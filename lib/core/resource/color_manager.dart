@@ -4,7 +4,7 @@ abstract class AppColorManager {
   static const Color transparent = Colors.transparent;
   static const Color white = Colors.white;
   static const Color black = Colors.black;
-  static const Color teal =  Color(0xff4BBCA7);
+  static const Color mainColor =  Color(0xff358cde);
   static const Color dotGrey = Color(0xffE5E5EA);
   static const Color textGrey = Color(0xffAEAFB2);
   static const Color grey = Color(0xff8e8e93);

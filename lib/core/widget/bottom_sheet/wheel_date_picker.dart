@@ -67,7 +67,7 @@ void showWheelDatePicker(
                     Navigator.of(context).pop();
 
                   },
-                  color: AppColorManager.teal,
+                  color: AppColorManager.mainColor,
                   alignment: Alignment.center,
                   child: AppTextWidget(
                     text: "save".tr(),

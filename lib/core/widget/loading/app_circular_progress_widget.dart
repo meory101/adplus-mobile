@@ -12,6 +12,6 @@ class AppCircularProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  CircularProgressIndicator(color: color??AppColorManager.teal,);
+    return  CircularProgressIndicator(color: color??AppColorManager.mainColor,);
   }
 }

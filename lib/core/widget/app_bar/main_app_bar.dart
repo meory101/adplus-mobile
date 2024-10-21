@@ -32,7 +32,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ? AppIconManager.arrowLeft
                   : AppIconManager.arrowRight,
               colorFilter:
-                  const ColorFilter.mode(AppColorManager.teal, BlendMode.srcIn),
+                  const ColorFilter.mode(AppColorManager.mainColor, BlendMode.srcIn),
             ),
           ),
           SizedBox(
@@ -41,7 +41,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           AppTextWidget(
             text: title,
             fontSize: FontSizeManager.fs18,
-            color: AppColorManager.teal,
+            color: AppColorManager.mainColor,
             fontWeight: FontWeight.w600,
             textAlign: TextAlign.center,
           ),

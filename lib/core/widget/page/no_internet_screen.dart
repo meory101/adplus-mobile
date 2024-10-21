@@ -27,7 +27,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
             alignment: Alignment.center,
             width: AppWidthManager.w60,
             height: AppHeightManager.h6,
-            color: AppColorManager.teal,
+            color: AppColorManager.mainColor,
             borderRadius: BorderRadius.circular(
               AppRadiusManager.r15,
             ),

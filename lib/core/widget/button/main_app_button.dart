@@ -47,7 +47,7 @@ class MainAppButton extends StatelessWidget {
           border: outLinedBorde == true
               ? Border.all(
 
-                  color: borderColor ?? AppColorManager.teal,
+                  color: borderColor ?? AppColorManager.mainColor,
                 )
               : null,
           boxShadow: haveShadow == true

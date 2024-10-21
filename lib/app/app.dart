@@ -11,14 +11,14 @@ import '../router/router.dart';
 
 final GlobalKey<NavigatorState> myAppKey = GlobalKey<NavigatorState>();
 
-class SoaFuel extends StatefulWidget {
-  const SoaFuel({super.key});
+class MzadApp extends StatefulWidget {
+  const MzadApp({super.key});
 
   @override
-  State<SoaFuel> createState() => _InanaaState();
+  State<MzadApp> createState() => _InanaaState();
 }
 
-class _InanaaState extends State<SoaFuel> {
+class _InanaaState extends State<MzadApp> {
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([

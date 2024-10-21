@@ -77,29 +77,29 @@ ThemeData lightTheme() {
       backgroundColor: AppColorManager.background,
     ),
     brightness: Brightness.light,
-    primaryColorLight: AppColorManager.teal,
+    primaryColorLight: AppColorManager.mainColor,
     scaffoldBackgroundColor: AppColorManager.background,
     fontFamily: FontFamilyManager.cairo,
-    primaryColor: AppColorManager.teal,
+    primaryColor: AppColorManager.mainColor,
     textTheme: appTextTheme,
     progressIndicatorTheme:
-        const ProgressIndicatorThemeData(color: AppColorManager.teal),
+        const ProgressIndicatorThemeData(color: AppColorManager.mainColor),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: AppColorManager.teal,
-        foregroundColor: AppColorManager.teal),
+        backgroundColor: AppColorManager.mainColor,
+        foregroundColor: AppColorManager.mainColor),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColorManager.white,
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
         borderSide: const BorderSide(
-          color: AppColorManager.teal,
+          color: AppColorManager.mainColor,
         ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
         borderSide: const BorderSide(
-          color: AppColorManager.teal,
+          color: AppColorManager.mainColor,
         ),
       ),
       enabledBorder: OutlineInputBorder(
@@ -114,11 +114,11 @@ ThemeData lightTheme() {
         fontWeight: FontWeight.normal,
       ),
       floatingLabelStyle: const TextStyle(
-        color: AppColorManager.teal,
+        color: AppColorManager.mainColor,
       ),
-      iconColor: AppColorManager.teal,
+      iconColor: AppColorManager.mainColor,
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: AppColorManager.teal),
+        borderSide: const BorderSide(color: AppColorManager.mainColor),
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
       ),
       border: OutlineInputBorder(
@@ -128,15 +128,15 @@ ThemeData lightTheme() {
     ),
     tabBarTheme: TabBarTheme(
       indicator: BoxDecoration(
-        color: AppColorManager.teal,
+        color: AppColorManager.mainColor,
         borderRadius: BorderRadius.circular(AppRadiusManager.r5),
       ),
     ),
-    colorScheme: const ColorScheme.light(primary: AppColorManager.teal)
-        .copyWith(secondary: AppColorManager.teal),
+    colorScheme: const ColorScheme.light(primary: AppColorManager.mainColor)
+        .copyWith(secondary: AppColorManager.mainColor),
     // Define the default button theme
     buttonTheme: const ButtonThemeData(
-      buttonColor: AppColorManager.teal,
+      buttonColor: AppColorManager.mainColor,
       textTheme: ButtonTextTheme.primary,
     ),
   );
