@@ -92,14 +92,14 @@ const HomeScreen(),
                     },
                     child: Column(
                       children: [
-                        SvgPicture.asset(AppIconManager.done,
+                        SvgPicture.asset(AppIconManager.home,
                             colorFilter: ColorFilter.mode(
                                 selectedIndex == 1
                                     ? AppColorManager.mainColor
                                     : AppColorManager.grey,
                                 BlendMode.srcIn)),
                         AppTextWidget(
-                          text: "restaurants".tr(),
+                          text: "categories".tr(),
                           color: selectedIndex == 1
                               ? AppColorManager.mainColor
                               : AppColorManager.grey,
@@ -118,14 +118,14 @@ const HomeScreen(),
                     },
                     child: Column(
                       children: [
-                        SvgPicture.asset(AppIconManager.claims,
+                        SvgPicture.asset(AppIconManager.home,
                             colorFilter: ColorFilter.mode(
                                 selectedIndex == 2
                                     ? AppColorManager.mainColor
                                     : AppColorManager.grey,
                                 BlendMode.srcIn)),
                         AppTextWidget(
-                          text: "myOrders".tr(),
+                          text: "advs".tr(),
                           color: selectedIndex == 2
                               ? AppColorManager.mainColor
                               : AppColorManager.grey,
@@ -143,7 +143,7 @@ const HomeScreen(),
                     },
                     child: Column(
                       children: [
-                        SvgPicture.asset(AppIconManager.more,
+                        SvgPicture.asset(AppIconManager.home,
                             colorFilter: ColorFilter.mode(
                                 selectedIndex == 3
                                     ? AppColorManager.mainColor

@@ -7,7 +7,7 @@ import '../core/widget/page/not_found_page.dart';
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
-  static String init = "";
+  static String init = mainBottomAppBar;
   static const String mainBottomAppBar = "/main-bottom-app-bar";
 }
 
