@@ -2,6 +2,10 @@
 
 abstract class AppIconManager {
   static const String _iconBasePath = 'assets/icons';
+
+  static const String notification = '$_iconBasePath/notification.svg';
+  static const String search = '$_iconBasePath/search.svg';
+
   static const String language = '$_iconBasePath/language.svg';
   static const String arrowLeft = '$_iconBasePath/arrow_left.svg';
   static const String arrowRight = '$_iconBasePath/arrow_right.svg';

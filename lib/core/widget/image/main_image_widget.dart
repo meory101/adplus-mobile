@@ -72,8 +72,8 @@ class MainProgressImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppColorManager.white,
-      highlightColor: AppColorManager.white,
+      baseColor: AppColorManager.shimmerBaseColor,
+      highlightColor: AppColorManager.shimmerHighlightColor,
       child: Container(
         width: width,
         height: height,
