@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 
+import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
@@ -17,19 +19,57 @@ class NewestItemsGridView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppTextWidget(
-            text: "newestItems",
+            text: "main category name",
             fontSize: FontSizeManager.fs16,
             color: AppColorManager.textAppColor,
             fontWeight: FontWeight.w700),
         SizedBox(
           height: AppHeightManager.h1point8,
         ),
+
         DynamicHeightGridView(
           crossAxisSpacing: AppWidthManager.w3Point8,
           mainAxisSpacing: AppWidthManager.w3Point8,
           crossAxisCount: 2,
           builder: (context, index) {
-            return const Text('dd');
+            return
+              Container(
+              alignment: Alignment.center,
+              height: AppHeightManager.h21,
+              padding: EdgeInsets.all(AppWidthManager.w3Point8),
+              decoration: BoxDecoration(
+
+                color:  AppColorManager.white
+                   ,
+                boxShadow: const [],
+                borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: AppWidthManager.w25,
+                    width: AppWidthManager.w25,
+                    child: MainImageWidget(
+                      imageUrl:  "",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppWidthManager.w3Point8,
+                  ),
+                  AppTextWidget(
+                    text:"sub category name",
+                    color: AppColorManager.mainColor,
+                    fontSize: FontSizeManager.fs16,
+                      overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    fontWeight: FontWeight.w700,
+                  )
+                ],
+              ),
+            );
           },
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

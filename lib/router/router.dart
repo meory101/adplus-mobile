@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
-
+import '../core/injection/injection_container.dart' as di;
 
 /// Eng.Nour Othman(meory)*
 
@@ -17,9 +19,10 @@ abstract class AppRouter {
 
     switch (settings.name) {
       case RouteNamedScreens.mainBottomAppBar:
-        return FadeBuilderRoute(page: const MainBottomAppBar());
-
-
+        return FadeBuilderRoute(page: BlocProvider(
+          create: (context) => di.sl<GetCategoriesCubit>()..getCategories(context: context),
+          child: MainBottomAppBar(),
+        ));
     }
     return FadeBuilderRoute(page: const NotFoundScreen());
   }

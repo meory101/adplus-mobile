@@ -1,20 +1,13 @@
-class ApiGetUrl {}
+class ApiGetUrl {
 
-class ApiPostUrl {
-  static String beforeAuth = "functions/beforeAuth";
-  static String loginUser = "login";
-  static String changePassword = "functions/updatePassword";
+  static String getCategories = "api/category/all";
 
-  ///
-
-  static String getSiteAccess = "functions/getSiteAccesses";
-  static String getSiteAccessDetails = "functions/getSiteAccessDetails";
-  static String omArea = "functions/getO&MAreas";
-  static String omAreaTasks = "functions/getOandMAreaTasksDetails";
-  static String oneTimePlans= "functions/getOneTimePeriodicTaskPlan";
-  static String periodicTimePlans= "functions/getPeriodicTaskPlan";
 }
 
+class ApiPostUrl {
+
+
+}
 class ApiDeleteUrl {}
 
 class ApiPutUrl {}

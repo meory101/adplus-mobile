@@ -11,16 +11,17 @@ class ApiMethods {
 
   ApiMethods({Map<String, String>? header, this.isSecondBaseUrl}) {
     if (header == null) {
-      headers = {
-        "Content-type": "application/json",
-        "Accept": "application/json",
-        "X-Parse-Application-Id": "soa",
-        "X-Parse-REST-API-Key": "soa12345",
-        "lang": AppSharedPreferences.getLanguage()
-      };
-      if (AppSharedPreferences.getToken().isNotEmpty) {
-        headers['X-Parse-Session-Token'] = AppSharedPreferences.getToken();
-      }
+      headers = {'Content-Type': 'application/json'};
+      // headers = {
+      //   "Content-type": "application/json",
+      //   "Accept": "application/json",
+      //   "X-Parse-Application-Id": "soa",
+      //   "X-Parse-REST-API-Key": "soa12345",
+      //   "lang": AppSharedPreferences.getLanguage()
+      // };
+      // if (AppSharedPreferences.getToken().isNotEmpty) {
+      //   headers['X-Parse-Session-Token'] = AppSharedPreferences.getToken();
+      // }
     } else {
       headers = header;
     }
@@ -89,6 +90,7 @@ class ApiMethods {
           ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),
           headers: headers);
     }
+
   }
 
   //Using this function for all post requests
