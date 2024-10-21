@@ -1,5 +1,3 @@
-
-
 abstract class AppIconManager {
   static const String _iconBasePath = 'assets/icons';
 
@@ -7,6 +5,9 @@ abstract class AppIconManager {
   static const String search = '$_iconBasePath/search.svg';
 
   static const String language = '$_iconBasePath/language.svg';
+  static const String person = '$_iconBasePath/person.svg';
+  static const String phone = '$_iconBasePath/phone.svg';
+
   static const String arrowLeft = '$_iconBasePath/arrow_left.svg';
   static const String arrowRight = '$_iconBasePath/arrow_right.svg';
   static const String home = '$_iconBasePath/home.svg';
@@ -15,6 +16,9 @@ abstract class AppIconManager {
   static const String qua = '$_iconBasePath/quo.svg';
   static const String more = '$_iconBasePath/more.svg';
   static const String add = '$_iconBasePath/add.svg';
+  static String email = '$_iconBasePath/email.svg';
+  static String lock = '$_iconBasePath/lock.svg';
+
   static const String totals = '$_iconBasePath/totals.svg';
   static const String download = '$_iconBasePath/download.svg';
   static const String upload = '$_iconBasePath/upload.svg';

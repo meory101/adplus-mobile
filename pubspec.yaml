@@ -12,8 +12,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.10+1
   responsive_sizer: ^3.3.1
@@ -37,6 +35,8 @@ dependencies:
   package_info_plus: ^8.0.2
   dots_indicator: ^3.0.0
   carousel_slider: ^5.0.0
+  country_code_picker: ^2.0.0
+ 
 
 dev_dependencies:
   flutter_test:
