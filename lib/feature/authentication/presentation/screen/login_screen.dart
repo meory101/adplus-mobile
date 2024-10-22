@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   suffixIcon: IconButton(
                     splashColor: AppColorManager.transparent,
-                    highlightColor:AppColorManager.transparent ,
+                    highlightColor: AppColorManager.transparent,
                     icon: Icon(
                       passwordVisible ? Icons.visibility : Icons.visibility_off,
                       color: AppColorManager.textGrey,
@@ -124,7 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: AppHeightManager.h4),
                 MainAppButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(RouteNamedScreens.mainBottomAppBar);
+                  },
                   height: AppHeightManager.h6,
                   color: AppColorManager.mainColor,
                   alignment: Alignment.center,
@@ -216,7 +219,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: AppTextWidget(
                         text: "Create Account",
                         color: AppColorManager.mainColor,
-
                         fontSize: FontSizeManager.fs15,
                         fontWeight: FontWeight.w600,
                       ),

@@ -14,10 +14,9 @@ import '../../domain/entity/response/get_categories_response_entity.dart';
 import '../widget/home_banners.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../widget/newest_items_grid_view.dart';
 
-/// Eng.Nour Othman(meory)*
+/// Eng. Nour Othman(meory)
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 List<List<SubCategory>> subCategories = [];
 List<GlobalKey> columnKey = [];
-List<Category> categories =[];
+List<Category> categories = [];
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
@@ -94,6 +93,23 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: AppHeightManager.h3,
               ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppWidthManager.w3Point8,
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                    ),
+                    prefixIcon: Icon(Icons.search),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: AppHeightManager.h3,
+              ),
               BlocConsumer<GetCategoriesCubit, GetCategoriesState>(
                   listener: (context, state) {},
                   builder: (context, state) {
@@ -103,7 +119,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }
                     categories = state.entity.data ?? [];
-
                     categories.forEach(
                       (category) {
                         subCategories.add(category.children ?? []);
@@ -112,10 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     columnKey = List.generate(categories.length, (index) {
                       return GlobalKey();
                     });
-
-                    return
-
-                      Column(
+                    return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -204,33 +216,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         Column(
                           children: List.generate(
                             categories.length,
-                                (index) {
-                              return Column(
-                                  key: columnKey[index], children:[ NewestItemsGridView()]);
+                            (index) {
+                              return Column(key: columnKey[index], children: [
+                                if (categories[index].name == "Vehicles") ...[
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Column(
+                                          children: [
+                                            NewestItemsGridView(),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Column(
+                                          children: [
+                                            NewestItemsGridView(),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ] else ...[
+                                  NewestItemsGridView(),
+                                ]
+                              ]);
                             },
                           ),
                         )
                       ],
                     );
                   }),
-
-
-              // Padding(
-              //   padding: EdgeInsets.symmetric(
-              //     horizontal: AppWidthManager.w3Point8,
-              //   ),
-              //   child: BlocConsumer<GetCategoriesCubit, GetCategoriesState>(
-              //     listener: (context, state) {},
-              //     builder: (context, state) {
-              //       if (state.status == CubitStatus.loading) {
-              //         return Center(
-              //           child: AppCircularProgressWidget(),
-              //         );
-              //       }
-              //       return NewestItemsGridView();
-              //     },
-              //   ),
-              // )
             ],
           ),
         ),
