@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
 import '../core/injection/injection_container.dart' as di;
+import '../feature/authentication/presentation/screen/login_screen.dart';
+import '../feature/authentication/presentation/screen/register_screen.dart';
+import '../feature/home/presentation/cubit/get_categories_cubit.dart';
+import '../feature/intro/presentation/screen/splash_screen.dart';
 
 
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
+  static const String init = mainBottomAppBar;
   static const String splash = "/splash";
   static const String login = "/login";
   static const String register = "/register";

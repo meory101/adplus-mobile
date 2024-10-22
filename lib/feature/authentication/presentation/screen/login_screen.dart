@@ -7,7 +7,6 @@ import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import '../../../../core/resource/image_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../router/router.dart';
 
@@ -20,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool checkedValue = false;
+  bool passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           height: AppHeightManager.h100,
           width: AppWidthManager.w100,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColorManager.background,
           ),
           child: Container(
@@ -78,7 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
                 AppTextFormField(
+                  maxLines: 1,
                   textInputType: TextInputType.visiblePassword,
+                  hintText: "Password",
+                  hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   prefixIcon: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: AppWidthManager.w3Point8),
@@ -88,23 +91,36 @@ class _LoginScreenState extends State<LoginScreen> {
                           AppColorManager.textGrey, BlendMode.srcIn),
                     ),
                   ),
-                  hintText: "Password",
-                  hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {},
                   validator: (value) {
                     return null;
                   },
+                  suffixIcon: IconButton(
+                    splashColor: AppColorManager.transparent,
+                    highlightColor:AppColorManager.transparent ,
+                    icon: Icon(
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: AppColorManager.textGrey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
+                  obscureText: !passwordVisible,
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: AppTextWidget(
-                    text: "Forgot Password?",
-                    color: AppColorManager.textAppColor,
-                    fontSize: FontSizeManager.fs15,
-                    fontWeight: FontWeight.w600,
-                    textAlign: TextAlign.right,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    AppTextWidget(
+                      text: "Forgot Password?",
+                      color: AppColorManager.mainColor,
+                      fontSize: FontSizeManager.fs15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ],
                 ),
                 SizedBox(height: AppHeightManager.h4),
                 MainAppButton(
@@ -115,13 +131,53 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: AppTextWidget(
                     text: "Login",
                     color: AppColorManager.white,
+                    fontSize: FontSizeManager.fs16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(height: AppHeightManager.h2),
-                AppTextWidget(
-                  text: "Or",
-                  color: AppColorManager.textAppColor,
-                  fontSize: FontSizeManager.fs15,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: AppHeightManager.h05,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              color: AppColorManager.borderGrey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        bottom: AppHeightManager.h04,
+                        left: AppWidthManager.w2point5,
+                        right: AppWidthManager.w2point5,
+                      ),
+                      child: AppTextWidget(
+                        text: "or",
+                        color: AppColorManager.textGrey,
+                        fontSize: FontSizeManager.fs16,
+                        fontWeight: FontWeight.w600,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: AppHeightManager.h05,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              color: AppColorManager.borderGrey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: AppHeightManager.h2),
                 MainAppButton(
@@ -135,7 +191,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(width: AppWidthManager.w2),
                       AppTextWidget(
                         text: "Login with Google",
-                        color: AppColorManager.textAppColor,
+                        color: AppColorManager.mainColor,
+                        fontSize: FontSizeManager.fs15,
+                        fontWeight: FontWeight.w600,
                       ),
                     ],
                   ),
@@ -158,9 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: AppTextWidget(
                         text: "Create Account",
                         color: AppColorManager.mainColor,
+
                         fontSize: FontSizeManager.fs15,
-                        fontWeight: FontWeight.bold,
-                        textAlign: TextAlign.center,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],

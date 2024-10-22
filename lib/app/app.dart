@@ -34,7 +34,7 @@ class _InanaaState extends State<MzadApp> {
         supportedLocales: context.supportedLocales,
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: RouteNamedScreens.splash, // تعيين السبلاش كوجهة أولية
+        initialRoute: RouteNamedScreens.init,
       );
     });
   }

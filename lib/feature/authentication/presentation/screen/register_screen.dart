@@ -98,28 +98,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                TextField(
-                  controller: phoneController,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    hintText: "Phone Number",
-                    hintStyle: const TextStyle(color: AppColorManager.textGrey),
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppWidthManager.w3Point8),
-                      child: SvgPicture.asset(
-                        AppIconManager.phone,
-                        colorFilter: const ColorFilter.mode(
-                            AppColorManager.textGrey, BlendMode.srcIn),
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                AppTextFormField(
+                  maxLines: 1,
+                  textInputType: TextInputType.number,
+                  hintText: "Phone Number",
+                  hintStyle: const TextStyle(color: AppColorManager.textGrey),
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppWidthManager.w3Point8),
+                    child: SvgPicture.asset(
+                      AppIconManager.phone,
+                      colorFilter: const ColorFilter.mode(
+                          AppColorManager.textGrey, BlendMode.srcIn),
                     ),
                   ),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    return null;
+                  },
+
+                  obscureText: !passwordVisible,
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
                 AppTextFormField(
+
                   maxLines: 1,
                   textInputType: TextInputType.visiblePassword,
                   hintText: "Password",
@@ -138,7 +140,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   suffixIcon: IconButton(
+                    splashColor: AppColorManager.transparent,
+                    highlightColor:AppColorManager.transparent ,
                     icon: Icon(
+
                       passwordVisible ? Icons.visibility : Icons.visibility_off,
                       color: AppColorManager.textGrey,
                     ),
@@ -170,6 +175,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   suffixIcon: IconButton(
+                    splashColor: AppColorManager.transparent,
+                    highlightColor:AppColorManager.transparent ,
                     icon: Icon(
                       confirmPasswordVisible
                           ? Icons.visibility
@@ -184,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   obscureText: !confirmPasswordVisible,
                 ),
-                SizedBox(height: AppHeightManager.h6),
+                SizedBox(height: AppHeightManager.h3),
                 MainAppButton(
                   onTap: () {},
                   height: AppHeightManager.h6,
@@ -193,9 +200,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: AppTextWidget(
                     text: "Create Account",
                     color: Colors.white,
+                    fontSize: FontSizeManager.fs16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: AppHeightManager.h08),
+                SizedBox(height: AppHeightManager.h4),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -214,10 +223,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       child: AppTextWidget(
                         text: "Login",
-                        color: AppColorManager.black,
+                        color: AppColorManager.mainColor,
                         fontSize: FontSizeManager.fs15,
                         fontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
                       ),
                     ),
                   ],

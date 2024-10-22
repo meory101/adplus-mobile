@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             AppTextWidget(
               text: "V ${AppInfoHelper.getAppVersion()}",
-              color: AppColorManager.white,
+              color: AppColorManager.mainColor,
             ),
             SizedBox(
               height: AppHeightManager.h1point8,
