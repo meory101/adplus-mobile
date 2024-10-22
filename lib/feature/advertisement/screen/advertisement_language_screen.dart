@@ -9,6 +9,7 @@ import 'package:mzad_damascus/feature/advertisement/widget/language_options_list
 import 'package:mzad_damascus/router/router.dart';
 
 import '../../../core/resource/font_manager.dart';
+import '../../../core/widget/container/decorated_container.dart';
 import '../widget/advertisement_app_bar.dart';
 
 class AdvertisementLanguageScreen extends StatefulWidget {
@@ -29,29 +30,16 @@ class _AdvertisementScreenState extends State<AdvertisementLanguageScreen> {
               .pushNamed(RouteNamedScreens.advertisementCategory);
         },
       ),
-      body: Container(
-        height: AppHeightManager.h100,
-        width: AppWidthManager.w100,
-        margin: EdgeInsets.only(
-          top: AppHeightManager.h9,
-        ),
-        padding: EdgeInsets.symmetric(
-            horizontal: AppWidthManager.w3Point8,
-            vertical: AppHeightManager.h2point5),
-        decoration: BoxDecoration(
-          color: AppColorManager.white,
-          boxShadow: ThemeManager.dialogShadow,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(AppRadiusManager.r20),
-            topRight: Radius.circular(AppRadiusManager.r20),
-          ),
-        ),
+      body:
+      DecoratedContainer(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              const AdvertisementAppBar(),
+              const AdvertisementAppBar(
+                completePercent: 0,
+              ),
               SizedBox(
                 height: AppHeightManager.h2point5,
               ),

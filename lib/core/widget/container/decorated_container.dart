@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../resource/color_manager.dart';
 import '../../resource/size_manager.dart';
+import '../../resource/theme_manager.dart';
 
 //A Decorated Container With Default Shadow Effect
 class DecoratedContainer extends StatelessWidget {
@@ -38,37 +39,21 @@ class DecoratedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding,
-      alignment: alignment,
-      width: width,
-      height: height,
-      margin: margin,
+      height: AppHeightManager.h100,
+      width: AppWidthManager.w100,
+      margin: EdgeInsets.only(
+        top: AppHeightManager.h9,
+      ),
+      padding: EdgeInsets.symmetric(
+          horizontal: AppWidthManager.w3Point8,
+          vertical: AppHeightManager.h2point5),
       decoration: BoxDecoration(
-        gradient: isGradient != null
-            ? const LinearGradient(
-                colors: [AppColorManager.white, AppColorManager.black],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              )
-            : null,
-        border: border,
-        image: image,
-        borderRadius: shape == BoxShape.circle
-            ? null
-            : borderRadius ?? BorderRadius.circular(AppRadiusManager.r3),
-        boxShadow: boxShadow ??
-            [
-              const BoxShadow(
-                color: AppColorManager.grey,
-                blurRadius: 2,
-                spreadRadius: 0,
-                offset:
-                    // changes position of shadow
-                    Offset(3, 5),
-              ),
-            ],
-        shape: shape ?? BoxShape.rectangle,
-        color: color ?? AppColorManager.white,
+        color: AppColorManager.white,
+        boxShadow: ThemeManager.dialogShadow,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(AppRadiusManager.r20),
+          topRight: Radius.circular(AppRadiusManager.r20),
+        ),
       ),
       child: child,
     );

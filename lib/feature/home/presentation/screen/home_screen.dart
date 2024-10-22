@@ -24,7 +24,6 @@ class HomeScreen extends StatefulWidget {
 
 List<List<SubCategory>> subCategories = [];
 List<GlobalKey> columnKey = [];
-List<Category> categories = [];
 
 class _HomeScreenState extends State<HomeScreen> {
   @override

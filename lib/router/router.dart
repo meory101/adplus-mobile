@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/feature/advertisement/screen/advertisement_category_screen.dart';
 import 'package:mzad_damascus/feature/advertisement/screen/advertisement_language_screen.dart';
@@ -39,10 +40,17 @@ abstract class AppRouter {
       case RouteNamedScreens.advertisementLanguage:
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
       case RouteNamedScreens.advertisementCategory:
-        return SlidUpBuilderRoute(page: const AdvertisementCategoryScreen());
+        return SlidLeftBuilderRoute(page: BlocProvider(
+          create: (context) =>
+          di.sl<GetCategoriesCubit>()
+            ..getCategories(context: context),
+          child: AdvertisementCategoryScreen(),
+        ));
       case RouteNamedScreens.mainBottomAppBar:
         return FadeBuilderRoute(page: BlocProvider(
-          create: (context) => di.sl<GetCategoriesCubit>()..getCategories(context: context),
+          create: (context) =>
+          di.sl<GetCategoriesCubit>()
+            ..getCategories(context: context),
           child: const MainBottomAppBar(),
         ));
         return FadeBuilderRoute(page: const MainBottomAppBar());
