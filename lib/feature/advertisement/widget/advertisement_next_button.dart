@@ -6,8 +6,8 @@ import '../../../core/resource/size_manager.dart';
 import '../../../core/widget/button/main_app_button.dart';
 import '../../../core/widget/text/app_text_widget.dart';
 
-class NextButton extends StatelessWidget {
-  const NextButton({super.key});
+class AdvertisementNextButton extends StatelessWidget {
+  const AdvertisementNextButton({super.key});
 
   @override
   Widget build(BuildContext context) {
