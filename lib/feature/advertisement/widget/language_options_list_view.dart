@@ -13,7 +13,8 @@ class LanguageOptionsListView extends StatefulWidget {
   const LanguageOptionsListView({super.key});
 
   @override
-  State<LanguageOptionsListView> createState() => _LanguageOptionsListViewState();
+  State<LanguageOptionsListView> createState() =>
+      _LanguageOptionsListViewState();
 }
 
 class _LanguageOptionsListViewState extends State<LanguageOptionsListView> {
@@ -49,8 +50,7 @@ class _LanguageOptionsListViewState extends State<LanguageOptionsListView> {
               horizontal: AppWidthManager.w3Point8,
               vertical: AppHeightManager.h2point5,
             ),
-            margin:
-            EdgeInsets.only(bottom: AppHeightManager.h1point8),
+            margin: EdgeInsets.only(bottom: AppHeightManager.h1point8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -79,7 +79,7 @@ class _LanguageOptionsListViewState extends State<LanguageOptionsListView> {
                 ),
                 AppTextWidget(
                     text:
-                    "your Advertisment will appear for users that use this application in english language pla pla pla ",
+                        "your Advertisment will appear for users that use this application in english language pla pla pla ",
                     fontSize: FontSizeManager.fs15,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,

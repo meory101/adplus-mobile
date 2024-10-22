@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
-import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/resource/theme_manager.dart';
-import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/advertisement/widget/advertisement_next_button.dart';
 import 'package:mzad_damascus/feature/advertisement/widget/language_options_list_view.dart';
+import 'package:mzad_damascus/router/router.dart';
 
 import '../../../core/resource/font_manager.dart';
 import '../widget/advertisement_app_bar.dart';
@@ -22,12 +19,16 @@ class AdvertisementLanguageScreen extends StatefulWidget {
       _AdvertisementScreenState();
 }
 
-
 class _AdvertisementScreenState extends State<AdvertisementLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: const AdvertisementNextButton(),
+      bottomSheet: AdvertisementNextButton(
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed(RouteNamedScreens.advertisementCategory);
+        },
+      ),
       body: Container(
         height: AppHeightManager.h100,
         width: AppWidthManager.w100,

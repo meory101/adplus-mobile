@@ -7,11 +7,13 @@ import '../../../core/widget/button/main_app_button.dart';
 import '../../../core/widget/text/app_text_widget.dart';
 
 class AdvertisementNextButton extends StatelessWidget {
-  const AdvertisementNextButton({super.key});
+  final void Function()? onTap;
+  const AdvertisementNextButton({super.key,required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return    MainAppButton(
+      onTap: onTap ,
       alignment: Alignment.center,
       margin: EdgeInsets.all(AppWidthManager.w3Point8),
       color: AppColorManager.mainColor,
