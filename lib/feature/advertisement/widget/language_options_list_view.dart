@@ -63,7 +63,7 @@ class _LanguageOptionsListViewState extends State<LanguageOptionsListView> {
                         text: "Both Languages",
                         fontSize: FontSizeManager.fs16,
                         color: AppColorManager.textAppColor,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     Visibility(
                       visible: selectedLanIndex == index,
                       child: SvgPicture.asset(
