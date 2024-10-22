@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/feature/advertisement/screen/advertisement_language_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
@@ -18,6 +19,7 @@ abstract class RouteNamedScreens {
   static const String login = "/login";
   static const String register = "/register";
   static const String mainBottomAppBar = "/main-bottom-app-bar";
+  static const String advertisementLanguage = "/advertisement-language";
 }
 
 abstract class AppRouter {
@@ -31,11 +33,12 @@ abstract class AppRouter {
         return FadeBuilderRoute(page: const LoginScreen());
       case RouteNamedScreens.register:
         return FadeBuilderRoute(page: const RegisterScreen());
-
+      case RouteNamedScreens.advertisementLanguage:
+        return FadeBuilderRoute(page: const AdvertisementLanguageScreen());
       case RouteNamedScreens.mainBottomAppBar:
         return FadeBuilderRoute(page: BlocProvider(
           create: (context) => di.sl<GetCategoriesCubit>()..getCategories(context: context),
-          child: MainBottomAppBar(),
+          child: const MainBottomAppBar(),
         ));
         return FadeBuilderRoute(page: const MainBottomAppBar());
     }

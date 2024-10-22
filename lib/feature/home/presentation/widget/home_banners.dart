@@ -34,7 +34,7 @@ class HomeBanners extends StatelessWidget {
                           BorderRadius.circular(AppRadiusManager.r15)),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: MainImageWidget(
-                    imageUrl: "ff",
+                    imageUrl: "",
                   ))
             ]),
         SizedBox(

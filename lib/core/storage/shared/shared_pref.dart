@@ -13,18 +13,14 @@ abstract class AppSharedPreferences {
     _sharedPreferences.clear();
   }
 
-  static void cashUserInfo({
-    required String token,
-    required String userId,
-  }){
 
-    _sharedPreferences.setString(AppKeyManager.token, token);
-    _sharedPreferences.setString(AppKeyManager.userId, userId);
-
-  }
   static cashLanguage({required String language}) {
     _sharedPreferences.setString(AppKeyManager.language, language);
   }
+  static cashToken({required String token}) {
+    _sharedPreferences.setString(AppKeyManager.token, token);
+  }
+
 
   static String getLanguage() {
     return _sharedPreferences.getString(AppKeyManager.language) ?? "en";
