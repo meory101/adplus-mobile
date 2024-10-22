@@ -8,8 +8,10 @@ import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/resource/theme_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/advertisement/widget/next_button.dart';
 
 import '../../../core/resource/font_manager.dart';
+import '../widget/advertisement_app_bar.dart';
 
 class AdvertisementLanguageScreen extends StatefulWidget {
   const AdvertisementLanguageScreen({super.key});
@@ -25,18 +27,7 @@ class _AdvertisementScreenState extends State<AdvertisementLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: MainAppButton(
-        alignment: Alignment.center,
-        margin: EdgeInsets.all(AppWidthManager.w3Point8),
-        color: AppColorManager.mainColor,
-        width: AppWidthManager.w100,
-        height: AppHeightManager.h6,
-        child: AppTextWidget(
-            text: "Next",
-            fontSize: FontSizeManager.fs16,
-            color: AppColorManager.white,
-            fontWeight: FontWeight.w500),
-      ),
+      bottomSheet: const NextButton(),
       body: SingleChildScrollView(
         child: Container(
           height: AppHeightManager.h100,
@@ -59,36 +50,7 @@ class _AdvertisementScreenState extends State<AdvertisementLanguageScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        LanguageHelper.checkIfLTR(context: context)
-                            ? AppIconManager.arrowMenuLeft
-                            : AppIconManager.arrowMenuRight,
-                        colorFilter: const ColorFilter.mode(
-                          AppColorManager.mainColor,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      AppTextWidget(
-                          text: "Back",
-                          fontSize: FontSizeManager.fs16,
-                          color: AppColorManager.textAppColor,
-                          fontWeight: FontWeight.w500),
-                    ],
-                  ),
-                  SvgPicture.asset(
-                    AppIconManager.xMark,
-                    colorFilter: const ColorFilter.mode(
-                      AppColorManager.mainColor,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ],
-              ),
+              const AdvertisementAppBar(),
               SizedBox(
                 height: AppHeightManager.h2point5,
               ),
