@@ -21,9 +21,6 @@ class HomeRemoteImplement extends HomeRemote {
     await ApiMethods().get(
         url: ApiGetUrl.getCategories);
 
-    print(jsonDecode(response.body));
-    print(response.statusCode);
-    print("-----------------------");
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getCategoriesResponseEntityFromJson(response.body);
     } else {

@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mzad_damascus/feature/advertisement/widget/categories_options_list_view.dart';
-import '../../../core/resource/color_manager.dart';
-import '../../../core/resource/font_manager.dart';
-import '../../../core/resource/size_manager.dart';
-import '../../../core/widget/container/decorated_container.dart';
-import '../../../core/widget/text/app_text_widget.dart';
-import '../../../router/router.dart';
+import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/font_manager.dart';
+import '../../../../core/resource/size_manager.dart';
+import '../../../../core/widget/container/decorated_container.dart';
+import '../../../../core/widget/text/app_text_widget.dart';
+import '../../../../router/router.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
+import '../widget/categories_options_list_view.dart';
 
 class AdvertisementCategoryScreen extends StatefulWidget {
   const AdvertisementCategoryScreen({super.key});

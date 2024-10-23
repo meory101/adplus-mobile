@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 
-import '../../../core/helper/language_helper.dart';
-import '../../../core/resource/color_manager.dart';
-import '../../../core/resource/font_manager.dart';
-import '../../../core/resource/icon_manager.dart';
-import '../../../core/widget/text/app_text_widget.dart';
-import '../../../router/router.dart';
+import '../../../../core/helper/language_helper.dart';
+import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/font_manager.dart';
+import '../../../../core/resource/icon_manager.dart';
+import '../../../../core/widget/text/app_text_widget.dart';
+import '../../../../router/router.dart';
 
 class AdvertisementAppBar extends StatelessWidget {
   final double completePercent;

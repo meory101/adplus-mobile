@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../core/resource/color_manager.dart';
-import '../../../core/resource/font_manager.dart';
-import '../../../core/resource/size_manager.dart';
-import '../../../core/widget/button/main_app_button.dart';
-import '../../../core/widget/text/app_text_widget.dart';
+import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/font_manager.dart';
+import '../../../../core/resource/size_manager.dart';
+import '../../../../core/widget/button/main_app_button.dart';
+import '../../../../core/widget/text/app_text_widget.dart';
+
 
 class AdvertisementNextButton extends StatelessWidget {
   final void Function()? onTap;

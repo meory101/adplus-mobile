@@ -2,15 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
-import 'package:mzad_damascus/core/resource/theme_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/advertisement/widget/advertisement_next_button.dart';
-import 'package:mzad_damascus/feature/advertisement/widget/language_options_list_view.dart';
 import 'package:mzad_damascus/router/router.dart';
-
-import '../../../core/resource/font_manager.dart';
-import '../../../core/widget/container/decorated_container.dart';
+import '../../../../core/resource/font_manager.dart';
+import '../../../../core/widget/container/decorated_container.dart';
 import '../widget/advertisement_app_bar.dart';
+import '../widget/advertisement_next_button.dart';
+import '../widget/language_options_list_view.dart';
 
 class AdvertisementLanguageScreen extends StatefulWidget {
   const AdvertisementLanguageScreen({super.key});

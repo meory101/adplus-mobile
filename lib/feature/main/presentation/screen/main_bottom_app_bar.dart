@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mzad_damascus/feature/advertisement/screen/advertisement_language_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
