@@ -27,5 +27,7 @@ abstract class EnumManager {
     -1 :  TextInputType.text
   };
 
+
+  static int advTypeCode =  14;
 }
 

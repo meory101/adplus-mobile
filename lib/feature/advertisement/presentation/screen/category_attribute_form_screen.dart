@@ -1,3 +1,4 @@
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,39 +93,55 @@ class _CategoryAttributeFormScreenState
                       children: List.generate(
                         attributes.length,
                         (index) {
-                          Attributes? currentAttribute =
-                              state.entity.data?.attributes?[index];
-                          print(
-                              currentAttribute?.attributeType?.attributeTypeId);
-                          print('00000000000000000000000000');
+                          Attributes? currentAttribute = state.entity.data?.attributes?[index];
+                          List<NameAndId> attributeListElements = [];
+                          EnumManager.advTypeCode;
+                          if (currentAttribute?.attributeType?.attributeTypeId ==
+                              EnumManager.listCode) {
+                            currentAttribute?.attributeTypeList?.forEach(
+                              (attributeListElement) {
+                                attributeListElements.add(
+                                  NameAndId(
+                                    name: attributeListElement.option ?? '',
+                                    id: attributeListElement.typeListId
+                                        .toString(),
+                                  ),
+                                );
+                              },
+                            );
+                          }
 
-                          return Column(
+                          return
+                            Column(
                             children: [
                               Visibility(
-                                  visible: currentAttribute
-                                          ?.attributeType?.attributeTypeId ==
-                                      EnumManager.listCode,
-                                  replacement: TitleAppFormFiled(
-                                    title:currentAttribute?.attributeName ?? "" ,
-                                    textInputType:
-                                        EnumManager.attributeTextInputType[
-                                            attributes[index]
-                                                    .attributeType
-                                                    ?.attributeTypeId ??
-                                                -1],
-                                    hint: attributes[index].attributeName ?? "",
-                                    onChanged: (value) {
-                                      return null;
-                                    },
-                                    validator: (value) {
-                                      return null;
-                                    },
-                                  ),
-                                  child: TitleDropDownFormFieldWidget(
-                                      title:
-                                          currentAttribute?.attributeName ?? "",
-                                      options: [],
-                                      hint:  currentAttribute?.attributeName ?? "")),
+                                visible: currentAttribute
+                                            ?.attributeType?.attributeTypeId ==
+                                        EnumManager.listCode &&
+                                    currentAttribute
+                                            ?.attributeType?.attributeTypeId !=
+                                        EnumManager.advTypeCode,
+                                replacement: TitleAppFormFiled(
+                                  title: currentAttribute?.attributeName ?? "",
+                                  textInputType: EnumManager
+                                      .attributeTextInputType[attributes[index]
+                                          .attributeType
+                                          ?.attributeTypeId ??
+                                      -1],
+                                  hint: attributes[index].attributeName ?? "",
+                                  onChanged: (value) {
+                                    return null;
+                                  },
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                ),
+                                child: TitleDropDownFormFieldWidget(
+                                  title: currentAttribute?.attributeName ?? "",
+                                  options: attributeListElements,
+                                  hint: currentAttribute?.attributeName ?? "",
+                                ),
+                              ),
                               SizedBox(
                                 height: AppHeightManager.h1point8,
                               ),
