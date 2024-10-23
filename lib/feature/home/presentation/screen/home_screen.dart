@@ -24,7 +24,7 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
+// meory
 List<List<SubCategory>> subCategories = [];
 List<MainCategory> categories = [];
 
