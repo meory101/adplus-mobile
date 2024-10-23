@@ -19,6 +19,8 @@ class GetCategoryAttributesResponseEntity {
 }
 
   GetCategoryAttributesResponseEntity.fromJson(dynamic json) {
+    print(json['message']);
+    print('enttttttttt');
     _success = json['success'];
     _message = json['message'];
     if (json['data'] != null) {

@@ -19,7 +19,9 @@ class AdvertisementRemoteImplement extends AdvertisementRemote {
   @override
   Future<GetCategoryAttributesResponseEntity> getCategoryAttributes({
   required GetCategoryAttributesRequestEntity entity}) async {
-    final response = await ApiMethods().get(url: ApiGetUrl.getCategoryAttributes);
+    final response = await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiGetUrl.getCategoryAttributes);
     print(jsonDecode(response.body));
     print(response.statusCode);
     print("-----------------------");

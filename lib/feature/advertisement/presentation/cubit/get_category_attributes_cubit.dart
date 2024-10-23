@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/api/api_error/api_failures.dart';
 import '../../../../core/api/api_error/api_error.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../../domain/entity/request/get_category_attributes_request_entity.dart';
@@ -25,7 +26,7 @@ class GetCategoryAttributesCubit extends Cubit<GetCategoryAttributesState> {
     result.fold(
           (failure) async {
         final ErrorEntity errorEntity =
-        await ApiErrorHandler.mapFailure(failure: failure);
+        await ApiErrorHandler.mapFailure(failure:failure);
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },

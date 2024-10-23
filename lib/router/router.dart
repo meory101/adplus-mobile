@@ -49,11 +49,13 @@ abstract class AppRouter {
           child: const AdvertisementCategoryScreen(),
         ));
       case RouteNamedScreens.categoryAttributeForm:
+        argument as CategoryAttributeFormArgs;
         return SlidLeftBuilderRoute(
             page: BlocProvider(
           create: (context) => di.sl<GetCategoryAttributesCubit>(),
-          child: const CategoryAttributeFormScreen(),
+          child:  CategoryAttributeFormScreen(args: argument,),
         ));
+
       case RouteNamedScreens.mainBottomAppBar:
         return FadeBuilderRoute(
             page: BlocProvider(
@@ -61,7 +63,6 @@ abstract class AppRouter {
               di.sl<GetCategoriesCubit>()..getCategories(context: context),
           child: const MainBottomAppBar(),
         ));
-        return FadeBuilderRoute(page: const MainBottomAppBar());
     }
     return FadeBuilderRoute(page: const NotFoundScreen());
   }

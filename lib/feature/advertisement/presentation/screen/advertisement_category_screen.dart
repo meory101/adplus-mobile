@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
@@ -20,13 +23,23 @@ class AdvertisementCategoryScreen extends StatefulWidget {
 
 class _AdvertisementCategoryScreenState
     extends State<AdvertisementCategoryScreen> {
+  num selectedCategoryId = -1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(RouteNamedScreens.advertisementCategory);
+          if (selectedCategoryId == -1) {
+            NoteMessage.showErrorSnackBar(
+                context: context, text: "please select category");
+            return;
+          }
+
+          Navigator.of(context).pushNamed(
+              RouteNamedScreens.categoryAttributeForm,
+              arguments:
+                  CategoryAttributeFormArgs(categoryId: selectedCategoryId));
         },
       ),
       body: DecoratedContainer(
@@ -49,7 +62,13 @@ class _AdvertisementCategoryScreenState
               SizedBox(
                 height: AppHeightManager.h1point8,
               ),
-              const CategoriesOptionsListView(),
+              CategoriesOptionsListView(
+                selectCategoryCallBak: (categoryId) {
+                  setState(() {
+                    selectedCategoryId = categoryId;
+                  });
+                },
+              ),
               SizedBox(
                 height: AppHeightManager.h6,
               ),
