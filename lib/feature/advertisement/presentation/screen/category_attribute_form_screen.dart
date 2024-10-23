@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
+import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
@@ -60,7 +61,7 @@ class _CategoryAttributeFormScreenState
             mainAxisSize: MainAxisSize.max,
             children: [
               const AdvertisementAppBar(
-                completePercent: 2,
+                completePercent: (2/3),
               ),
               SizedBox(
                 height: AppHeightManager.h2point5,
@@ -90,7 +91,8 @@ class _CategoryAttributeFormScreenState
                               AppTextFormField(
                                 textInputType: TextInputType.text,
                                 hintText: attributes[index].attributeName ?? "",
-                                hintStyle: const TextStyle(
+                                hintStyle:  TextStyle(
+                                  fontSize: FontSizeManager.fs15,
                                     color: AppColorManager.textGrey),
                                 onChanged: (value) {
                                   return null;

@@ -49,7 +49,7 @@ class _AdvertisementCategoryScreenState
             mainAxisSize: MainAxisSize.max,
             children: [
               const AdvertisementAppBar(
-                completePercent: 3,
+                completePercent: (1/3),
               ),
               SizedBox(
                 height: AppHeightManager.h2point5,

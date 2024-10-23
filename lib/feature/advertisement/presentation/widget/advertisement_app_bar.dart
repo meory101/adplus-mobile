@@ -81,7 +81,7 @@ class AdvertisementAppBar extends StatelessWidget {
               Alignment.topLeft :  Alignment.topRight,
               child: Container(
                 width:
-                (MediaQuery.of(context).size.width ) / completePercent,
+                (MediaQuery.of(context).size.width ) * completePercent,
                 decoration: BoxDecoration(
                   color:  AppColorManager.mainColor,
                   borderRadius: BorderRadius.circular(20),
