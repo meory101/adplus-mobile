@@ -1,4 +1,9 @@
-part of 'get_category_attributes_cubit.dart';
+
+
+import 'package:equatable/equatable.dart';
+
+import '../../../../core/resource/cubit_status_manager.dart';
+import '../../domain/entity/response/get_category_attributes_response_entity.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -6,14 +11,14 @@ part of 'get_category_attributes_cubit.dart';
 class GetCategoryAttributesState extends Equatable {
   final String error;
   final CubitStatus status;
-  final GetCategoriesResponseEntity entity;
+  final GetCategoryAttributesResponseEntity entity;
 
   const GetCategoryAttributesState(
       {required this.error, required this.status, required this.entity});
 
   factory GetCategoryAttributesState.initial() {
     return GetCategoryAttributesState(
-        entity: GetCategoriesResponseEntity(),
+        entity: GetCategoryAttributesResponseEntity(),
         error: '',
         status: CubitStatus.initial);
   }
@@ -21,7 +26,7 @@ class GetCategoryAttributesState extends Equatable {
   GetCategoryAttributesState copyWith({
     String? error,
     CubitStatus? status,
-    GetCategoriesResponseEntity? entity,
+    GetCategoryAttributesResponseEntity? entity,
   }) {
     return GetCategoryAttributesState(
         error: error ?? this.error,
