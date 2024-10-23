@@ -8,7 +8,6 @@ import '../../resource/size_manager.dart';
 import '../text/app_text_widget.dart';
 import 'NameAndId.dart';
 
-
 class DropDownFormFieldWidget extends StatefulWidget {
   const DropDownFormFieldWidget({
     Key? key,
@@ -81,16 +80,28 @@ class _DropDownFormFieldWidgetState extends State<DropDownFormFieldWidget> {
                 child: SvgPicture.asset(AppIconManager.arrowMenuDown),
               ),
             ),
+            border:  OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+              borderSide:  BorderSide(color: AppColorManager.lightGreyOpacity6),
+            ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadiusManager.r10),
               borderSide: const BorderSide(color: AppColorManager.red),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-              borderSide: const BorderSide(color: AppColorManager.grey),
+              borderSide:  BorderSide(color: AppColorManager.lightGreyOpacity6),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+              borderSide:  BorderSide(color: AppColorManager.lightGreyOpacity6),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+              borderSide:  BorderSide(color: AppColorManager.lightGreyOpacity6),
             ),
           ),
-          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+          borderRadius: BorderRadius.circular(AppRadiusManager.r10,),
           key: dropDownKey,
           isExpanded: true,
           style: TextStyle(

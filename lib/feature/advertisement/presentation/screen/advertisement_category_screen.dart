@@ -6,7 +6,7 @@ import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart'
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
-import '../../../../core/widget/container/decorated_container.dart';
+import '../../../../core/widget/container/dialog_container.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../../router/router.dart';
 import '../widget/advertisement_app_bar.dart';
@@ -42,7 +42,7 @@ class _AdvertisementCategoryScreenState
                   CategoryAttributeFormArgs(categoryId: selectedCategoryId));
         },
       ),
-      body: DecoratedContainer(
+      body: DialogContainer(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

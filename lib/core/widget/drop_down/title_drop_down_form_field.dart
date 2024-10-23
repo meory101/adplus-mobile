@@ -27,7 +27,7 @@ class TitleDropDownFormFieldWidget extends StatelessWidget {
       children: [
         AppTextWidget(
           text: title,
-          fontSize: FontSizeManager.fs16,
+          fontSize: FontSizeManager.fs15,
           fontWeight: FontWeight.w600,
           color: AppColorManager.textAppColor,
         ),

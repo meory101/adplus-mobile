@@ -5,7 +5,7 @@ import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/font_manager.dart';
-import '../../../../core/widget/container/decorated_container.dart';
+import '../../../../core/widget/container/dialog_container.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
 import '../widget/language_options_list_view.dart';
@@ -29,7 +29,7 @@ class _AdvertisementScreenState extends State<AdvertisementLanguageScreen> {
         },
       ),
       body:
-      DecoratedContainer(
+      DialogContainer(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -50,7 +50,7 @@ class TitleAppFormFiled extends StatelessWidget {
       children: [
         AppTextWidget(
           text: title,
-          fontSize: FontSizeManager.fs16,
+          fontSize: FontSizeManager.fs15,
           fontWeight: FontWeight.w600,
         ),
         SizedBox(

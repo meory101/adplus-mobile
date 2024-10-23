@@ -1,7 +1,8 @@
 class ApiGetUrl {
 
   static String getCategories = "api/category/all";
-  static String getCategoryAttributes= "api/category/inside-page";
+  static String getCategoryAttributes= "api/category/category-info";
+
 
 }
 

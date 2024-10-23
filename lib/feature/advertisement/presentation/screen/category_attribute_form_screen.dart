@@ -5,7 +5,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/widget/drop_down/NameAndId.dart';
+import 'package:mzad_damascus/core/widget/drop_down/title_drop_down_form_field.dart';
 import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
+import 'package:mzad_damascus/core/widget/form_field/title_app_form_filed.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
@@ -15,7 +18,8 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_categ
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
-import '../../../../core/widget/container/decorated_container.dart';
+import '../../../../core/widget/container/dialog_container.dart';
+import '../../../../core/widget/drop_down/drop_down_form_field.dart';
 import '../../../../router/router.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
@@ -39,6 +43,7 @@ class _CategoryAttributeFormScreenState
   }
 
   getCategoryAttributes() {
+    print('999999999999999999999${widget.args.categoryId}');
     context.read<GetCategoryAttributesCubit>().getCategoryAttributes(
         context: context,
         entity: GetCategoryAttributesRequestEntity(
@@ -54,14 +59,14 @@ class _CategoryAttributeFormScreenState
               .pushNamed(RouteNamedScreens.categoryAttributeForm);
         },
       ),
-      body: DecoratedContainer(
+      body: DialogContainer(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
+            // mainAxisSize: MainAxisSize.max,
             children: [
               const AdvertisementAppBar(
-                completePercent: (2/3),
+                completePercent: (2 / 3),
               ),
               SizedBox(
                 height: AppHeightManager.h2point5,
@@ -78,29 +83,48 @@ class _CategoryAttributeFormScreenState
                   if (state.status == CubitStatus.loading) {
                     return const AppCircularProgressWidget();
                   }
-                  List<Attribute> attributes = state.entity.data ?? [];
+                  List<Attributes> attributes =
+                      state.entity.data?.attributes ?? [];
                   return Form(
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
                         attributes.length,
                         (index) {
+                          Attributes? currentAttribute =
+                              state.entity.data?.attributes?[index];
+                          print(
+                              currentAttribute?.attributeType?.attributeTypeId);
+                          print('00000000000000000000000000');
+
                           return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppTextFormField(
-                                textInputType: TextInputType.text,
-                                hintText: attributes[index].attributeName ?? "",
-                                hintStyle:  TextStyle(
-                                  fontSize: FontSizeManager.fs15,
-                                    color: AppColorManager.textGrey),
-                                onChanged: (value) {
-                                  return null;
-                                },
-                                validator: (value) {
-                                  return null;
-                                },
-                              ),
+                              Visibility(
+                                  visible: currentAttribute
+                                          ?.attributeType?.attributeTypeId ==
+                                      EnumManager.listCode,
+                                  replacement: TitleAppFormFiled(
+                                    title:currentAttribute?.attributeName ?? "" ,
+                                    textInputType:
+                                        EnumManager.attributeTextInputType[
+                                            attributes[index]
+                                                    .attributeType
+                                                    ?.attributeTypeId ??
+                                                -1],
+                                    hint: attributes[index].attributeName ?? "",
+                                    onChanged: (value) {
+                                      return null;
+                                    },
+                                    validator: (value) {
+                                      return null;
+                                    },
+                                  ),
+                                  child: TitleDropDownFormFieldWidget(
+                                      title:
+                                          currentAttribute?.attributeName ?? "",
+                                      options: [],
+                                      hint:  currentAttribute?.attributeName ?? "")),
                               SizedBox(
                                 height: AppHeightManager.h1point8,
                               ),
