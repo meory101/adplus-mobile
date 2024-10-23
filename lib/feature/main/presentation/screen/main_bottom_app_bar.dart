@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
-
-
 
 class MainBottomAppBar extends StatefulWidget {
   const MainBottomAppBar({super.key});
@@ -19,15 +18,17 @@ class MainBottomAppBar extends StatefulWidget {
 }
 
 class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
-  late final List<Widget> bottomBarScreens ;
-  int selectedIndex =0;
+  late final List<Widget> bottomBarScreens;
+
+  int selectedIndex = 0;
+
   @override
   void initState() {
     bottomBarScreens = [
-const HomeScreen(),
-const HomeScreen(),
-const HomeScreen(),
-const HomeScreen(),
+      const HomeScreen(),
+      const HomeScreen(),
+      const HomeScreen(),
+      const HomeScreen(),
     ];
 
     super.initState();
@@ -37,10 +38,10 @@ const HomeScreen(),
   Widget build(BuildContext context) {
     return PopScope(
       canPop: selectedIndex == 0,
-      onPopInvokedWithResult:(didPop, result) {
+      onPopInvokedWithResult: (didPop, result) {
         if (didPop == false) {
           setState(() {
-            selectedIndex =0;
+            selectedIndex = 0;
           });
         } else {
           FlutterExitApp.exitApp(iosForceExit: true);
@@ -59,11 +60,12 @@ const HomeScreen(),
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-
                     overlayColor: const WidgetStatePropertyAll(
                         AppColorManager.transparent),
                     onTap: () {
-
+                      setState(() {
+                        selectedIndex=0;
+                      });
                     },
                     child: Column(
                       children: [
@@ -107,12 +109,32 @@ const HomeScreen(),
                       ],
                     ),
                   ),
+                  Container(
+
+                    height: AppWidthManager.w12,
+                    width: AppWidthManager.w12,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColorManager.mainColor),
+                    child: InkWell(
+                      overlayColor: const WidgetStatePropertyAll(
+                          AppColorManager.transparent),
+                      onTap: () {
+                            Navigator.of(context).pushNamed(RouteNamedScreens.advertisementLanguage);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(AppWidthManager.w4),
+                        child: SvgPicture.asset(AppIconManager.add,
+                            colorFilter: const ColorFilter.mode(
+                                AppColorManager.white, BlendMode.srcIn)),
+                      ),
+                    ),
+                  ),
                   InkWell(
                     overlayColor: const WidgetStatePropertyAll(
                         AppColorManager.transparent),
                     onTap: () {
                       setState(() {
-
                         selectedIndex = 2;
                       });
                     },
@@ -171,9 +193,4 @@ const HomeScreen(),
           )),
     );
   }
-
-
-
 }
-
-

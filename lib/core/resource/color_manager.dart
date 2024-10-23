@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 abstract class AppColorManager {
   static const Color transparent = Colors.transparent;
   static const Color white = Colors.white;
+  static const Color shadow = Color.fromARGB(28, 130, 130, 130);
+
   static const Color black = Colors.black;
   static const Color mainColor =  Color(0xff358cde);
   static const borderGrey = Color(0xFFEBEBEB);

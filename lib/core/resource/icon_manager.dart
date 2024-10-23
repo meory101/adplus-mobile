@@ -3,6 +3,7 @@ abstract class AppIconManager {
 
   static const String notification = '$_iconBasePath/notification.svg';
   static const String search = '$_iconBasePath/search.svg';
+  static const String done = '$_iconBasePath/done.svg';
 
   static const String language = '$_iconBasePath/language.svg';
   static const String person = '$_iconBasePath/person.svg';
@@ -28,7 +29,6 @@ abstract class AppIconManager {
   static String arrowMenuLeft = '$_iconBasePath/arrow_menu_left.svg';
   static String arrowMenuRight = '$_iconBasePath/arrow_menu_right.svg';
   static String xMark = '$_iconBasePath/xmark.svg';
-  static String done = '$_iconBasePath/done.svg';
   static String warning = '$_iconBasePath/warning.svg';
-  static String calendar = '$_iconBasePath/calendar.svg';
+  static String calendar = '$_iconBasePath/calendar-add.svg';
 }

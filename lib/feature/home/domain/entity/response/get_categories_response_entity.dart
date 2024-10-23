@@ -10,7 +10,7 @@ class GetCategoriesResponseEntity {
   GetCategoriesResponseEntity({
       bool? success, 
       String? message, 
-      List<Category>? data, 
+      List<MainCategory>? data, 
       List<dynamic>? errors,}){
     _success = success;
     _message = message;
@@ -24,7 +24,7 @@ class GetCategoriesResponseEntity {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(Category.fromJson(v));
+        _data?.add(MainCategory.fromJson(v));
       });
     }
     // if (json['errors'] != null) {
@@ -36,11 +36,11 @@ class GetCategoriesResponseEntity {
   }
   bool? _success;
   String? _message;
-  List<Category>? _data;
+  List<MainCategory>? _data;
   List<dynamic>? _errors;
 GetCategoriesResponseEntity copyWith({  bool? success,
   String? message,
-  List<Category>? data,
+  List<MainCategory>? data,
   List<dynamic>? errors,
 }) => GetCategoriesResponseEntity(  success: success ?? _success,
   message: message ?? _message,
@@ -49,7 +49,7 @@ GetCategoriesResponseEntity copyWith({  bool? success,
 );
   bool? get success => _success;
   String? get message => _message;
-  List<Category>? get data => _data;
+  List<MainCategory>? get data => _data;
   List<dynamic>? get errors => _errors;
 
   Map<String, dynamic> toJson() {
@@ -84,10 +84,10 @@ GetCategoriesResponseEntity copyWith({  bool? success,
 /// items_count : 0
 /// children : [{"category_id":36,"parent_id":3,"name":"سامسونغ","en_name":null,"photo":"0","photo_1":null,"photo_2":null,"photo_3":null,"description":"هواتف","keywords":"سامسونغ,هاتف,المترونيات","slug":"سامسونغ","status":1,"homepage_appear":0,"ord":1}]
 
-Category dataFromJson(String str) => Category.fromJson(json.decode(str));
-String dataToJson(Category data) => json.encode(data.toJson());
-class Category {
-  Category({
+MainCategory dataFromJson(String str) => MainCategory.fromJson(json.decode(str));
+String dataToJson(MainCategory data) => json.encode(data.toJson());
+class MainCategory {
+  MainCategory({
       num? categoryId, 
       num? parentId, 
       String? name,
@@ -122,7 +122,7 @@ class Category {
     _children = children;
 }
 
-  Category.fromJson(dynamic json) {
+  MainCategory.fromJson(dynamic json) {
     _categoryId = json['category_id'];
     _parentId = json['parent_id'];
     _name = json['name'];
@@ -161,7 +161,7 @@ class Category {
   num? _ord;
   num? _itemsCount;
   List<SubCategory>? _children;
-Category copyWith({  num? categoryId,
+MainCategory copyWith({  num? categoryId,
   num? parentId,
   String? name,
   String? enName,
@@ -177,7 +177,7 @@ Category copyWith({  num? categoryId,
   num? ord,
   num? itemsCount,
   List<SubCategory>? children,
-}) => Category(  categoryId: categoryId ?? _categoryId,
+}) => MainCategory(  categoryId: categoryId ?? _categoryId,
   parentId: parentId ?? _parentId,
   name: name ?? _name,
   enName: enName ?? _enName,

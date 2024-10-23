@@ -51,7 +51,7 @@ abstract class NoteMessage {
                   children: [
                     Expanded(
                       child: AppTextWidget(
-                        text: text,
+                        text: text.isNotEmpty?text : "Something went wrong",
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.black,
                         fontWeight: FontWeight.w600,
