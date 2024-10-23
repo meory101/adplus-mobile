@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';

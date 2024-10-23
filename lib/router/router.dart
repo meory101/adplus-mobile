@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attributes_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
@@ -13,7 +15,6 @@ import '../feature/authentication/presentation/screen/register_screen.dart';
 import '../feature/home/presentation/cubit/get_categories_cubit.dart';
 import '../feature/intro/presentation/screen/splash_screen.dart';
 
-
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
@@ -24,6 +25,7 @@ abstract class RouteNamedScreens {
   static const String mainBottomAppBar = "/main-bottom-app-bar";
   static const String advertisementLanguage = "/advertisement-language";
   static const String advertisementCategory = "/advertisement-category ";
+  static const String categoryAttributeForm = "/category-attribute-form";
 }
 
 abstract class AppRouter {
@@ -40,17 +42,23 @@ abstract class AppRouter {
       case RouteNamedScreens.advertisementLanguage:
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
       case RouteNamedScreens.advertisementCategory:
-        return SlidLeftBuilderRoute(page: BlocProvider(
+        return SlidLeftBuilderRoute(
+            page: BlocProvider(
           create: (context) =>
-          di.sl<GetCategoriesCubit>()
-            ..getCategories(context: context),
-          child: AdvertisementCategoryScreen(),
+              di.sl<GetCategoriesCubit>()..getCategories(context: context),
+          child: const AdvertisementCategoryScreen(),
+        ));
+      case RouteNamedScreens.categoryAttributeForm:
+        return SlidLeftBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<GetCategoryAttributesCubit>(),
+          child: const CategoryAttributeFormScreen(),
         ));
       case RouteNamedScreens.mainBottomAppBar:
-        return FadeBuilderRoute(page: BlocProvider(
+        return FadeBuilderRoute(
+            page: BlocProvider(
           create: (context) =>
-          di.sl<GetCategoriesCubit>()
-            ..getCategories(context: context),
+              di.sl<GetCategoriesCubit>()..getCategories(context: context),
           child: const MainBottomAppBar(),
         ));
         return FadeBuilderRoute(page: const MainBottomAppBar());
