@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
+import 'package:mzad_damascus/core/widget/loading/shimmer/categories_options_list_view_shimmer.dart';
 
 import '../../../core/helper/language_helper.dart';
 import '../../../core/resource/color_manager.dart';
@@ -36,27 +37,7 @@ class _CategoriesOptionsListViewState extends State<CategoriesOptionsListView> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 20,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ShimmerContainer(
-                            boxShape: BoxShape.circle,
-                            width: AppWidthManager.w10,
-                            height: AppHeightManager.h3,
-                          ),
-                          ShimmerContainer(
-                            width: AppWidthManager.w50,
-                            height: AppHeightManager.h3,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: AppHeightManager.h2,
-                      )
-                    ],
-                  );
+                  return const CategoriesOptionsListViewShimmer();
                 },
               ),
             );
@@ -78,6 +59,8 @@ class _CategoriesOptionsListViewState extends State<CategoriesOptionsListView> {
                       onChanged: (value) {
                         setState(() {
                           selectedCategoryIndex = index;
+                          print(categories[selectedCategoryIndex].categoryId);
+                          print('category id');
                         });
                       },
                       visualDensity: const VisualDensity(
