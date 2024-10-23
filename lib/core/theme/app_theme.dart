@@ -110,7 +110,7 @@ ThemeData lightTheme() {
           horizontal: AppWidthManager.w16, vertical: AppHeightManager.h1point5),
       hintStyle: TextStyle(
         color: AppColorManager.grey,
-        fontSize: FontSizeManager.fs16,
+        fontSize: FontSizeManager.fs15,
         fontWeight: FontWeight.normal,
       ),
       floatingLabelStyle: const TextStyle(

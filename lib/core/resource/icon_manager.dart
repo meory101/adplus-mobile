@@ -30,5 +30,5 @@ abstract class AppIconManager {
   static String arrowMenuRight = '$_iconBasePath/arrow_menu_right.svg';
   static String xMark = '$_iconBasePath/xmark.svg';
   static String warning = '$_iconBasePath/warning.svg';
-  static String calendar = '$_iconBasePath/calendar.svg';
+  static String calendar = '$_iconBasePath/calendar-add.svg';
 }

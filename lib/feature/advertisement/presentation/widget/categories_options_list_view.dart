@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/categories_options_list_view_shimmer.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
@@ -64,8 +65,6 @@ class _CategoriesOptionsListViewState extends State<CategoriesOptionsListView> {
                   groupValue: selectedCategoryIndex,
                   onChanged: (value) {
                     setState(() {
-                      print(categories[selectedCategoryIndex ?? 0].categoryId);
-                      print('category id');
                       selectedCategoryIndex = index;
                       if (selectedCategoryIndex != null) {
                         widget.selectCategoryCallBak(
@@ -85,7 +84,10 @@ class _CategoriesOptionsListViewState extends State<CategoriesOptionsListView> {
                           //TODO change the name based on language
                           LanguageHelper.checkIfLTR(context: context)
                               ? categories[index].name ?? ""
-                              : categories[index].name ?? ""),
+                              : categories[index].name ?? ""
+                  ,
+                    fontSize: FontSizeManager.fs15,
+                  ),
                 ),
               ),
             ],
