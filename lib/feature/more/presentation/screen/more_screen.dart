@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/transfer.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/widget/CustomListTile.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
@@ -48,7 +50,7 @@ class MoreScreen extends StatelessWidget {
             color: AppColorManager.orange,
             onTap: () {},
           ),
-          MoreListTile(
+          CustomListTile(
             icon: Icons.block,
             label: 'blocked',
             color: AppColorManager.red,
@@ -74,8 +76,8 @@ class MoreScreen extends StatelessWidget {
           Divider(),
           _buildListTile(
             icon: Icons.wallet_travel,
-            label: 'رصيد المزائدة',
-            color: Colors.purple,
+            label: 'تحويل الى حساب اعمال ',
+            color: AppColorManager.purple,
             onTap: () {},
           ),
           _buildListTile(
@@ -98,23 +100,6 @@ class MoreScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildListTile({
-    required IconData icon,
-    required String label,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 20,
-        backgroundColor: color.withOpacity(0.1),
-        child: Icon(icon, color: color),
-      ),
-      title: Text(label, style: TextStyle(fontSize: 16)),
-      onTap: onTap,
     );
   }
 }
