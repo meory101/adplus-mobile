@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/transfer.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/widget/CustomListTile.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 
@@ -68,7 +69,13 @@ class MoreScreen extends StatelessWidget {
             icon: Icons.wallet_travel,
             label: 'تحويل الى حساب اعمال ',
             color: AppColorManager.purple,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BusinessAccountScreen()),
+              );
+            },
           ),
           CustomListTile(
             icon: Icons.card_giftcard,

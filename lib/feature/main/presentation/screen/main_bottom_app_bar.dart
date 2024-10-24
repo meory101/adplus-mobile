@@ -29,7 +29,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
     bottomBarScreens = [
       const HomeScreen(),
       const HomeScreen(),
-      const HomeScreen(),
+      const ProfileScreen(),
       MoreScreen(),
     ];
 
@@ -142,14 +142,14 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                     },
                     child: Column(
                       children: [
-                        SvgPicture.asset(AppIconManager.home,
+                        SvgPicture.asset(AppIconManager.person,
                             colorFilter: ColorFilter.mode(
                                 selectedIndex == 2
                                     ? AppColorManager.mainColor
                                     : AppColorManager.grey,
                                 BlendMode.srcIn)),
                         AppTextWidget(
-                          text: "advs".tr(),
+                          text: "profile".tr(),
                           color: selectedIndex == 2
                               ? AppColorManager.mainColor
                               : AppColorManager.grey,
