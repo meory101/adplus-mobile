@@ -19,14 +19,13 @@ class MoreScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppTextWidget(
-            text: 'More',
+                text: 'More',
                 fontSize: FontSizeManager.fs17,
                 color: AppColorManager.textAppColor,
                 fontWeight: FontWeight.w700),
           ],
-
-
-      )),
+        ),
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
         children: [
@@ -36,7 +35,7 @@ class MoreScreen extends StatelessWidget {
             color: AppColorManager.pinkAccent,
             onTap: () {},
           ),
-          Divider(),
+          const Divider(),
           MoreListTile(
             icon: Icons.announcement,
             label: 'My Ads',

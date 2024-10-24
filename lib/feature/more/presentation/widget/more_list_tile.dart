@@ -6,7 +6,7 @@ class MoreListTile extends StatelessWidget {
   final Color color;
   final VoidCallback onTap;
 
-  MoreListTile({
+  const MoreListTile({super.key,
     required this.icon,
     required this.label,
     required this.color,
