@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
+import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/resource/size_manager.dart';
+import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -7,18 +10,23 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'More',
-          style: TextStyle(
-            color: Colors.black,
-          ),
+        automaticallyImplyLeading: false,
+        surfaceTintColor: AppColorManager.background,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppTextWidget(
+            text: 'More',
+                fontSize: FontSizeManager.fs17,
+                color: AppColorManager.textAppColor,
+                fontWeight: FontWeight.w700),
+          ],
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
         children: [
           _buildListTile(
             icon: Icons.add,
@@ -89,19 +97,6 @@ class MoreScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text(
-          'Help',
-          style: TextStyle(color: AppColorManager.textAppColor),
-        ),
-        icon: Icon(
-          Icons.help_outline,
-          color: AppColorManager.background,
-        ),
-        backgroundColor: AppColorManager.mainColor,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 
