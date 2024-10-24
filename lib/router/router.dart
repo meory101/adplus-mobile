@@ -5,6 +5,7 @@ import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
+import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
 import '../core/injection/injection_container.dart' as di;
@@ -26,6 +27,7 @@ abstract class RouteNamedScreens {
   static const String advertisementLanguage = "/advertisement-language";
   static const String advertisementCategory = "/advertisement-category ";
   static const String categoryAttributeForm = "/category-attribute-form";
+  static const String profile = "/profile";
 }
 
 abstract class AppRouter {
@@ -35,6 +37,8 @@ abstract class AppRouter {
     switch (settings.name) {
       case RouteNamedScreens.splash:
         return FadeBuilderRoute(page: const SplashScreen());
+      case RouteNamedScreens.profile:
+        return FadeBuilderRoute(page: ProfileScreen());
       case RouteNamedScreens.login:
         return FadeBuilderRoute(page: const LoginScreen());
       case RouteNamedScreens.register:
@@ -53,7 +57,9 @@ abstract class AppRouter {
         return SlidLeftBuilderRoute(
             page: BlocProvider(
           create: (context) => di.sl<GetCategoryAttributesCubit>(),
-          child:  CategoryAttributeFormScreen(args: argument,),
+          child: CategoryAttributeFormScreen(
+            args: argument,
+          ),
         ));
 
       case RouteNamedScreens.mainBottomAppBar:

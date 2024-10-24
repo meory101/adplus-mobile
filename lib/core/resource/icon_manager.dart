@@ -6,6 +6,11 @@ abstract class AppIconManager {
   static const String done = '$_iconBasePath/done.svg';
 
   static const String language = '$_iconBasePath/language.svg';
+  static const String likes = '$_iconBasePath/likes.svg';
+  static const String favorites = '$_iconBasePath/favorites.svg';
+  static const String comments = '$_iconBasePath/comments.svg';
+  static const String activity = '$_iconBasePath/activity.svg';
+
   static const String person = '$_iconBasePath/person.svg';
   static const String phone = '$_iconBasePath/phone.svg';
 
