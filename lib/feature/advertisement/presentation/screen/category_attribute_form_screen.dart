@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/drop_down/NameAndId.dart';
 import 'package:mzad_damascus/core/widget/drop_down/title_drop_down_form_field.dart';
 import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
@@ -16,11 +17,9 @@ import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_ca
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attributes_state.dart';
-import '../../../../core/resource/color_manager.dart';
-import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/container/dialog_container.dart';
-import '../../../../core/widget/drop_down/drop_down_form_field.dart';
+import '../../../../core/widget/loading/shimmer/category_attribute_form_list_view_shimmer.dart';
 import '../../../../router/router.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
@@ -37,6 +36,7 @@ class CategoryAttributeFormScreen extends StatefulWidget {
 
 class _CategoryAttributeFormScreenState
     extends State<CategoryAttributeFormScreen> {
+GlobalKey<FormState>formKey = GlobalKey();
   @override
   void initState() {
     getCategoryAttributes();
@@ -51,13 +51,18 @@ class _CategoryAttributeFormScreenState
             categoryId: widget.args.categoryId));
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(RouteNamedScreens.categoryAttributeForm);
+          if((formKey.currentState?.validate())??false){
+            // Navigator.of(context)
+            //     .pushNamed(RouteNamedScreens.categoryAttributeForm);
+            return;
+          }
+          NoteMessage.showErrorSnackBar(context: context, text: "please enter fields");
         },
       ),
       body: DialogContainer(
@@ -82,22 +87,27 @@ class _CategoryAttributeFormScreenState
                 },
                 builder: (context, state) {
                   if (state.status == CubitStatus.loading) {
-                    return const AppCircularProgressWidget();
+                    return const CategoryAttributeFormListViewShimmer();
                   }
                   List<Attributes> attributes =
                       state.entity.data?.attributes ?? [];
+
+
                   return Form(
+                    key: formKey,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
                         attributes.length,
                         (index) {
-                          Attributes? currentAttribute = state.entity.data?.attributes?[index];
+
+                          Attributes? currentAttribute =
+                              state.entity.data?.attributes?[index];
+
                           List<NameAndId> attributeListElements = [];
-                          EnumManager.advTypeCode;
-                          if (currentAttribute?.attributeType?.attributeTypeId ==
-                              EnumManager.listCode) {
+
+                          if (currentAttribute?.attributeType?.attributeTypeId == EnumManager.listCode) {
                             currentAttribute?.attributeTypeList?.forEach(
                               (attributeListElement) {
                                 attributeListElements.add(
@@ -111,17 +121,15 @@ class _CategoryAttributeFormScreenState
                             );
                           }
 
-                          return
-                            Column(
+
+                          return Column(
                             children: [
                               Visibility(
                                 visible: currentAttribute
                                             ?.attributeType?.attributeTypeId ==
-                                        EnumManager.listCode &&
-                                    currentAttribute
-                                            ?.attributeType?.attributeTypeId !=
-                                        EnumManager.advTypeCode,
+                                        EnumManager.listCode,
                                 replacement: TitleAppFormFiled(
+
                                   title: currentAttribute?.attributeName ?? "",
                                   textInputType: EnumManager
                                       .attributeTextInputType[attributes[index]
@@ -133,10 +141,19 @@ class _CategoryAttributeFormScreenState
                                     return null;
                                   },
                                   validator: (value) {
+                                    if(value?.isEmpty ??true){
+                                      return "required";
+                                    }
                                     return null;
                                   },
                                 ),
                                 child: TitleDropDownFormFieldWidget(
+                                  validator: (value) {
+                                    if(value?.name.isEmpty ??true){
+                                      return "required";
+                                    }
+                                    return null;
+                                  },
                                   title: currentAttribute?.attributeName ?? "",
                                   options: attributeListElements,
                                   hint: currentAttribute?.attributeName ?? "",

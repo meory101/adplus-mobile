@@ -19,8 +19,8 @@ class CategoriesOptionsListViewShimmer extends StatelessWidget {
               height: AppHeightManager.h3,
             ),
             ShimmerContainer(
-              width: AppWidthManager.w50,
-              height: AppHeightManager.h3,
+              width: AppWidthManager.w70,
+              height: AppHeightManager.h4,
             ),
           ],
         ),

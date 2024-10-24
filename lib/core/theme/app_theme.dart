@@ -99,7 +99,7 @@ ThemeData lightTheme() {
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
         borderSide: const BorderSide(
-          color: AppColorManager.mainColor,
+          color: AppColorManager.red,
         ),
       ),
       enabledBorder: OutlineInputBorder(

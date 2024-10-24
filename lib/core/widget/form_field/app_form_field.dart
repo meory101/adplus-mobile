@@ -123,6 +123,12 @@ class AppTextFormField extends StatelessWidget {
               borderSide: BorderSide(
                 color: AppColorManager.lightGreyOpacity6,
               )),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(
+                  borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
+              borderSide: BorderSide(
+                color: AppColorManager.red,
+              )),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(
                   borderRadius != null ? borderRadius! : AppRadiusManager.r10)),

@@ -28,6 +28,6 @@ abstract class EnumManager {
   };
 
 
-  static int advTypeCode =  14;
+  static String advTypeCode =  "نوع الإعلان";
 }
 
