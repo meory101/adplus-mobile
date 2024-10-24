@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/transfer.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/widget/CustomListTile.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
@@ -37,7 +35,9 @@ class MoreScreen extends StatelessWidget {
             color: AppColorManager.pinkAccent,
             onTap: () {},
           ),
-          const Divider(),
+           const Divider(
+            color: AppColorManager.borderGrey,
+          ),
           MoreListTile(
             icon: Icons.announcement,
             label: 'My Ads',
@@ -50,7 +50,7 @@ class MoreScreen extends StatelessWidget {
             color: AppColorManager.orange,
             onTap: () {},
           ),
-          CustomListTile(
+          MoreListTile(
             icon: Icons.block,
             label: 'blocked',
             color: AppColorManager.red,
@@ -73,26 +73,28 @@ class MoreScreen extends StatelessWidget {
               );
             },
           ),
-          Divider(),
-          _buildListTile(
+          const Divider(
+            color: AppColorManager.borderGrey,
+          ),
+          MoreListTile(
             icon: Icons.wallet_travel,
             label: 'تحويل الى حساب اعمال ',
             color: AppColorManager.purple,
             onTap: () {},
           ),
-          _buildListTile(
+          MoreListTile(
             icon: Icons.card_giftcard,
             label: 'باقات الإعلانات المدفوعة',
             color: Colors.deepPurpleAccent,
             onTap: () {},
           ),
-          _buildListTile(
+          MoreListTile(
             icon: Icons.show_chart,
             label: 'الإعلانات المميزة',
             color: Colors.amber,
             onTap: () {},
           ),
-          _buildListTile(
+          MoreListTile(
             icon: Icons.account_balance,
             label: 'تفاصيل الحساب البنكي',
             color: Colors.green,

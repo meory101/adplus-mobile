@@ -27,9 +27,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorManager.background,
-      appBar: MainAppBar(
-        title: 'Profile screen',
+
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        surfaceTintColor: AppColorManager.background,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppTextWidget(
+                text: 'profile',
+                fontSize: FontSizeManager.fs17,
+                color: AppColorManager.textAppColor,
+                fontWeight: FontWeight.w700),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

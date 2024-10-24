@@ -199,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     AppTextWidget(
                                         text: "${categories[index].name}",
-                                        fontSize: FontSizeManager.fs16,
+                                        fontSize: FontSizeManager.fs15,
                                         color: AppColorManager.textAppColor,
                                         fontWeight: FontWeight.w600),
                                     SizedBox(
