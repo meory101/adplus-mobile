@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
@@ -64,7 +65,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                         AppColorManager.transparent),
                     onTap: () {
                       setState(() {
-                        selectedIndex=0;
+                        selectedIndex = 0;
                       });
                     },
                     child: Column(
@@ -110,7 +111,6 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                     ),
                   ),
                   Container(
-
                     height: AppWidthManager.w12,
                     width: AppWidthManager.w12,
                     decoration: const BoxDecoration(
@@ -120,7 +120,13 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                       overlayColor: const WidgetStatePropertyAll(
                           AppColorManager.transparent),
                       onTap: () {
-                            Navigator.of(context).pushNamed(RouteNamedScreens.advertisementLanguage);
+                        if (AppSharedPreferences.getToken().isEmpty) {
+                          Navigator.of(context)
+                              .pushNamed(RouteNamedScreens.register);
+                          return;
+                        }
+                        Navigator.of(context)
+                            .pushNamed(RouteNamedScreens.advertisementLanguage);
                       },
                       child: Padding(
                         padding: EdgeInsets.all(AppWidthManager.w4),

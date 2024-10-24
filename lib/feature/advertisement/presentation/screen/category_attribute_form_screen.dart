@@ -36,7 +36,8 @@ class CategoryAttributeFormScreen extends StatefulWidget {
 
 class _CategoryAttributeFormScreenState
     extends State<CategoryAttributeFormScreen> {
-GlobalKey<FormState>formKey = GlobalKey();
+  GlobalKey<FormState>formKey = GlobalKey();
+
   @override
   void initState() {
     getCategoryAttributes();
@@ -57,12 +58,13 @@ GlobalKey<FormState>formKey = GlobalKey();
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
         onTap: () {
-          if((formKey.currentState?.validate())??false){
+          if ((formKey.currentState?.validate()) ?? false) {
             // Navigator.of(context)
             //     .pushNamed(RouteNamedScreens.categoryAttributeForm);
             return;
           }
-          NoteMessage.showErrorSnackBar(context: context, text: "please enter fields");
+          NoteMessage.showErrorSnackBar(
+              context: context, text: "please enter fields");
         },
       ),
       body: DialogContainer(
@@ -100,16 +102,16 @@ GlobalKey<FormState>formKey = GlobalKey();
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
                         attributes.length,
-                        (index) {
-
+                            (index) {
                           Attributes? currentAttribute =
-                              state.entity.data?.attributes?[index];
+                          state.entity.data?.attributes?[index];
 
                           List<NameAndId> attributeListElements = [];
 
-                          if (currentAttribute?.attributeType?.attributeTypeId == EnumManager.listCode) {
+                          if (currentAttribute?.attributeType
+                              ?.attributeTypeId == EnumManager.listCode) {
                             currentAttribute?.attributeTypeList?.forEach(
-                              (attributeListElement) {
+                                  (attributeListElement) {
                                 attributeListElements.add(
                                   NameAndId(
                                     name: attributeListElement.option ?? '',
@@ -123,46 +125,60 @@ GlobalKey<FormState>formKey = GlobalKey();
 
 
                           return Column(
-                            children: [
-                              Visibility(
-                                visible: currentAttribute
-                                            ?.attributeType?.attributeTypeId ==
-                                        EnumManager.listCode,
-                                replacement: TitleAppFormFiled(
+                              children: [
+                          Visibility(
+                          visible: currentAttribute
+                              ?.attributeType?.attributeTypeId ==
+                              EnumManager.listCode,
+                              replacement:
+                              AppTextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null; // Return null if the input is valid
+                                },
+                              ),
 
-                                  title: currentAttribute?.attributeName ?? "",
-                                  textInputType: EnumManager
-                                      .attributeTextInputType[attributes[index]
-                                          .attributeType
-                                          ?.attributeTypeId ??
-                                      -1],
-                                  hint: attributes[index].attributeName ?? "",
-                                  onChanged: (value) {
-                                    return null;
-                                  },
-                                  validator: (value) {
-                                    if(value?.isEmpty ??true){
-                                      return "required";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                child: TitleDropDownFormFieldWidget(
-                                  validator: (value) {
-                                    if(value?.name.isEmpty ??true){
-                                      return "required";
-                                    }
-                                    return null;
-                                  },
-                                  title: currentAttribute?.attributeName ?? "",
-                                  options: attributeListElements,
-                                  hint: currentAttribute?.attributeName ?? "",
-                                ),
-                              ),
-                              SizedBox(
-                                height: AppHeightManager.h1point8,
-                              ),
-                            ],
+
+                              // TitleAppFormFiled(
+                              //   title: currentAttribute?.attributeName ?? "",
+                              //   textInputType: EnumManager
+                              //       .attributeTextInputType[attributes[index]
+                              //           .attributeType
+                              //           ?.attributeTypeId ??
+                              //       -1],
+                              //   hint: attributes[index].attributeName ?? "",
+                              //   onChanged: (value) {
+                              //     return null;
+                              //   },
+                              //   validator: (value) {
+                              //     print("called validatroe");
+                              //     if((value?? "").isEmpty){
+                              //       print('dkdkdk');
+                              //       print('0000000000000000000000');
+                              //       return "required";
+                              //     }
+                              //     return null;
+                              //   },
+                              // ),
+                              child: TitleDropDownFormFieldWidget(
+                              validator: (value)
+                          {
+                            if (value?.name.isEmpty ?? true) {
+                              return "required";
+                            }
+                            return null;
+                          },
+                          title: currentAttribute?.attributeName ?? "",
+                          options: attributeListElements,
+                          hint: currentAttribute?.attributeName ?? "",
+                          ),
+                          ),
+                          SizedBox(
+                          height: AppHeightManager.h1point8,
+                          ),
+                          ],
                           );
                         },
                       ),

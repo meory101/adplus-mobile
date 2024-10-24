@@ -39,7 +39,7 @@ class DialogContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: AppHeightManager.h100,
+      height: AppHeightManager.h100,
       width: AppWidthManager.w100,
       margin: EdgeInsets.only(
         top: AppHeightManager.h9,
