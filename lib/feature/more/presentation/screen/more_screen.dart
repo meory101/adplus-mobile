@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/widget/CustomListTile.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
-import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
+
+import '../widget/CustomListTile.dart';
 
 class MoreScreen extends StatelessWidget {
   @override
@@ -13,6 +13,7 @@ class MoreScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        elevation: 0,
         surfaceTintColor: AppColorManager.background,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -23,15 +24,9 @@ class MoreScreen extends StatelessWidget {
                 color: AppColorManager.textAppColor,
                 fontWeight: FontWeight.w700),
           ],
-        title: AppTextWidget(
-          text: 'More',
-          fontSize: 14,
-          color: AppColorManager.textAppColor,
-        ),
-        backgroundColor: AppColorManager.background,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
+
+
+      )),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
         children: [
@@ -104,19 +99,6 @@ class MoreScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text(
-          'Help',
-          style: TextStyle(color: AppColorManager.textAppColor),
-        ),
-        icon: Icon(
-          Icons.help_outline,
-          color: AppColorManager.background,
-        ),
-        backgroundColor: AppColorManager.mainColor,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 

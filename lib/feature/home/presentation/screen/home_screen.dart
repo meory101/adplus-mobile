@@ -35,6 +35,9 @@ List<MainCategory> categories = [];
 List<Widget> generateCards(List<SubCategory> subcategories) {
   List<Widget> cards = [];
   int length = subcategories.length;
+    print(categories[0].categoryId);
+    print('00000000000');
+
   int i = 0;
   //TODO en ar
   if (length == 1) {
@@ -182,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: List.generate(
                           categories.length,
                           (index) {
+
                             List<SubCategory> subCategories =
                                 categories[index].children ?? [];
                             List<Widget> cards = generateCards(subCategories);
