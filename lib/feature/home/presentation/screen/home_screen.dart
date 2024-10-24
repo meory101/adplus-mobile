@@ -1,15 +1,16 @@
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/resource/theme_manager.dart';
+import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit.dart';
-import 'package:mzad_damascus/feature/home/presentation/widget/item_card.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
-import '../../../../core/widget/image/main_image_widget.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
 import '../widget/home_banners.dart';
@@ -24,9 +25,78 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-// meory1212
-List<List<SubCategory>> subCategories = [];
+
 List<MainCategory> categories = [];
+
+List<Widget> generateCards(List<SubCategory> subcategories) {
+  List<Widget> cards = [];
+  int length = subcategories.length;
+  int i = 0;
+  //TODO en ar
+  if (length == 1) {
+    cards.add(
+      FullWidthCard(
+        onTap: () {},
+        title: subcategories.first.name ?? "",
+        imagePath: subcategories.first.photo ?? "",
+      ),
+    );
+  } else if (length == 2) {
+    cards.add(StandardCard(
+        index: 0,
+        onTap: () {},
+        title: subcategories.first.name ?? "",
+        imagePath: subcategories.first.photo ?? ""));
+    cards.add(BigCard(
+        index: 1,
+        onTap: () {},
+        title: subcategories.last.name ?? "",
+        imagePath: subcategories.last.photo ?? ""));
+  } else if (length == 3) {
+    print("threeeeeeeeeeeeeeeeeeee");
+    for (int i = 0; i < length; i++) {
+      cards.add(StandardCard(
+        index: i,
+        onTap: () {},
+        title: subcategories[i].name ?? "",
+        imagePath: subcategories[i].photo ?? "",
+      ));
+    }
+  } else if (length > 3) {
+    for (i = 0; i < length; i++) {
+      if (length % 2 != 0 && i == length - 1) {
+        print('dddddddddddddddddd');
+        cards.add(
+          FullWidthCard(
+            onTap: () {},
+            title: subcategories[i].name ?? "",
+            imagePath: subcategories[i].photo ?? "",
+          ),
+        );
+        return cards;
+      }
+      i % 3 == 0
+          ? cards.add(
+              BigCard(
+                index: i,
+                onTap: () {},
+                title: subcategories[i].name ?? "",
+                imagePath: subcategories[i].photo ?? "",
+              ),
+            )
+          : cards.add(
+              StandardCard(
+                index: i,
+                onTap: () {},
+                title: subcategories[i].name ?? "",
+                imagePath: subcategories[i].photo ?? "",
+              ),
+            );
+    }
+  }
+
+  return cards;
+}
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
@@ -101,11 +171,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }
                     categories = state.entity.data ?? [];
-                    categories.forEach(
-                      (category) {
-                        subCategories.add(category.children ?? []);
-                      },
-                    );
 
                     return Padding(
                       padding: EdgeInsets.symmetric(
@@ -115,63 +180,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: List.generate(
                           categories.length,
                           (index) {
+                            List<SubCategory> subCategories =
+                                categories[index].children ?? [];
+                            List<Widget> cards = generateCards(subCategories);
                             return Visibility(
-                              visible: subCategories[index].isNotEmpty,
-                              child: Column(
-                                children: [
-                                  AppTextWidget(
-                                      text: "${categories[index].name}",
-                                      fontSize: FontSizeManager.fs15,
-                                      color: AppColorManager.textAppColor,
-                                      fontWeight: FontWeight.w600),
-                                  subCategories[index].isEmpty
-                                      ? SizedBox()
-                                      : subCategories[index].length == 1
-                                          ? ItemCard()
-                                          : subCategories[index].length == 3
-                                              ? const Row(
-                                                  children: [
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: ItemCard()),
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: ItemCard()),
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: ItemCard()),
-                                                  ],
-                                                )
-                                              : Wrap(
-                                                  children: List.generate(
-                                                    subCategories[index].length,
-                                                    (i) {
-                                                      return Container(
-                                                          margin: EdgeInsets.only(
-                                                              right: 2),
-                                                          height:
-                                                              AppHeightManager
-                                                                  .h20,
-                                                          width: index % 3 == 0
-                                                              ? MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /3
-                                                              : MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width/2.6,
-                                                          child: ItemCard(
-                                                              imageUrl: AppConstantManager
-                                                                      .imageBaseUrl +
-                                                                  subCategories[
-                                                                          index][i]
-                                                                      .photo
-                                                                      .toString()));
-                                                    },
-                                                  ),
-                                                )
-                                ],
+                              visible: cards.isNotEmpty,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: AppHeightManager.h2point5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppTextWidget(
+                                        text: "${categories[index].name}",
+                                        fontSize: FontSizeManager.fs16,
+                                        color: AppColorManager.textAppColor,
+                                        fontWeight: FontWeight.w600),
+                                    SizedBox(
+                                      height: AppHeightManager.h1point8,
+                                    ),
+                                    Wrap(
+                                      children: cards,
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -183,6 +215,177 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FullWidthCard extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final String? bgImage;
+  final VoidCallback onTap;
+
+  const FullWidthCard({
+    super.key,
+    required this.title,
+    required this.imagePath,
+    this.bgImage, // Background image
+    required this.onTap, // Make onTap required
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    print("byuilded this");
+    return Stack(
+      children: [
+        Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          width: AppWidthManager.w100,
+          height: AppHeightManager.h20,
+          decoration: BoxDecoration(
+              boxShadow: ThemeManager.cardShadow,
+              color: AppColorManager.lightGreyOpacity6,
+              borderRadius: BorderRadius.circular(AppRadiusManager.r15)),
+          child: MainImageWidget(
+            borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+            imageUrl: AppConstantManager.imageBaseUrl + imagePath,
+          ),
+        ),
+        Positioned(
+          left: LanguageHelper.checkIfLTR(context: context)
+              ? AppWidthManager.w3
+              : 0,
+          right: !LanguageHelper.checkIfLTR(context: context)
+              ? AppWidthManager.w3
+              : 0,
+          bottom: AppHeightManager.h2point2,
+          child: AppTextWidget(
+            text: title,
+            fontSize: FontSizeManager.fs15,
+            fontWeight: FontWeight.w600,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class StandardCard extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final VoidCallback onTap;
+  final int index;
+
+  const StandardCard(
+      {super.key,
+      required this.title,
+      required this.imagePath,
+      required this.onTap,
+      required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          width: AppWidthManager.w25,
+          height: AppHeightManager.h20,
+          margin: EdgeInsets.only(
+              right: index % 2 == 0
+                  ? LanguageHelper.checkIfLTR(context: context)
+                      ? AppWidthManager.w3Point8
+                      : 0
+                  : 0,
+              left: index % 2 == 0
+                  ? !LanguageHelper.checkIfLTR(context: context)
+                      ? AppWidthManager.w3Point8
+                      : 0
+                  : 0,
+              bottom: AppWidthManager.w3Point8),
+          decoration: BoxDecoration(
+              boxShadow: ThemeManager.cardShadow,
+              color: AppColorManager.lightGreyOpacity6,
+              borderRadius: BorderRadius.circular(AppRadiusManager.r15)),
+          child: MainImageWidget(
+            borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+            imageUrl: AppConstantManager.imageBaseUrl + imagePath,
+          ),
+        ),
+        Positioned(
+          left: LanguageHelper.checkIfLTR(context: context)
+              ? AppWidthManager.w3
+              : 0,
+          bottom: AppHeightManager.h2point2,
+          right: !LanguageHelper.checkIfLTR(context: context)
+              ? AppWidthManager.w3
+              : 0,
+          child: AppTextWidget(
+            text: title,
+            fontSize: FontSizeManager.fs15,
+            fontWeight: FontWeight.w600,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class BigCard extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final int index;
+  final VoidCallback onTap;
+
+  const BigCard(
+      {super.key,
+      required this.title,
+      required this.imagePath,
+      required this.onTap,
+      required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          width: AppWidthManager.w60,
+          height: AppHeightManager.h20,
+          margin: EdgeInsets.only(
+              right: index % 2 == 0
+                  ? LanguageHelper.checkIfLTR(context: context)
+                      ? AppWidthManager.w3Point8
+                      : 0
+                  : 0,
+              bottom: AppWidthManager.w3Point8),
+          decoration: BoxDecoration(
+              boxShadow: ThemeManager.cardShadow,
+              color: AppColorManager.lightGreyOpacity6,
+              borderRadius: BorderRadius.circular(AppRadiusManager.r15)),
+          child: MainImageWidget(
+            borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+            imageUrl: AppConstantManager.imageBaseUrl + imagePath,
+          ),
+        ),
+        Positioned(
+          left: LanguageHelper.checkIfLTR(context: context)
+              ? AppWidthManager.w3
+              : 0,
+          bottom: AppHeightManager.h2point2,
+          child: AppTextWidget(
+            text: title,
+            fontSize: FontSizeManager.fs15,
+            fontWeight: FontWeight.w600,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
+      ],
     );
   }
 }
