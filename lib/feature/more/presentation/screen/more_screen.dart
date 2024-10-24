@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
+import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/widget/CustomListTile.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -7,54 +9,53 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'More',
-          style: TextStyle(
-            color: Colors.black,
-          ),
+        title: AppTextWidget(
+          text: 'More',
+          fontSize: 14,
+          color: AppColorManager.textAppColor,
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColorManager.background,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        automaticallyImplyLeading: false,
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
-          _buildListTile(
+          CustomListTile(
             icon: Icons.add,
             label: 'Add Ads',
-            color: Colors.pinkAccent,
+            color: AppColorManager.pinkAccent,
             onTap: () {},
           ),
           Divider(),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.announcement,
             label: 'My Ads',
-            color: Colors.green,
+            color: AppColorManager.green,
             onTap: () {},
           ),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.star_border,
             label: 'Favourite',
-            color: Colors.orange,
+            color: AppColorManager.orange,
             onTap: () {},
           ),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.block,
             label: 'blocked',
-            color: Colors.red,
+            color: AppColorManager.red,
             onTap: () {},
           ),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.chat_bubble_outline,
             label: 'chat',
-            color: Colors.lightBlue,
+            color: AppColorManager.lightBlue,
             onTap: () {},
           ),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.person,
             label: 'Profile',
-            color: Colors.lightBlue,
+            color: AppColorManager.lightBlue,
             onTap: () {
               Navigator.push(
                 context,
@@ -63,62 +64,32 @@ class MoreScreen extends StatelessWidget {
             },
           ),
           Divider(),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.wallet_travel,
             label: 'رصيد المزائدة',
-            color: Colors.purple,
+            color: AppColorManager.purple,
             onTap: () {},
           ),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.card_giftcard,
             label: 'باقات الإعلانات المدفوعة',
-            color: Colors.deepPurpleAccent,
+            color: AppColorManager.deepPurpleAccent,
             onTap: () {},
           ),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.show_chart,
             label: 'الإعلانات المميزة',
-            color: Colors.amber,
+            color: AppColorManager.amber,
             onTap: () {},
           ),
-          _buildListTile(
+          CustomListTile(
             icon: Icons.account_balance,
             label: 'تفاصيل الحساب البنكي',
-            color: Colors.green,
+            color: AppColorManager.green,
             onTap: () {},
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text(
-          'Help',
-          style: TextStyle(color: AppColorManager.textAppColor),
-        ),
-        icon: Icon(
-          Icons.help_outline,
-          color: AppColorManager.background,
-        ),
-        backgroundColor: AppColorManager.mainColor,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-    );
-  }
-
-  Widget _buildListTile({
-    required IconData icon,
-    required String label,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 20,
-        backgroundColor: color.withOpacity(0.1),
-        child: Icon(icon, color: color),
-      ),
-      title: Text(label, style: TextStyle(fontSize: 16)),
-      onTap: onTap,
     );
   }
 }

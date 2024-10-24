@@ -6,7 +6,7 @@ abstract class AppColorManager {
   static const Color shadow = Color.fromARGB(28, 130, 130, 130);
 
   static const Color black = Colors.black;
-  static const Color mainColor =  Color(0xff358cde);
+  static const Color mainColor = Color(0xff358cde);
   static const borderGrey = Color(0xFFEBEBEB);
   static const Color dotGrey = Color(0xffE5E5EA);
   static const Color textGrey = Color(0xffAEAFB2);
@@ -20,5 +20,10 @@ abstract class AppColorManager {
   static const Color red = Color(0xffff3b30);
   static Color lightGreyOpacity6 = const Color(0xffe5e5ea).withOpacity(0.6);
   static const Color green = Color(0xff34c759);
-
+  static const Color pinkAccent = Colors.pinkAccent;
+  static const Color orange = Colors.orange;
+  static const Color lightBlue = Colors.lightBlue;
+  static const Color purple = Colors.purple;
+  static const Color deepPurpleAccent = Colors.deepPurpleAccent;
+  static const Color amber = Colors.amber;
 }
