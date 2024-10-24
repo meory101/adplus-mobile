@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CustomListTile extends StatelessWidget {
+class MoreListTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color color;
   final VoidCallback onTap;
 
-  CustomListTile({
+  MoreListTile({
     required this.icon,
     required this.label,
     required this.color,

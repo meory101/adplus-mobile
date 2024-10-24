@@ -5,7 +5,7 @@ import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 
-import '../widget/CustomListTile.dart';
+import '../widget/more_list_tile.dart';
 
 class MoreScreen extends StatelessWidget {
   @override
@@ -30,38 +30,38 @@ class MoreScreen extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
         children: [
-          CustomListTile(
+          MoreListTile(
             icon: Icons.add,
             label: 'Add Ads',
             color: AppColorManager.pinkAccent,
             onTap: () {},
           ),
           Divider(),
-          CustomListTile(
+          MoreListTile(
             icon: Icons.announcement,
             label: 'My Ads',
             color: AppColorManager.green,
             onTap: () {},
           ),
-          CustomListTile(
+          MoreListTile(
             icon: Icons.star_border,
             label: 'Favourite',
             color: AppColorManager.orange,
             onTap: () {},
           ),
-          CustomListTile(
+          MoreListTile(
             icon: Icons.block,
             label: 'blocked',
             color: AppColorManager.red,
             onTap: () {},
           ),
-          CustomListTile(
+          MoreListTile(
             icon: Icons.chat_bubble_outline,
             label: 'chat',
             color: AppColorManager.lightBlue,
             onTap: () {},
           ),
-          CustomListTile(
+          MoreListTile(
             icon: Icons.person,
             label: 'Profile',
             color: AppColorManager.lightBlue,
