@@ -66,7 +66,7 @@ class MoreScreen extends StatelessWidget {
           Divider(),
           CustomListTile(
             icon: Icons.wallet_travel,
-            label: 'رصيد المزائدة',
+            label: 'تحويل الى حساب اعمال ',
             color: AppColorManager.purple,
             onTap: () {},
           ),
