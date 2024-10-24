@@ -118,7 +118,7 @@ ThemeData lightTheme() {
       ),
       iconColor: AppColorManager.mainColor,
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: AppColorManager.mainColor),
+        borderSide:  BorderSide(color: AppColorManager.lightGreyOpacity6),
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
       ),
       border: OutlineInputBorder(

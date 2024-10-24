@@ -177,7 +177,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: AppHeightManager.h3),
               MainAppButton(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(RouteNamedScreens.advertisementLanguage);
+                },
                 height: AppHeightManager.h6,
                 color: AppColorManager.mainColor,
                 alignment: Alignment.center,
@@ -203,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context)
-                          .pushNamed(RouteNamedScreens.advertisementLanguage);;
+                          .pushNamed(RouteNamedScreens.login);
                     },
                     child: AppTextWidget(
                       text: "Login",

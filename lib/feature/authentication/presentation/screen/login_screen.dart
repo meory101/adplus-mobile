@@ -26,11 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.only(
-            top: AppHeightManager.h20,
-            left: AppWidthManager.w5,
-            right: AppWidthManager.w5
-          ),
+          padding: EdgeInsets.only(
+              top: AppHeightManager.h20,
+              left: AppWidthManager.w5,
+              right: AppWidthManager.w5),
           child: Column(
             children: [
               AppTextWidget(
@@ -79,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 suffixIcon: IconButton(
                   splashColor: AppColorManager.transparent,
-                  highlightColor:AppColorManager.transparent ,
+                  highlightColor: AppColorManager.transparent,
                   icon: Icon(
                     passwordVisible ? Icons.visibility : Icons.visibility_off,
                     color: AppColorManager.textGrey,
@@ -106,7 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: AppHeightManager.h4),
               MainAppButton(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(RouteNamedScreens.advertisementLanguage);
+                },
                 height: AppHeightManager.h6,
                 color: AppColorManager.mainColor,
                 alignment: Alignment.center,
@@ -115,69 +117,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: AppColorManager.white,
                   fontSize: FontSizeManager.fs16,
                   fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: AppHeightManager.h2),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: AppHeightManager.h05,
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          top: BorderSide(
-                            color: AppColorManager.borderGrey,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: AppHeightManager.h04,
-                      left: AppWidthManager.w2point5,
-                      right: AppWidthManager.w2point5,
-                    ),
-                    child: AppTextWidget(
-                      text: "or",
-                      color: AppColorManager.textGrey,
-                      fontSize: FontSizeManager.fs16,
-                      fontWeight: FontWeight.w600,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: AppHeightManager.h05,
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          top: BorderSide(
-                            color: AppColorManager.borderGrey,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: AppHeightManager.h2),
-              MainAppButton(
-                onTap: () {},
-                height: AppHeightManager.h6,
-                color: AppColorManager.white,
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: AppWidthManager.w2),
-                    AppTextWidget(
-                      text: "Login with Google",
-                      color: AppColorManager.mainColor,
-                      fontSize: FontSizeManager.fs15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
                 ),
               ),
               SizedBox(height: AppHeightManager.h4),
@@ -193,12 +132,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context)
-                          .pushNamed(RouteNamedScreens.advertisementLanguage);
+                          .pushNamed(RouteNamedScreens.register);
                     },
                     child: AppTextWidget(
                       text: "Create Account",
                       color: AppColorManager.mainColor,
-
                       fontSize: FontSizeManager.fs15,
                       fontWeight: FontWeight.w600,
                     ),
