@@ -44,13 +44,14 @@ class FullWidthCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: LanguageHelper.checkIfLTR(context: context)
+            right: LanguageHelper.checkIfLTR(context: context)
                 ? AppWidthManager.w3
                 : 0,
-            right: !LanguageHelper.checkIfLTR(context: context)
+            left: !LanguageHelper.checkIfLTR(context: context)
                 ? AppWidthManager.w3
                 : 0,
-            bottom: AppHeightManager.h2point2,
+            bottom
+                : AppHeightManager.h1point8,
             child: AppTextWidget(
               text: title,
               fontSize: FontSizeManager.fs15,

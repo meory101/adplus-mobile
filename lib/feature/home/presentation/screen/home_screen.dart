@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onCategoryTaped(subcategories.first);
           },
           title: subcategories.first.name ?? "",
-          imagePath: subcategories.first.photo ?? "",
+          imagePath: subcategories.first.photo1 ?? "",
         ),
       );
     } else if (length == 2) {
@@ -57,14 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
             onCategoryTaped(subcategories.first);
           },
           title: subcategories.first.name ?? "",
-          imagePath: subcategories.first.photo ?? ""));
+          imagePath: subcategories.first.photo1 ?? ""));
       cards.add(BigCard(
           index: 1,
           onTap: () {
             onCategoryTaped(subcategories.last);
           },
           title: subcategories.last.name ?? "",
-          imagePath: subcategories.last.photo ?? ""));
+          imagePath: subcategories.last.photo1 ?? ""));
     } else if (length == 3) {
       for (int i = 0; i < length; i++) {
         cards.add(StandardCard(
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onCategoryTaped(subcategories[i]);
           },
           title: subcategories[i].name ?? "",
-          imagePath: subcategories[i].photo ?? "",
+          imagePath: subcategories[i].photo1 ?? "",
         ));
       }
     } else if (length > 3) {
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onCategoryTaped(subcategories[i]);
               },
               title: subcategories[i].name ?? "",
-              imagePath: subcategories[i].photo ?? "",
+              imagePath: subcategories[i].photo1 ?? "",
             ),
           );
           return cards;
@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onCategoryTaped(subcategories[i]);
                   },
                   title: subcategories[i].name ?? "",
-                  imagePath: subcategories[i].photo ?? "",
+                  imagePath: subcategories[i].photo1 ?? "",
                 ),
               )
             : cards.add(
@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onCategoryTaped(subcategories[i]);
                   },
                   title: subcategories[i].name ?? "",
-                  imagePath: subcategories[i].photo ?? "",
+                  imagePath: subcategories[i].photo1 ?? "",
                 ),
               );
       }

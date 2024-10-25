@@ -18,15 +18,15 @@ class StandardCard extends StatelessWidget {
 
   const StandardCard(
       {super.key,
-        required this.title,
-        required this.imagePath,
-        required this.onTap,
-        required this.index});
+      required this.title,
+      required this.imagePath,
+      required this.onTap,
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:onTap,
+      onTap: onTap,
       child: Stack(
         children: [
           Container(
@@ -36,13 +36,13 @@ class StandardCard extends StatelessWidget {
             margin: EdgeInsets.only(
                 right: index % 2 == 0
                     ? LanguageHelper.checkIfLTR(context: context)
-                    ? AppWidthManager.w3Point8
-                    : 0
+                        ? AppWidthManager.w3Point8
+                        : 0
                     : 0,
                 left: index % 2 == 0
                     ? !LanguageHelper.checkIfLTR(context: context)
-                    ? AppWidthManager.w3Point8
-                    : 0
+                        ? AppWidthManager.w3Point8
+                        : 0
                     : 0,
                 bottom: AppWidthManager.w3Point8),
             decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class StandardCard extends StatelessWidget {
             left: LanguageHelper.checkIfLTR(context: context)
                 ? AppWidthManager.w3
                 : 0,
-            bottom: AppHeightManager.h2point2,
+            bottom: AppHeightManager.h1point8,
             right: !LanguageHelper.checkIfLTR(context: context)
                 ? AppWidthManager.w3
                 : 0,

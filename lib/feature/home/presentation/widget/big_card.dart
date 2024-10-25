@@ -50,10 +50,14 @@ class BigCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: LanguageHelper.checkIfLTR(context: context)
+            right: LanguageHelper.checkIfLTR(context: context)
                 ? AppWidthManager.w3
                 : 0,
-            bottom: AppHeightManager.h2point2,
+            left: !LanguageHelper.checkIfLTR(context: context)
+                ? AppWidthManager.w3
+                : 0,
+            bottom               : AppHeightManager.h2point5,
+
             child: AppTextWidget(
               text: title,
               fontSize: FontSizeManager.fs15,
