@@ -22,12 +22,12 @@ class LoginResponseEntity {
     _success = json['success'];
     _message = json['message'];
     _data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    if (json['errors'] != null) {
-      _errors = [];
-      json['errors'].forEach((v) {
-        _errors?.add(Dynamic.fromJson(v));
-      });
-    }
+    // if (json['errors'] != null) {
+    //   _errors = [];
+    //   json['errors'].forEach((v) {
+    //     _errors?.add(Dynamic.fromJson(v));
+    //   });
+    // }
   }
   bool? _success;
   String? _message;

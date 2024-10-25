@@ -21,7 +21,7 @@ class AdvertisementRemoteImplement extends AdvertisementRemote {
   required GetCategoryAttributesRequestEntity entity}) async {
     final response = await ApiMethods().post(
         body: entity.toJson(),
-        url: ApiGetUrl.getCategoryAttributes);
+        url: ApiPostUrl.getCategoryAttributes);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getCategoryAttributesResponseEntityFromJson(response.body);
     } else {
