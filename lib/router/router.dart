@@ -13,7 +13,7 @@ import '../feature/advertisement/presentation/screen/advertisement_category_scre
 import '../feature/advertisement/presentation/screen/advertisement_language_screen.dart';
 import '../feature/authentication/presentation/screen/login_screen.dart';
 import '../feature/authentication/presentation/screen/register_screen.dart';
-import '../feature/home/presentation/cubit/get_categories_cubit.dart';
+import '../feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import '../feature/intro/presentation/screen/splash_screen.dart';
 
 /// Eng.Nour Othman(meory)*

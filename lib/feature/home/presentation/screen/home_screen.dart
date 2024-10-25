@@ -6,7 +6,7 @@ import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/theme_manager.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
-import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
@@ -35,9 +35,6 @@ List<MainCategory> categories = [];
 List<Widget> generateCards(List<SubCategory> subcategories) {
   List<Widget> cards = [];
   int length = subcategories.length;
-    print(categories[0].categoryId);
-    print('00000000000');
-
   int i = 0;
   //TODO en ar
   if (length == 1) {
@@ -93,7 +90,7 @@ List<Widget> generateCards(List<SubCategory> subcategories) {
               StandardCard(
                 index: i,
                 onTap: () {},
-                title: subcategories[i].name ?? "",
+                title: subcategories[i].categoryId.toString() ?? "",
                 imagePath: subcategories[i].photo ?? "",
               ),
             );

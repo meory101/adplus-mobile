@@ -10,7 +10,7 @@ import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 
 import '../../../home/domain/entity/response/get_categories_response_entity.dart';
-import '../../../home/presentation/cubit/get_categories_cubit.dart';
+import '../../../home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 
 class CategoriesOptionsListView extends StatefulWidget {
   final Function(num) selectCategoryCallBak;
@@ -57,40 +57,43 @@ class _CategoriesOptionsListViewState extends State<CategoriesOptionsListView> {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: categories.length,
         itemBuilder: (context, index) {
-          return Row(
-            children: [
-              Flexible(
-                child: RadioListTile(
-                  value: index,
-                  groupValue: selectedCategoryIndex,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategoryIndex = index;
-                      if (selectedCategoryIndex != null) {
-                        widget.selectCategoryCallBak(
-                            categories[selectedCategoryIndex!].categoryId ?? -1);
-                      }
-                    });
-                  },
-                  visualDensity: const VisualDensity(
-                    horizontal: VisualDensity.minimumDensity,
-                    vertical: VisualDensity.minimumDensity,
-                  ),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  activeColor: AppColorManager.mainColor,
-                  contentPadding: EdgeInsets.zero,
-                  title: AppTextWidget(
-                      text:
-                          //TODO change the name based on language
-                          LanguageHelper.checkIfLTR(context: context)
-                              ? categories[index].name ?? ""
-                              : categories[index].name ?? ""
-                  ,
-                    fontSize: FontSizeManager.fs15,
+          return Visibility(
+            visible: (categories[index].children??[]).isEmpty,
+            child: Row(
+              children: [
+                Flexible(
+                  child: RadioListTile(
+                    value: index,
+                    groupValue: selectedCategoryIndex,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCategoryIndex = index;
+                        if (selectedCategoryIndex != null) {
+                          widget.selectCategoryCallBak(
+                              categories[selectedCategoryIndex!].categoryId ?? -1);
+                        }
+                      });
+                    },
+                    visualDensity: const VisualDensity(
+                      horizontal: VisualDensity.minimumDensity,
+                      vertical: VisualDensity.minimumDensity,
+                    ),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    activeColor: AppColorManager.mainColor,
+                    contentPadding: EdgeInsets.zero,
+                    title: AppTextWidget(
+                        text:
+                            //TODO change the name based on language
+                            LanguageHelper.checkIfLTR(context: context)
+                                ? categories[index].name ?? ""
+                                : categories[index].name ?? ""
+                    ,
+                      fontSize: FontSizeManager.fs15,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       );

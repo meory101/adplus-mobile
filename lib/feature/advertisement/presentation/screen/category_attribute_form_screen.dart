@@ -38,7 +38,6 @@ class _CategoryAttributeFormScreenState
   }
 
   getCategoryAttributes() {
-    print('999999999999999999999${widget.args.categoryId}');
     context.read<GetCategoryAttributesCubit>().getCategoryAttributes(
         context: context,
         entity: GetCategoryAttributesRequestEntity(

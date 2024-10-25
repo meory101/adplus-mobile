@@ -8,7 +8,9 @@ import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.da
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase.dart';
-import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -16,7 +18,9 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => CategoryInsidePageCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetCategoryInsidePageUsecase(repository: sl()));
   sl.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImplements(
       remote: sl(),

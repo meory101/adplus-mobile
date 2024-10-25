@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
-import '../../../../../core/api/api_error/api_error.dart';
-import '../../../../../core/resource/cubit_status_manager.dart';
-import '../../domain/usecase/get_categories_usecase.dart';
+import '../../../../../../core/api/api_error/api_error.dart';
+import '../../../../../../core/resource/cubit_status_manager.dart';
+import '../../../domain/usecase/get_categories_usecase.dart';
 
 
 part 'get_categories_state.dart';
