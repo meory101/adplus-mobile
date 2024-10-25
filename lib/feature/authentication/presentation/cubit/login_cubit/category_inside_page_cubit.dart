@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/login_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/login_response_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/login_usecase.dart';
@@ -38,6 +39,9 @@ class LoginCubit extends Cubit<LoginState> {
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
       (data) {
+        AppSharedPreferences.cashToken(token:data.data?.accessToken??"");
+        print(AppSharedPreferences.getToken());
+        print('access token');
         emit(state.copyWith(status: CubitStatus.success, entity: data));
       },
     );

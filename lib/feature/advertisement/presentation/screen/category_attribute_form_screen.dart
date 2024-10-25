@@ -6,6 +6,8 @@ import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/widget/drop_down/NameAndId.dart';
 import 'package:mzad_damascus/core/widget/drop_down/title_drop_down_form_field.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/add_advertisement_request_entity.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/attribute_form_value.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attributes_cubit.dart';
@@ -14,6 +16,7 @@ import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/container/dialog_container.dart';
 import '../../../../core/widget/form_field/title_app_form_filed.dart';
 import '../../../../core/widget/loading/shimmer/category_attribute_form_list_view_shimmer.dart';
+import '../../../../router/router.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
 
@@ -37,7 +40,10 @@ class _CategoryAttributeFormScreenState
     super.initState();
   }
 
+  AddAdvertisementRequestEntity entity =AddAdvertisementRequestEntity();
+
   getCategoryAttributes() {
+    entity.categoryId = widget.args.categoryId;
     context.read<GetCategoryAttributesCubit>().getCategoryAttributes(
         context: context,
         entity: GetCategoryAttributesRequestEntity(
@@ -49,9 +55,11 @@ class _CategoryAttributeFormScreenState
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
         onTap: () {
+         entity.attributes = entity.attributes?.toSet().toList();
+         print(entity.attributes?.length);
           if ((formKey.currentState?.validate()) ?? false) {
             // Navigator.of(context)
-            //     .pushNamed(RouteNamedScreens.categoryAttributeForm);
+                // .pushNamed(RouteNamedScreens.categoryAttributeForm);
             return;
           }
           NoteMessage.showErrorSnackBar(
@@ -129,6 +137,12 @@ class _CategoryAttributeFormScreenState
                                       -1],
                                   hint: attributes[index].attributeName ?? "",
                                   onChanged: (value) {
+                                    print('heeeeeeelo');
+                                    entity.attributes?.add(AttributeFormValue(
+                                      value:  value,
+
+                                    attributeId:  currentAttribute?.attributeId
+                                    ));
                                     return null;
                                   },
                                   validator: (value) {
@@ -139,6 +153,17 @@ class _CategoryAttributeFormScreenState
                                   },
                                 ),
                                 child: TitleDropDownFormFieldWidget(
+                                  onChanged: (value) {
+                                    print('heeeeeeelo');
+
+
+                                    entity.attributes?.add(AttributeFormValue(
+                                        value:  value?.name ??"",
+
+                                        attributeId:  currentAttribute?.attributeId
+                                    ));
+                                    print(entity.attributes);
+                                  },
                                   validator: (value) {
                                     if (value?.name.isEmpty ?? true) {
                                       return "required";
@@ -147,6 +172,7 @@ class _CategoryAttributeFormScreenState
                                   },
                                   title: currentAttribute?.attributeName ?? "",
                                   options: attributeListElements,
+
                                   hint: currentAttribute?.attributeName ?? "",
                                 ),
                               ),

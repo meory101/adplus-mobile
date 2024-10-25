@@ -4,6 +4,7 @@ import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
@@ -43,7 +44,11 @@ abstract class AppRouter {
       case RouteNamedScreens.profile:
         return FadeBuilderRoute(page: ProfileScreen());
       case RouteNamedScreens.login:
-        return FadeBuilderRoute(page: const LoginScreen());
+        return FadeBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<LoginCubit>(),
+          child: const LoginScreen(),
+        ));
       case RouteNamedScreens.register:
         return FadeBuilderRoute(page: const RegisterScreen());
       case RouteNamedScreens.advertisementLanguage:
@@ -56,13 +61,12 @@ abstract class AppRouter {
           child: const AdvertisementCategoryScreen(),
         ));
       case RouteNamedScreens.categoryInsidePage:
-        argument as  CategoryInsidePageArgs ;
+        argument as CategoryInsidePageArgs;
         return SlidLeftBuilderRoute(
             page: BlocProvider(
-              create: (context) =>
-              di.sl<CategoryInsidePageCubit>(),
-              child:  CategoryInsidePageScreen(args: argument),
-            ));
+          create: (context) => di.sl<CategoryInsidePageCubit>(),
+          child: CategoryInsidePageScreen(args: argument),
+        ));
       case RouteNamedScreens.categoryAttributeForm:
         argument as CategoryAttributeFormArgs;
         return SlidLeftBuilderRoute(

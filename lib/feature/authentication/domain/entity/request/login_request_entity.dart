@@ -31,6 +31,11 @@ LoginRequestEntity copyWith({  String? username,
   authCode: authCode ?? _authCode,
 );
   String? get username => _username;
+
+  set username(String? value) {
+    _username = value;
+  }
+
   String? get password => _password;
   String? get authCode => _authCode;
 
@@ -42,4 +47,11 @@ LoginRequestEntity copyWith({  String? username,
     return map;
   }
 
+  set password(String? value) {
+    _password = value;
+  }
+
+  set authCode(String? value) {
+    _authCode = value;
+  }
 }

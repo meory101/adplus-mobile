@@ -4,6 +4,11 @@ import 'package:mzad_damascus/feature/advertisement/data/repository/advertisemen
 import 'package:mzad_damascus/feature/advertisement/domain/repository/advertisement_repository.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/get_category_attributes_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attributes_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/data/datasource/remote/auth_remote.dart';
+import 'package:mzad_damascus/feature/authentication/data/repository/auth_repository_implements.dart';
+import 'package:mzad_damascus/feature/authentication/domain/repository/auth_repository.dart';
+import 'package:mzad_damascus/feature/authentication/domain/usecase/login_usecase.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.dart';
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
@@ -38,4 +43,16 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<AdvertisementRemote>(
       () => AdvertisementRemoteImplement());
+
+
+  sl.registerFactory(() => LoginCubit(usecase: sl()));
+  sl.registerLazySingleton(() => LoginUsecase(repository: sl()));
+  sl.registerLazySingleton<AuthRepository>(
+        () => AuthRepositoryImplements(
+      remote: sl(),
+    ),
+  );
+  sl.registerLazySingleton<AuthRemote>(
+          () => AuthRemoteImplement());
+
 }

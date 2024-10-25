@@ -10,7 +10,7 @@ class LoginResponseEntity {
   LoginResponseEntity({
       bool? success, 
       String? message, 
-      Data? data, 
+      UserLoginData? data, 
       List<dynamic>? errors,}){
     _success = success;
     _message = message;
@@ -21,7 +21,7 @@ class LoginResponseEntity {
   LoginResponseEntity.fromJson(dynamic json) {
     _success = json['success'];
     _message = json['message'];
-    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    _data = json['data'] != null ? UserLoginData.fromJson(json['data']) : null;
     // if (json['errors'] != null) {
     //   _errors = [];
     //   json['errors'].forEach((v) {
@@ -31,11 +31,11 @@ class LoginResponseEntity {
   }
   bool? _success;
   String? _message;
-  Data? _data;
+  UserLoginData? _data;
   List<dynamic>? _errors;
 LoginResponseEntity copyWith({  bool? success,
   String? message,
-  Data? data,
+  UserLoginData? data,
   List<dynamic>? errors,
 }) => LoginResponseEntity(  success: success ?? _success,
   message: message ?? _message,
@@ -44,7 +44,7 @@ LoginResponseEntity copyWith({  bool? success,
 );
   bool? get success => _success;
   String? get message => _message;
-  Data? get data => _data;
+  UserLoginData? get data => _data;
   List<dynamic>? get errors => _errors;
 
   Map<String, dynamic> toJson() {
@@ -68,10 +68,10 @@ LoginResponseEntity copyWith({  bool? success,
 /// access_token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwaS5tYXphZGRpbWFzaHEuY29tL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzI5ODgyMzA2LCJleHAiOjE3Mjk4ODU5MDYsIm5iZiI6MTcyOTg4MjMwNiwianRpIjoiYjhDZFFPWE5PY2I5R3c3ZCIsInN1YiI6IjEwNyIsInBydiI6IjQxZWZiN2JhZDdmNmY2MzJlMjQwNWJkM2E3OTNiOGE2YmRlYzY3NzcifQ.ry65Hs2wWY4b-pz_VriHo_9j9GzE-OVr-n0jMvo8FFI"
 /// expires_in : 3600
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-String dataToJson(Data data) => json.encode(data.toJson());
-class Data {
-  Data({
+UserLoginData dataFromJson(String str) => UserLoginData.fromJson(json.decode(str));
+String dataToJson(UserLoginData data) => json.encode(data.toJson());
+class UserLoginData {
+  UserLoginData({
       User? user, 
       bool? isVerified, 
       bool? captcha, 
@@ -84,7 +84,7 @@ class Data {
     _expiresIn = expiresIn;
 }
 
-  Data.fromJson(dynamic json) {
+  UserLoginData.fromJson(dynamic json) {
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
     _isVerified = json['is_verified'];
     _captcha = json['captcha'];
@@ -96,12 +96,12 @@ class Data {
   bool? _captcha;
   String? _accessToken;
   num? _expiresIn;
-Data copyWith({  User? user,
+UserLoginData copyWith({  User? user,
   bool? isVerified,
   bool? captcha,
   String? accessToken,
   num? expiresIn,
-}) => Data(  user: user ?? _user,
+}) => UserLoginData(  user: user ?? _user,
   isVerified: isVerified ?? _isVerified,
   captcha: captcha ?? _captcha,
   accessToken: accessToken ?? _accessToken,
