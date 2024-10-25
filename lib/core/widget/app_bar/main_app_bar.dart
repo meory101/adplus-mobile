@@ -40,7 +40,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           AppTextWidget(
             text: title,
-            fontSize: FontSizeManager.fs18,
+            fontSize: FontSizeManager.fs16,
             color: AppColorManager.mainColor,
             fontWeight: FontWeight.w600,
             textAlign: TextAlign.center,

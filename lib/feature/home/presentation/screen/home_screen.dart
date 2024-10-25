@@ -7,6 +7,8 @@ import 'package:mzad_damascus/core/resource/theme_manager.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
@@ -30,77 +32,97 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-List<MainCategory> categories = [];
+class _HomeScreenState extends State<HomeScreen> {
+  List<MainCategory> categories = [];
 
-List<Widget> generateCards(List<SubCategory> subcategories) {
-  List<Widget> cards = [];
-  int length = subcategories.length;
-  int i = 0;
-  //TODO en ar
-  if (length == 1) {
-    cards.add(
-      FullWidthCard(
-        onTap: () {},
-        title: subcategories.first.name ?? "",
-        imagePath: subcategories.first.photo ?? "",
-      ),
-    );
-  } else if (length == 2) {
-    cards.add(StandardCard(
-        index: 0,
-        onTap: () {},
-        title: subcategories.first.name ?? "",
-        imagePath: subcategories.first.photo ?? ""));
-    cards.add(BigCard(
-        index: 1,
-        onTap: () {},
-        title: subcategories.last.name ?? "",
-        imagePath: subcategories.last.photo ?? ""));
-  } else if (length == 3) {
-    for (int i = 0; i < length; i++) {
+  List<Widget> generateCards(List<SubCategory> subcategories) {
+    List<Widget> cards = [];
+    int length = subcategories.length;
+    // int i = 0;
+    //TODO en ar
+    if (length == 1) {
+      cards.add(
+        FullWidthCard(
+          onTap: () {
+            onCategoryTaped(subcategories.first);
+          },
+          title: subcategories.first.name ?? "",
+          imagePath: subcategories.first.photo ?? "",
+        ),
+      );
+    } else if (length == 2) {
       cards.add(StandardCard(
-        index: i,
-        onTap: () {},
-        title: subcategories[i].name ?? "",
-        imagePath: subcategories[i].photo ?? "",
-      ));
-    }
-  } else if (length > 3) {
-    for (i = 0; i < length; i++) {
-      if (length % 2 != 0 && i == length - 1) {
-        cards.add(
-          FullWidthCard(
-            onTap: () {},
-            title: subcategories[i].name ?? "",
-            imagePath: subcategories[i].photo ?? "",
-          ),
-        );
-        return cards;
+          index: 0,
+          onTap: () {
+            onCategoryTaped(subcategories.first);
+          },
+          title: subcategories.first.name ?? "",
+          imagePath: subcategories.first.photo ?? ""));
+      cards.add(BigCard(
+          index: 1,
+          onTap: () {
+            onCategoryTaped(subcategories.last);
+          },
+          title: subcategories.last.name ?? "",
+          imagePath: subcategories.last.photo ?? ""));
+    } else if (length == 3) {
+      for (int i = 0; i < length; i++) {
+        cards.add(StandardCard(
+          index: i,
+          onTap: () {
+            onCategoryTaped(subcategories[i]);
+          },
+          title: subcategories[i].name ?? "",
+          imagePath: subcategories[i].photo ?? "",
+        ));
       }
-      i % 3 == 0
-          ? cards.add(
-              BigCard(
-                index: i,
-                onTap: () {},
-                title: subcategories[i].name ?? "",
-                imagePath: subcategories[i].photo ?? "",
-              ),
-            )
-          : cards.add(
-              StandardCard(
-                index: i,
-                onTap: () {},
-                title: subcategories[i].categoryId.toString() ?? "",
-                imagePath: subcategories[i].photo ?? "",
-              ),
-            );
+    } else if (length > 3) {
+      for (int i = 0; i < length; i++) {
+        if (length % 2 != 0 && i == length - 1) {
+          cards.add(
+            FullWidthCard(
+              onTap: () {
+                onCategoryTaped(subcategories[i]);
+              },
+              title: subcategories[i].name ?? "",
+              imagePath: subcategories[i].photo ?? "",
+            ),
+          );
+          return cards;
+        }
+        i % 3 == 0
+            ? cards.add(
+                BigCard(
+                  index: i,
+                  onTap: () {
+                    onCategoryTaped(subcategories[i]);
+                  },
+                  title: subcategories[i].name ?? "",
+                  imagePath: subcategories[i].photo ?? "",
+                ),
+              )
+            : cards.add(
+                StandardCard(
+                  index: i,
+                  onTap: () {
+                    onCategoryTaped(subcategories[i]);
+                  },
+                  title: subcategories[i].name ?? "",
+                  imagePath: subcategories[i].photo ?? "",
+                ),
+              );
+      }
     }
+
+    return cards;
   }
 
-  return cards;
-}
+  onCategoryTaped(SubCategory subCategory) {
+    print('ddddddddddddd');
+    Navigator.of(context).pushNamed(RouteNamedScreens.categoryInsidePage,
+        arguments: CategoryInsidePageArgs(subCategory: subCategory));
+  }
 
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,7 +204,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: List.generate(
                           categories.length,
                           (index) {
-
                             List<SubCategory> subCategories =
                                 categories[index].children ?? [];
                             List<Widget> cards = generateCards(subCategories);
@@ -221,6 +242,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-

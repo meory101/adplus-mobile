@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
@@ -25,38 +26,41 @@ class FullWidthCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          width: AppWidthManager.w100,
-          height: AppHeightManager.h20,
-          decoration: BoxDecoration(
-              boxShadow: ThemeManager.cardShadow,
-              color: AppColorManager.lightGreyOpacity6,
-              borderRadius: BorderRadius.circular(AppRadiusManager.r15)),
-          child: MainImageWidget(
-            borderRadius: BorderRadius.circular(AppRadiusManager.r15),
-            imageUrl: AppConstantManager.imageBaseUrl + imagePath,
+    return InkWell(
+      onTap: onTap,
+      child: Stack(
+        children: [
+          Container(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            width: AppWidthManager.w100,
+            height: AppHeightManager.h20,
+            decoration: BoxDecoration(
+                boxShadow: ThemeManager.cardShadow,
+                color: AppColorManager.lightGreyOpacity6,
+                borderRadius: BorderRadius.circular(AppRadiusManager.r15)),
+            child: MainImageWidget(
+              borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+              imageUrl: AppConstantManager.imageBaseUrl + imagePath,
+            ),
           ),
-        ),
-        Positioned(
-          left: LanguageHelper.checkIfLTR(context: context)
-              ? AppWidthManager.w3
-              : 0,
-          right: !LanguageHelper.checkIfLTR(context: context)
-              ? AppWidthManager.w3
-              : 0,
-          bottom: AppHeightManager.h2point2,
-          child: AppTextWidget(
-            text: title,
-            fontSize: FontSizeManager.fs15,
-            fontWeight: FontWeight.w600,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        )
-      ],
+          Positioned(
+            left: LanguageHelper.checkIfLTR(context: context)
+                ? AppWidthManager.w3
+                : 0,
+            right: !LanguageHelper.checkIfLTR(context: context)
+                ? AppWidthManager.w3
+                : 0,
+            bottom: AppHeightManager.h2point2,
+            child: AppTextWidget(
+              text: title,
+              fontSize: FontSizeManager.fs15,
+              fontWeight: FontWeight.w600,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
