@@ -18,10 +18,10 @@ class StandardCard extends StatelessWidget {
 
   const StandardCard(
       {super.key,
-      required this.title,
-      required this.imagePath,
-      required this.onTap,
-      required this.index});
+        required this.title,
+        required this.imagePath,
+        required this.onTap,
+        required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +36,13 @@ class StandardCard extends StatelessWidget {
             margin: EdgeInsets.only(
                 right: index % 2 == 0
                     ? LanguageHelper.checkIfLTR(context: context)
-                        ? AppWidthManager.w3Point8
-                        : 0
+                    ? AppWidthManager.w3Point8
+                    : 0
                     : 0,
                 left: index % 2 == 0
                     ? !LanguageHelper.checkIfLTR(context: context)
-                        ? AppWidthManager.w3Point8
-                        : 0
+                    ? AppWidthManager.w3Point8
+                    : 0
                     : 0,
                 bottom: AppWidthManager.w3Point8),
             decoration: BoxDecoration(
