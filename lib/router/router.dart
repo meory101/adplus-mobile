@@ -74,7 +74,7 @@ abstract class AppRouter {
       case RouteNamedScreens.advertisement:
         return SlidLeftBuilderRoute(
             page: BlocProvider(
-              create: (context) => di.sl<GetCitiesCubit>(),
+              create: (context) => di.sl<GetCitiesCubit>()..getCities(context: context),
               child:  AdvertisementScreen(),
             ));
       case RouteNamedScreens.categoryAttributeForm:

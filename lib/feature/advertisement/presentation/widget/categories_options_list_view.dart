@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/categories_options_list_view_shimmer.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
@@ -69,6 +70,7 @@ class _CategoriesOptionsListViewState extends State<CategoriesOptionsListView> {
                       setState(() {
                         selectedCategoryIndex = index;
                         if (selectedCategoryIndex != null) {
+                          AdvertisementModel.entity?.keywords = categories[selectedCategoryIndex!].keywords;
                           widget.selectCategoryCallBak(
                               categories[selectedCategoryIndex!].categoryId ?? -1);
                         }

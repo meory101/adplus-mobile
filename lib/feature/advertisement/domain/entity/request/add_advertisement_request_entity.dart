@@ -22,8 +22,8 @@ class AddAdvertisementRequestEntity {
       String? name, 
       num? startingPrice, 
       num? minIncreasePrice, 
-      String? description, 
-      num? keywords, 
+      String? description,
+    String? keywords,
       String? bidingStartTime,
     List<AttributeFormValue>? attributes,}){
     _categoryId = categoryId;
@@ -54,7 +54,7 @@ class AddAdvertisementRequestEntity {
   num? _startingPrice;
   num? _minIncreasePrice;
   String? _description;
-  num? _keywords;
+  String? _keywords;
   String? _bidingStartTime;
   List<AttributeFormValue>? _attributes;
 AddAdvertisementRequestEntity copyWith({  num? categoryId,
@@ -63,7 +63,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   num? startingPrice,
   num? minIncreasePrice,
   String? description,
-  num? keywords,
+  String? keywords,
   String? bidingStartTime,
   dynamic attributes,
 }) => AddAdvertisementRequestEntity(  categoryId: categoryId ?? _categoryId,
@@ -82,7 +82,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   num? get startingPrice => _startingPrice;
   num? get minIncreasePrice => _minIncreasePrice;
   String? get description => _description;
-  num? get keywords => _keywords;
+  String? get keywords => _keywords;
   String? get bidingStartTime => _bidingStartTime;
   List<AttributeFormValue>? get attributes => _attributes;
 
@@ -110,7 +110,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
     _bidingStartTime = value;
   }
 
-  set keywords(num? value) {
+  set keywords(String? value) {
     _keywords = value;
   }
 

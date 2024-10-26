@@ -2,24 +2,25 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 abstract class AppImageHelper {
   static Future<File?>? pickImageFrom({required ImageSource source}) async {
-
+    File? tempImage;
     try {
       final photo =
-      await ImagePicker().pickImage(source: source,
+      await ImagePicker().pickImage( source: source,
         maxHeight: 512,
         maxWidth: 512,
         imageQuality: 75,);
-      if(photo==null) return null;
-      return File(photo.path);
+      if (photo == null) return null;
+      tempImage = File(photo.path);
+      // tempImage = await _cropImage(imageFile: tempImage);
+    } catch (error) {
     }
-    catch(e){
-      print(e);
-    }
-    return null;
+    return tempImage;
   }
+
 
   static String convertBase46Encoder({required File image}) {
     List<int> imageBytes = image.readAsBytesSync() ?? [];
@@ -31,3 +32,18 @@ abstract class AppImageHelper {
   }
 }
 
+// Future<File?> _cropImage({required File imageFile}) async {
+//   try {
+//     CroppedFile? croppedImg = await ImageCropper()
+//         .cropImage(sourcePath: imageFile.path, compressQuality: 75,
+//     );
+//     if (croppedImg == null) {
+//       return null;
+//     } else {
+//       return File(croppedImg.path);
+//     }
+//   } catch (e) {
+//     print(e);
+//   }
+//   return null;
+// }
