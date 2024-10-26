@@ -25,7 +25,6 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
         onTap: () {
-
         },
       ),
       body:
@@ -42,7 +41,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                 height: AppHeightManager.h2point5,
               ),
               AppTextWidget(
-                  text: "Choose Language",
+                  text: "Choose city",
                   fontSize: FontSizeManager.fs16,
                   color: AppColorManager.textAppColor,
                   fontWeight: FontWeight.w600),

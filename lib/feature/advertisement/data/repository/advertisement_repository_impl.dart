@@ -7,6 +7,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
 import '../../domain/entity/request/get_category_attributes_request_entity.dart';
+import '../../domain/entity/response/get_cities_response_entity.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -27,4 +28,15 @@ class AdvertisementRepositoryImpl implements AdvertisementRepository {
       },
     );
   }
+
+  @override
+  Future<Either<ApiFailure,GetCitiesResponseEntity>> getCities()async{
+    return Connector<GetCitiesResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getCities();
+        return Right(result);
+      },
+    );
+  }
+
 }

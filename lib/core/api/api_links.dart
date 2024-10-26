@@ -1,6 +1,7 @@
 class ApiGetUrl {
 
   static String getCategories = "api/category/all";
+  static String getCities = "api/category/cities";
 
 }
 
