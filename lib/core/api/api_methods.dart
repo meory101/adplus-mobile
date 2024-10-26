@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import '../storage/shared/shared_pref.dart';
 import 'api_url.dart';
 import 'package:path/path.dart';
@@ -159,19 +160,34 @@ class ApiMethods {
   }
 
   Future<http.Response> postWithMultiFile({required String url,required Map data,required List<File> files}) async {
-    var multiPartRequest =  http.MultipartRequest('POST', Uri.parse(url));
+    var multiPartRequest =  http.MultipartRequest('POST', Uri.parse('https://'+AppConstantManager.baseUrl+'/'+url));
     for (int i = 0; i < files.length; i++) {
+      print('called this');
       var length = await files[i].length();
       var stream = await http.ByteStream(files[i].openRead());
-      var multiPartFile = await http.MultipartFile('photo[]', stream, length,
-          filename: basename(files[i].path));
+      var multiPartFile = http.MultipartFile(
+        'photos[$i]', // Field name for images
+        stream,
+        length,
+        filename: basename(files[i].path),
+      );
       multiPartRequest.files.add(multiPartFile);
+
+      print(multiPartRequest.files);
     }
+    print('final');
+    print(multiPartRequest.files);
+    print(multiPartRequest.files.first.filename);
     multiPartRequest.headers.addAll(headers);
     data.forEach((key, value) {
-      multiPartRequest.fields[key] = value;
+      // print(key);
+      // print(value);
+      multiPartRequest.fields[key.toString()] = value.toString();
     });
     http.StreamedResponse sresponce = await multiPartRequest.send();
+    // print(AppSharedPreferences.getToken());
+    // print('token');
+
    return  await http.Response.fromStream(sresponce);
     // print(jsonDecode(response.body));
     // return jsonDecode(response.body);

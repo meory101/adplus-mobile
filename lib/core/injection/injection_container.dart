@@ -2,8 +2,10 @@ import 'package:get_it/get_it.dart';
 import 'package:mzad_damascus/feature/advertisement/data/datasource/remote/advertisement_remote.dart';
 import 'package:mzad_damascus/feature/advertisement/data/repository/advertisement_repository_impl.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/repository/advertisement_repository.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/usecase/add_advertisement_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/get_category_attributes_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/get_cities_usecase.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/data/datasource/remote/auth_remote.dart';
@@ -38,9 +40,13 @@ Future<void> init() async {
 
 
   sl.registerFactory(() => GetCategoryAttributesCubit(usecase: sl()));
+  sl.registerFactory(() => AddAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => GetCitiesCubit(usecase: sl()));
   sl.registerLazySingleton(
       () => GetCategoryAttributesUsecase(repository: sl()));
+
+  sl.registerLazySingleton(
+          () => AddAdvertisementUsecase(repository: sl()));
   sl.registerLazySingleton(
           () => GetCitiesUsecase(repository: sl()));
   sl.registerLazySingleton<AdvertisementRepository>(

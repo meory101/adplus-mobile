@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
@@ -73,10 +74,19 @@ abstract class AppRouter {
 
       case RouteNamedScreens.advertisement:
         return SlidLeftBuilderRoute(
-            page: BlocProvider(
-              create: (context) => di.sl<GetCitiesCubit>()..getCities(context: context),
-              child:  AdvertisementScreen(),
-            ));
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  di.sl<GetCitiesCubit>()..getCities(context: context),
+            ),
+            BlocProvider(
+              create: (context) =>
+              di.sl<AddAdvertisementCubit>(),
+            )
+          ],
+          child: AdvertisementScreen(),
+        ));
       case RouteNamedScreens.categoryAttributeForm:
         argument as CategoryAttributeFormArgs;
         return SlidLeftBuilderRoute(

@@ -56,7 +56,9 @@ class AdvertisementRemoteImplement extends AdvertisementRemote {
     final response = await ApiMethods().postWithMultiFile(
         data: entity.toJson(),
         files: files,
-        url: ApiGetUrl.getCities);
+        url: ApiPostUrl.addAdv);
+    print(response.statusCode);
+    print(response.body);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {
