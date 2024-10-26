@@ -12,6 +12,10 @@ class AttributeFormValue {
     _value = value;
 }
 
+  set attributeId(num? value) {
+    _attributeId = value;
+  }
+
   AttributeFormValue.fromJson(dynamic json) {
     _attributeId = json['attribute_id'];
     _value = json['value'];
@@ -33,4 +37,7 @@ AttributeFormValue copyWith({  num? attributeId,
     return map;
   }
 
+  set value(String? value) {
+    _value = value;
+  }
 }

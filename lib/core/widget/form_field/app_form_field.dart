@@ -74,6 +74,7 @@ class AppTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
       onTap: onTap,
       key: Key(initialValue ?? ""),
       readOnly: readOnly ?? false,
@@ -85,6 +86,7 @@ class AppTextFormField extends StatelessWidget {
       focusNode: focusNode,
       obscureText: obscureText ?? false,
       onChanged: onChanged,
+
       autofocus: autoFoucs ?? false,
       onEditingComplete: editingComplete,
       keyboardType: textInputType,

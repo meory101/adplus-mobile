@@ -40,14 +40,31 @@ class _CategoryAttributeFormScreenState
     super.initState();
   }
 
-  AddAdvertisementRequestEntity entity =AddAdvertisementRequestEntity();
+  List<AttributeFormValue> attributeFormValues = [];
+  Attributes? currentAttribute;
 
   getCategoryAttributes() {
-    entity.categoryId = widget.args.categoryId;
+    AdvertisementModel.entity?.categoryId = widget.args.categoryId;
     context.read<GetCategoryAttributesCubit>().getCategoryAttributes(
         context: context,
         entity: GetCategoryAttributesRequestEntity(
             categoryId: widget.args.categoryId));
+  }
+  void setAttributeFormValue(String value, Attributes? attribute) {
+    if (attribute == null) return;
+    final existingValue = attributeFormValues.firstWhere(
+          (formValue) => formValue.attributeId == attribute.attributeId,
+      orElse: () => AttributeFormValue(value: '', attributeId: null),
+    );
+
+    if (existingValue.attributeId == null) {
+      attributeFormValues.add(AttributeFormValue(
+        value: value,
+        attributeId: attribute.attributeId,
+      ));
+    } else {
+      existingValue.value = value;
+    }
   }
 
   @override
@@ -55,11 +72,10 @@ class _CategoryAttributeFormScreenState
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
         onTap: () {
-         entity.attributes = entity.attributes?.toSet().toList();
-         print(entity.attributes?.length);
           if ((formKey.currentState?.validate()) ?? false) {
-            // Navigator.of(context)
-                // .pushNamed(RouteNamedScreens.categoryAttributeForm);
+            AdvertisementModel.entity?.attributes = attributeFormValues;
+            Navigator.of(context)
+            .pushNamed(RouteNamedScreens.advertisement);
             return;
           }
           NoteMessage.showErrorSnackBar(
@@ -101,7 +117,7 @@ class _CategoryAttributeFormScreenState
                       children: List.generate(
                         attributes.length,
                         (index) {
-                          Attributes? currentAttribute =
+                       Attributes?   currentAttribute =
                               state.entity.data?.attributes?[index];
 
                           List<NameAndId> attributeListElements = [];
@@ -137,12 +153,8 @@ class _CategoryAttributeFormScreenState
                                       -1],
                                   hint: attributes[index].attributeName ?? "",
                                   onChanged: (value) {
-                                    print('heeeeeeelo');
-                                    entity.attributes?.add(AttributeFormValue(
-                                      value:  value,
-
-                                    attributeId:  currentAttribute?.attributeId
-                                    ));
+                                    setAttributeFormValue(
+                                        value ?? "", currentAttribute);
                                     return null;
                                   },
                                   validator: (value) {
@@ -153,26 +165,19 @@ class _CategoryAttributeFormScreenState
                                   },
                                 ),
                                 child: TitleDropDownFormFieldWidget(
-                                  onChanged: (value) {
-                                    print('heeeeeeelo');
-
-
-                                    entity.attributes?.add(AttributeFormValue(
-                                        value:  value?.name ??"",
-
-                                        attributeId:  currentAttribute?.attributeId
-                                    ));
-                                    print(entity.attributes);
-                                  },
                                   validator: (value) {
-                                    if (value?.name.isEmpty ?? true) {
+                                    if ((value?.name ?? "").isEmpty) {
                                       return "required";
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    setAttributeFormValue(
+                                        value?.name ?? "", currentAttribute);
+                                    return null;
+                                  },
                                   title: currentAttribute?.attributeName ?? "",
                                   options: attributeListElements,
-
                                   hint: currentAttribute?.attributeName ?? "",
                                 ),
                               ),
@@ -202,4 +207,8 @@ class CategoryAttributeFormArgs {
   num? categoryId;
 
   CategoryAttributeFormArgs({required this.categoryId});
+}
+
+abstract  class AdvertisementModel{
+ static AddAdvertisementRequestEntity? entity = AddAdvertisementRequestEntity();
 }

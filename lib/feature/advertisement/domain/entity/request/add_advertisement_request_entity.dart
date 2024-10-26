@@ -101,6 +101,8 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   }
 
   set attributes(List<AttributeFormValue>? value) {
+    print(value);
+    print('model value');
     _attributes = value;
   }
 

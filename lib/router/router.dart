@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attributes_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
@@ -32,6 +33,7 @@ abstract class RouteNamedScreens {
   static const String categoryAttributeForm = "/category-attribute-form";
   static const String profile = "/profile";
   static const String categoryInsidePage = "/category-inside-page";
+  static const String advertisement = "/advertisement";
 }
 
 abstract class AppRouter {
@@ -67,6 +69,14 @@ abstract class AppRouter {
           create: (context) => di.sl<CategoryInsidePageCubit>(),
           child: CategoryInsidePageScreen(args: argument),
         ));
+
+      case RouteNamedScreens.advertisement:
+        argument as CategoryInsidePageArgs;
+        return SlidLeftBuilderRoute(
+            page: BlocProvider(
+              create: (context) => di.sl<CategoryInsidePageCubit>(),
+              child: AdvertisementScreen(),
+            ));
       case RouteNamedScreens.categoryAttributeForm:
         argument as CategoryAttributeFormArgs;
         return SlidLeftBuilderRoute(
