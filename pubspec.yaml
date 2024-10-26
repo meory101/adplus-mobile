@@ -31,7 +31,6 @@ dependencies:
   flash: ^3.1.1
   pinput: ^4.0.0
   image_picker: ^1.1.2
-  image_cropper: ^8.0.1
   url_launcher: ^6.3.0
   package_info_plus: ^8.0.2
   dots_indicator: ^3.0.0

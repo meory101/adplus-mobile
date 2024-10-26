@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mzad_damascus/core/helper/app_image_helper.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
-import 'package:mzad_damascus/core/resource/image_manager.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/drop_down/NameAndId.dart';
@@ -15,16 +13,14 @@ import 'package:mzad_damascus/core/widget/drop_down/title_drop_down_form_field.d
 import 'package:mzad_damascus/core/widget/form_field/title_app_form_filed.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_state.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_state.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
-
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
-import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/container/dialog_container.dart';
-import '../../../../core/widget/text/app_text_widget.dart';
-import '../../../../router/router.dart';
 import '../../domain/entity/response/get_cities_response_entity.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
@@ -43,33 +39,44 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
   }
 
   List<File> advFiles = [];
+  Map data = {};
   GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: AdvertisementNextButton(
-        buttonText: "add advertisement",
-        onTap: () {
-          if(formKey.currentState!.validate() && advFiles.isNotEmpty){
-            context.read<AddAdvertisementCubit>().addAdvertisement(
-                context: context,
-                entity: AdvertisementModel.entity!,
-                files: advFiles);
+      bottomSheet: BlocConsumer<AddAdvertisementCubit, AddAdvertisementState>(
+        listener: (context, state) {
+          if (state.status == CubitStatus.error) {
+            NoteMessage.showErrorSnackBar(context: context, text: "");
           }
-
-          print(AdvertisementModel.entity?.name);
-          print(AdvertisementModel.entity?.description);
-          print(AdvertisementModel.entity?.startingPrice);
-          print(AdvertisementModel.entity?.keywords); //
-          print(AdvertisementModel.entity?.cityId);
-          print(AdvertisementModel.entity?.minIncreasePrice);
-          print(AdvertisementModel.entity?.bidingStartTime);
-          print(AdvertisementModel.entity?.categoryId); //
-          print(AdvertisementModel.entity?.attributes); //
-          print('000000000000000000000');
+          if (state.status == CubitStatus.success) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              RouteNamedScreens.mainBottomAppBar,
+              (route) => false,
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state.status == CubitStatus.loading) {
+            return const CircularProgressIndicator();
+          }
+          return AdvertisementNextButton(
+            buttonText: "add advertisement",
+            onTap: () async {
+              if (formKey.currentState!.validate() && advFiles.isNotEmpty) {
+                context.read<AddAdvertisementCubit>().addAdvertisement(
+                    context: context,
+                    entity: AdvertisementModel.entity!,
+                    files: advFiles);
+              } else {
+                NoteMessage.showErrorSnackBar(
+                    context: context, text: "enter required fields");
+              }
+            },
+          );
         },
       ),
-
       body: DialogContainer(
         child: SingleChildScrollView(
           child: Form(
@@ -80,7 +87,6 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               children: [
                 const AdvertisementAppBar(
                   completePercent: 1,
-
                 ),
                 SizedBox(
                   height: AppHeightManager.h2point5,

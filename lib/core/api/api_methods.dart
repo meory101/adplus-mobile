@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:http/http.dart' as http;
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import '../storage/shared/shared_pref.dart';
@@ -93,7 +94,6 @@ class ApiMethods {
           ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),
           headers: headers);
     }
-
   }
 
   //Using this function for all post requests
@@ -151,45 +151,41 @@ class ApiMethods {
     }
   }
 
-  //Using this function for all delete requests
-  //When the parameter does not needed set as empty value
   Future<http.Response> delete({required String url, required path}) async {
     return await http.delete(
         ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),
         headers: headers);
   }
 
-  Future<http.Response> postWithMultiFile({required String url,required Map data,required List<File> files}) async {
-    var multiPartRequest =  http.MultipartRequest('POST', Uri.parse('https://'+AppConstantManager.baseUrl+'/'+url));
-    for (int i = 0; i < files.length; i++) {
-      print('called this');
-      var length = await files[i].length();
-      var stream = await http.ByteStream(files[i].openRead());
-      var multiPartFile = http.MultipartFile(
-        'photos[$i]', // Field name for images
+  Future<http.Response> postWithMultiFile({
+    required String url,
+    required Map data,
+    required List<File> files,
+  }) async {
+    var multiPartRequest = http.MultipartRequest(
+        'POST', Uri.parse('https://${AppConstantManager.baseUrl}/$url'));
+
+    for (var image in files) {
+      var stream = http.ByteStream(image.openRead());
+      var length = await image.length();
+      var multipartFile = http.MultipartFile(
+        'photos[]',
         stream,
         length,
-        filename: basename(files[i].path),
+        filename: basename(image.path),
       );
-      multiPartRequest.files.add(multiPartFile);
-
-      print(multiPartRequest.files);
+      multiPartRequest.files.add(multipartFile);
     }
-    print('final');
-    print(multiPartRequest.files);
-    print(multiPartRequest.files.first.filename);
-    multiPartRequest.headers.addAll(headers);
+
+    multiPartRequest.headers.addAll({
+      'Authorization': 'Bearer ${AppSharedPreferences.getToken()}',
+    });
+
     data.forEach((key, value) {
-      // print(key);
-      // print(value);
       multiPartRequest.fields[key.toString()] = value.toString();
     });
-    http.StreamedResponse sresponce = await multiPartRequest.send();
-    // print(AppSharedPreferences.getToken());
-    // print('token');
 
-   return  await http.Response.fromStream(sresponce);
-    // print(jsonDecode(response.body));
-    // return jsonDecode(response.body);
+    http.StreamedResponse response = await multiPartRequest.send();
+    return await http.Response.fromStream(response);
   }
 }
