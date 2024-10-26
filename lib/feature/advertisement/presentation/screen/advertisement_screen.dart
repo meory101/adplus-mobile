@@ -46,6 +46,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
+        buttonText: "add advertisement",
         onTap: () {
 
           print(AdvertisementModel.entity?.name);

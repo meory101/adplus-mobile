@@ -9,7 +9,8 @@ import '../../../../core/widget/text/app_text_widget.dart';
 
 class AdvertisementNextButton extends StatelessWidget {
   final void Function()? onTap;
-  const AdvertisementNextButton({super.key,required this.onTap});
+  final String? buttonText;
+  const AdvertisementNextButton({super.key,required this.onTap,this.buttonText});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class AdvertisementNextButton extends StatelessWidget {
       width: AppWidthManager.w100,
       height: AppHeightManager.h6,
       child: AppTextWidget(
-          text: "Next",
+          text:buttonText?? "Next",
           fontSize: FontSizeManager.fs16,
           color: AppColorManager.white,
           fontWeight: FontWeight.w500),

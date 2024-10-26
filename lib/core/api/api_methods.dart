@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import '../storage/shared/shared_pref.dart';
 import 'api_url.dart';
+import 'package:path/path.dart';
 
 //All Api methods with configuration to send http request
 class ApiMethods {
@@ -19,9 +21,9 @@ class ApiMethods {
       //   "X-Parse-REST-API-Key": "soa12345",
       //   "lang": AppSharedPreferences.getLanguage()
       // };
-      // if (AppSharedPreferences.getToken().isNotEmpty) {
-      //   headers['X-Parse-Session-Token'] = AppSharedPreferences.getToken();
-      // }
+      if (AppSharedPreferences.getToken().isNotEmpty) {
+        headers['Authorization'] = 'Bearer ${AppSharedPreferences.getToken()}';
+      }
     } else {
       headers = header;
     }
@@ -154,5 +156,24 @@ class ApiMethods {
     return await http.delete(
         ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),
         headers: headers);
+  }
+
+  Future<http.Response> postWithMultiFile({required String url,required Map data,required List<File> files}) async {
+    var multiPartRequest =  http.MultipartRequest('POST', Uri.parse(url));
+    for (int i = 0; i < files.length; i++) {
+      var length = await files[i].length();
+      var stream = await http.ByteStream(files[i].openRead());
+      var multiPartFile = await http.MultipartFile('photo[]', stream, length,
+          filename: basename(files[i].path));
+      multiPartRequest.files.add(multiPartFile);
+    }
+    multiPartRequest.headers.addAll(headers);
+    data.forEach((key, value) {
+      multiPartRequest.fields[key] = value;
+    });
+    http.StreamedResponse sresponce = await multiPartRequest.send();
+   return  await http.Response.fromStream(sresponce);
+    // print(jsonDecode(response.body));
+    // return jsonDecode(response.body);
   }
 }
