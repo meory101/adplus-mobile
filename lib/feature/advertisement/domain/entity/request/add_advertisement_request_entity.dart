@@ -45,7 +45,7 @@ class AddAdvertisementRequestEntity {
     _minIncreasePrice = json['min_increase_price'];
     _description = json['description'];
     _keywords = json['keywords'];
-    _bidingStartTime = json['biding_start_time'];
+    _bidingStartTime = json['bidding_start_time'];
     _attributes = json['attributes'];
   }
   num? _categoryId;
@@ -95,7 +95,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
     map['min_increase_price'] = _minIncreasePrice;
     map['description'] = _description;
     map['keywords'] = _keywords;
-    map['biding_start_time'] = _bidingStartTime;
+    map['bidding_start_time'] = _bidingStartTime;
     map['attributes'] = _attributes;
     return map;
   }

@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 
 abstract class EnumManager {
 
-  static int textCode = 1;
-  static int numberCode = 2;
-  static int dateCode = 3;
-  static int booleanCode = 4;
-  static int listCode = 5;
+  // static int textCode = 1;
+  // static int numberCode = 2;
+  // static int dateCode = 3;
+  // static int booleanCode = 4;
+  // static int listCode = 5;
 
 
   static String text = "text";
@@ -18,13 +18,13 @@ abstract class EnumManager {
   static String list = "list";
 
 
-  static Map<int,TextInputType> attributeTextInputType ={
-    textCode : TextInputType.text,
-    numberCode : TextInputType.number,
-    dateCode : TextInputType.datetime,
-    booleanCode : TextInputType.text,
-    listCode : TextInputType.text,
-    -1 :  TextInputType.text
+  static Map<String,TextInputType> attributeTextInputType ={
+    text : TextInputType.text,
+    number : TextInputType.number,
+    number : TextInputType.datetime,
+    boolean : TextInputType.text,
+    list : TextInputType.text,
+    "" :  TextInputType.text
   };
 
 

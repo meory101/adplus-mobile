@@ -76,8 +76,6 @@ class AdvertisementRemoteImplement extends AdvertisementRemote {
       multiPartRequest.fields[key.toString()] = value.toString();
     });
 
-    multiPartRequest.fields['bidding_start_time'] = DateTime.now().toString();
-
     if (data['attributes'] != null && data['attributes'] is List) {
       for (var attr in data['attributes']) {
         multiPartRequest

@@ -124,8 +124,8 @@ class _CategoryAttributeFormScreenState
                           List<NameAndId> attributeListElements = [];
 
                           if (currentAttribute
-                                  ?.attributeType?.attributeTypeId ==
-                              EnumManager.listCode) {
+                                  ?.attributeType?.name ==
+                              EnumManager.list) {
                             currentAttribute?.attributeTypeList?.forEach(
                               (attributeListElement) {
                                 attributeListElements.add(
@@ -143,15 +143,15 @@ class _CategoryAttributeFormScreenState
                             children: [
                               Visibility(
                                 visible: currentAttribute
-                                        ?.attributeType?.attributeTypeId ==
-                                    EnumManager.listCode,
+                                        ?.attributeType?.name ==
+                                    EnumManager.list,
                                 replacement: TitleAppFormFiled(
                                   title: currentAttribute?.attributeName ?? "",
                                   textInputType: EnumManager
                                       .attributeTextInputType[attributes[index]
                                           .attributeType
-                                          ?.attributeTypeId ??
-                                      -1],
+                                          ?.name ??
+                                      ""],
                                   hint: attributes[index].attributeName ?? "",
                                   onChanged: (value) {
                                     setAttributeFormValue(

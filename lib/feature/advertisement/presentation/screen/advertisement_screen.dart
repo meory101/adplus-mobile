@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mzad_damascus/core/helper/app_image_helper.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
@@ -19,8 +21,12 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_citie
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/font_manager.dart';
+import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
+import '../../../../core/widget/bottom_sheet/wheel_date_picker.dart';
 import '../../../../core/widget/container/dialog_container.dart';
+import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_cities_response_entity.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
@@ -41,6 +47,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
   List<File> advFiles = [];
   Map data = {};
   GlobalKey<FormState> formKey = GlobalKey();
+  DateTime? dateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -276,21 +283,74 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                 SizedBox(
                   height: AppHeightManager.h1point8,
                 ),
-                TitleAppFormFiled(
-                  textInputType: TextInputType.datetime,
-                  hint: "start time",
-                  title: "start time",
-                  onChanged: (value) {
-                    AdvertisementModel.entity?.bidingStartTime = value ?? "";
-
-                    return null;
+                InkWell(
+                  overlayColor: const MaterialStatePropertyAll(
+                      AppColorManager.transparent),
+                  onTap: () {
+                    showWheelDatePicker(
+                      context: context,
+                      onDateSelected: (value) {
+                        AdvertisementModel.entity?.bidingStartTime = '${value}';
+                        setState(() {
+                          dateTime = value;
+                        });
+                      },
+                    );
                   },
-                  validator: (value) {
-                    if ((value ?? "").isEmpty) {
-                      return "required";
-                    }
-                    return null;
-                  },
+                  child: Container(
+                    alignment: LanguageHelper.checkIfLTR(context: context)
+                        ? Alignment.topRight
+                        : Alignment.topLeft,
+                    width: double.infinity,
+                    height: AppHeightManager.h6,
+                    decoration: BoxDecoration(
+                      color: AppColorManager.white,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(AppRadiusManager.r10)),
+                      border: Border.all(
+                        color: AppColorManager.lightGreyOpacity6,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(AppWidthManager.w3),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          dateTime == null
+                              ? AppTextWidget(
+                                  text: "start bidding date".tr(),
+                                  fontSize: FontSizeManager.fs14,
+                                  color: AppColorManager.grey,
+                                )
+                              : AppTextWidget(
+                                  fontSize: FontSizeManager.fs15,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColorManager.black,
+                                  text: "$dateTime",
+                                ),
+                          InkWell(
+                            overlayColor: const WidgetStatePropertyAll(
+                                AppColorManager.transparent),
+                            onTap: () {
+                              showWheelDatePicker(
+                                context: context,
+                                onDateSelected: (value) {
+                                  AdvertisementModel.entity?.bidingStartTime =
+                                      '${value}';
+                                  setState(() {
+                                    dateTime = value;
+                                  });
+                                },
+                              );
+                            },
+                            child: SvgPicture.asset(
+                              AppIconManager.calendar,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: AppHeightManager.h9,
