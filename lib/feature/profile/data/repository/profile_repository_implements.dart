@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
@@ -31,6 +33,16 @@ class ProfileRepositoryImplements implements ProfileRepository {
     return Connector<UpdateProfileResponseEntity>().connect(
       remote: () async {
         final result = await remote.updateProfile(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure,bool>>updateProfileImage({required File profileImage}) {
+    return Connector<bool>().connect(
+      remote: () async {
+        final result = await remote.updateProfileImage(profileImage: profileImage);
         return Right(result);
       },
     );

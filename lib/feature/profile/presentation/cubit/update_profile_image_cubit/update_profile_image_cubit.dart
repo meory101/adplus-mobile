@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -11,33 +12,35 @@ import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_usec
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
 import '../../../domain/entity/request/update_profile_request_entity.dart';
+import '../../../domain/usecase/update_profile_image_usecase.dart';
 
 
-part 'update_profile_state.dart';
+part 'update_profile_image_state.dart';
 
 /// Eng.Nour Othman(meory)*
 
 
-class UpdateProfileCubit extends Cubit<UpdateProfileState> {
-  final UpdateProfileUsecase usecase;
+class UpdateProfileImageCubit extends Cubit<UpdateProfileImageState> {
+  final UpdateProfileImageUsecase usecase;
 
-  UpdateProfileCubit({
+  UpdateProfileImageCubit({
     required this.usecase,
-  }) : super(UpdateProfileState.initial());
+  }) : super(UpdateProfileImageState.initial());
 
-  void updateProfile({required BuildContext context,required UpdateProfileRequestEntity entity}) async {
+  void updateProfile(
+      {required BuildContext context, required File profileImage}) async {
     emit(state.copyWith(status: CubitStatus.loading));
-    final result = await usecase(entity:entity );
+    final result = await usecase(profileImage:profileImage);
 
     if (isClosed) return;
     result.fold(
-      (failure) async {
+          (failure) async {
         final ErrorEntity errorEntity =
-            await ApiErrorHandler.mapFailure(failure: failure);
+        await ApiErrorHandler.mapFailure(failure: failure);
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
-      (data) {
+          (data) {
         emit(state.copyWith(status: CubitStatus.success, entity: data));
       },
     );

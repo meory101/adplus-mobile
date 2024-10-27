@@ -21,6 +21,10 @@ class UpdateProfileRequestEntity {
     _whatsapp = whatsapp;
 }
 
+  set name(String? value) {
+    _name = value;
+  }
+
   UpdateProfileRequestEntity.fromJson(dynamic json) {
     _name = json['name'];
     _username = json['username'];
@@ -60,4 +64,19 @@ UpdateProfileRequestEntity copyWith({  String? name,
     return map;
   }
 
+  set username(String? value) {
+    _username = value;
+  }
+
+  set email(String? value) {
+    _email = value;
+  }
+
+  set phone(String? value) {
+    _phone = value;
+  }
+
+  set whatsapp(String? value) {
+    _whatsapp = value;
+  }
 }

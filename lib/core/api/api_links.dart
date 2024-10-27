@@ -14,6 +14,7 @@ class ApiPostUrl {
   static String addAdv= "api/item/create-item";
   static String getItemsByAttribute= "api/item/getItemsByAttribute";
   static String updateProfile = "api/auth/UpdateProfile";
+  static String uploadProfileImage = "api/auth/UploadProfileImage";
 
 }
 class ApiDeleteUrl {}

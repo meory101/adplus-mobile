@@ -7,7 +7,9 @@ import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/profile_info_card_shimmer.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/profile_following_info_card.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
@@ -22,6 +24,11 @@ class ProfileInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProfileInfo? profileInfo;
+
+    onEditTaped(){
+      Navigator.of(context).pushNamed(RouteNamedScreens.profileModification,arguments: ProfileInfoModificationArgs(profileInfo: profileInfo));
+    }
     return BlocConsumer<GetProfileInfoCubit, GetProfileInfoState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error) {
@@ -34,7 +41,7 @@ class ProfileInfoCard extends StatelessWidget {
         }
 
 
-        ProfileInfo? profileInfo = state.entity.data;
+         profileInfo = state.entity.data;
         return Container(
           decoration: BoxDecoration(
             border: Border.all(
@@ -92,34 +99,37 @@ class ProfileInfoCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColorManager.textGrey,
-                            width: 1.0,
+                  InkWell(
+                    onTap: onEditTaped,
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppColorManager.textGrey,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppHeightManager.h1,
-                              horizontal: AppWidthManager.w4),
-                          child: Row(
-                            children: [
-                              AppTextWidget(text: "Edit",
-                                fontWeight: FontWeight.w500,
-                                fontSize: FontSizeManager.fs15,
-                              ),
-                              SizedBox(width: AppWidthManager.w2,),
-                              Icon(Icons.edit, size: AppWidthManager.w5,)
-                            ],
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: AppHeightManager.h1,
+                                horizontal: AppWidthManager.w4),
+                            child: Row(
+                              children: [
+                                AppTextWidget(text: "Edit",
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: FontSizeManager.fs15,
+                                ),
+                                SizedBox(width: AppWidthManager.w2,),
+                                Icon(Icons.edit, size: AppWidthManager.w5,)
+                              ],
+                            ),
                           ),
                         ),
-                      ),
 
-                    ],
+                      ],
+                    ),
                   )
                 ],
               ),

@@ -118,10 +118,12 @@ abstract class AppRouter {
               ),
             ));
       case RouteNamedScreens.profileModification:
+        argument as ProfileInfoModificationArgs;
         return SlidLeftBuilderRoute(
             page: BlocProvider(
               create: (context) => di.sl<UpdateProfileCubit>(),
-              child: const ProfileInfoModificationScreen(
+              child:  ProfileInfoModificationScreen(
+                args: argument,
               ),
             ));
       case RouteNamedScreens.mainBottomAppBar:
