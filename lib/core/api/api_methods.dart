@@ -24,6 +24,8 @@ class ApiMethods {
       //   "lang": AppSharedPreferences.getLanguage()
       // };
       if (AppSharedPreferences.getToken().isNotEmpty) {
+        print(AppSharedPreferences.getToken());
+        print('tokeeeeeeeeeeeeeeeeeeeeeeen');
         headers['Authorization'] = 'Bearer ${AppSharedPreferences.getToken()}';
       }
     } else {

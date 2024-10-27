@@ -25,7 +25,7 @@ class _InsidePageCategoryAdvsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(title: ''),
+      appBar: const MainAppBar(title: ''),
       body: SingleChildScrollView(
         child: Column(
           children: [

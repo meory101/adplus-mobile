@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
-import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
+import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
+import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -24,10 +29,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+@override
+  void initState() {
+    initProfileScreen();
+    super.initState();
+  }
+  initProfileScreen(){
+    if(AppSharedPreferences.getToken().isEmpty){
+      Navigator.of(context).pushNamed(RouteNamedScreens.login);
+      return;
+    }
+    context.read<GetProfileInfoCubit>().getProfileInfo(context: context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -54,8 +70,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
-              margin: EdgeInsets.all(16.0),
-              padding: EdgeInsets.all(16.0),
+              margin: EdgeInsets.all(AppWidthManager.w3Point8),
+              padding: EdgeInsets.all(AppWidthManager.w3Point8),
               child: Column(
                 children: [
                   SizedBox(height: AppHeightManager.h02),
@@ -64,11 +80,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Column(
                         children: [
-                          CircleAvatar(
-                            radius: AppRadiusManager.r30,
-                            backgroundImage:
-                                AssetImage('assets/images/placeholder.png'),
-                          ),
+                         Container(
+                            width: AppWidthManager.w20,
+                            height: AppWidthManager.w20,
+                           clipBehavior: Clip.antiAliasWithSaveLayer,
+                           decoration: const BoxDecoration(
+                             shape: BoxShape.circle,
+                           ),
+                           child: MainImageWidget(
+                             imageUrl: "",
+                           ),
+                         ),
                           AppTextWidget(
                             text: '+97471686245',
                             fontSize: FontSizeManager.fs16,
@@ -149,6 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
+
             Divider(
               color: Colors.grey[400],
               thickness: 1.0,
