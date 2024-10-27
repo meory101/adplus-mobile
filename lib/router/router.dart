@@ -14,6 +14,8 @@ import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_p
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
@@ -40,6 +42,7 @@ abstract class RouteNamedScreens {
   static const String categoryInsidePage = "/category-inside-page";
   static const String advertisement = "/advertisement";
   static const String insidePageCategoryAdvs = "/inside-page-category-advs";
+  static const String profileModification = "/profile-modification";
 }
 
 abstract class AppRouter {
@@ -114,10 +117,20 @@ abstract class AppRouter {
                 args: argument,
               ),
             ));
-
+      case RouteNamedScreens.profileModification:
+        return SlidLeftBuilderRoute(
+            page: BlocProvider(
+              create: (context) => di.sl<UpdateProfileCubit>(),
+              child: const ProfileInfoModificationScreen(
+              ),
+            ));
       case RouteNamedScreens.mainBottomAppBar:
         return FadeBuilderRoute(
             page: MultiBlocProvider(providers: [
+              BlocProvider(
+                create: (context) => di.sl<LoginCubit>(),
+                child: const LoginScreen(),
+              ),
               BlocProvider(
                 create: (context) =>
                 di.sl<GetCategoriesCubit>()

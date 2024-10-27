@@ -31,9 +31,9 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
     bottomBarScreens = [
       const HomeScreen(),
       const HomeScreen(),
-    AppSharedPreferences.getToken().isEmpty ?
-    const LoginScreen():
-      const ProfileScreen(),
+      AppSharedPreferences.getToken().isEmpty
+          ? const LoginScreen()
+          : const ProfileScreen(),
       MoreScreen(),
     ];
 
@@ -116,7 +116,6 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                     ),
                   ),
                   Container(
-
                     height: AppWidthManager.w12,
                     width: AppWidthManager.w12,
                     decoration: const BoxDecoration(
