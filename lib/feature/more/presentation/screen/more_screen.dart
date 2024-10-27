@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 
 import '../widget/more_list_tile.dart';
@@ -19,10 +21,11 @@ class MoreScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppTextWidget(
-                text: 'More',
-                fontSize: FontSizeManager.fs17,
-                color: AppColorManager.textAppColor,
-                fontWeight: FontWeight.w700),
+              text: 'More',
+              fontSize: FontSizeManager.fs17,
+              color: AppColorManager.textAppColor,
+              fontWeight: FontWeight.w700,
+            ),
           ],
         ),
       ),
@@ -35,9 +38,7 @@ class MoreScreen extends StatelessWidget {
             color: AppColorManager.pinkAccent,
             onTap: () {},
           ),
-           const Divider(
-            color: AppColorManager.borderGrey,
-          ),
+          const Divider(color: AppColorManager.borderGrey),
           MoreListTile(
             icon: Icons.announcement,
             label: 'My Ads',
@@ -52,13 +53,13 @@ class MoreScreen extends StatelessWidget {
           ),
           MoreListTile(
             icon: Icons.block,
-            label: 'blocked',
+            label: 'Blocked',
             color: AppColorManager.red,
             onTap: () {},
           ),
           MoreListTile(
             icon: Icons.chat_bubble_outline,
-            label: 'chat',
+            label: 'Chat',
             color: AppColorManager.lightBlue,
             onTap: () {},
           ),
@@ -73,12 +74,10 @@ class MoreScreen extends StatelessWidget {
               );
             },
           ),
-          const Divider(
-            color: AppColorManager.borderGrey,
-          ),
+          const Divider(color: AppColorManager.borderGrey),
           MoreListTile(
             icon: Icons.wallet_travel,
-            label: 'تحويل الى حساب اعمال ',
+            label: 'تحويل الى حساب اعمال',
             color: AppColorManager.purple,
             onTap: () {},
           ),
@@ -99,6 +98,28 @@ class MoreScreen extends StatelessWidget {
             label: 'تفاصيل الحساب البنكي',
             color: Colors.green,
             onTap: () {},
+          ),
+          const Divider(color: AppColorManager.borderGrey),
+
+          // زر تسجيل الخروج
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
+            child: ElevatedButton(
+              onPressed: () {
+                // استدعاء logout من LogoutCubit
+                context.read<LogoutCubit>().logout();
+                print("sssssssssssssssssssssss");
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColorManager.red, // اللون عند الضغط
+                padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
+              ),
+              child: AppTextWidget(
+                text: 'تسجيل الخروج',
+                color: AppColorManager.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
       ),

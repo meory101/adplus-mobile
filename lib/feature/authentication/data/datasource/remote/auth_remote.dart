@@ -13,7 +13,7 @@ import '../../../../../core/api/api_methods.dart';
 
 abstract class AuthRemote {
   Future<LoginResponseEntity> login({required LoginRequestEntity entity});
-
+ Future<bool> logout();
 
 }
 
@@ -30,6 +30,16 @@ class AuthRemoteImplement extends AuthRemote {
       throw ApiServerException(response: response);
     }
   }
+ @override
+  Future<bool> logout() async {
+    final response = await ApiMethods().get(url: ApiPostUrl.logout);  
 
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      final jsonResponse = json.decode(response.body);
+      return jsonResponse['success'] ?? false;  
+    } else {
+      throw ApiServerException(response: response);  
+    }
+  }
 
 }

@@ -1,8 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/core/injection/injection_container.dart';
+import 'package:mzad_damascus/feature/authentication/data/datasource/remote/auth_remote.dart';
+import 'package:mzad_damascus/feature/authentication/domain/repository/auth_repository.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
@@ -31,7 +36,11 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
       const HomeScreen(),
       const HomeScreen(),
       const ProfileScreen(),
-      MoreScreen(),
+      BlocProvider(
+        create: (context) =>
+            LogoutCubit(logoutUsecase: sl()), // تأكد من توفير LogoutCubit هنا
+        child: MoreScreen(), // استخدم GetIt للحصول على AuthRepository
+      )
     ];
 
     super.initState();
@@ -113,7 +122,6 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                     ),
                   ),
                   Container(
-
                     height: AppWidthManager.w12,
                     width: AppWidthManager.w12,
                     decoration: const BoxDecoration(
