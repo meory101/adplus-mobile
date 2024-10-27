@@ -24,6 +24,9 @@ class AuthRemoteImplement extends AuthRemote {
     await ApiMethods().post(
       body: entity.toJson(),
         url: ApiPostUrl.login);
+    print(response.statusCode);
+    print(response.body);
+    print('000000000000000000000000000lgoogog}');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return loginResponseEntityFromJson(response.body);
     } else {

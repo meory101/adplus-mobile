@@ -36,7 +36,7 @@ class LoginCubit extends Cubit<LoginState> {
         final ErrorEntity errorEntity =
             await ApiErrorHandler.mapFailure(failure: failure);
         emit(state.copyWith(
-            error: errorEntity.errorMessage, status: CubitStatus.error));
+            error: errorEntity.errorMessage, status: CubitStatus.error,));
       },
       (data) {
         AppSharedPreferences.cashToken(token:data.data?.accessToken??"");

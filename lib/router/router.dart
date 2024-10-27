@@ -97,6 +97,7 @@ abstract class AppRouter {
         return SlidLeftBuilderRoute(
             page: MultiBlocProvider(
           providers: [
+
             BlocProvider(
               create: (context) =>
                   di.sl<GetCitiesCubit>()..getCities(context: context),
@@ -126,6 +127,9 @@ abstract class AppRouter {
             ),
             BlocProvider(
               create: (context) => di.sl<UpdateProfileImageCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<GetProfileInfoCubit>(),
             )
           ],
           child: ProfileInfoModificationScreen(

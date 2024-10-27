@@ -153,7 +153,7 @@ class ApiMethods {
     }
   }
 
-  Future<http.Response> delete({required String url, required path}) async {
+  Future<http.Response> delete({required String url, required path,}) async {
     return await http.delete(
         ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),
         headers: headers);
@@ -163,6 +163,7 @@ class ApiMethods {
     required String url,
     required Map data,
     required List<File> files,
+    String? imageKey
   }) async {
     var multiPartRequest = http.MultipartRequest(
         'POST', Uri.parse('https://${AppConstantManager.baseUrl}/$url'));
@@ -171,7 +172,7 @@ class ApiMethods {
       var stream = http.ByteStream(image.openRead());
       var length = await image.length();
       var multipartFile = http.MultipartFile(
-        'photos[]',
+        imageKey ??'photos[]',
         stream,
         length,
         filename: basename(image.path),

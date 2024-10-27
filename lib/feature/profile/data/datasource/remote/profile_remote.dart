@@ -14,6 +14,7 @@ abstract class ProfileRemote {
   Future<UpdateProfileResponseEntity> updateProfile({
     required UpdateProfileRequestEntity entity,
   });
+
   Future<bool> updateProfileImage({
     required File profileImage,
   });
@@ -33,7 +34,11 @@ class ProfileRemoteImplement extends ProfileRemote {
   @override
   Future<UpdateProfileResponseEntity> updateProfile(
       {required UpdateProfileRequestEntity entity}) async {
-    final response = await ApiMethods().post(url: ApiPostUrl.updateProfile,body: entity.toJson());
+    final response = await ApiMethods()
+        .post(url: ApiPostUrl.updateProfile, body: entity.toJson());
+    print(response.body);
+    print(response.statusCode);
+    print('dataaaaaaaaaaaaaaaaaaaaaaaa');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return updateProfileResponseEntityFromJson(response.body);
     } else {
@@ -42,9 +47,12 @@ class ProfileRemoteImplement extends ProfileRemote {
   }
 
   @override
-  Future<bool> updateProfileImage({required File profileImage})async {
-
-    final response = await ApiMethods().postWithMultiFile(data: {},files:[profileImage] ,url: ApiPostUrl.uploadProfileImage);
+  Future<bool> updateProfileImage({required File profileImage}) async {
+    final response = await ApiMethods().postWithMultiFile(
+        data: {}, files: [profileImage], url: ApiPostUrl.uploadProfileImage,imageKey: 'image');
+    print(response.body);
+    print(response.statusCode);
+    print('imaggggggggggggggggggggggge');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {

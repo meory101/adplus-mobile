@@ -14,7 +14,9 @@ import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/helper/app_image_helper.dart';
@@ -80,61 +82,63 @@ class _ProfileInfoModificationScreenState
                       ),
                     ),
                     child: (widget.args.profileInfo?.user?.photo ?? '')
-                        .isNotEmpty
+                            .isNotEmpty
                         ? Container(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
 
-                        // alignment: Alignment.center,
-                        width: AppWidthManager.w20,
-                        height: AppWidthManager.w20,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            LanguageHelper.checkIfLTR(context: context)
-                                ? BoxShadow(
-                              color: AppColorManager.lightGreyOpacity6,
-                              offset: const Offset(4, -2),
-                              blurRadius: 7,
-                              spreadRadius: 1,
-                            )
-                                : BoxShadow(
-                              color: AppColorManager.lightGreyOpacity6,
-                              offset: const Offset(-4, -2),
-                              blurRadius: 7,
-                              spreadRadius: 1,
-                            )
-                          ],
-                          shape: BoxShape.circle,
-                        ),
-                        child: MainImageWidget(
-                          imageUrl: (AppConstantManager.imageBaseUrl +
-                              (widget.args.profileInfo?.user?.phone ?? "")),
-                        ))
+                            // alignment: Alignment.center,
+                            width: AppWidthManager.w20,
+                            height: AppWidthManager.w20,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                LanguageHelper.checkIfLTR(context: context)
+                                    ? BoxShadow(
+                                        color:
+                                            AppColorManager.lightGreyOpacity6,
+                                        offset: const Offset(4, -2),
+                                        blurRadius: 7,
+                                        spreadRadius: 1,
+                                      )
+                                    : BoxShadow(
+                                        color:
+                                            AppColorManager.lightGreyOpacity6,
+                                        offset: const Offset(-4, -2),
+                                        blurRadius: 7,
+                                        spreadRadius: 1,
+                                      )
+                              ],
+                              shape: BoxShape.circle,
+                            ),
+                            child: MainImageWidget(
+                              imageUrl: (AppConstantManager.imageBaseUrl +
+                                  (widget.args.profileInfo?.user?.phone ?? "")),
+                            ))
                         : Container(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      alignment: Alignment.center,
-                      width: AppWidthManager.w20,
-                      height: AppWidthManager.w20,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: AppColorManager.lightGreyOpacity6,
-                              offset: const Offset(
-                                -2,
-                                2,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            alignment: Alignment.center,
+                            width: AppWidthManager.w20,
+                            height: AppWidthManager.w20,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    color: AppColorManager.lightGreyOpacity6,
+                                    offset: const Offset(
+                                      -2,
+                                      2,
+                                    ),
+                                    blurRadius: 4,
+                                    spreadRadius: 4)
+                              ],
+                              color: AppColorManager.shimmerBaseColor,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  AppImageManager.placeholder,
+                                ),
+                                fit: BoxFit.cover,
                               ),
-                              blurRadius: 4,
-                              spreadRadius: 4)
-                        ],
-                        color: AppColorManager.shimmerBaseColor,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(
-                            AppImageManager.placeholder,
+                            ),
                           ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
                   ),
                   Positioned(
                     bottom: AppHeightManager.h1,
@@ -146,9 +150,7 @@ class _ProfileInfoModificationScreenState
                       onTap: () async {
                         profileImage = await AppImageHelper.pickImageFrom(
                             source: ImageSource.gallery);
-                        setState(() {
-
-                        });
+                        setState(() {});
                       },
                       child: Container(
                         padding: EdgeInsets.all(AppWidthManager.w1),
@@ -172,22 +174,21 @@ class _ProfileInfoModificationScreenState
                 title: "name",
                 hint: "name",
                 onChanged: (value) {
-                  entity.name = value ??"";
+                  entity.name = value ?? "";
                   return null;
                 },
                 validator: (value) {
-
                   return null;
                 },
-              ),   SizedBox(
+              ),
+              SizedBox(
                 height: AppHeightManager.h1point8,
               ),
-
               TitleAppFormFiled(
                 title: "User Name(email or phone)",
                 hint: "User Name",
                 onChanged: (value) {
-                  entity.username = value ??"";
+                  entity.username = value ?? "";
 
                   return null;
                 },
@@ -202,7 +203,7 @@ class _ProfileInfoModificationScreenState
                 title: "email",
                 hint: "email",
                 onChanged: (value) {
-                  entity.email = value ??"";
+                  entity.email = value ?? "";
 
                   return null;
                 },
@@ -217,7 +218,7 @@ class _ProfileInfoModificationScreenState
                 title: "whatsapp number",
                 hint: "whatsapp number",
                 onChanged: (value) {
-                  entity.whatsapp = value ??"";
+                  entity.whatsapp = value ?? "";
 
                   return null;
                 },
@@ -232,7 +233,7 @@ class _ProfileInfoModificationScreenState
                 title: "phone",
                 hint: "phone",
                 onChanged: (value) {
-                  entity.phone = value ??"";
+                  entity.phone = value ?? "";
 
                   return null;
                 },
@@ -243,33 +244,58 @@ class _ProfileInfoModificationScreenState
               SizedBox(
                 height: AppHeightManager.h4,
               ),
-              BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
+              BlocConsumer<UpdateProfileImageCubit, UpdateProfileImageState>(
                 listener: (context, state) {
-                  if(state.status == CubitStatus.error){
-                    NoteMessage.showErrorSnackBar(context: context, text: "");
+                  if (state.status == CubitStatus.success) {
+                    context
+                        .read<GetProfileInfoCubit>()
+                        .getProfileInfo(context: context);
+                    Navigator.of(context).pop();
                   }
                 },
                 builder: (context, state) {
-                  if(state.status == CubitStatus.loading){
-                    return const CircularProgressIndicator();
-                  }
-                  return MainAppButton(
-
-                    onTap: () {
-                      print(entity.name);
-                      print(entity.username);
-                      context.read<UpdateProfileCubit>().updateProfile(
-                          context: context, entity: entity);
+                  return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
+                    listener: (context, state) {
+                      if (state.status == CubitStatus.error) {
+                        NoteMessage.showErrorSnackBar(
+                            context: context, text: "");
+                      }
+                      if (state.status == CubitStatus.success) {
+                        if(profileImage==null){
+                          context
+                              .read<GetProfileInfoCubit>()
+                              .getProfileInfo(context: context);
+                          Navigator.of(context).pop();
+                          return;
+                        }
+                        context.read<UpdateProfileImageCubit>().updateProfile(
+                            context: context, profileImage: profileImage!);
+                      }
                     },
-                    alignment: Alignment.center,
-                    width: AppWidthManager.w100,
-                    height: AppHeightManager.h6,
-                    color: AppColorManager.mainColor,
-                    child: AppTextWidget(text: "save",
-                      fontSize: FontSizeManager.fs15,
-                      fontWeight: FontWeight.w500,
-                      color: AppColorManager.white,
-                    ),
+                    builder: (context, state) {
+                      if (state.status == CubitStatus.loading) {
+                        return const CircularProgressIndicator();
+                      }
+                      return MainAppButton(
+                        onTap: () {
+                          print(entity.name);
+                          print(entity.username);
+                          context
+                              .read<UpdateProfileCubit>()
+                              .updateProfile(context: context, entity: entity);
+                        },
+                        alignment: Alignment.center,
+                        width: AppWidthManager.w100,
+                        height: AppHeightManager.h6,
+                        color: AppColorManager.mainColor,
+                        child: AppTextWidget(
+                          text: "save",
+                          fontSize: FontSizeManager.fs15,
+                          fontWeight: FontWeight.w500,
+                          color: AppColorManager.white,
+                        ),
+                      );
+                    },
                   );
                 },
               )
@@ -280,7 +306,6 @@ class _ProfileInfoModificationScreenState
     );
   }
 }
-
 
 class ProfileInfoModificationArgs {
   ProfileInfo? profileInfo;
