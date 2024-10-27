@@ -10,7 +10,7 @@ class GetProfileInfoResponseEntity {
   GetProfileInfoResponseEntity({
       bool? success, 
       String? message, 
-      Data? data, 
+      ProfileInfo? data, 
       List<dynamic>? errors,}){
     _success = success;
     _message = message;
@@ -21,7 +21,7 @@ class GetProfileInfoResponseEntity {
   GetProfileInfoResponseEntity.fromJson(dynamic json) {
     _success = json['success'];
     _message = json['message'];
-    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    _data = json['data'] != null ? ProfileInfo.fromJson(json['data']) : null;
     // if (json['errors'] != null) {
     //   _errors = [];
     //   json['errors'].forEach((v) {
@@ -31,11 +31,11 @@ class GetProfileInfoResponseEntity {
   }
   bool? _success;
   String? _message;
-  Data? _data;
+  ProfileInfo? _data;
   List<dynamic>? _errors;
 GetProfileInfoResponseEntity copyWith({  bool? success,
   String? message,
-  Data? data,
+  ProfileInfo? data,
   List<dynamic>? errors,
 }) => GetProfileInfoResponseEntity(  success: success ?? _success,
   message: message ?? _message,
@@ -44,7 +44,7 @@ GetProfileInfoResponseEntity copyWith({  bool? success,
 );
   bool? get success => _success;
   String? get message => _message;
-  Data? get data => _data;
+  ProfileInfo? get data => _data;
   List<dynamic>? get errors => _errors;
 
   Map<String, dynamic> toJson() {
@@ -64,20 +64,20 @@ GetProfileInfoResponseEntity copyWith({  bool? success,
 
 /// user : {"client_id":107,"name":"Murad","username":"+963999999999","email":null,"phone":"+963999999999","whatsapp":"963999999999","address":null,"photo":null,"token_expires":0,"is_verified":1,"error_login":0}
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-String dataToJson(Data data) => json.encode(data.toJson());
-class Data {
-  Data({
+ProfileInfo dataFromJson(String str) => ProfileInfo.fromJson(json.decode(str));
+String dataToJson(ProfileInfo data) => json.encode(data.toJson());
+class ProfileInfo {
+  ProfileInfo({
       User? user,}){
     _user = user;
 }
 
-  Data.fromJson(dynamic json) {
+  ProfileInfo.fromJson(dynamic json) {
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
   User? _user;
-Data copyWith({  User? user,
-}) => Data(  user: user ?? _user,
+ProfileInfo copyWith({  User? user,
+}) => ProfileInfo(  user: user ?? _user,
 );
   User? get user => _user;
 

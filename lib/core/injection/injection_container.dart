@@ -22,6 +22,11 @@ import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_pa
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
+import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
+import 'package:mzad_damascus/feature/profile/data/repository/profile_repository_implements.dart';
+import 'package:mzad_damascus/feature/profile/domain/repository/profile_repository.dart';
+import 'package:mzad_damascus/feature/profile/domain/usecase/get_profile_info_usecase.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -56,4 +61,11 @@ Future<void> init() async {
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImplements(remote: sl()));
   sl.registerLazySingleton<AuthRemote>(() => AuthRemoteImplement());
 
+
+
+
+  sl.registerFactory(() => GetProfileInfoCubit(usecase: sl()));
+  sl.registerLazySingleton(() => GetProfileInfoUsecase(repository: sl()));
+  sl.registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImplements(remote: sl()));
+  sl.registerLazySingleton<ProfileRemote>(() => ProfileRemoteImplement());
 }
