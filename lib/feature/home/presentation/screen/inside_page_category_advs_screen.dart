@@ -42,7 +42,6 @@ class _InsidePageCategoryAdvsScreenState
                   return Column(
                     children: [
                       DecoratedContainer(
-
                           borderRadius:
                               BorderRadius.circular(AppRadiusManager.r15),
                           color: AppColorManager.lightGreyOpacity6,

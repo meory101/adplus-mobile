@@ -8,6 +8,7 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_citie
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
@@ -50,7 +51,18 @@ abstract class AppRouter {
       case RouteNamedScreens.profile:
         return FadeBuilderRoute(page: const ProfileScreen());
       case RouteNamedScreens.insidePageCategoryAdvs:
-        return FadeBuilderRoute(page: const InsidePageCategoryAdvsScreen());
+        return FadeBuilderRoute(
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => di.sl<AdvsByAttributeCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<AdvsByAttributeCubit>(),
+            )
+          ],
+          child: const InsidePageCategoryAdvsScreen(),
+        ));
       case RouteNamedScreens.login:
         return FadeBuilderRoute(
             page: BlocProvider(
@@ -85,8 +97,7 @@ abstract class AppRouter {
                   di.sl<GetCitiesCubit>()..getCities(context: context),
             ),
             BlocProvider(
-              create: (context) =>
-              di.sl<AddAdvertisementCubit>(),
+              create: (context) => di.sl<AddAdvertisementCubit>(),
             )
           ],
           child: AdvertisementScreen(),

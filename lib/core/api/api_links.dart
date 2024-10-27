@@ -11,6 +11,7 @@ class ApiPostUrl {
   static String getCategoryInsidePage= "api/category/inside-page";
   static String login= "api/auth/login";
   static String addAdv= "api/item/create-item";
+  static String getItemsByAttribute= "api/item/getItemsByAttribute";
 }
 class ApiDeleteUrl {}
 
