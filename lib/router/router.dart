@@ -9,6 +9,7 @@ import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertis
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
@@ -32,7 +33,7 @@ import '../feature/intro/presentation/screen/splash_screen.dart';
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
-  static const String init = mainBottomAppBar;
+  static const String init = splash;
   static const String splash = "/splash";
   static const String login = "/login";
   static const String register = "/register";
@@ -76,7 +77,11 @@ abstract class AppRouter {
           child: const LoginScreen(),
         ));
       case RouteNamedScreens.register:
-        return FadeBuilderRoute(page: const RegisterScreen());
+        return FadeBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<RegisterCubit>(),
+          child: const RegisterScreen(),
+        ));
       case RouteNamedScreens.advertisementLanguage:
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
       case RouteNamedScreens.advertisementCategory:
@@ -98,7 +103,6 @@ abstract class AppRouter {
         return SlidLeftBuilderRoute(
             page: MultiBlocProvider(
           providers: [
-
             BlocProvider(
               create: (context) =>
                   di.sl<GetCitiesCubit>()..getCities(context: context),
@@ -139,17 +143,16 @@ abstract class AppRouter {
         ));
       case RouteNamedScreens.mainBottomAppBar:
         return FadeBuilderRoute(
-            page: MultiBlocProvider(providers: [
-              BlocProvider(
-                create: (context) =>
-                di.sl<GetCategoriesCubit>()
-                  ..getCategories(context: context),),
-              BlocProvider(
-                  create: (context) =>
-                  di.sl<GetProfileInfoCubit>()),
-            ],
-              child: const MainBottomAppBar(),
-            ));
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  di.sl<GetCategoriesCubit>()..getCategories(context: context),
+            ),
+            BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
+          ],
+          child: const MainBottomAppBar(),
+        ));
     }
     return FadeBuilderRoute(page: const NotFoundScreen());
   }
