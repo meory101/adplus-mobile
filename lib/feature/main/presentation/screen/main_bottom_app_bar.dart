@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/injection/injection_container.dart';
 import 'package:mzad_damascus/feature/authentication/data/datasource/remote/auth_remote.dart';
 import 'package:mzad_damascus/feature/authentication/domain/repository/auth_repository.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/logout%20cubit/logout_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
@@ -36,11 +36,8 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
       const HomeScreen(),
       const HomeScreen(),
       const ProfileScreen(),
-      BlocProvider(
-        create: (context) =>
-            LogoutCubit(logoutUsecase: sl()), // تأكد من توفير LogoutCubit هنا
-        child: MoreScreen(), // استخدم GetIt للحصول على AuthRepository
-      )
+     MoreScreen(), // استخدم GetIt للحصول على AuthRepository
+      
     ];
 
     super.initState();

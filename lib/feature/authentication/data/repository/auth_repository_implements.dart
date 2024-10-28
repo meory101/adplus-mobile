@@ -36,7 +36,7 @@ class AuthRepositoryImplements implements AuthRepository {
     return Connector<LogoutResponseEntity>().connect(
       remote: () async {
         final result = await remote.logout(); // استخدم دالة logout من AuthRemote
-        return Right(result as LogoutResponseEntity);
+        return Right(result);
       },
     );
   }

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
+import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
+import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/logout%20cubit/logout_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_state.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
+import 'package:mzad_damascus/router/router.dart';
 
 import '../widget/more_list_tile.dart';
 
@@ -100,26 +105,43 @@ class MoreScreen extends StatelessWidget {
             onTap: () {},
           ),
           const Divider(color: AppColorManager.borderGrey),
-
-          // زر تسجيل الخروج
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
-            child: ElevatedButton(
-              onPressed: () {
-                // استدعاء logout من LogoutCubit
-                context.read<LogoutCubit>().logout();
-                print("sssssssssssssssssssssss");
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColorManager.red, // اللون عند الضغط
+          BlocConsumer<LogoutCubit, LogoutState>(
+            listener: (context, state) {
+              if (state.status == CubitStatus.error) {
+                NoteMessage.showErrorSnackBar(context: context, text: "");
+              }
+              if (state.status == CubitStatus.success) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  RouteNamedScreens.mainBottomAppBar,
+                  (route) => false,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state.status == CubitStatus.loading) {
+                return AppCircularProgressWidget();
+              }
+              return Padding(
                 padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
-              ),
-              child: AppTextWidget(
-                text: 'تسجيل الخروج',
-                color: AppColorManager.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // استدعاء logout من LogoutCubit
+                    context.read<LogoutCubit>().logout(context: context);
+                    print("sssssssssssssssssssssss");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColorManager.red, // اللون عند الضغط
+                    padding:
+                        EdgeInsets.symmetric(vertical: AppHeightManager.h2),
+                  ),
+                  child: AppTextWidget(
+                    text: 'تسجيل الخروج',
+                    color: AppColorManager.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

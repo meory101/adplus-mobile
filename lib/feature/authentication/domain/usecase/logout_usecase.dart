@@ -13,6 +13,6 @@ class LogoutUsecase {
   });
 
   Future<Either<ApiFailure, LogoutResponseEntity>> call() async {
-    return await repository.logout(); // تنفيذ دالة logout من الrepository
+    return await repository.logout();
   }
 }

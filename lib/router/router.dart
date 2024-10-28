@@ -8,6 +8,7 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_citie
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
@@ -122,6 +123,13 @@ abstract class AppRouter {
                 create: (context) =>
                 di.sl<GetCategoriesCubit>()
                   ..getCategories(context: context),),
+
+
+                  BlocProvider(
+                create: (context) =>
+                di.sl<LogoutCubit>()),
+
+
               BlocProvider(
                   create: (context) =>
                   di.sl<GetProfileInfoCubit>()),
