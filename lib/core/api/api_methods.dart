@@ -92,7 +92,7 @@ class ApiMethods {
               .getLink(),
           headers: headers);
     } else {
-      return await http.get(
+      return   await http.get(
           ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),
           headers: headers);
     }
