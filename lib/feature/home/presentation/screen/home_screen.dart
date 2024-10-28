@@ -1,10 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mzad_damascus/core/helper/language_helper.dart';
-import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
-import 'package:mzad_damascus/core/resource/theme_manager.dart';
-import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';

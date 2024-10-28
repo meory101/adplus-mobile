@@ -28,6 +28,8 @@ class LoginCubit extends Cubit<LoginState> {
       {required BuildContext context,
       required LoginRequestEntity entity}) async {
     emit(state.copyWith(status: CubitStatus.loading));
+    //TODO
+    // entity.authCode ="123437";
     final result = await usecase(entity: entity);
 
     if (isClosed) return;

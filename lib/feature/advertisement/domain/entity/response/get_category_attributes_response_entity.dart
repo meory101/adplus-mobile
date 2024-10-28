@@ -98,7 +98,7 @@ class CategoryInfo {
       num? homepageAppear,
       num? ord,
       num? itemsCount,
-      List<Attributes>? attributes,}){
+      List<CategoryAttributes>? attributes,}){
     _categoryId = categoryId;
     _parentId = parentId;
     _name = name;
@@ -136,7 +136,7 @@ class CategoryInfo {
     if (json['attributes'] != null) {
       _attributes = [];
       json['attributes'].forEach((v) {
-        _attributes?.add(Attributes.fromJson(v));
+        _attributes?.add(CategoryAttributes.fromJson(v));
       });
     }
   }
@@ -155,7 +155,7 @@ class CategoryInfo {
   num? _homepageAppear;
   num? _ord;
   num? _itemsCount;
-  List<Attributes>? _attributes;
+  List<CategoryAttributes>? _attributes;
 CategoryInfo copyWith({  num? categoryId,
   num? parentId,
   String? name,
@@ -171,7 +171,7 @@ CategoryInfo copyWith({  num? categoryId,
   num? homepageAppear,
   num? ord,
   num? itemsCount,
-  List<Attributes>? attributes,
+  List<CategoryAttributes>? attributes,
 }) => CategoryInfo(  categoryId: categoryId ?? _categoryId,
   parentId: parentId ?? _parentId,
   name: name ?? _name,
@@ -204,7 +204,7 @@ CategoryInfo copyWith({  num? categoryId,
   num? get homepageAppear => _homepageAppear;
   num? get ord => _ord;
   num? get itemsCount => _itemsCount;
-  List<Attributes>? get attributes => _attributes;
+  List<CategoryAttributes>? get attributes => _attributes;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -238,10 +238,10 @@ CategoryInfo copyWith({  num? categoryId,
 /// attribute_type : {"attribute_type_id":5,"name":"قائمة","has_list":1}
 /// attribute_type_list : [{"type_list_id":101,"option":"خدمات","photo":null},{"type_list_id":102,"option":"تبديل","photo":null},{"type_list_id":103,"option":"أجار","photo":null},{"type_list_id":104,"option":"شراء","photo":null},{"type_list_id":105,"option":"للبيع","photo":null}]
 
-Attributes attributesFromJson(String str) => Attributes.fromJson(json.decode(str));
-String attributesToJson(Attributes data) => json.encode(data.toJson());
-class Attributes {
-  Attributes({
+CategoryAttributes attributesFromJson(String str) => CategoryAttributes.fromJson(json.decode(str));
+String attributesToJson(CategoryAttributes data) => json.encode(data.toJson());
+class CategoryAttributes {
+  CategoryAttributes({
       num? attributeId, 
       num? categoryId, 
       String? attributeName, 
@@ -256,7 +256,7 @@ class Attributes {
     _attributeTypeList = attributeTypeList;
 }
 
-  Attributes.fromJson(dynamic json) {
+  CategoryAttributes.fromJson(dynamic json) {
     _attributeId = json['attribute_id'];
     _categoryId = json['category_id'];
     _attributeName = json['attribute_name'];
@@ -275,13 +275,13 @@ class Attributes {
   num? _ord;
   AttributeType? _attributeType;
   List<AttributeTypeList>? _attributeTypeList;
-Attributes copyWith({  num? attributeId,
+CategoryAttributes copyWith({  num? attributeId,
   num? categoryId,
   String? attributeName,
   num? ord,
   AttributeType? attributeType,
   List<AttributeTypeList>? attributeTypeList,
-}) => Attributes(  attributeId: attributeId ?? _attributeId,
+}) => CategoryAttributes(  attributeId: attributeId ?? _attributeId,
   categoryId: categoryId ?? _categoryId,
   attributeName: attributeName ?? _attributeName,
   ord: ord ?? _ord,

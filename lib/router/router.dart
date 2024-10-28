@@ -57,17 +57,15 @@ abstract class AppRouter {
       case RouteNamedScreens.profile:
         return FadeBuilderRoute(page: const ProfileScreen());
       case RouteNamedScreens.insidePageCategoryAdvs:
+        argument as InsidePageCategoryAdvArgs;
         return FadeBuilderRoute(
             page: MultiBlocProvider(
           providers: [
             BlocProvider(
               create: (context) => di.sl<AdvsByAttributeCubit>(),
             ),
-            BlocProvider(
-              create: (context) => di.sl<AdvsByAttributeCubit>(),
-            )
           ],
-          child: const InsidePageCategoryAdvsScreen(),
+          child: InsidePageCategoryAdvsScreen(args: argument,),
         ));
       case RouteNamedScreens.login:
         return FadeBuilderRoute(
@@ -89,16 +87,23 @@ abstract class AppRouter {
       case RouteNamedScreens.categoryInsidePage:
         argument as CategoryInsidePageArgs;
         return SlidLeftBuilderRoute(
-            page: BlocProvider(
-          create: (context) => di.sl<CategoryInsidePageCubit>(),
-          child: CategoryInsidePageScreen(args: argument),
-        ));
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => di.sl<CategoryInsidePageCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => di.sl<AdvsByAttributeCubit>(),
+              ),
+            ],
+            child: CategoryInsidePageScreen(args: argument),
+          ),
+        );
 
       case RouteNamedScreens.advertisement:
         return SlidLeftBuilderRoute(
             page: MultiBlocProvider(
           providers: [
-
             BlocProvider(
               create: (context) =>
                   di.sl<GetCitiesCubit>()..getCities(context: context),
@@ -139,26 +144,21 @@ abstract class AppRouter {
         ));
       case RouteNamedScreens.mainBottomAppBar:
         return FadeBuilderRoute(
-            page: MultiBlocProvider(providers: [
-              BlocProvider(
-                create: (context) =>
-                di.sl<GetCategoriesCubit>()
-                  ..getCategories(context: context),),
-
-                  BlocProvider(
-                create: (context) =>
-                di.sl<LogoutCubit>()),
-              BlocProvider(
-                create: (context) => di.sl<LoginCubit>(),
-                child: const LoginScreen(),
-              ),
-              BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
-
-            ],
-              child: const MainBottomAppBar(),
-            ));
-
-
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  di.sl<GetCategoriesCubit>()..getCategories(context: context),
+            ),
+            BlocProvider(create: (context) => di.sl<LogoutCubit>()),
+            BlocProvider(
+              create: (context) => di.sl<LoginCubit>(),
+              child: const LoginScreen(),
+            ),
+            BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
+          ],
+          child: const MainBottomAppBar(),
+        ));
     }
     return FadeBuilderRoute(page: const NotFoundScreen());
   }

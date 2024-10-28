@@ -12,7 +12,7 @@ class CategoryInsidePageResponseEntity {
   CategoryInsidePageResponseEntity({
       bool? success, 
       String? message, 
-      List<Attributes>? data,
+      List<CategoryAttributes>? data,
       List<dynamic>? errors,}){
     _success = success;
     _message = message;
@@ -26,23 +26,23 @@ class CategoryInsidePageResponseEntity {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(Attributes.fromJson(v));
+        _data?.add(CategoryAttributes.fromJson(v));
       });
     }
     if (json['errors'] != null) {
       _errors = [];
       json['errors'].forEach((v) {
-        _errors?.add(Attributes.fromJson(v));
+        _errors?.add(CategoryAttributes.fromJson(v));
       });
     }
   }
   bool? _success;
   String? _message;
-  List<Attributes>? _data;
+  List<CategoryAttributes>? _data;
   List<dynamic>? _errors;
 CategoryInsidePageResponseEntity copyWith({  bool? success,
   String? message,
-  List<Attributes>? data,
+  List<CategoryAttributes>? data,
   List<dynamic>? errors,
 }) => CategoryInsidePageResponseEntity(  success: success ?? _success,
   message: message ?? _message,
@@ -51,7 +51,7 @@ CategoryInsidePageResponseEntity copyWith({  bool? success,
 );
   bool? get success => _success;
   String? get message => _message;
-  List<Attributes>? get data => _data;
+  List<CategoryAttributes>? get data => _data;
   List<dynamic>? get errors => _errors;
 
   Map<String, dynamic> toJson() {

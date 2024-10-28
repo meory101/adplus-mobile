@@ -42,7 +42,7 @@ class _CategoryAttributeFormScreenState
   }
 
   List<AttributeFormValue> attributeFormValues = [];
-  Attributes? currentAttribute;
+  CategoryAttributes? currentAttribute;
 
   getCategoryAttributes() {
     AdvertisementModel.entity?.categoryId = widget.args.categoryId;
@@ -51,7 +51,7 @@ class _CategoryAttributeFormScreenState
         entity: GetCategoryAttributesRequestEntity(
             categoryId: widget.args.categoryId));
   }
-  void setAttributeFormValue(String value, Attributes? attribute) {
+  void setAttributeFormValue(String value, CategoryAttributes? attribute) {
     if (attribute == null) return;
     final existingValue = attributeFormValues.firstWhere(
           (formValue) => formValue.attributeId == attribute.attributeId,
@@ -107,7 +107,7 @@ class _CategoryAttributeFormScreenState
                   if (state.status == CubitStatus.loading) {
                     return const CategoryAttributeFormListViewShimmer();
                   }
-                  List<Attributes> attributes =
+                  List<CategoryAttributes> attributes =
                       state.entity.data?.attributes ?? [];
 
                   return Form(
@@ -118,7 +118,7 @@ class _CategoryAttributeFormScreenState
                       children: List.generate(
                         attributes.length,
                         (index) {
-                       Attributes?   currentAttribute =
+                          CategoryAttributes?   currentAttribute =
                               state.entity.data?.attributes?[index];
 
                           List<NameAndId> attributeListElements = [];

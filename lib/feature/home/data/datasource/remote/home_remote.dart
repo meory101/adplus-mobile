@@ -52,6 +52,7 @@ class HomeRemoteImplement extends HomeRemote {
         await ApiMethods().post(
         body: entity.toJson(),
         url: ApiPostUrl.getItemsByAttribute);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return advsByAttributeResponseEntityFromJson(response.body);
     } else {
