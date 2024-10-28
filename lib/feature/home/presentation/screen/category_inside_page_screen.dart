@@ -70,6 +70,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
               itemBuilder: (context, index) {
                 List<AttributeTypeList> attributeTypeList =
                     insidePageData[index].attributeTypeList ?? [];
+                print(insidePageData[index].attributeName);
+                print(insidePageData[index].attributeId);
+                print('0000000000000000000');
                 return Visibility(
                   visible: attributeTypeList.isNotEmpty,
                   child: Column(
@@ -88,6 +91,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                         builder: (context, index) {
                           return InkWell(
                             onTap: () {
+                              print(attributeTypeList[index].option);
+                              print(attributeTypeList[index].typeListId);
+                              print('999999999999999');
                               Navigator.of(context).pushNamed(
                                   RouteNamedScreens.insidePageCategoryAdvs);
                             },

@@ -12,6 +12,7 @@ import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/storage/shared/shared_pref.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
+import '../../../authentication/presentation/screen/login_screen.dart';
 import '../../../profile/presentation/screen/profile_screen.dart';
 
 class MainBottomAppBar extends StatefulWidget {

@@ -145,32 +145,20 @@ abstract class AppRouter {
                 di.sl<GetCategoriesCubit>()
                   ..getCategories(context: context),),
 
-
                   BlocProvider(
                 create: (context) =>
                 di.sl<LogoutCubit>()),
-
-
               BlocProvider(
-                  create: (context) =>
-                  di.sl<GetProfileInfoCubit>()),
+                create: (context) => di.sl<LoginCubit>(),
+                child: const LoginScreen(),
+              ),
+              BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
+
             ],
               child: const MainBottomAppBar(),
             ));
-            page: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => di.sl<LoginCubit>(),
-              child: const LoginScreen(),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  di.sl<GetCategoriesCubit>()..getCategories(context: context),
-            ),
-            BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
-          ],
-          child: const MainBottomAppBar(),
-        ));
+
+
     }
     return FadeBuilderRoute(page: const NotFoundScreen());
   }

@@ -46,7 +46,7 @@ class ProfileRemoteImplement extends ProfileRemote {
   @override
   Future<bool> updateProfileImage({required File profileImage}) async {
     final response = await ApiMethods().postWithMultiFile(
-        data: {}, files: [profileImage], url: ApiPostUrl.uploadProfileImage,imageKey: 'image');
+        data: {}, files: [profileImage], url: ApiPostUrl.updateProfileImage,imageKey: 'image');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {
