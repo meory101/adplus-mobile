@@ -40,6 +40,8 @@ class _ProfileInfoModificationScreenState
     extends State<ProfileInfoModificationScreen> {
   File? profileImage;
   UpdateProfileRequestEntity entity = UpdateProfileRequestEntity();
+  GlobalKey <FormState>formKey = GlobalKey();
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,258 +50,272 @@ class _ProfileInfoModificationScreenState
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppWidthManager.w3Point8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  Visibility(
-                    visible: profileImage?.path == null,
-                    replacement: Container(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      alignment: Alignment.center,
-                      width: AppWidthManager.w20,
-                      height: AppWidthManager.w20,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: AppColorManager.lightGreyOpacity6,
-                              offset: const Offset(
-                                -2,
-                                2,
-                              ),
-                              blurRadius: 4,
-                              spreadRadius: 4)
-                        ],
-                        color: AppColorManager.shimmerBaseColor,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: FileImage(
-                            profileImage ?? File(""),
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    child: (widget.args.profileInfo?.user?.photo ?? '')
-                            .isNotEmpty
-                        ? Container(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                            // alignment: Alignment.center,
-                            width: AppWidthManager.w20,
-                            height: AppWidthManager.w20,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                LanguageHelper.checkIfLTR(context: context)
-                                    ? BoxShadow(
-                                        color:
-                                            AppColorManager.lightGreyOpacity6,
-                                        offset: const Offset(4, -2),
-                                        blurRadius: 7,
-                                        spreadRadius: 1,
-                                      )
-                                    : BoxShadow(
-                                        color:
-                                            AppColorManager.lightGreyOpacity6,
-                                        offset: const Offset(-4, -2),
-                                        blurRadius: 7,
-                                        spreadRadius: 1,
-                                      )
-                              ],
-                              shape: BoxShape.circle,
-                            ),
-                            child: MainImageWidget(
-                              imageUrl: (AppConstantManager.imageBaseUrl +
-                                  (widget.args.profileInfo?.user?.phone ?? "")),
-                            ))
-                        : Container(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            alignment: Alignment.center,
-                            width: AppWidthManager.w20,
-                            height: AppWidthManager.w20,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    color: AppColorManager.lightGreyOpacity6,
-                                    offset: const Offset(
-                                      -2,
-                                      2,
-                                    ),
-                                    blurRadius: 4,
-                                    spreadRadius: 4)
-                              ],
-                              color: AppColorManager.shimmerBaseColor,
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  AppImageManager.placeholder,
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                  ),
-                  Positioned(
-                    bottom: AppHeightManager.h1,
-                    left: AppWidthManager.w12,
-                    right: 0,
-                    child: InkWell(
-                      overlayColor: const WidgetStatePropertyAll(
-                          AppColorManager.transparent),
-                      onTap: () async {
-                        profileImage = await AppImageHelper.pickImageFrom(
-                            source: ImageSource.gallery);
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(AppWidthManager.w1),
-                        decoration: const BoxDecoration(
-                            color: AppColorManager.textAppColor,
-                            shape: BoxShape.circle),
-                        child: Icon(
-                          Icons.edit,
-                          color: AppColorManager.white,
-                          size: 14.px,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: AppHeightManager.h4,
-              ),
-              TitleAppFormFiled(
-                title: "name",
-                hint: "name",
-                onChanged: (value) {
-                  entity.name = value ?? "";
-                  return null;
-                },
-                validator: (value) {
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: AppHeightManager.h1point8,
-              ),
-              TitleAppFormFiled(
-                title: "User Name(email or phone)",
-                hint: "User Name",
-                onChanged: (value) {
-                  entity.username = value ?? "";
-
-                  return null;
-                },
-                validator: (value) {
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: AppHeightManager.h1point8,
-              ),
-              TitleAppFormFiled(
-                title: "email",
-                hint: "email",
-                onChanged: (value) {
-                  entity.email = value ?? "";
-
-                  return null;
-                },
-                validator: (value) {
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: AppHeightManager.h1point8,
-              ),
-              TitleAppFormFiled(
-                title: "whatsapp number",
-                hint: "whatsapp number",
-                onChanged: (value) {
-                  entity.whatsapp = value ?? "";
-
-                  return null;
-                },
-                validator: (value) {
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: AppHeightManager.h1point8,
-              ),
-              TitleAppFormFiled(
-                title: "phone",
-                hint: "phone",
-                onChanged: (value) {
-                  entity.phone = value ?? "";
-
-                  return null;
-                },
-                validator: (value) {
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: AppHeightManager.h4,
-              ),
-              BlocConsumer<UpdateProfileImageCubit, UpdateProfileImageState>(
-                listener: (context, state) {
-                  if (state.status == CubitStatus.success) {
-                    context
-                        .read<GetProfileInfoCubit>()
-                        .getProfileInfo(context: context);
-                    Navigator.of(context).pop();
-                  }
-                },
-                builder: (context, state) {
-                  return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-                    listener: (context, state) {
-                      if (state.status == CubitStatus.error) {
-                        NoteMessage.showErrorSnackBar(
-                            context: context, text: "");
-                      }
-                      if (state.status == CubitStatus.success) {
-                        if(profileImage==null){
-                          context
-                              .read<GetProfileInfoCubit>()
-                              .getProfileInfo(context: context);
-                          Navigator.of(context).pop();
-                          return;
-                        }
-                        context.read<UpdateProfileImageCubit>().updateProfile(
-                            context: context, profileImage: profileImage!);
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state.status == CubitStatus.loading) {
-                        return const CircularProgressIndicator();
-                      }
-                      return MainAppButton(
-                        onTap: () {
-                          print(entity.name);
-                          print(entity.username);
-                          context
-                              .read<UpdateProfileCubit>()
-                              .updateProfile(context: context, entity: entity);
-                        },
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    Visibility(
+                      visible: profileImage?.path == null,
+                      replacement: Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
                         alignment: Alignment.center,
-                        width: AppWidthManager.w100,
-                        height: AppHeightManager.h6,
-                        color: AppColorManager.mainColor,
-                        child: AppTextWidget(
-                          text: "save",
-                          fontSize: FontSizeManager.fs15,
-                          fontWeight: FontWeight.w500,
-                          color: AppColorManager.white,
+                        width: AppWidthManager.w20,
+                        height: AppWidthManager.w20,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppColorManager.lightGreyOpacity6,
+                                offset: const Offset(
+                                  -2,
+                                  2,
+                                ),
+                                blurRadius: 4,
+                                spreadRadius: 4)
+                          ],
+                          color: AppColorManager.shimmerBaseColor,
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: FileImage(
+                              profileImage ?? File(""),
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      );
-                    },
-                  );
-                },
-              )
-            ],
+                      ),
+                      child: (widget.args.profileInfo?.user?.photo ?? '')
+                              .isNotEmpty
+                          ? Container(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                              // alignment: Alignment.center,
+                              width: AppWidthManager.w20,
+                              height: AppWidthManager.w20,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  LanguageHelper.checkIfLTR(context: context)
+                                      ? BoxShadow(
+                                          color:
+                                              AppColorManager.lightGreyOpacity6,
+                                          offset: const Offset(4, -2),
+                                          blurRadius: 7,
+                                          spreadRadius: 1,
+                                        )
+                                      : BoxShadow(
+                                          color:
+                                              AppColorManager.lightGreyOpacity6,
+                                          offset: const Offset(-4, -2),
+                                          blurRadius: 7,
+                                          spreadRadius: 1,
+                                        )
+                                ],
+                                shape: BoxShape.circle,
+                              ),
+                              child: MainImageWidget(
+                                imageUrl: (AppConstantManager.imageBaseUrl +
+                                    (widget.args.profileInfo?.user?.photo ?? "")),
+                              ))
+                          : Container(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              alignment: Alignment.center,
+                              width: AppWidthManager.w20,
+                              height: AppWidthManager.w20,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AppColorManager.lightGreyOpacity6,
+                                      offset: const Offset(
+                                        -2,
+                                        2,
+                                      ),
+                                      blurRadius: 4,
+                                      spreadRadius: 4)
+                                ],
+                                color: AppColorManager.shimmerBaseColor,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    AppImageManager.placeholder,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                    ),
+                    Positioned(
+                      bottom: AppHeightManager.h1,
+                      left: AppWidthManager.w12,
+                      right: 0,
+                      child: InkWell(
+                        overlayColor: const WidgetStatePropertyAll(
+                            AppColorManager.transparent),
+                        onTap: () async {
+                          profileImage = await AppImageHelper.pickImageFrom(
+                              source: ImageSource.gallery);
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(AppWidthManager.w1),
+                          decoration: const BoxDecoration(
+                              color: AppColorManager.textAppColor,
+                              shape: BoxShape.circle),
+                          child: Icon(
+                            Icons.edit,
+                            color: AppColorManager.white,
+                            size: 14.px,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: AppHeightManager.h4,
+                ),
+                TitleAppFormFiled(
+                  initValue: widget.args.profileInfo?.user?.name ??"",
+
+                  title: "name (required)",
+                  hint: "name",
+                  onChanged: (value) {
+                    entity.name = value ?? "";
+                    return null;
+                  },
+                  validator: (value) {
+                    if((value??"").isEmpty){
+                      return "required";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: AppHeightManager.h1point8,
+                ),
+                TitleAppFormFiled(
+                  initValue: widget.args.profileInfo?.user?.username ??"",
+
+                  title: "User Name (email or phone) (required)",
+                  hint: "User Name",
+                  onChanged: (value) {
+
+                    entity.username = value ?? "";
+
+                    return null;
+                  },
+                  validator: (value) {
+                    if((value??"").isEmpty){
+                      return "required";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: AppHeightManager.h1point8,
+                ),
+                TitleAppFormFiled(
+                  initValue: widget.args.profileInfo?.user?.email ??"",
+
+                  title: "email",
+                  hint: "email",
+                  onChanged: (value) {
+                    entity.email = value ?? "";
+
+                    return null;
+                  },
+                  validator: (value) {
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: AppHeightManager.h1point8,
+                ),
+                TitleAppFormFiled(
+                  initValue: widget.args.profileInfo?.user?.whatsapp ??"",
+
+                  title: "whatsapp number",
+                  hint: "whatsapp number",
+                  onChanged: (value) {
+                    entity.whatsapp = value ?? "";
+
+                    return null;
+                  },
+                  validator: (value) {
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: AppHeightManager.h1point8,
+                ),
+                TitleAppFormFiled(
+                  initValue: widget.args.profileInfo?.user?.phone ??"",
+
+                  title: "phone",
+                  hint: "phone",
+                  onChanged: (value) {
+                    entity.phone = value ?? "";
+
+                    return null;
+                  },
+                  validator: (value) {
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: AppHeightManager.h4,
+                ),
+                BlocConsumer<UpdateProfileImageCubit, UpdateProfileImageState>(
+                  listener: (context, state) {
+                    if (state.status == CubitStatus.success) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  builder: (context, state) {
+                    return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
+                      listener: (context, state) {
+                        if (state.status == CubitStatus.error) {
+                          NoteMessage.showErrorSnackBar(
+                              context: context, text: "");
+                        }
+                        if (state.status == CubitStatus.success) {
+                         if(profileImage!=null){
+                           context.read<UpdateProfileImageCubit>().updateProfile(
+                               context: context, profileImage: profileImage!);
+                           return;
+                         }
+                         Navigator.of(context).pop();
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state.status == CubitStatus.loading) {
+                          return  const CircularProgressIndicator();
+                        }
+                        return MainAppButton(
+                          onTap: () {
+                           if((formKey.currentState?.validate() ?? false)){
+                             context
+                                 .read<UpdateProfileCubit>()
+                                 .updateProfile(context: context, entity: entity);
+                           }
+                          },
+                          alignment: Alignment.center,
+                          width: AppWidthManager.w100,
+                          height: AppHeightManager.h6,
+                          color: AppColorManager.mainColor,
+                          child: AppTextWidget(
+                            text: "save",
+                            fontSize: FontSizeManager.fs15,
+                            fontWeight: FontWeight.w500,
+                            color: AppColorManager.white,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

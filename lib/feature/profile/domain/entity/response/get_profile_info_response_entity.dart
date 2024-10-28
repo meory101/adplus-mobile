@@ -81,6 +81,7 @@ ProfileInfo copyWith({  User? user,
 );
   User? get user => _user;
 
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (_user != null) {

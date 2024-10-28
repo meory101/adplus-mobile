@@ -25,7 +25,7 @@ class ApiMethods {
       // };
       if (AppSharedPreferences.getToken().isNotEmpty) {
         print(AppSharedPreferences.getToken());
-        print('tokeeeeeeeeeeeeeeeeeeeeeeen');
+        print('token');
         headers['Authorization'] = 'Bearer ${AppSharedPreferences.getToken()}';
       }
     } else {

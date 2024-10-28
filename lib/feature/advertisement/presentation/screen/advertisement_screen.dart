@@ -121,7 +121,6 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                               source: ImageSource.gallery);
                           if (advFile != null) {
                             setState(() {
-                              print('weeeeeeeeeeeeeeee');
                               advFiles.add(advFile);
                             });
                           }
@@ -139,7 +138,6 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                           children: List.generate(
                             advFiles.length,
                             (index) {
-                              print('eeeeeeeeeeeeee');
                               return DecoratedContainer(
                                 borderRadius:
                                     BorderRadius.circular(AppRadiusManager.r15),

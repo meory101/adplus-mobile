@@ -19,16 +19,24 @@ import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_profile_info_response_entity.dart';
 import '../cubit/get_profile_cubit/get_profile_info_cubit.dart';
 
-class ProfileInfoCard extends StatelessWidget {
+class ProfileInfoCard extends StatefulWidget {
   const ProfileInfoCard({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    ProfileInfo? profileInfo;
+  State<ProfileInfoCard> createState() => _ProfileInfoCardState();
+}
 
-    onEditTaped(){
-      Navigator.of(context).pushNamed(RouteNamedScreens.profileModification,arguments: ProfileInfoModificationArgs(profileInfo: profileInfo));
-    }
+class _ProfileInfoCardState extends State<ProfileInfoCard> {
+  ProfileInfo? profileInfo;
+
+  onEditTaped(){
+    Navigator.of(context).pushNamed(RouteNamedScreens.profileModification,arguments: ProfileInfoModificationArgs(profileInfo: profileInfo)).then((value) {
+      context.read<GetProfileInfoCubit>().getProfileInfo(context: context);
+    },);
+  }
+  @override
+  Widget build(BuildContext context) {
+
     return BlocConsumer<GetProfileInfoCubit, GetProfileInfoState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error) {

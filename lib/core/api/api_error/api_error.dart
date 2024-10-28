@@ -62,6 +62,8 @@ abstract class ApiErrorHandler {
       final ErrorResponseEntity errorResponseEntity;
       try {
         //todo
+        print('api server error');
+        print(failure.response?.body);
         errorResponseEntity =
             errorResponseEntityFromJson(failure.response?.body ?? '{}');
 

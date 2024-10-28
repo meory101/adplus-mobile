@@ -86,9 +86,6 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         builder: (context, index) {
-                          print(attributeTypeList[index].option ?? "");
-                          print(attributeTypeList[index].typeListId ?? "");
-                          print('daaaaaaaaaaaaataaaaaaaa');
                           return InkWell(
                             onTap: () {
                               Navigator.of(context).pushNamed(
