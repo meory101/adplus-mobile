@@ -61,7 +61,6 @@ void showWheelDatePicker(
                   borderRadius: BorderRadius.circular(AppRadiusManager.r10),
                   height: AppHeightManager.h5,
                   onTap: () {
-                    print('dddddddddddddddddddddd');
                     onDateSelected(selectedDate);
                     Navigator.of(context).pop();
 

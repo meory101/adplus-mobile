@@ -118,7 +118,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   onCategoryTaped(SubCategory subCategory) {
-    print('ddddddddddddd');
     Navigator.of(context).pushNamed(RouteNamedScreens.categoryInsidePage,
         arguments: CategoryInsidePageArgs(subCategory: subCategory));
   }

@@ -1,16 +1,16 @@
 import 'dart:convert';
 /// success : true
 /// message : "تمت العملية بنجاح"
-/// data : {"user":{"client_id":107,"name":"Murad","username":"+963999999999","email":null,"phone":"+963999999999","whatsapp":"963999999999","address":null,"photo":null,"token_expires":0,"is_verified":1,"error_login":0}}
+/// data : {"user":{"client_id":107,"name":"Murad","username":"+963999999999","email":"othaaaaaaaaa@gmail.com","phone":"+963999999999","whatsapp":"963999999999","address":null,"photo":null,"token_expires":0,"is_verified":1,"error_login":0}}
 /// errors : []
 
-GetProfileInfoResponseEntity getProfileInfoResponseEntityFromJson(String str) => GetProfileInfoResponseEntity.fromJson(json.decode(str));
-String getProfileInfoResponseEntityToJson(GetProfileInfoResponseEntity data) => json.encode(data.toJson());
-class GetProfileInfoResponseEntity {
-  GetProfileInfoResponseEntity({
+UpdateProfileResponseEntity updateProfileResponseEntityFromJson(String str) => UpdateProfileResponseEntity.fromJson(json.decode(str));
+String updateProfileResponseEntityToJson(UpdateProfileResponseEntity data) => json.encode(data.toJson());
+class UpdateProfileResponseEntity {
+  UpdateProfileResponseEntity({
       bool? success, 
       String? message, 
-      ProfileInfo? data, 
+      Data? data,
       List<dynamic>? errors,}){
     _success = success;
     _message = message;
@@ -18,10 +18,10 @@ class GetProfileInfoResponseEntity {
     _errors = errors;
 }
 
-  GetProfileInfoResponseEntity.fromJson(dynamic json) {
+  UpdateProfileResponseEntity.fromJson(dynamic json) {
     _success = json['success'];
     _message = json['message'];
-    _data = json['data'] != null ? ProfileInfo.fromJson(json['data']) : null;
+    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
     // if (json['errors'] != null) {
     //   _errors = [];
     //   json['errors'].forEach((v) {
@@ -31,20 +31,20 @@ class GetProfileInfoResponseEntity {
   }
   bool? _success;
   String? _message;
-  ProfileInfo? _data;
+  Data? _data;
   List<dynamic>? _errors;
-GetProfileInfoResponseEntity copyWith({  bool? success,
+UpdateProfileResponseEntity copyWith({  bool? success,
   String? message,
-  ProfileInfo? data,
+  Data? data,
   List<dynamic>? errors,
-}) => GetProfileInfoResponseEntity(  success: success ?? _success,
+}) => UpdateProfileResponseEntity(  success: success ?? _success,
   message: message ?? _message,
   data: data ?? _data,
   errors: errors ?? _errors,
 );
   bool? get success => _success;
   String? get message => _message;
-  ProfileInfo? get data => _data;
+  Data? get data => _data;
   List<dynamic>? get errors => _errors;
 
   Map<String, dynamic> toJson() {
@@ -62,25 +62,24 @@ GetProfileInfoResponseEntity copyWith({  bool? success,
 
 }
 
-/// user : {"client_id":107,"name":"Murad","username":"+963999999999","email":null,"phone":"+963999999999","whatsapp":"963999999999","address":null,"photo":null,"token_expires":0,"is_verified":1,"error_login":0}
+/// user : {"client_id":107,"name":"Murad","username":"+963999999999","email":"othaaaaaaaaa@gmail.com","phone":"+963999999999","whatsapp":"963999999999","address":null,"photo":null,"token_expires":0,"is_verified":1,"error_login":0}
 
-ProfileInfo dataFromJson(String str) => ProfileInfo.fromJson(json.decode(str));
-String dataToJson(ProfileInfo data) => json.encode(data.toJson());
-class ProfileInfo {
-  ProfileInfo({
+Data dataFromJson(String str) => Data.fromJson(json.decode(str));
+String dataToJson(Data data) => json.encode(data.toJson());
+class Data {
+  Data({
       User? user,}){
     _user = user;
 }
 
-  ProfileInfo.fromJson(dynamic json) {
+  Data.fromJson(dynamic json) {
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
   User? _user;
-ProfileInfo copyWith({  User? user,
-}) => ProfileInfo(  user: user ?? _user,
+Data copyWith({  User? user,
+}) => Data(  user: user ?? _user,
 );
   User? get user => _user;
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -95,7 +94,7 @@ ProfileInfo copyWith({  User? user,
 /// client_id : 107
 /// name : "Murad"
 /// username : "+963999999999"
-/// email : null
+/// email : "othaaaaaaaaa@gmail.com"
 /// phone : "+963999999999"
 /// whatsapp : "963999999999"
 /// address : null
@@ -108,16 +107,16 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 String userToJson(User data) => json.encode(data.toJson());
 class User {
   User({
-      num? clientId, 
-      String? name, 
-      String? username, 
-      dynamic email, 
-      String? phone, 
-      String? whatsapp, 
-      dynamic address, 
-      dynamic photo, 
-      num? tokenExpires, 
-      num? isVerified, 
+      num? clientId,
+      String? name,
+      String? username,
+      String? email,
+      String? phone,
+      String? whatsapp,
+      dynamic address,
+      dynamic photo,
+      num? tokenExpires,
+      num? isVerified,
       num? errorLogin,}){
     _clientId = clientId;
     _name = name;
@@ -148,7 +147,7 @@ class User {
   num? _clientId;
   String? _name;
   String? _username;
-  dynamic _email;
+  String? _email;
   String? _phone;
   String? _whatsapp;
   dynamic _address;
@@ -159,7 +158,7 @@ class User {
 User copyWith({  num? clientId,
   String? name,
   String? username,
-  dynamic email,
+  String? email,
   String? phone,
   String? whatsapp,
   dynamic address,
@@ -182,7 +181,7 @@ User copyWith({  num? clientId,
   num? get clientId => _clientId;
   String? get name => _name;
   String? get username => _username;
-  dynamic get email => _email;
+  String? get email => _email;
   String? get phone => _phone;
   String? get whatsapp => _whatsapp;
   dynamic get address => _address;

@@ -25,6 +25,7 @@ class AuthRepositoryImplements implements AuthRepository {
   Future<Either<ApiFailure, LoginResponseEntity>> login({required LoginRequestEntity entity}) async {
     return Connector<LoginResponseEntity>().connect(
       remote: () async {
+
         final result = await remote.login(entity: entity);
         return Right(result);
       },

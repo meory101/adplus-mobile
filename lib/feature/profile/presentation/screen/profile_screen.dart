@@ -7,14 +7,10 @@ import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
-import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
-import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
-import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
-import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
-import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/widget/profile_info_card.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
@@ -41,10 +37,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   initProfileScreen() {
-    if (AppSharedPreferences.getToken().isEmpty) {
-      Navigator.of(context).pushNamed(RouteNamedScreens.login);
-      return;
-    }
     context.read<GetProfileInfoCubit>().getProfileInfo(context: context);
   }
 
@@ -70,137 +62,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocConsumer<GetProfileInfoCubit, GetProfileInfoState>(
-              listener: (context, state) {
-                if (state.status == CubitStatus.error) {
-                  NoteMessage.showErrorSnackBar(context: context, text: "");
-                }
-              },
-              builder: (context, state) {
-                if (state.status == CubitStatus.loading) {
-                  return  AppCircularProgressWidget();
-                }
-                ProfileInfo? profileInfo = state.entity.data;
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColorManager.textGrey,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(AppRadiusManager.r15),
-                  ),
-                  margin: EdgeInsets.all(AppWidthManager.w3Point8),
-                  padding: EdgeInsets.all(AppWidthManager.w3Point8),
-                  child: Column(
-                    children: [
-                      SizedBox(height: AppHeightManager.h02),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                width: AppWidthManager.w20,
-                                height: AppWidthManager.w20,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: MainImageWidget(
-                                  imageUrl: (AppConstantManager.imageBaseUrl+(profileInfo?.user?.photo ??"")),
-                                ),
-                              ),
-                              AppTextWidget(
-                                text:  profileInfo?.user?.name ??"",
-                                fontSize: FontSizeManager.fs16,
-                                color: AppColorManager.textGrey,
-                              ),
-                              SizedBox(height: AppHeightManager.h2),
-                              AppTextWidget(
-                                text:  profileInfo?.user?.username ??"",
-
-                                fontSize: FontSizeManager.fs16,
-                                color: AppColorManager.textGrey,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColorManager.textGrey,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 16.0),
-                                  child: Row(
-                                    children: [Text("Edit"), Icon(Icons.edit)],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: AppWidthManager.w3),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColorManager.textGrey,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 16.0),
-                                  child: Row(
-                                    children: [
-                                      Text("Share"),
-                                      Icon(Icons.share)
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(height: AppHeightManager.h4),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildInfoColumn('0', 'followers'),
-                          _buildInfoColumn('1', 'Following'),
-                          _buildInfoColumn('0/470', 'Posted Ads '),
-                          _buildInfoColumn('7 days', 'post Ads time '),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: MainAppButton(
-                          onTap: () {},
-                          height: AppHeightManager.h6,
-                          color: AppColorManager.mainColor,
-                          alignment: Alignment.center,
-                          child: AppTextWidget(
-                            text: "Look around",
-                            color: AppColorManager.white,
-                            fontSize: FontSizeManager.fs16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+            const ProfileInfoCard(),
             Divider(
-              color: Colors.grey[400],
+              color: AppColorManager.borderGrey,
               thickness: 1.0,
-              indent: 16.0,
-              endIndent: 16.0,
+              indent: AppWidthManager.w3Point8,
+              endIndent: AppWidthManager.w3Point8,
             ),
             Container(
               decoration: BoxDecoration(
@@ -231,23 +98,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildInfoColumn(String value, String label) {
-    return Column(
-      children: [
-        AppTextWidget(
-          text: value,
-          fontSize: FontSizeManager.fs18,
-          fontWeight: FontWeight.bold,
-          color: AppColorManager.textAppColor,
-        ),
-        AppTextWidget(
-          text: label,
-          fontSize: FontSizeManager.fs14,
-          color: AppColorManager.textGrey,
-        ),
-      ],
-    );
-  }
 
   Widget _buildBottomMenu() {
     return Row(
