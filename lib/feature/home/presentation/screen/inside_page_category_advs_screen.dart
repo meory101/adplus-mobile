@@ -13,6 +13,7 @@ import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.d
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../domain/entity/response/advs_by_attribute_response_entity.dart';
@@ -41,7 +42,7 @@ class _InsidePageCategoryAdvsScreenState
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: entity);
   }
-
+  AdData? advertisement;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +58,7 @@ class _InsidePageCategoryAdvsScreenState
             return InkWell(
               onTap: () {
                 Navigator.of(context)
-                    .pushNamed(RouteNamedScreens.advertisementDetails);
+                    .pushNamed(RouteNamedScreens.advertisementDetails,arguments: AdvertisementDetailsArgs(advertisement: advertisement));
               },
               child: Column(
                 children: [
@@ -73,7 +74,7 @@ class _InsidePageCategoryAdvsScreenState
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: advs.length,
                       itemBuilder: (context, index) {
-                        AdData advertisement = advs[index];
+                         advertisement = advs[index];
                         return Column(
                           children: [
                             Container(
@@ -85,7 +86,7 @@ class _InsidePageCategoryAdvsScreenState
                                 ),
                                 child: MainImageWidget(
                                   imageUrl: AppConstantManager.imageBaseUrl +
-                                      (advertisement.photos?.first.photo ?? ""),
+                                      (advertisement?.photos?.first.photo ?? ""),
                                   borderRadius: BorderRadius.circular(
                                       AppRadiusManager.r15),
                                 )),
@@ -96,7 +97,7 @@ class _InsidePageCategoryAdvsScreenState
                                   height: AppHeightManager.h08,
                                 ),
                                 AppTextWidget(
-                                  text: advertisement.itemId.toString() ?? "",
+                                  text: advertisement?.itemId.toString() ?? "",
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   fontSize: FontSizeManager.fs15,
@@ -104,7 +105,7 @@ class _InsidePageCategoryAdvsScreenState
                                 ),
                                 AppTextWidget(
                                   text:
-                                      advertisement.startingPrice.toString() ??
+                                      advertisement?.startingPrice.toString() ??
                                           "",
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,

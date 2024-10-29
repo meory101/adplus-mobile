@@ -93,7 +93,7 @@ abstract class AppRouter {
             ..getAdvDetails(
                 context: context,
                 entity: GetAdvDetailsRequestEntity(
-                    itemId: argument.advertisement.itemId)),
+                    itemId: argument.advertisement?.itemId)),
           child: AdvertisementDetailsScreen(
             args: argument,
           ),

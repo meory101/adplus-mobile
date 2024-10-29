@@ -19,6 +19,6 @@ class _AdvertisementDetailsScreenState extends State<AdvertisementDetailsScreen>
 
 
 class AdvertisementDetailsArgs{
-  AdData advertisement;
+  AdData? advertisement;
   AdvertisementDetailsArgs({required this.advertisement});
 }

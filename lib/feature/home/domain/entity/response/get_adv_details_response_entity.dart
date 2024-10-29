@@ -22,12 +22,12 @@ class GetAdvDetailsResponseEntity {
     _success = json['success'];
     _message = json['message'];
     _data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    if (json['errors'] != null) {
-      _errors = [];
-      json['errors'].forEach((v) {
-        _errors?.add(Dynamic.fromJson(v));
-      });
-    }
+    // if (json['errors'] != null) {
+    //   _errors = [];
+    //   json['errors'].forEach((v) {
+    //     _errors?.add(Dynamic.fromJson(v));
+    //   });
+    // }
   }
   bool? _success;
   String? _message;
@@ -165,18 +165,19 @@ class Data {
         _attributes?.add(Attributes.fromJson(v));
       });
     }
-    if (json['comments'] != null) {
-      _comments = [];
-      json['comments'].forEach((v) {
-        _comments?.add(Dynamic.fromJson(v));
-      });
-    }
-    if (json['reaction'] != null) {
-      _reaction = [];
-      json['reaction'].forEach((v) {
-        _reaction?.add(Dynamic.fromJson(v));
-      });
-    }
+    //TODO ADD COMMENTS REACTIONS MODELS
+    // if (json['comments'] != null) {
+    //   _comments = [];
+    //   json['comments'].forEach((v) {
+    //     _comments?.add(Dynamic.fromJson(v));
+    //   });
+    // }
+    // if (json['reaction'] != null) {
+    //   _reaction = [];
+    //   json['reaction'].forEach((v) {
+    //     _reaction?.add(Dynamic.fromJson(v));
+    //   });
+    // }
     _author = json['author'] != null ? Author.fromJson(json['author']) : null;
   }
   num? _itemId;
