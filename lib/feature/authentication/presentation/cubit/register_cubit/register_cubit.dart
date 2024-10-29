@@ -9,7 +9,6 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/register
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
 
- 
 /// Eng.Hussaen Baaghdadi
 
 class RegisterCubit extends Cubit<RegisterState> {
@@ -36,10 +35,7 @@ class RegisterCubit extends Cubit<RegisterState> {
           status: CubitStatus.error,
         ));
       },
-      (data) {
-        AppSharedPreferences.cashToken(token: data.data?.accessToken ?? "");
-        emit(state.copyWith(status: CubitStatus.success, entity: data));
-      },
+      (data) {},
     );
   }
 }

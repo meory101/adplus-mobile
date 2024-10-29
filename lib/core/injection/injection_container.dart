@@ -14,9 +14,11 @@ import 'package:mzad_damascus/feature/authentication/domain/repository/auth_repo
 import 'package:mzad_damascus/feature/authentication/domain/usecase/login_usecase.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/logout_usecase.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/register_usecase.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/domain/usecase/verfication_usecase.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_cubit.dart';
 import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.dart';
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
@@ -71,6 +73,9 @@ Future<void> init() async {
   sl.registerFactory(() => RegisterCubit(usecase: sl()));
 
   sl.registerLazySingleton(() => RegisterUsecase(repository: sl()));
+  ///////////////verfication 
+   sl.registerFactory(() => VerficationCubit(usecase: sl()));
+  sl.registerLazySingleton(() => VerficationUsecase(repository: sl()));
 
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImplements(remote: sl()));

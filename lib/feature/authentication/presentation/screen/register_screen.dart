@@ -174,7 +174,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: !confirmPasswordVisible,
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                // رسالة مطابقة كلمة المرور
                 passwordsMatch
                     ? Text(
                         'Passwords match',
@@ -185,12 +184,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(color: Colors.red),
                       ),
                 SizedBox(height: AppHeightManager.h3),
-                // زر إنشاء حساب
                 BlocConsumer<RegisterCubit, RegisterState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
                       Navigator.of(context)
-                          .pushNamed(RouteNamedScreens.mainBottomAppBar);
+                          .pushNamed(RouteNamedScreens.verfication);
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
@@ -223,7 +221,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 SizedBox(height: AppHeightManager.h4),
-                // الانتقال لتسجيل الدخول
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

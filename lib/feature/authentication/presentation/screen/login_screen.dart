@@ -10,7 +10,7 @@ import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/login_request_entity.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/login_cubit.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../router/router.dart';
 
