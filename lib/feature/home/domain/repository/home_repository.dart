@@ -4,7 +4,9 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/category_insid
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 import '../entity/request/advs_by_attribute_request_entity.dart';
+import '../entity/request/get_adv_details_request_entity.dart';
 import '../entity/response/advs_by_attribute_response_entity.dart';
+import '../entity/response/get_adv_details_response_entity.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -12,5 +14,6 @@ abstract class HomeRepository {
   Future<Either<ApiFailure, GetCategoriesResponseEntity>> getCategories();
   Future<Either<ApiFailure, CategoryInsidePageResponseEntity>> getCategoryInsidePage({required CategoryInsidePageRequestEntity entity});
   Future<Either<ApiFailure,AdvsByAttributeResponseEntity>> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
+  Future<Either<ApiFailure, GetAdvDetailsResponseEntity>>getAdvDetails({required GetAdvDetailsRequestEntity entity});
 
 }

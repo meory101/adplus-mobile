@@ -1,8 +1,10 @@
 
 import 'dart:convert';
 
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 
 import '../../../../../core/api/api_error/api_exception.dart';
@@ -16,6 +18,7 @@ abstract class HomeRemote {
   Future<GetCategoriesResponseEntity> getCategories();
   Future<CategoryInsidePageResponseEntity> getCategoryInsidePage({required CategoryInsidePageRequestEntity entity});
   Future<AdvsByAttributeResponseEntity> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
+  Future<GetAdvDetailsResponseEntity> getAdvDetails({required GetAdvDetailsRequestEntity entity});
 
 
 }
@@ -60,4 +63,17 @@ class HomeRemoteImplement extends HomeRemote {
     }
   }
 
+  @override
+  Future<GetAdvDetailsResponseEntity> getAdvDetails({required GetAdvDetailsRequestEntity entity})async {
+    final response =
+        await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.getItemsById);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return getAdvDetailsResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
 }
