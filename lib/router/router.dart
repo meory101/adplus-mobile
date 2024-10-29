@@ -9,6 +9,8 @@ import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertis
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
@@ -67,7 +69,9 @@ abstract class AppRouter {
               create: (context) => di.sl<AdvsByAttributeCubit>(),
             ),
           ],
-          child: InsidePageCategoryAdvsScreen(args: argument,),
+          child: InsidePageCategoryAdvsScreen(
+            args: argument,
+          ),
         ));
       case RouteNamedScreens.login:
         return FadeBuilderRoute(
@@ -81,7 +85,19 @@ abstract class AppRouter {
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
 
       case RouteNamedScreens.advertisementDetails:
-        return SlidUpBuilderRoute(page: const AdvertisementDetailsScreen());
+        argument as AdvertisementDetailsArgs;
+
+        return SlidUpBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<AdvDetailsCubit>()
+            ..getAdvDetails(
+                context: context,
+                entity: GetAdvDetailsRequestEntity(
+                    itemId: argument.advertisement.itemId)),
+          child: AdvertisementDetailsScreen(
+            args: argument,
+          ),
+        ));
 
       case RouteNamedScreens.advertisementCategory:
         return SlidLeftBuilderRoute(
