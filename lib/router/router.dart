@@ -11,6 +11,7 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cu
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
@@ -45,6 +46,7 @@ abstract class RouteNamedScreens {
   static const String advertisement = "/advertisement";
   static const String insidePageCategoryAdvs = "/inside-page-category-advs";
   static const String profileModification = "/profile-modification";
+  static const String advertisementDetails = "/advertisement-details";
 }
 
 abstract class AppRouter {
@@ -77,6 +79,10 @@ abstract class AppRouter {
         return FadeBuilderRoute(page: const RegisterScreen());
       case RouteNamedScreens.advertisementLanguage:
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
+
+      case RouteNamedScreens.advertisementDetails:
+        return SlidUpBuilderRoute(page: const AdvertisementDetailsScreen());
+
       case RouteNamedScreens.advertisementCategory:
         return SlidLeftBuilderRoute(
             page: BlocProvider(

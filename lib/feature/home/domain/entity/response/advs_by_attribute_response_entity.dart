@@ -171,11 +171,12 @@ class AdData {
       List<Photos>? photos, 
       List<Comments>? comments, 
       List<Reactions>? reactions, 
-      List<Author>? author, 
+      Author? author,
       String? description, 
       String? keywords, 
       num? startingPrice, 
-      num? minIncreasePrice, 
+      num? minIncreasePrice,
+    num? itemId,
       String? biddingStartTime, 
       List<Attributes>? attributes,}){
     _categoryId = categoryId;
@@ -183,7 +184,9 @@ class AdData {
     _name = name;
     _biddingStatus = biddingStatus;
     _photos = photos;
-    _comments = comments;
+     _itemId = itemId;
+
+        _comments = comments;
     _reactions = reactions;
     _author = author;
     _description = description;
@@ -199,6 +202,7 @@ class AdData {
     _cityId = json['city_id'];
     _name = json['name'];
     _biddingStatus = json['bidding_status'];
+    _itemId = json['item_id'];
     if (json['photos'] != null) {
       _photos = [];
       json['photos'].forEach((v) {
@@ -218,10 +222,9 @@ class AdData {
       });
     }
     if (json['author'] != null) {
-      _author = [];
-      json['author'].forEach((v) {
-        _author?.add(Author.fromJson(v));
-      });
+      print(json['author']);
+      print('000000000000000000000000000');
+        _author=(Author.fromJson(json['author']));
     }
     _description = json['description'];
     _keywords = json['keywords'];
@@ -239,10 +242,11 @@ class AdData {
   num? _cityId;
   String? _name;
   num? _biddingStatus;
+  num? _itemId;
   List<Photos>? _photos;
   List<Comments>? _comments;
   List<Reactions>? _reactions;
-  List<Author>? _author;
+  Author? _author;
   String? _description;
   String? _keywords;
   num? _startingPrice;
@@ -250,13 +254,14 @@ class AdData {
   String? _biddingStartTime;
   List<Attributes>? _attributes;
 AdData copyWith({  num? categoryId,
+  num? itemId,
   num? cityId,
   String? name,
   num? biddingStatus,
   List<Photos>? photos,
   List<Comments>? comments,
   List<Reactions>? reactions,
-  List<Author>? author,
+  Author? author,
   String? description,
   String? keywords,
   num? startingPrice,
@@ -265,6 +270,8 @@ AdData copyWith({  num? categoryId,
   List<Attributes>? attributes,
 }) => AdData(  categoryId: categoryId ?? _categoryId,
   cityId: cityId ?? _cityId,
+
+  itemId : _itemId ?? _itemId,
   name: name ?? _name,
   biddingStatus: biddingStatus ?? _biddingStatus,
   photos: photos ?? _photos,
@@ -285,13 +292,14 @@ AdData copyWith({  num? categoryId,
   List<Photos>? get photos => _photos;
   List<Comments>? get comments => _comments;
   List<Reactions>? get reactions => _reactions;
-  List<Author>? get author => _author;
+  Author? get author => _author;
   String? get description => _description;
   String? get keywords => _keywords;
   num? get startingPrice => _startingPrice;
   num? get minIncreasePrice => _minIncreasePrice;
   String? get biddingStartTime => _biddingStartTime;
   List<Attributes>? get attributes => _attributes;
+ num? get     itemId => _itemId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -308,9 +316,9 @@ AdData copyWith({  num? categoryId,
     if (_reactions != null) {
       map['reactions'] = _reactions?.map((v) => v.toJson()).toList();
     }
-    if (_author != null) {
-      map['author'] = _author?.map((v) => v.toJson()).toList();
-    }
+    // if (_author != null) {
+    //   map['author'] = _author?.map((v) => v.toJson()).toList();
+    // }
     map['description'] = _description;
     map['keywords'] = _keywords;
     map['starting_price'] = _startingPrice;
