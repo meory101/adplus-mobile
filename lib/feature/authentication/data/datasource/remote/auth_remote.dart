@@ -38,8 +38,6 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<LogoutResponseEntity> logout() async {
     final response = await ApiMethods().get(url: ApiGetUrl.logout);
-    print(response.body);
-    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return logoutResponseEntityFromJson(response.body);
     } else {

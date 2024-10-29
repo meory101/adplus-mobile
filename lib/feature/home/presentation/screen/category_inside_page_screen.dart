@@ -13,8 +13,11 @@ import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/category_inside_page_shimmer.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside_page_request_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
@@ -43,6 +46,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
             categoryId: widget.args.subCategory.categoryId));
   }
 
+  AdvsByAttributeRequestEntity entity = AdvsByAttributeRequestEntity();
+  CategoryAttributes? currentInsidePageData;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +68,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
             return const CategoryInsidePageShimmer();
           }
 
-          List<Attributes>? insidePageData = state.entity.data ?? [];
+          List<CategoryAttributes>? insidePageData = state.entity.data ?? [];
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
             child: ListView.builder(
@@ -70,6 +76,8 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
               itemBuilder: (context, index) {
                 List<AttributeTypeList> attributeTypeList =
                     insidePageData[index].attributeTypeList ?? [];
+                currentInsidePageData = insidePageData[index];
+
                 return Visibility(
                   visible: attributeTypeList.isNotEmpty,
                   child: Column(
@@ -88,8 +96,17 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                         builder: (context, index) {
                           return InkWell(
                             onTap: () {
+                              entity.page = 1;
+                              List<Attributes> attributes = [];
+                              attributes.add(Attributes(
+                                  attributeId:
+                                      currentInsidePageData?.attributeId,
+                                  value: attributeTypeList[index].option));
+                              entity.attributes = attributes;
                               Navigator.of(context).pushNamed(
-                                  RouteNamedScreens.insidePageCategoryAdvs);
+                                  RouteNamedScreens.insidePageCategoryAdvs,
+                                  arguments: InsidePageCategoryAdvArgs(
+                                      entity: entity));
                             },
                             child: DecoratedContainer(
                                 margin: EdgeInsets.only(

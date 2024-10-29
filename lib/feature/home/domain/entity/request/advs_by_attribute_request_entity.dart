@@ -31,6 +31,10 @@ AdvsByAttributeRequestEntity copyWith({  num? page,
   num? get page => _page;
   List<Attributes>? get attributes => _attributes;
 
+  set page(num? value) {
+    _page = value;
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['page'] = _page;
@@ -40,6 +44,9 @@ AdvsByAttributeRequestEntity copyWith({  num? page,
     return map;
   }
 
+  set attributes(List<Attributes>? value) {
+    _attributes = value;
+  }
 }
 
 /// attribute_id : 19
@@ -49,7 +56,7 @@ Attributes attributesFromJson(String str) => Attributes.fromJson(json.decode(str
 String attributesToJson(Attributes data) => json.encode(data.toJson());
 class Attributes {
   Attributes({
-      num? attributeId, 
+      num? attributeId,
       String? value,}){
     _attributeId = attributeId;
     _value = value;

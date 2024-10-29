@@ -125,9 +125,7 @@ class MoreScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
                 child: ElevatedButton(
                   onPressed: () {
-                    // استدعاء logout من LogoutCubit
                     context.read<LogoutCubit>().logout(context: context);
-                    print("sssssssssssssssssssssss");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColorManager.red, // اللون عند الضغط

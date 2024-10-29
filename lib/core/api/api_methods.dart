@@ -23,11 +23,11 @@ class ApiMethods {
       //   "X-Parse-REST-API-Key": "soa12345",
       //   "lang": AppSharedPreferences.getLanguage()
       // };
-      if (AppSharedPreferences.getToken().isNotEmpty) {
-        print(AppSharedPreferences.getToken());
-        print('token');
-        headers['Authorization'] = 'Bearer ${AppSharedPreferences.getToken()}';
-      }
+      // if (AppSharedPreferences.getToken().isNotEmpty) {
+      //   print(AppSharedPreferences.getToken());
+      //   print('token');
+      //   headers['Authorization'] = 'Bearer ${AppSharedPreferences.getToken()}';
+      // }
     } else {
       headers = header;
     }

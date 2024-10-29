@@ -23,7 +23,7 @@ class AdvsByAttributeCubit extends Cubit<AdvsByAttributeState> {
     required this.usecase,
   }) : super(AdvsByAttributeState.initial());
 
-  void getCategoryInsidePage(
+  void getAdvsByAttribute(
       {required BuildContext context,
       required AdvsByAttributeRequestEntity entity}) async {
     emit(state.copyWith(status: CubitStatus.loading));
