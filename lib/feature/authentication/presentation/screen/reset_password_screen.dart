@@ -110,7 +110,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   obscureText: !passwordVisible,
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                // حقل تأكيد كلمة المرور الجديدة
                 AppTextFormField(
                   maxLines: 1,
                   hintText: "Confirm New Password",

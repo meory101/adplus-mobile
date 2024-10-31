@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     MainAppButton(
                       onTap: () {
                         Navigator.of(context).pushNamedAndRemoveUntil(
-                          RouteNamedScreens.resetpassword,
+                          RouteNamedScreens.forgetpassword,
                           (route) => false,
                         );
                       },

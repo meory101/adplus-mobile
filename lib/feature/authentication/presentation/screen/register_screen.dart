@@ -26,7 +26,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool passwordVisible = false;
   bool confirmPasswordVisible = false;
-  bool passwordsMatch = false; // للتحقق من مطابقة كلمة المرور
+  bool passwordsMatch = false;  
 
   RegisterRequestEntity entity = RegisterRequestEntity();
   GlobalKey<FormState> formKey = GlobalKey();
@@ -51,8 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   fontWeight: FontWeight.w700,
                 ),
                 SizedBox(height: AppHeightManager.h5),
-                // حقل الاسم الكامل
-                AppTextFormField(
+                 AppTextFormField(
                   textInputType: TextInputType.name,
                   hintText: "Full Name",
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
@@ -138,8 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: !passwordVisible,
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                // حقل تأكيد كلمة المرور
-                AppTextFormField(
+                 AppTextFormField(
                   maxLines: 1,
                   hintText: "Confirm Password",
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),

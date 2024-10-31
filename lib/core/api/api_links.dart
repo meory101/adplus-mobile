@@ -11,6 +11,7 @@ class ApiPostUrl {
   static String login = "api/auth/login";
   static String register = "api/auth/register";
   static String resetPassword = "api/auth/resetPassword";
+  static String forgetpassword = "api/auth/forgotPassword";
 
   static String addAdv = "api/item/create-item";
   static String getItemsByAttribute = "api/item/getItemsByAttribute";
