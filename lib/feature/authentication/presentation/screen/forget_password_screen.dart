@@ -12,6 +12,9 @@ import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/forget_password_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_state.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -82,12 +85,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
-                      NoteMessage.showSuccessSnackBar(
-                          context: context, text: "Reset link sent to your email");
+                      Navigator.of(context).pushNamed(
+                        RouteNamedScreens.resetpassword,
+                      );
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
-                          context: context, text: state.error ?? "Error occurred");
+                          context: context,
+                          text: state.error ?? "Error occurred");
                     }
                   },
                   builder: (context, state) {
