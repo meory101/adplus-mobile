@@ -11,6 +11,7 @@ import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/login_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/login_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../router/router.dart';
 
@@ -58,13 +59,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           AppColorManager.textGrey, BlendMode.srcIn),
                     ),
                   ),
-                  hintText: "User Name",
+                  hintText: "Username (Email or Phone)",
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.username = value;
                     return null;
                   },
                   validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your username';
+                    }
+
+                    bool isEmail = RegExp(
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+                        .hasMatch(value);
+                    bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
+
+                    if (!isEmail && !isPhone) {
+                      return 'Username must be a valid phone number or email';
+                    }
                     return null;
                   },
                 ),
@@ -88,6 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                   validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
                     return null;
                   },
                   suffixIcon: IconButton(
@@ -109,11 +125,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    AppTextWidget(
-                      text: "Forgot Password?",
-                      color: AppColorManager.mainColor,
-                      fontSize: FontSizeManager.fs15,
-                      fontWeight: FontWeight.w600,
+                    MainAppButton(
+                      onTap: () {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          RouteNamedScreens.resetpassword,
+                          (route) => false,
+                        );
+                      },
+                      child: AppTextWidget(
+                        text: "Forgot Password?",
+                        color: AppColorManager.mainColor,
+                        fontSize: FontSizeManager.fs15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
