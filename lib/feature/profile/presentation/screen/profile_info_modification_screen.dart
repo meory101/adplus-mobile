@@ -40,8 +40,13 @@ class _ProfileInfoModificationScreenState
     extends State<ProfileInfoModificationScreen> {
   File? profileImage;
   UpdateProfileRequestEntity entity = UpdateProfileRequestEntity();
-  GlobalKey <FormState>formKey = GlobalKey();
-
+  GlobalKey<FormState> formKey = GlobalKey();
+  @override
+  void initState() {
+    entity.username = widget.args.profileInfo?.user?.username;
+    entity.name = widget.args.profileInfo?.user?.name;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +120,8 @@ class _ProfileInfoModificationScreenState
                               ),
                               child: MainImageWidget(
                                 imageUrl: (AppConstantManager.imageBaseUrl +
-                                    (widget.args.profileInfo?.user?.photo ?? "")),
+                                    (widget.args.profileInfo?.user?.photo ??
+                                        "")),
                               ))
                           : Container(
                               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -175,8 +181,7 @@ class _ProfileInfoModificationScreenState
                   height: AppHeightManager.h4,
                 ),
                 TitleAppFormFiled(
-                  initValue: widget.args.profileInfo?.user?.name ??"",
-
+                  initValue: widget.args.profileInfo?.user?.name ?? "",
                   title: "name (required)",
                   hint: "name",
                   onChanged: (value) {
@@ -184,7 +189,7 @@ class _ProfileInfoModificationScreenState
                     return null;
                   },
                   validator: (value) {
-                    if((value??"").isEmpty){
+                    if ((value ?? "").isEmpty) {
                       return "required";
                     }
                     return null;
@@ -194,18 +199,16 @@ class _ProfileInfoModificationScreenState
                   height: AppHeightManager.h1point8,
                 ),
                 TitleAppFormFiled(
-                  initValue: widget.args.profileInfo?.user?.username ??"",
-
+                  initValue: widget.args.profileInfo?.user?.username ?? "",
                   title: "User Name (email or phone) (required)",
                   hint: "User Name",
                   onChanged: (value) {
-
                     entity.username = value ?? "";
 
                     return null;
                   },
                   validator: (value) {
-                    if((value??"").isEmpty){
+                    if ((value ?? "").isEmpty) {
                       return "required";
                     }
                     return null;
@@ -215,8 +218,7 @@ class _ProfileInfoModificationScreenState
                   height: AppHeightManager.h1point8,
                 ),
                 TitleAppFormFiled(
-                  initValue: widget.args.profileInfo?.user?.email ??"",
-
+                  initValue: widget.args.profileInfo?.user?.email ?? "",
                   title: "email",
                   hint: "email",
                   onChanged: (value) {
@@ -232,8 +234,7 @@ class _ProfileInfoModificationScreenState
                   height: AppHeightManager.h1point8,
                 ),
                 TitleAppFormFiled(
-                  initValue: widget.args.profileInfo?.user?.whatsapp ??"",
-
+                  initValue: widget.args.profileInfo?.user?.whatsapp ?? "",
                   title: "whatsapp number",
                   hint: "whatsapp number",
                   onChanged: (value) {
@@ -249,8 +250,7 @@ class _ProfileInfoModificationScreenState
                   height: AppHeightManager.h1point8,
                 ),
                 TitleAppFormFiled(
-                  initValue: widget.args.profileInfo?.user?.phone ??"",
-
+                  initValue: widget.args.profileInfo?.user?.phone ?? "",
                   title: "phone",
                   hint: "phone",
                   onChanged: (value) {
@@ -279,25 +279,27 @@ class _ProfileInfoModificationScreenState
                               context: context, text: "");
                         }
                         if (state.status == CubitStatus.success) {
-                         if(profileImage!=null){
-                           context.read<UpdateProfileImageCubit>().updateProfile(
-                               context: context, profileImage: profileImage!);
-                           return;
-                         }
-                         Navigator.of(context).pop();
+                          if (profileImage != null) {
+                            context
+                                .read<UpdateProfileImageCubit>()
+                                .updateProfile(
+                                    context: context,
+                                    profileImage: profileImage!);
+                            return;
+                          }
+                          Navigator.of(context).pop();
                         }
                       },
                       builder: (context, state) {
                         if (state.status == CubitStatus.loading) {
-                          return  const CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         }
                         return MainAppButton(
                           onTap: () {
-                           if((formKey.currentState?.validate() ?? false)){
-                             context
-                                 .read<UpdateProfileCubit>()
-                                 .updateProfile(context: context, entity: entity);
-                           }
+                            if ((formKey.currentState?.validate() ?? false)) {
+                              context.read<UpdateProfileCubit>().updateProfile(
+                                  context: context, entity: entity);
+                            }
                           },
                           alignment: Alignment.center,
                           width: AppWidthManager.w100,

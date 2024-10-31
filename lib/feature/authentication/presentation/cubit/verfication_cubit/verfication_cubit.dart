@@ -31,7 +31,7 @@ class VerficationCubit extends Cubit<VerficationState> {
     required this.usecase,
   }) : super(VerficationState.initial());
 
-  void verifyCode(String code, 
+  void verifyCode(String code,
       {required BuildContext context,
       required VerificationRequestEntity entity}) async {
     emit(state.copyWith(status: CubitStatus.loading));

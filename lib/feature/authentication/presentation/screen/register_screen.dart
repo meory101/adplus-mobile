@@ -12,6 +12,7 @@ import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/register_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_state.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../router/router.dart';
 
@@ -66,8 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                // حقل البريد الإلكتروني
-                AppTextFormField(
+                 AppTextFormField(
                   textInputType: TextInputType.text,
                   hintText: "Username (Email or Phone)",
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
@@ -78,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your username';
                     }
-                    // التحقق إذا كان إما بريد إلكتروني أو رقم هاتف
+                     
                     bool isEmail = RegExp(
                             r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
                         .hasMatch(value);
@@ -91,8 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                // حقل رقم الهاتف
-                AppTextFormField(
+                 AppTextFormField(
                   textInputType: TextInputType.number,
                   hintText: "Phone Number",
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
@@ -187,12 +186,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 BlocConsumer<RegisterCubit, RegisterState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
-                      Navigator.of(context)
-                          .pushNamed(RouteNamedScreens.verfication);
+                      Navigator.of(context).pushNamed(
+                        RouteNamedScreens.verfication,
+                        arguments: VerificationCodeArgs(
+                          password: entity.password,
+                          username: entity.username,
+                        ),
+                      );
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
-                          context: context, text: "Registration failed.");
+                        context: context,
+                        text: state.error ?? "Registration failed",
+                      );
                     }
                   },
                   builder: (context, state) {

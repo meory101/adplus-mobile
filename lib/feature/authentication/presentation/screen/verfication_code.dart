@@ -18,9 +18,10 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/verficat
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_state.dart';
 import 'package:mzad_damascus/router/router.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
- 
+
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({Key? key}) : super(key: key);
+  final VerificationCodeArgs args;
+  const VerificationScreen({Key? key, required this.args}) : super(key: key);
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -28,6 +29,13 @@ class VerificationScreen extends StatefulWidget {
 
 class _VerificationScreenState extends State<VerificationScreen> {
   final TextEditingController codeController = TextEditingController();
+  VerificationRequestEntity entity = VerificationRequestEntity();
+  @override
+  void initState() {
+    entity.username = widget.args.username;
+    entity.password = widget.args.password;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +63,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 controller: codeController,
                 keyboardType: TextInputType.number,
                 onDone: (value) {
+                  entity.authCode = value;
                   print("Code entered: $value");
                 },
               ),
@@ -80,9 +89,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   onTap: () {
                     final code = codeController.text;
                     if (code.isNotEmpty && code.length == 6) {
-                      context.read<VerficationCubit>().verifyCode(code,
-                          context: context,
-                          entity: VerificationRequestEntity());
+                      context
+                          .read<VerficationCubit>()
+                          .verifyCode(code, context: context, entity: entity);
                     } else {
                       NoteMessage.showErrorSnackBar(
                           context: context,
@@ -106,4 +115,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
       ),
     );
   }
+}
+
+class VerificationCodeArgs {
+  String? username;
+  String? password;
+  VerificationCodeArgs({required this.password, required this.username});
 }

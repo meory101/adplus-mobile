@@ -12,6 +12,8 @@ class ApiPostUrl {
   static String getCategoryAttributes= "api/category/category-info";
   static String getCategoryInsidePage= "api/category/inside-page";
   static String login= "api/auth/login";
+    static String register= "api/auth/register";
+
   static String addAdv= "api/item/create-item";
   static String getItemsByAttribute= "api/item/getItemsByAttribute";
   static String updateProfile= "api/auth/UpdateProfile";

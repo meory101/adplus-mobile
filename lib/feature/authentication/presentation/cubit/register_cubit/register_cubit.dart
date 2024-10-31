@@ -26,6 +26,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     final result = await usecase(entity: entity);
 
     if (isClosed) return;
+
     result.fold(
       (failure) async {
         final ErrorEntity errorEntity =
@@ -35,7 +36,14 @@ class RegisterCubit extends Cubit<RegisterState> {
           status: CubitStatus.error,
         ));
       },
-      (data) {},
+      (data) {
+         if (data.data['user']['is_verified'] == 0) {
+           emit(state.copyWith(status: CubitStatus.success));
+        } else {
+           emit(state.copyWith(
+              status: CubitStatus.error, error: "Account is already verified"));
+        }
+      },
     );
   }
 }

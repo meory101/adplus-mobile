@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/login_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/verfication_request.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/login_response_entity.dart';
@@ -17,8 +18,8 @@ abstract class AuthRemote {
   Future<LogoutResponseEntity> logout();
   Future<RegisterResponseEntity> register(
       {required RegisterRequestEntity entity});
-      //////////////////
-       Future<VerificationResponseEntity> verfication(
+  //////////////////
+  Future<VerificationResponseEntity> verfication(
       {required VerificationRequestEntity entity});
 }
 
@@ -26,8 +27,14 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<LoginResponseEntity> login(
       {required LoginRequestEntity entity}) async {
+    print(AppSharedPreferences.getToken());
+    print('tollllll');
+
     final response =
         await ApiMethods().post(body: entity.toJson(), url: ApiPostUrl.login);
+    print("looooooooooooogin");
+    print(response.body);
+    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return loginResponseEntityFromJson(response.body);
     } else {
@@ -38,6 +45,9 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<LogoutResponseEntity> logout() async {
     final response = await ApiMethods().get(url: ApiGetUrl.logout);
+    print("looooooooooooogout");
+    print(response.body);
+    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return logoutResponseEntityFromJson(response.body);
     } else {
@@ -65,6 +75,7 @@ class AuthRemoteImplement extends AuthRemote {
       {required VerificationRequestEntity entity}) async {
     final response =
         await ApiMethods().post(body: entity.toJson(), url: ApiPostUrl.login);
+    print("verfiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiication");
     print(response.body);
     print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {

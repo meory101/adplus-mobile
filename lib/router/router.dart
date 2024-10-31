@@ -7,8 +7,11 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_categ
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_cubit.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
@@ -35,7 +38,8 @@ import '../feature/intro/presentation/screen/splash_screen.dart';
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
-  static const String init = mainBottomAppBar;
+  static String init = login;
+  // AppSharedPreferences.getToken().isEmpty ? register : mainBottomAppBar;
   static const String splash = "/splash";
   static const String login = "/login";
   static const String register = "/register";
@@ -49,6 +53,7 @@ abstract class RouteNamedScreens {
   static const String insidePageCategoryAdvs = "/inside-page-category-advs";
   static const String profileModification = "/profile-modification";
   static const String advertisementDetails = "/advertisement-details";
+  static const String verfication = "/verfication";
 }
 
 abstract class AppRouter {
@@ -80,10 +85,22 @@ abstract class AppRouter {
           child: const LoginScreen(),
         ));
       case RouteNamedScreens.register:
-        return FadeBuilderRoute(page: const RegisterScreen());
+        return FadeBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<RegisterCubit>(),
+          child: const RegisterScreen(),
+        ));
       case RouteNamedScreens.advertisementLanguage:
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
-
+      case RouteNamedScreens.verfication:
+        argument as VerificationCodeArgs;
+        return FadeBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<VerficationCubit>(),
+          child: VerificationScreen(
+            args: argument,
+          ),
+        ));
       case RouteNamedScreens.advertisementDetails:
         argument as AdvertisementDetailsArgs;
 
