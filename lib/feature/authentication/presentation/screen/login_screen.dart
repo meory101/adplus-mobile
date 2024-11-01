@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
                       Navigator.of(context)
-                          .pushNamed(RouteNamedScreens.advertisementLanguage);
+                          .pushNamedAndRemoveUntil(RouteNamedScreens.mainBottomAppBar, (route) => false,);
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(context: context, text: "");
