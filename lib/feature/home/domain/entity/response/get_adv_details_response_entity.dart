@@ -10,7 +10,7 @@ class GetAdvDetailsResponseEntity {
   GetAdvDetailsResponseEntity({
       bool? success, 
       String? message, 
-      Data? data, 
+      AdvDetails? data, 
       List<dynamic>? errors,}){
     _success = success;
     _message = message;
@@ -21,7 +21,7 @@ class GetAdvDetailsResponseEntity {
   GetAdvDetailsResponseEntity.fromJson(dynamic json) {
     _success = json['success'];
     _message = json['message'];
-    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    _data = json['data'] != null ? AdvDetails.fromJson(json['data']) : null;
     // if (json['errors'] != null) {
     //   _errors = [];
     //   json['errors'].forEach((v) {
@@ -31,11 +31,11 @@ class GetAdvDetailsResponseEntity {
   }
   bool? _success;
   String? _message;
-  Data? _data;
+  AdvDetails? _data;
   List<dynamic>? _errors;
 GetAdvDetailsResponseEntity copyWith({  bool? success,
   String? message,
-  Data? data,
+  AdvDetails? data,
   List<dynamic>? errors,
 }) => GetAdvDetailsResponseEntity(  success: success ?? _success,
   message: message ?? _message,
@@ -44,7 +44,7 @@ GetAdvDetailsResponseEntity copyWith({  bool? success,
 );
   bool? get success => _success;
   String? get message => _message;
-  Data? get data => _data;
+  AdvDetails? get data => _data;
   List<dynamic>? get errors => _errors;
 
   Map<String, dynamic> toJson() {
@@ -85,10 +85,10 @@ GetAdvDetailsResponseEntity copyWith({  bool? success,
 /// reaction : []
 /// author : {"client_id":47,"name":"hla","username":"hla@gmail.com","email":"hla@gmail.com","phone":"+963978567888","whatsapp":"+963978567888","address":null,"photo":"1729458413_671570ed9ea1e.webp","token_expires":0,"is_verified":1,"error_login":0}
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-String dataToJson(Data data) => json.encode(data.toJson());
-class Data {
-  Data({
+AdvDetails dataFromJson(String str) => AdvDetails.fromJson(json.decode(str));
+String dataToJson(AdvDetails data) => json.encode(data.toJson());
+class AdvDetails {
+  AdvDetails({
       num? itemId, 
       num? categoryId, 
       num? cityId, 
@@ -135,7 +135,7 @@ class Data {
     _author = author;
 }
 
-  Data.fromJson(dynamic json) {
+  AdvDetails.fromJson(dynamic json) {
     _itemId = json['item_id'];
     _categoryId = json['category_id'];
     _cityId = json['city_id'];
@@ -202,7 +202,7 @@ class Data {
   List<dynamic>? _comments;
   List<dynamic>? _reaction;
   Author? _author;
-Data copyWith({  num? itemId,
+AdvDetails copyWith({  num? itemId,
   num? categoryId,
   num? cityId,
   String? name,
@@ -224,7 +224,7 @@ Data copyWith({  num? itemId,
   List<dynamic>? comments,
   List<dynamic>? reaction,
   Author? author,
-}) => Data(  itemId: itemId ?? _itemId,
+}) => AdvDetails(  itemId: itemId ?? _itemId,
   categoryId: categoryId ?? _categoryId,
   cityId: cityId ?? _cityId,
   name: name ?? _name,
