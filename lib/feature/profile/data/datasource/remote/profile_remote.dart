@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/update_profile_response_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/update_profile_username_response_entity.dart';
 import '../../../../../core/api/api_error/api_exception.dart';
 import '../../../../../core/api/api_error/api_status_code.dart';
 import '../../../../../core/api/api_links.dart';
@@ -18,6 +20,9 @@ abstract class ProfileRemote {
 
   Future<bool> updateProfileImage({
     required File profileImage,
+  });
+  Future<UpdateUsernameResponseEntity> updateusername({
+    required UpdateUsernameRequestEntity entity,
   });
 }
 
@@ -53,6 +58,17 @@ class ProfileRemoteImplement extends ProfileRemote {
         imageKey: 'image');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+  @override
+   Future<UpdateUsernameResponseEntity> updateusername(
+      {required UpdateUsernameRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(url: ApiPostUrl.updateUsername, body: entity.toJson());
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return updateUsernameResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

@@ -41,9 +41,11 @@ import 'package:mzad_damascus/feature/profile/domain/repository/profile_reposito
 import 'package:mzad_damascus/feature/profile/domain/usecase/get_profile_info_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_image_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_usecase.dart';
+import 'package:mzad_damascus/feature/profile/domain/usecase/update_username_usecase.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 
 import '../../feature/home/domain/usecase/get_adv_details_usecase.dart';
 import '../../feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
@@ -102,7 +104,9 @@ Future<void> init() async {
   sl.registerFactory(() => LogoutCubit(usecase: sl()));
 
   sl.registerLazySingleton(() => LogoutUsecase(repository: sl()));
+  sl.registerFactory(() => UpdateUsernameCubit(usecase: sl()));
 
+  sl.registerLazySingleton(() => UpdateUsernameUsecase(repository: sl()));
   sl.registerFactory(() => GetProfileInfoCubit(usecase: sl()));
   sl.registerFactory(() => UpdateProfileImageCubit(usecase: sl()));
   sl.registerFactory(() => UpdateProfileCubit(usecase: sl()));
