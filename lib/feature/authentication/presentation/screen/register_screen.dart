@@ -236,7 +236,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed(RouteNamedScreens.login);
+                            .pushReplacementNamed(RouteNamedScreens.login);
                       },
                       child: AppTextWidget(
                         text: "Login",

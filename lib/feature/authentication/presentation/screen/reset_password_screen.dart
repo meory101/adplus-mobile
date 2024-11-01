@@ -52,10 +52,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 SizedBox(height: AppHeightManager.h5),
                 AppTextFormField(
                   textInputType: TextInputType.emailAddress,
-                  hintText: "",
+                  hintText: "email",
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.username = value;
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {

@@ -31,13 +31,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Forget Password"),
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-              top: AppHeightManager.h20,
+              top: AppHeightManager.h40,
               left: AppWidthManager.w5,
               right: AppWidthManager.w5),
           child: Form(
@@ -119,6 +116,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     );
                   },
                 ),
+                SizedBox(height: AppHeightManager.h4)
               ],
             ),
           ),
