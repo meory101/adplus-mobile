@@ -36,10 +36,6 @@ class ProfileRemoteImplement extends ProfileRemote {
   @override
   Future<GetProfileInfoResponseEntity> getProfileInfo() async {
     final response = await ApiMethods().get(url: ApiGetUrl.getProfileInfo);
-    print("profileeeeeeeeeeeeeeeeeee");
-    print(AppSharedPreferences.getToken());
-    print(response.body);
-    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getProfileInfoResponseEntityFromJson(response.body);
     } else {

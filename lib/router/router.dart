@@ -46,7 +46,7 @@ import '../feature/intro/presentation/screen/splash_screen.dart';
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
-  static String init = login;
+  static String init = mainBottomAppBar;
   // AppSharedPreferences.getToken().isEmpty ? register : mainBottomAppBar;
   static const String splash = "/splash";
   static const String login = "/login";
