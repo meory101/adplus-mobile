@@ -12,6 +12,10 @@ class GetCommentsRequestEntity {
     _itemId = itemId;
 }
 
+  set page(num? value) {
+    _page = value;
+  }
+
   GetCommentsRequestEntity.fromJson(dynamic json) {
     _page = json['page'];
     _itemId = json['item_id'];

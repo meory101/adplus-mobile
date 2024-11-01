@@ -12,6 +12,10 @@ class AddCommentRequestEntity {
     _comment = comment;
 }
 
+  set itemId(num? value) {
+    _itemId = value;
+  }
+
   AddCommentRequestEntity.fromJson(dynamic json) {
     _itemId = json['item_id'];
     _comment = json['comment'];
@@ -33,4 +37,7 @@ AddCommentRequestEntity copyWith({  num? itemId,
     return map;
   }
 
+  set comment(String? value) {
+    _comment = value;
+  }
 }
