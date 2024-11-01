@@ -21,17 +21,13 @@ class ResetCubit extends Cubit<ResetPasswordState> {
   }) async {
     emit(state.copyWith(status: CubitStatus.loading));
 
-    // استخدم نتيجة إعادة تعيين كلمة المرور
-    final result = await usecase(entity: entity);
+     final result = await usecase(entity: entity);
 
-    // تحقق مما إذا كان Cubit مغلقًا
-    if (isClosed) return;
+     if (isClosed) return;
 
-    // معالجة النتيجة
-    result.fold(
+     result.fold(
       (failure) async {
-        // تحويل الخطأ إلى كائن خطأ مناسب
-        final ErrorEntity errorEntity =
+         final ErrorEntity errorEntity =
             await ApiErrorHandler.mapFailure(failure: failure);
         emit(state.copyWith(
           error: errorEntity.errorMessage,

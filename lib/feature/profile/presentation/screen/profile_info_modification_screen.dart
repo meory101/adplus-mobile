@@ -13,10 +13,13 @@ import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_state.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/helper/app_image_helper.dart';
@@ -40,6 +43,8 @@ class _ProfileInfoModificationScreenState
     extends State<ProfileInfoModificationScreen> {
   File? profileImage;
   UpdateProfileRequestEntity entity = UpdateProfileRequestEntity();
+  UpdateUsernameRequestEntity entity1 = UpdateUsernameRequestEntity();
+
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   void initState() {
@@ -180,15 +185,7 @@ class _ProfileInfoModificationScreenState
                 SizedBox(
                   height: AppHeightManager.h4,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0, left: 10),
-                  child: MainAppButton(
-                    color: AppColorManager.mainColor,
-                    height: AppHeightManager.h5,
-                    width: AppWidthManager.w10,
-                    child: Center(child: AppTextWidget(text: "save")),
-                  ),
-                ),
+
                 Row(
                   children: [
                     Expanded(
@@ -236,11 +233,14 @@ class _ProfileInfoModificationScreenState
                     Expanded(
                       flex: 3,
                       child: TitleAppFormFiled(
-                        initValue: widget.args.profileInfo?.user?.name ?? "",
+                        initValue:
+                            widget.args.profileInfo?.user?.username ?? "",
                         title: "Username (required)",
                         hint: "Name",
                         onChanged: (value) {
-                          entity.name = value ?? "";
+                          print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+                          print(value);
+                          entity1.username = value ?? "";
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -264,31 +264,56 @@ class _ProfileInfoModificationScreenState
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 30.0, left: 10),
-                        child: MainAppButton(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColorManager.mainColor,
-                          height: AppHeightManager.h5,
-                          width: AppWidthManager.w10,
-                          child: Center(
-                              child: AppTextWidget(
-                            text: "save",
-                            color: AppColorManager.background,
-                          )),
+                        child: BlocConsumer<UpdateUsernameCubit,
+                            UpdateUsernameState>(
+                          listener: (context, state) {
+                            if (state.status == CubitStatus.success) {
+                              NoteMessage.showSuccessSnackBar(
+                                  context: context,
+                                  text: "Username updated successfully");
+                            } else if (state.status == CubitStatus.error) {
+                              NoteMessage.showErrorSnackBar(
+                                  context: context,
+                                  text: "Failed to update username");
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state.status == CubitStatus.loading) {
+                              return const CircularProgressIndicator();
+                            }
+                            return MainAppButton(
+                              onTap: () {
+                                print(
+                                    "sssssssssssssssssssssssssssssssssssssssssssssssssss");
+                                print(entity1.username);
+                                if ((formKey.currentState?.validate() ??
+                                    false)) {
+                                  context
+                                      .read<UpdateUsernameCubit>()
+                                      .updateusername(
+                                        context: context,
+                                        entity: entity1,
+                                      );
+                                }
+                              },
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColorManager.mainColor,
+                              height: AppHeightManager.h5,
+                              width: AppWidthManager.w10,
+                              child: Center(
+                                child: AppTextWidget(
+                                  text: "Save",
+                                  color: AppColorManager.background,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    )
-                    // IconButton(
-                    //   icon: Icon(Icons.save, color: AppColorManager.mainColor),
-                    //   onPressed: () {
-                    //     if (formKey.currentState?.validate() ?? false) {
-                    //       context
-                    //           .read<UpdateProfileCubit>()
-                    //           .updateProfile(context: context, entity: entity);
-                    //     }
-                    //   },
-                    // ),
+                    ),
                   ],
                 ),
+
                 SizedBox(
                   height: AppHeightManager.h1point8,
                 ),

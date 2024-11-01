@@ -25,10 +25,10 @@ abstract class AuthRemote {
   //////////////////
   Future<VerificationResponseEntity> verfication(
       {required VerificationRequestEntity entity});
-        Future<ResetPasswordResponse> resetPassword({required PasswordResetRequestEntity entity}); 
-         Future<ForgetPasswordResponseEntity> forgetpassword({required ForgetPasswordRequestEntity entity}); // أضف هذه السطر
-
-
+  Future<ResetPasswordResponse> resetPassword(
+      {required PasswordResetRequestEntity entity});
+  Future<ForgetPasswordResponseEntity> forgetpassword(
+      {required ForgetPasswordRequestEntity entity}); // أضف هذه السطر
 }
 
 class AuthRemoteImplement extends AuthRemote {
@@ -92,31 +92,38 @@ class AuthRemoteImplement extends AuthRemote {
       throw ApiServerException(response: response);
     }
   }
-   Future<ResetPasswordResponse> resetPassword({required PasswordResetRequestEntity entity}) async {
-    final response = await ApiMethods()
-        .post(body: entity.toJson(), url: ApiPostUrl.resetPassword); // تأكد من أن لديك عنوان URL الصحيح
+
+  Future<ResetPasswordResponse> resetPassword(
+      {required PasswordResetRequestEntity entity}) async {
+    final response = await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.resetPassword); // تأكد من أن لديك عنوان URL الصحيح
     print("Resetting password");
     print(response.body);
     print(response.statusCode);
-    
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      return resetPasswordResponseFromJson(response.body); // تأكد من وجود هذه الدالة لتحويل JSON إلى الكائن
-    } else {
-      throw ApiServerException(response: response);
-    }
-  }
- Future<ForgetPasswordResponseEntity> forgetpassword({required ForgetPasswordRequestEntity entity}) async {
-    final response = await ApiMethods()
-        .post(body: entity.toJson(), url: ApiPostUrl.forgetpassword); // تأكد من أن لديك عنوان URL الصحيح
-    print("forget password");
-    print(response.body);
-    print(response.statusCode);
-    
-    if (ApiStatusCode.success().contains(response.statusCode)) {
-      return forgetPasswordResponseEntityFromJson(response.body); // تأكد من وجود هذه الدالة لتحويل JSON إلى الكائن
+      return resetPasswordResponseFromJson(
+          response.body); // تأكد من وجود هذه الدالة لتحويل JSON إلى الكائن
     } else {
       throw ApiServerException(response: response);
     }
   }
 
+  Future<ForgetPasswordResponseEntity> forgetpassword(
+      {required ForgetPasswordRequestEntity entity}) async {
+    final response = await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.forgetpassword); // تأكد من أن لديك عنوان URL الصحيح
+    print("forget password");
+    print(response.body);
+    print(response.statusCode);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return forgetPasswordResponseEntityFromJson(
+          response.body); // تأكد من وجود هذه الدالة لتحويل JSON إلى الكائن
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
 }

@@ -28,6 +28,7 @@ import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_b
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 import '../core/navigation/fade_builder_route.dart';
@@ -194,7 +195,10 @@ abstract class AppRouter {
             ),
             BlocProvider(
               create: (context) => di.sl<GetProfileInfoCubit>(),
-            )
+            ),
+            BlocProvider(
+              create: (context) => di.sl<UpdateUsernameCubit>(),
+            ),
           ],
           child: ProfileInfoModificationScreen(
             args: argument,
