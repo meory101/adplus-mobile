@@ -98,7 +98,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-
   Widget _buildBottomMenu() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,

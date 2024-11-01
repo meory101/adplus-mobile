@@ -112,7 +112,7 @@ class MoreScreen extends StatelessWidget {
               }
               if (state.status == CubitStatus.success) {
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                  RouteNamedScreens.mainBottomAppBar,
+                  RouteNamedScreens.login,
                   (route) => false,
                 );
               }
@@ -128,7 +128,7 @@ class MoreScreen extends StatelessWidget {
                     context.read<LogoutCubit>().logout(context: context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColorManager.red, // اللون عند الضغط
+                    backgroundColor: AppColorManager.red,  
                     padding:
                         EdgeInsets.symmetric(vertical: AppHeightManager.h2),
                   ),

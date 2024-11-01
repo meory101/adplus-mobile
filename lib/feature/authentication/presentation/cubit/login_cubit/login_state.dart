@@ -1,4 +1,4 @@
-part of 'category_inside_page_cubit.dart';
+part of 'login_cubit.dart';
 
 /// Eng.Nour Othman(meory)*
 

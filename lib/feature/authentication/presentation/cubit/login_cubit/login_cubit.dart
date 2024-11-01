@@ -13,7 +13,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
 
-part 'category_inside_page_state.dart';
+part 'login_state.dart';
 
 /// Eng.Nour Othman(meory)*
 
