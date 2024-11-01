@@ -42,7 +42,9 @@ class _InsidePageCategoryAdvsScreenState
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: entity);
   }
+
   AdData? advertisement;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,13 +54,17 @@ class _InsidePageCategoryAdvsScreenState
           listener: (context, state) {},
           builder: (context, state) {
             if (state.status == CubitStatus.loading) {
-              return const AppCircularProgressWidget();
+              return SizedBox(
+                  height: AppHeightManager.h70,
+                  child: const Center(child: AppCircularProgressWidget()));
             }
             List<AdData> advs = state.entity.data?.adData ?? [];
             return InkWell(
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(RouteNamedScreens.advertisementDetails,arguments: AdvertisementDetailsArgs(advertisement: advertisement));
+                Navigator.of(context).pushNamed(
+                    RouteNamedScreens.advertisementDetails,
+                    arguments:
+                        AdvertisementDetailsArgs(advertisement: advertisement));
               },
               child: Column(
                 children: [
@@ -66,17 +72,17 @@ class _InsidePageCategoryAdvsScreenState
                     padding:
                         EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
                     child: DynamicHeightGridView(
-                          crossAxisSpacing: AppWidthManager.w2,
-                          crossAxisCount: 2,
+                      crossAxisSpacing: AppWidthManager.w2,
+                      crossAxisCount: 2,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: advs.length,
                       builder: (context, index) {
-                         advertisement = advs[index];
+                        advertisement = advs[index];
                         return Column(
                           children: [
                             Container(
-                              height: AppHeightManager.h30,
+                                height: AppHeightManager.h30,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 decoration: BoxDecoration(
                                   color: AppColorManager.lightGreyOpacity6,
@@ -85,7 +91,8 @@ class _InsidePageCategoryAdvsScreenState
                                 ),
                                 child: MainImageWidget(
                                   imageUrl: AppConstantManager.imageBaseUrl +
-                                      (advertisement?.photos?.first.photo ?? ""),
+                                      (advertisement?.photos?.first.photo ??
+                                          ""),
                                   borderRadius: BorderRadius.circular(
                                       AppRadiusManager.r15),
                                 )),

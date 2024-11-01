@@ -33,7 +33,7 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
               });
             },
             aspectRatio:
-            AppWidthManager.w92 / AppHeightManager.h50,
+            AppWidthManager.w92 / AppHeightManager.h35,
             enableInfiniteScroll: true,
             autoPlay: true,
             viewportFraction: 1,
