@@ -101,22 +101,10 @@ class _AdvertisementDetailsScreenState
                       SizedBox(
                         height: AppHeightManager.h1point5,
                       ),
-                      BlocConsumer<GetCommentsCubit, GetCommentsState>(
-                        listener: (context, state) {
-                          if (state.status == CubitStatus.error) {
-                            NoteMessage.showErrorSnackBar(
-                                context: context, text: "");
-                          }
-                        },
-                        builder: (context, state) {
-                          if (state.status == CubitStatus.loading) {
-                            return const AppCircularProgressWidget();
-                          }
-                          List<Comment>? comments = state.entity.data?.data;
-                          return CommentsSection(comments: comments,itemId: widget.args.advertisement?.itemId,);
+                       CommentsSection(itemId: widget.args.advertisement?.itemId,),
 
-                        },
-                      ),
+
+
                       SizedBox(
                         height: AppHeightManager.h12,
                       ),

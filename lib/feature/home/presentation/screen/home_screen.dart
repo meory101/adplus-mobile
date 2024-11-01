@@ -184,9 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   listener: (context, state) {},
                   builder: (context, state) {
                     if (state.status == CubitStatus.loading) {
-                      return const Center(
-                        child: AppCircularProgressWidget(),
-                      );
+                      return SizedBox(
+                          height: AppHeightManager.h50,
+                          child:
+                              const Center(child: AppCircularProgressWidget()));
                     }
                     categories = state.entity.data ?? [];
 
