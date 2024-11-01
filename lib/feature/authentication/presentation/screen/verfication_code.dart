@@ -12,8 +12,6 @@ import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/verfication_request.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_cubit.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_state.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_state.dart';
 import 'package:mzad_damascus/router/router.dart';
@@ -64,7 +62,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 keyboardType: TextInputType.number,
                 onDone: (value) {
                   entity.authCode = value;
-                  print("Code entered: $value");
+
                 },
               ),
             ),

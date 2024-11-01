@@ -1,4 +1,7 @@
 import 'dart:convert';
+
+import '../../../../../core/model/comment.dart';
+import '../../../../../core/model/pagination.dart';
 /// success : true
 /// message : "Items retrieved successfully."
 /// data : {"adData":[{"category_id":1,"city_id":1,"name":"Electronics","bidding_status":1,"photos":[{"image_id":1,"photo":"photo.jpg"}],"comments":[{"comment_id":101,"client_id":101,"item_id":45,"comment":"This is a great item!","created_at":"2024-09-16T12:00:00Z"}],"reactions":[{"reaction_id":501,"reaction_type":"like","item_id":45,"client_id":45,"created_at":"2024-09-16T12:00:00Z"}],"author":[{"client_id":501,"name":"string","email":"string","phone":"963999999999","address":"string","photo":"photo.jpg"}],"description":"Category description","keywords":"electronics, gadgets","starting_price":50000,"min_increase_price":10000,"bidding_start_time":"2024-10-01T12:00:00Z","attributes":[{"attribute_id":1,"value":"Black"}]}],"pagination":{"total_items":100,"total_pages":10,"current_page":1,"per_page":10}}
@@ -53,11 +56,11 @@ Data dataFromJson(String str) => Data.fromJson(json.decode(str));
 String dataToJson(Data data) => json.encode(data.toJson());
 class Data {
   Data({
-      List<AdData>? adData, 
-      Pagination? pagination,}){
+    List<AdData>? adData,
+    Pagination? pagination,}) {
     _adData = adData;
     _pagination = pagination;
-}
+  }
 
   Data.fromJson(dynamic json) {
     if (json['data'] != null) {
@@ -66,16 +69,22 @@ class Data {
         _adData?.add(AdData.fromJson(v));
       });
     }
-    _pagination = json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
+    _pagination =
+    json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
   }
+
   List<AdData>? _adData;
   Pagination? _pagination;
-Data copyWith({  List<AdData>? adData,
-  Pagination? pagination,
-}) => Data(  adData: adData ?? _adData,
-  pagination: pagination ?? _pagination,
-);
+
+  Data copyWith({ List<AdData>? adData,
+    Pagination? pagination,
+  }) =>
+      Data(adData: adData ?? _adData,
+        pagination: pagination ?? _pagination,
+      );
+
   List<AdData>? get adData => _adData;
+
   Pagination? get pagination => _pagination;
 
   Map<String, dynamic> toJson() {
@@ -88,77 +97,9 @@ Data copyWith({  List<AdData>? adData,
     }
     return map;
   }
-
 }
 
-/// total_items : 100
-/// total_pages : 10
-/// current_page : 1
-/// per_page : 10
 
-Pagination paginationFromJson(String str) => Pagination.fromJson(json.decode(str));
-String paginationToJson(Pagination data) => json.encode(data.toJson());
-class Pagination {
-  Pagination({
-      num? totalItems, 
-      num? totalPages, 
-      num? currentPage, 
-      num? perPage,}){
-    _totalItems = totalItems;
-    _totalPages = totalPages;
-    _currentPage = currentPage;
-    _perPage = perPage;
-}
-
-  Pagination.fromJson(dynamic json) {
-    _totalItems = json['total_items'];
-    _totalPages = json['total_pages'];
-    _currentPage = json['current_page'];
-    _perPage = json['per_page'];
-  }
-  num? _totalItems;
-  num? _totalPages;
-  num? _currentPage;
-  num? _perPage;
-Pagination copyWith({  num? totalItems,
-  num? totalPages,
-  num? currentPage,
-  num? perPage,
-}) => Pagination(  totalItems: totalItems ?? _totalItems,
-  totalPages: totalPages ?? _totalPages,
-  currentPage: currentPage ?? _currentPage,
-  perPage: perPage ?? _perPage,
-);
-  num? get totalItems => _totalItems;
-  num? get totalPages => _totalPages;
-  num? get currentPage => _currentPage;
-  num? get perPage => _perPage;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['total_items'] = _totalItems;
-    map['total_pages'] = _totalPages;
-    map['current_page'] = _currentPage;
-    map['per_page'] = _perPage;
-    return map;
-  }
-
-}
-
-/// category_id : 1
-/// city_id : 1
-/// name : "Electronics"
-/// bidding_status : 1
-/// photos : [{"image_id":1,"photo":"photo.jpg"}]
-/// comments : [{"comment_id":101,"client_id":101,"item_id":45,"comment":"This is a great item!","created_at":"2024-09-16T12:00:00Z"}]
-/// reactions : [{"reaction_id":501,"reaction_type":"like","item_id":45,"client_id":45,"created_at":"2024-09-16T12:00:00Z"}]
-/// author : [{"client_id":501,"name":"string","email":"string","phone":"963999999999","address":"string","photo":"photo.jpg"}]
-/// description : "Category description"
-/// keywords : "electronics, gadgets"
-/// starting_price : 50000
-/// min_increase_price : 10000
-/// bidding_start_time : "2024-10-01T12:00:00Z"
-/// attributes : [{"attribute_id":1,"value":"Black"}]
 
 AdData adDataFromJson(String str) => AdData.fromJson(json.decode(str));
 String adDataToJson(AdData data) => json.encode(data.toJson());
@@ -169,7 +110,7 @@ class AdData {
       String? name, 
       num? biddingStatus, 
       List<Photos>? photos, 
-      List<Comments>? comments, 
+      List<Comment>? comments,
       List<Reactions>? reactions, 
       Author? author,
       String? description, 
@@ -212,7 +153,7 @@ class AdData {
     if (json['comments'] != null) {
       _comments = [];
       json['comments'].forEach((v) {
-        _comments?.add(Comments.fromJson(v));
+        _comments?.add(Comment.fromJson(v));
       });
     }
     if (json['reactions'] != null) {
@@ -222,8 +163,6 @@ class AdData {
       });
     }
     if (json['author'] != null) {
-      print(json['author']);
-      print('000000000000000000000000000');
         _author=(Author.fromJson(json['author']));
     }
     _description = json['description'];
@@ -244,7 +183,7 @@ class AdData {
   num? _biddingStatus;
   num? _itemId;
   List<Photos>? _photos;
-  List<Comments>? _comments;
+  List<Comment>? _comments;
   List<Reactions>? _reactions;
   Author? _author;
   String? _description;
@@ -259,7 +198,7 @@ AdData copyWith({  num? categoryId,
   String? name,
   num? biddingStatus,
   List<Photos>? photos,
-  List<Comments>? comments,
+  List<Comment>? comments,
   List<Reactions>? reactions,
   Author? author,
   String? description,
@@ -290,7 +229,7 @@ AdData copyWith({  num? categoryId,
   String? get name => _name;
   num? get biddingStatus => _biddingStatus;
   List<Photos>? get photos => _photos;
-  List<Comments>? get comments => _comments;
+  List<Comment>? get comments => _comments;
   List<Reactions>? get reactions => _reactions;
   Author? get author => _author;
   String? get description => _description;
@@ -503,71 +442,7 @@ Reactions copyWith({  num? reactionId,
 
 }
 
-/// comment_id : 101
-/// client_id : 101
-/// item_id : 45
-/// comment : "This is a great item!"
-/// created_at : "2024-09-16T12:00:00Z"
 
-Comments commentsFromJson(String str) => Comments.fromJson(json.decode(str));
-String commentsToJson(Comments data) => json.encode(data.toJson());
-class Comments {
-  Comments({
-      num? commentId, 
-      num? clientId, 
-      num? itemId, 
-      String? comment, 
-      String? createdAt,}){
-    _commentId = commentId;
-    _clientId = clientId;
-    _itemId = itemId;
-    _comment = comment;
-    _createdAt = createdAt;
-}
-
-  Comments.fromJson(dynamic json) {
-    _commentId = json['comment_id'];
-    _clientId = json['client_id'];
-    _itemId = json['item_id'];
-    _comment = json['comment'];
-    _createdAt = json['created_at'];
-  }
-  num? _commentId;
-  num? _clientId;
-  num? _itemId;
-  String? _comment;
-  String? _createdAt;
-Comments copyWith({  num? commentId,
-  num? clientId,
-  num? itemId,
-  String? comment,
-  String? createdAt,
-}) => Comments(  commentId: commentId ?? _commentId,
-  clientId: clientId ?? _clientId,
-  itemId: itemId ?? _itemId,
-  comment: comment ?? _comment,
-  createdAt: createdAt ?? _createdAt,
-);
-  num? get commentId => _commentId;
-  num? get clientId => _clientId;
-  num? get itemId => _itemId;
-  String? get comment => _comment;
-  String? get createdAt => _createdAt;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['comment_id'] = _commentId;
-    map['client_id'] = _clientId;
-    map['item_id'] = _itemId;
-    map['comment'] = _comment;
-    map['created_at'] = _createdAt;
-    return map;
-  }
-
-}
-
-/// image_id : 1
-/// photo : "photo.jpg"
 
 Photos photosFromJson(String str) => Photos.fromJson(json.decode(str));
 String photosToJson(Photos data) => json.encode(data.toJson());

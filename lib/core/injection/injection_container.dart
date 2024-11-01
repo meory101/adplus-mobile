@@ -42,6 +42,9 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cub
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
 
+import '../../feature/home/domain/usecase/get_adv_details_usecase.dart';
+import '../../feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
+
 /// Eng.Nour Othman(meory)*
 
 final sl = GetIt.instance;
@@ -57,8 +60,9 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeRepository>(
       () => HomeRepositoryImplements(remote: sl()));
   sl.registerLazySingleton<HomeRemote>(() => HomeRemoteImplement());
+  sl.registerLazySingleton(() => GetAdvDetailsUsecase(repository: sl()));
+  sl.registerFactory(() => AdvDetailsCubit(usecase: sl()));
 
-  // تسجيلات خدمات الإعلان
   sl.registerFactory(() => GetCategoryAttributesCubit(usecase: sl()));
   sl.registerFactory(() => AddAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => GetCitiesCubit(usecase: sl()));
@@ -77,14 +81,12 @@ Future<void> init() async {
   sl.registerFactory(() => RegisterCubit(usecase: sl()));
 
   sl.registerLazySingleton(() => RegisterUsecase(repository: sl()));
-  ///////////////verfication
   sl.registerFactory(() => VerficationCubit(usecase: sl()));
   sl.registerLazySingleton(() => VerficationUsecase(repository: sl()));
-/////////////////
   sl.registerFactory(() => ResetCubit(usecase: sl()));
   sl.registerLazySingleton(() => ResetPasswordUsecase(repository: sl()));
 
-   sl.registerFactory(() => ForgetPasswordCubit(usecase: sl()));
+  sl.registerFactory(() => ForgetPasswordCubit(usecase: sl()));
   sl.registerLazySingleton(() => ForgetPasswordUsecase(repository: sl()));
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImplements(remote: sl()));

@@ -3,12 +3,15 @@ import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.da
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside_page_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
+import '../../domain/entity/request/add_comment_request_entity.dart';
 import '../../domain/repository/home_repository.dart';
 
 /// Eng.Nour Othman(meory)*
@@ -43,7 +46,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, AdvsByAttributeResponseEntity>> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity}) {
+  Future<Either<ApiFailure, AdvsByAttributeResponseEntity>> getAdvsByAttribute(
+      {required AdvsByAttributeRequestEntity entity}) {
     return Connector<AdvsByAttributeResponseEntity>().connect(
       remote: () async {
         final result = await remote.getAdvsByAttribute(entity: entity);
@@ -53,10 +57,33 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, GetAdvDetailsResponseEntity>> getAdvDetails({required GetAdvDetailsRequestEntity entity})async {
+  Future<Either<ApiFailure, GetAdvDetailsResponseEntity>> getAdvDetails(
+      {required GetAdvDetailsRequestEntity entity}) async {
     return Connector<GetAdvDetailsResponseEntity>().connect(
       remote: () async {
         final result = await remote.getAdvDetails(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, bool>> addComment(
+      {required AddCommentRequestEntity entity}) async {
+    return Connector<bool>().connect(
+      remote: () async {
+        final result = await remote.addComment(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, GetCommentsResponseEntity>> getComments(
+      {required GetCommentsRequestEntity entity}) async {
+    return Connector<GetCommentsResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getComments(entity: entity);
         return Right(result);
       },
     );

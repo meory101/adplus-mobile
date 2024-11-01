@@ -491,10 +491,7 @@ Attributes copyWith({  num? itemAttributeId,
 
 }
 
-/// attribute_id : 24
-/// category_id : 4
-/// attribute_name : "نوع الغيار"
-/// ord : 1
+
 
 Attribute attributeFromJson(String str) => Attribute.fromJson(json.decode(str));
 String attributeToJson(Attribute data) => json.encode(data.toJson());
@@ -545,9 +542,6 @@ Attribute copyWith({  num? attributeId,
 
 }
 
-/// image_id : 60
-/// item_id : 59
-/// photo : "1730045154_671e64e281741.webp"
 
 Photos photosFromJson(String str) => Photos.fromJson(json.decode(str));
 String photosToJson(Photos data) => json.encode(data.toJson());
