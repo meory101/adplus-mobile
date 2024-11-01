@@ -148,6 +148,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                       ),
                                     ),
                                     AppTextWidget(
+                                      maxLines: 2,
                                         textAlign: TextAlign.center,
                                         text: attributeTypeList[index].option ??
                                             ""),

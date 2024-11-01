@@ -26,4 +26,5 @@ abstract class AppColorManager {
   static const Color purple = Colors.purple;
   static const Color deepPurpleAccent = Colors.deepPurpleAccent;
   static const Color amber = Colors.amber;
+  static const Color darkRed = Color.fromARGB(100, 255, 10, 20);
 }

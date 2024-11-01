@@ -65,19 +65,18 @@ class _InsidePageCategoryAdvsScreenState
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    child: DynamicHeightGridView(
                           crossAxisSpacing: AppWidthManager.w2,
                           crossAxisCount: 2,
-                          childAspectRatio: 0.6),
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: advs.length,
-                      itemBuilder: (context, index) {
+                      builder: (context, index) {
                          advertisement = advs[index];
                         return Column(
                           children: [
                             Container(
+                              height: AppHeightManager.h30,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 decoration: BoxDecoration(
                                   color: AppColorManager.lightGreyOpacity6,
