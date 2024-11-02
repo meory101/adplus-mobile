@@ -29,14 +29,19 @@ class ProfileInfoCard extends StatefulWidget {
 class _ProfileInfoCardState extends State<ProfileInfoCard> {
   ProfileInfo? profileInfo;
 
-  onEditTaped(){
-    Navigator.of(context).pushNamed(RouteNamedScreens.profileModification,arguments: ProfileInfoModificationArgs(profileInfo: profileInfo)).then((value) {
-      context.read<GetProfileInfoCubit>().getProfileInfo(context: context);
-    },);
+  onEditTaped() {
+    Navigator.of(context)
+        .pushNamed(RouteNamedScreens.profileModification,
+            arguments: ProfileInfoModificationArgs(profileInfo: profileInfo))
+        .then(
+      (value) {
+        context.read<GetProfileInfoCubit>().getProfileInfo(context: context);
+      },
+    );
   }
+
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<GetProfileInfoCubit, GetProfileInfoState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error) {
@@ -45,11 +50,10 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
       },
       builder: (context, state) {
         if (state.status == CubitStatus.loading) {
-         return const ProfileInfoCardShimmer();
+          return const ProfileInfoCardShimmer();
         }
 
-
-         profileInfo = state.entity.data;
+        profileInfo = state.entity.data;
         return Container(
           decoration: BoxDecoration(
             border: Border.all(
@@ -90,8 +94,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                       ),
                       SizedBox(height: AppHeightManager.h02),
                       AppTextWidget(
-                        text: "username : ${profileInfo?.user?.username ??
-                            '--'}",
+                        text:
+                            "username : ${profileInfo?.user?.username ?? '--'}",
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.textGrey,
                       ),
@@ -101,7 +105,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                         color: AppColorManager.textGrey,
                       ),
                       AppTextWidget(
-                        text: "phone : ${profileInfo?.user?.phone ?? '--'}",
+                        text:
+                            "descraption : ${profileInfo?.user?.description ?? '--'}",
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.textGrey,
                       ),
@@ -125,17 +130,22 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                                 horizontal: AppWidthManager.w4),
                             child: Row(
                               children: [
-                                AppTextWidget(text: "Edit",
+                                AppTextWidget(
+                                  text: "Edit",
                                   fontWeight: FontWeight.w500,
                                   fontSize: FontSizeManager.fs15,
                                 ),
-                                SizedBox(width: AppWidthManager.w2,),
-                                Icon(Icons.edit, size: AppWidthManager.w5,)
+                                SizedBox(
+                                  width: AppWidthManager.w2,
+                                ),
+                                Icon(
+                                  Icons.edit,
+                                  size: AppWidthManager.w5,
+                                )
                               ],
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   )
@@ -151,8 +161,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
               SizedBox(height: AppHeightManager.h1),
               ProfileFollowingInfoCard(
                 profileInfo: profileInfo,
-              ), SizedBox(height: AppHeightManager.h2),
-
+              ),
+              SizedBox(height: AppHeightManager.h2),
             ],
           ),
         );

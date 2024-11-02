@@ -20,7 +20,6 @@ abstract class ProfileRemote {
   Future<bool> updateProfileImage({
     required File profileImage,
   });
-
 }
 
 class ProfileRemoteImplement extends ProfileRemote {
@@ -40,6 +39,8 @@ class ProfileRemoteImplement extends ProfileRemote {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.updateProfile, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
+      print("sssssssssssssssssss");
+      print(response.body);
       return updateProfileResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
@@ -59,6 +60,4 @@ class ProfileRemoteImplement extends ProfileRemote {
       throw ApiServerException(response: response);
     }
   }
-
-  
 }

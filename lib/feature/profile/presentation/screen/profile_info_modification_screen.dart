@@ -200,6 +200,21 @@ class _ProfileInfoModificationScreenState
                 SizedBox(
                   height: AppHeightManager.h1point8,
                 ),
+                TitleAppFormFiled(
+                  initValue: widget.args.profileInfo?.user?.description ?? "",
+                  title: "Descraption ",
+                  hint: "descraption",
+                  onChanged: (value) {
+                    entity.description = value ?? "";
+                    return null;
+                  },
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "required";
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(
                   height: AppHeightManager.h1point8,
                 ),
