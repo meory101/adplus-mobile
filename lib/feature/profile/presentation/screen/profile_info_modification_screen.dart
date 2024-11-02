@@ -20,6 +20,7 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_state.dart';
+import 'package:mzad_damascus/router/router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/helper/app_image_helper.dart';
@@ -268,10 +269,10 @@ class _ProfileInfoModificationScreenState
                             UpdateUsernameState>(
                           listener: (context, state) {
                             if (state.status == CubitStatus.success) {
-                              NoteMessage.showSuccessSnackBar(
-                                  context: context,
-                                  text: "Username updated successfully");
-                            } else if (state.status == CubitStatus.error) {
+                              Navigator.of(context)
+                                  .pushNamed(RouteNamedScreens.verfiyusername);
+                            }
+                            if (state.status == CubitStatus.error) {
                               NoteMessage.showErrorSnackBar(
                                   context: context,
                                   text: "Failed to update username");

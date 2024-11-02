@@ -32,8 +32,10 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cub
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
+import 'package:mzad_damascus/feature/profile/presentation/screen/verfiy_username_screen.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
 import '../core/injection/injection_container.dart' as di;
@@ -66,6 +68,7 @@ abstract class RouteNamedScreens {
   static const String verfication = "/verfication";
   static const String resetpassword = "/resetpassword";
   static const String forgetpassword = "/forgetpassword";
+  static const String verfiyusername = "/verfiyusername";
 }
 
 abstract class AppRouter {
@@ -113,6 +116,16 @@ abstract class AppRouter {
             page: BlocProvider(
           create: (context) => di.sl<RegisterCubit>(),
           child: const RegisterScreen(),
+        ));
+      case RouteNamedScreens.verfiyusername:
+        argument as VerfiyusernameArgs;
+
+        return FadeBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<VerfiyUsernameCubit>(),
+          child: VerfiyUsernameScreen(
+            args: argument,
+          ),
         ));
       case RouteNamedScreens.advertisementLanguage:
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
@@ -216,6 +229,9 @@ abstract class AppRouter {
             ),
             BlocProvider(
               create: (context) => di.sl<UpdateUsernameCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<VerfiyUsernameCubit>(),
             ),
           ],
           child: ProfileInfoModificationScreen(
