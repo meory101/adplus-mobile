@@ -59,6 +59,8 @@ class _InsidePageCategoryAdvsScreenState
                   child: const Center(child: AppCircularProgressWidget()));
             }
             List<AdData> advs = state.entity.data?.adData ?? [];
+            print( advs.length);
+            print('8888888888888888888888');
             return InkWell(
               onTap: () {
                 Navigator.of(context).pushNamed(
@@ -103,7 +105,7 @@ class _InsidePageCategoryAdvsScreenState
                                   height: AppHeightManager.h08,
                                 ),
                                 AppTextWidget(
-                                  text: advertisement?.itemId.toString() ?? "",
+                                  text: advertisement?.name.toString() ?? "",
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   fontSize: FontSizeManager.fs15,
