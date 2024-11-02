@@ -114,7 +114,7 @@ class _DropDownFormFieldWidgetState extends State<DropDownFormFieldWidget> {
               .map((option) => DropdownMenuItem<NameAndId>(
             value: option,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add padding
+              padding:  EdgeInsets.symmetric(horizontal: AppWidthManager.w1), // Add padding
               child: AppTextWidget(
                 color: AppColorManager.black,
                 text: option.name,

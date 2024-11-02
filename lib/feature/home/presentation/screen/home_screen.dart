@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           title:
           LanguageHelper.checkIfLTR(context: context)?
-          subcategories.first.enName ?? "" : subcategories.first.name ?? "",
+          subcategories.last.enName ?? "" : subcategories.last.name ?? "",
           imagePath: subcategories.last.photo1 ?? ""));
     } else if (length == 3) {
       for (int i = 0; i < length; i++) {
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           title:
           LanguageHelper.checkIfLTR(context: context)?
-          subcategories.first.enName ?? "" : subcategories.first.name ?? "",
+          subcategories[i].enName ?? "" : subcategories[i].name ?? "",
           imagePath: subcategories[i].photo1 ?? "",
         ));
       }
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               title:
               LanguageHelper.checkIfLTR(context: context)?
-              subcategories.first.enName ?? "" : subcategories.first.name ?? "",
+              subcategories[i].enName ?? "" : subcategories[i].name ?? "",
               imagePath: subcategories[i].photo1 ?? "",
             ),
           );
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             title:
             LanguageHelper.checkIfLTR(context: context)?
-            subcategories.first.enName ?? "" : subcategories.first.name ?? "",
+            subcategories[i].enName ?? "" : subcategories[i].name ?? "",
             imagePath: subcategories[i].photo1 ?? "",
           ),
         )
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             title:
             LanguageHelper.checkIfLTR(context: context)?
-            subcategories.first.enName ?? "" : subcategories.first.name ?? "",
+            subcategories[i].enName ?? "" : subcategories[i].name ?? "",
             imagePath: subcategories[i].photo1 ?? "",
           ),
         );

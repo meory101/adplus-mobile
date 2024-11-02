@@ -259,104 +259,12 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                     return null;
                   },
                   validator: (value) {
-                    if ((value ?? "").isEmpty) {
-                      return "required";
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: AppHeightManager.h1point8,
-                ),
-                TitleAppFormFiled(
-                  textInputType: TextInputType.number,
-                  hint: "min increase price",
-                  title: "min increase price",
-                  onChanged: (value) {
-                    AdvertisementModel.entity?.minIncreasePrice =
-                        num.parse(value ?? "0");
 
                     return null;
                   },
-                  validator: (value) {
-                    if ((value ?? "").isEmpty) {
-                      return "required";
-                    }
-                    return null;
-                  },
                 ),
-                SizedBox(
-                  height: AppHeightManager.h1point8,
-                ),
-                InkWell(
-                  overlayColor: const MaterialStatePropertyAll(
-                      AppColorManager.transparent),
-                  onTap: () {
-                    showWheelDatePicker(
-                      context: context,
-                      onDateSelected: (value) {
-                        AdvertisementModel.entity?.bidingStartTime = '${value}';
-                        setState(() {
-                          dateTime = value;
-                        });
-                      },
-                    );
-                  },
-                  child: Container(
-                    alignment: LanguageHelper.checkIfLTR(context: context)
-                        ? Alignment.topRight
-                        : Alignment.topLeft,
-                    width: double.infinity,
-                    height: AppHeightManager.h6,
-                    decoration: BoxDecoration(
-                      color: AppColorManager.white,
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(AppRadiusManager.r10)),
-                      border: Border.all(
-                        color: AppColorManager.lightGreyOpacity6,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(AppWidthManager.w3),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          dateTime == null
-                              ? AppTextWidget(
-                                  text: "start bidding date".tr(),
-                                  fontSize: FontSizeManager.fs14,
-                                  color: AppColorManager.grey,
-                                )
-                              : AppTextWidget(
-                                  fontSize: FontSizeManager.fs15,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColorManager.black,
-                                  text: "$dateTime",
-                                ),
-                          InkWell(
-                            overlayColor: const WidgetStatePropertyAll(
-                                AppColorManager.transparent),
-                            onTap: () {
-                              showWheelDatePicker(
-                                context: context,
-                                onDateSelected: (value) {
-                                  AdvertisementModel.entity?.bidingStartTime =
-                                      '${value}';
-                                  setState(() {
-                                    dateTime = value;
-                                  });
-                                },
-                              );
-                            },
-                            child: SvgPicture.asset(
-                              AppIconManager.calendar,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+
+
                 SizedBox(
                   height: AppHeightManager.h9,
                 ),

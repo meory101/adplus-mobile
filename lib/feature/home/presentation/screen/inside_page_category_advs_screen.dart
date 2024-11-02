@@ -38,6 +38,8 @@ class _InsidePageCategoryAdvsScreenState
   }
 
   getAdvs(AdvsByAttributeRequestEntity entity) {
+    print(entity.attributes?.first.value);
+    print(entity.attributes?.first.attributeId);
     context
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: entity);

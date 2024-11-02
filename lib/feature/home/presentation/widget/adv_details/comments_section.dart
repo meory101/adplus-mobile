@@ -244,13 +244,13 @@ class _CommentsSectionState extends State<CommentsSection> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                AppTextWidget(
-                    fontWeight: FontWeight.w700,
-                    color: AppColorManager.mainColor,
-                    decorationColor: AppColorManager.mainColor,
-                    textDecoration: TextDecoration.underline,
-                    fontSize: FontSizeManager.fs15,
-                    text: "more comments"),
+                // AppTextWidget(
+                //     fontWeight: FontWeight.w700,
+                //     color: AppColorManager.mainColor,
+                //     decorationColor: AppColorManager.mainColor,
+                //     textDecoration: TextDecoration.underline,
+                //     fontSize: FontSizeManager.fs15,
+                //     text: "more comments"),
               ],
             ),
           ),
