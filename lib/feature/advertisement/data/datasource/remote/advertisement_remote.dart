@@ -87,6 +87,8 @@ class AdvertisementRemoteImplement extends AdvertisementRemote {
     }
     http.StreamedResponse response = await multiPartRequest.send();
     final finalResponse =await http.Response.fromStream(response);
+    print(finalResponse.statusCode);
+    print(finalResponse.body);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {

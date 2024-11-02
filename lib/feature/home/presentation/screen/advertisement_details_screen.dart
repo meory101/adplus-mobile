@@ -34,7 +34,9 @@ class _AdvertisementDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AdvDetailsCubit, AdvDetailsState>(
+    return
+
+      BlocConsumer<AdvDetailsCubit, AdvDetailsState>(
         listener: (context, state) {
       if (state.status == CubitStatus.error) {
         NoteMessage.showErrorSnackBar(context: context, text: "");
@@ -50,14 +52,14 @@ class _AdvertisementDetailsScreenState
       }
       advDetails = state.entity.data;
       return Scaffold(
-        bottomSheet: StatefulBuilder(builder: (context, setState) {
-          return Visibility(
-            visible: advDetails != null,
-            child: AdvDetailsBottomSheet(
-              advDetails: advDetails,
-            ),
-          );
-        }),
+        // bottomSheet: StatefulBuilder(builder: (context, setState) {
+        //   return Visibility(
+        //     visible: advDetails != null,
+        //     child: AdvDetailsBottomSheet(
+        //       advDetails: advDetails,
+        //     ),
+        //   );
+        // }),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(

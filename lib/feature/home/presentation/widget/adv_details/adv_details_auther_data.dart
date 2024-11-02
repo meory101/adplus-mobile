@@ -36,6 +36,20 @@ class AdvDetailsAutherData extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 fontSize: FontSizeManager.fs15,
                 text: advDetails?.author?.name ?? ""),
+            Row(
+              children: [
+                AppTextWidget(
+                    maxLines: 2,
+                    fontWeight: FontWeight.w600,
+                    fontSize: FontSizeManager.fs15,
+                    text: '${advDetails?.author?.followersCount??0}'),
+                SizedBox(width: AppWidthManager.w1,),
+                AppTextWidget(
+                    fontWeight: FontWeight.w600,
+                    fontSize: FontSizeManager.fs15,
+                    text: 'follower'),
+              ],
+            ),
             AppTextWidget(
                 maxLines: 2,
                 fontWeight: FontWeight.w600,
