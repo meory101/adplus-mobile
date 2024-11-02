@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
@@ -33,15 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> generateCards(List<SubCategory> subcategories) {
     List<Widget> cards = [];
     int length = subcategories.length;
-    // int i = 0;
-    //TODO en ar
     if (length == 1) {
       cards.add(
         FullWidthCard(
           onTap: () {
+
             onCategoryTaped(subcategories.first);
           },
-          title: subcategories.first.name ?? "",
+          title: LanguageHelper.checkIfLTR(context: context)
+              ? subcategories.first.enName ?? ""
+              : subcategories.first.name ?? "",
           imagePath: subcategories.first.photo1 ?? "",
         ),
       );
@@ -51,14 +53,18 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () {
             onCategoryTaped(subcategories.first);
           },
-          title: subcategories.first.name ?? "",
+          title: LanguageHelper.checkIfLTR(context: context)
+              ? subcategories.first.enName ?? ""
+              : subcategories.first.name ?? "",
           imagePath: subcategories.first.photo1 ?? ""));
       cards.add(BigCard(
           index: 1,
           onTap: () {
             onCategoryTaped(subcategories.last);
           },
-          title: subcategories.last.name ?? "",
+          title:  LanguageHelper.checkIfLTR(context: context)
+              ? subcategories.first.enName ?? ""
+              : subcategories.first.name ?? "",
           imagePath: subcategories.last.photo1 ?? ""));
     } else if (length == 3) {
       for (int i = 0; i < length; i++) {
@@ -68,7 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () {
             onCategoryTaped(subcategories[i]);
           },
-          title: subcategories[i].name ?? "",
+          title: LanguageHelper.checkIfLTR(context: context)
+              ? subcategories.first.enName ?? ""
+              : subcategories.first.name ?? "",
           imagePath: subcategories[i].photo1 ?? "",
         ));
       }
@@ -80,7 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 onCategoryTaped(subcategories[i]);
               },
-              title: subcategories[i].name ?? "",
+              title: LanguageHelper.checkIfLTR(context: context)
+                  ? subcategories.first.enName ?? ""
+                  : subcategories.first.name ?? "",
               imagePath: subcategories[i].photo1 ?? "",
             ),
           );
@@ -93,7 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     onCategoryTaped(subcategories[i]);
                   },
-                  title: subcategories[i].name ?? "",
+                  title: LanguageHelper.checkIfLTR(context: context)
+                      ? subcategories.first.enName ?? ""
+                      : subcategories.first.name ?? "",
                   imagePath: subcategories[i].photo1 ?? "",
                 ),
               )
@@ -103,7 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     onCategoryTaped(subcategories[i]);
                   },
-                  title: subcategories[i].name ?? "",
+                  title: LanguageHelper.checkIfLTR(context: context)
+                      ? subcategories.first.enName ?? ""
+                      : subcategories.first.name ?? "",
                   imagePath: subcategories[i].photo1 ?? "",
                 ),
               );
