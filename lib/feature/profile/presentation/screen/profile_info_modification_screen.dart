@@ -275,7 +275,7 @@ class _ProfileInfoModificationScreenState
                             if (state.status == CubitStatus.error) {
                               NoteMessage.showErrorSnackBar(
                                   context: context,
-                                  text: "Failed to update username");
+                                  text: state.error);
                             }
                           },
                           builder: (context, state) {

@@ -53,14 +53,13 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MainAppBar(
-          //TODO change lang
           title: LanguageHelper.checkIfLTR(context: context)
-              ? widget.args.subCategory.name ?? ""
+              ? widget.args.subCategory.enName ?? ""
               : widget.args.subCategory.name ?? ""),
       body: BlocConsumer<CategoryInsidePageCubit, CategoryInsidePageState>(
         listener: (context, state) {
           if (state.status == CubitStatus.error) {
-            NoteMessage.showErrorSnackBar(context: context, text: "");
+            NoteMessage.showErrorSnackBar(context: context, text: state.error);
           }
         },
         builder: (context, state) {
@@ -84,7 +83,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppTextWidget(
-                          text: insidePageData[index].attributeName ?? "dd"),
+                          text: insidePageData[index].attributeName ?? ""),
                       SizedBox(
                         height: AppHeightManager.h1point8,
                       ),
@@ -147,11 +146,15 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                         ),
                                       ),
                                     ),
-                                    AppTextWidget(
-                                      maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        text: attributeTypeList[index].option ??
-                                            ""),
+
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: AppTextWidget(
+                                        maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          text: '${attributeTypeList[index].option ??
+                                              ""}\n'),
+                                    ),
                                   ],
                                 )),
                           );

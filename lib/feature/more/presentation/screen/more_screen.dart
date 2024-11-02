@@ -108,7 +108,7 @@ class MoreScreen extends StatelessWidget {
           BlocConsumer<LogoutCubit, LogoutState>(
             listener: (context, state) {
               if (state.status == CubitStatus.error) {
-                NoteMessage.showErrorSnackBar(context: context, text: "");
+                NoteMessage.showErrorSnackBar(context: context, text: state.error);
               }
               if (state.status == CubitStatus.success) {
                 Navigator.of(context).pushNamedAndRemoveUntil(

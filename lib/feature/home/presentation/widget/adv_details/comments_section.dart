@@ -274,7 +274,7 @@ class _CommentsSectionState extends State<CommentsSection> {
           BlocConsumer<AddCommentCubit, AddCommentState>(
             listener: (context, state) {
               if (state.status == CubitStatus.error) {
-                NoteMessage.showErrorSnackBar(context: context, text: "");
+                NoteMessage.showErrorSnackBar(context: context, text: state.error);
               }
               if (state.status == CubitStatus.success) {
                 context.read<GetCommentsCubit>().getComments(

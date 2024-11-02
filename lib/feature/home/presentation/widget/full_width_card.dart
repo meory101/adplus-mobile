@@ -28,7 +28,7 @@ class FullWidthCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Stack(
+      child: Column(
         children: [
           Container(
             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -43,23 +43,17 @@ class FullWidthCard extends StatelessWidget {
               imageUrl: AppConstantManager.imageBaseUrl + imagePath,
             ),
           ),
-          Positioned(
-            right: LanguageHelper.checkIfLTR(context: context)
-                ? AppWidthManager.w3
-                : 0,
-            left: !LanguageHelper.checkIfLTR(context: context)
-                ? AppWidthManager.w3
-                : 0,
-            bottom
-                : AppHeightManager.h1point8,
-            child: AppTextWidget(
-              text: title,
-              fontSize: FontSizeManager.fs15,
-              fontWeight: FontWeight.w600,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          )
+          SizedBox(height: AppHeightManager.h05,),
+          AppTextWidget(
+            text: title,
+            fontSize: FontSizeManager.fs15,
+            fontWeight: FontWeight.w700,
+            color: AppColorManager.mainColor,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(height: AppHeightManager.h1point8,),
+
         ],
       ),
     );

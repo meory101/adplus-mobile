@@ -39,7 +39,7 @@ class _AdvertisementDetailsScreenState
       BlocConsumer<AdvDetailsCubit, AdvDetailsState>(
         listener: (context, state) {
       if (state.status == CubitStatus.error) {
-        NoteMessage.showErrorSnackBar(context: context, text: "");
+        NoteMessage.showErrorSnackBar(context: context, text: state.error);
       }
     }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
