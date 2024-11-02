@@ -74,8 +74,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: AppWidthManager.w20,
-                        height: AppWidthManager.w20,
+                        width: AppWidthManager.w25,
+                        height: AppWidthManager.w25,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
@@ -106,7 +106,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                       ),
                       AppTextWidget(
                         text:
-                            "descraption : ${profileInfo?.user?.description ?? '--'}",
+                            "description : ${profileInfo?.user?.description ?? '--'}",
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.textGrey,
                       ),

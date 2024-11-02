@@ -98,8 +98,8 @@ class _ProfileInfoModificationScreenState
                               clipBehavior: Clip.antiAliasWithSaveLayer,
 
                               // alignment: Alignment.center,
-                              width: AppWidthManager.w20,
-                              height: AppWidthManager.w20,
+                              width: AppWidthManager.w25,
+                              height: AppWidthManager.w25,
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   LanguageHelper.checkIfLTR(context: context)
@@ -202,8 +202,8 @@ class _ProfileInfoModificationScreenState
                 ),
                 TitleAppFormFiled(
                   initValue: widget.args.profileInfo?.user?.description ?? "",
-                  title: "Descraption ",
-                  hint: "descraption",
+                  title: "Description ",
+                  hint: "description",
                   onChanged: (value) {
                     entity.description = value ?? "";
                     return null;
