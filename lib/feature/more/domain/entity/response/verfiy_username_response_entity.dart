@@ -23,7 +23,7 @@ class VerifyUsernameResponseEntity {
     message = json['message'];
     success = json['success'];
     errors = json['errors'] ?? [];
-    data = json['data'] ?? {};
+    // data = json['data'] ?? {};
   }
 
   Map<String, dynamic> toJson() {

@@ -32,20 +32,23 @@ import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_pa
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
+import 'package:mzad_damascus/feature/more/data/remote/profile_remote.dart';
+import 'package:mzad_damascus/feature/more/data/repository/profile_repository_implements.dart';
+import 'package:mzad_damascus/feature/more/domain/repository/profile_repository.dart';
+import 'package:mzad_damascus/feature/more/domain/usecase/update_username_usecase.dart';
+import 'package:mzad_damascus/feature/more/domain/usecase/verfiyusername_usecase.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:mzad_damascus/feature/profile/data/repository/profile_repository_implements.dart';
 import 'package:mzad_damascus/feature/profile/domain/repository/profile_repository.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/get_profile_info_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_image_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_usecase.dart';
-import 'package:mzad_damascus/feature/profile/domain/usecase/update_username_usecase.dart';
-import 'package:mzad_damascus/feature/profile/domain/usecase/verfiyusername_usecase.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
+  import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_cubit.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
-
+ 
 /// Eng.Nour Othman(meory)*
 
 final sl = GetIt.instance;
@@ -56,11 +59,16 @@ Future<void> init() async {
   sl.registerFactory(() => CategoryInsidePageCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvsByAttributeUsecase(repository: sl()));
+  
   sl.registerLazySingleton(
       () => GetCategoryInsidePageUsecase(repository: sl()));
   sl.registerLazySingleton<HomeRepository>(
       () => HomeRepositoryImplements(remote: sl()));
   sl.registerLazySingleton<HomeRemote>(() => HomeRemoteImplement());
+
+  sl.registerLazySingleton<MoreRepository>(
+      () => MoreRepositoryImplements(remote: sl()));
+  sl.registerLazySingleton<MoreRemote>(() => MoreRemoteImplement());
 
   // تسجيلات خدمات الإعلان
   sl.registerFactory(() => GetCategoryAttributesCubit(usecase: sl()));

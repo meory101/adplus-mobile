@@ -28,7 +28,7 @@ class UpdateUsernameResponseEntity {
     _message = json['message'];
     _success = json['success'];
     _errors = json['errors'] ?? [];
-    _data = json['data'] ?? {};
+    // _data = json['data'] ?? {};
   }
 
   Map<String, dynamic> toJson() {

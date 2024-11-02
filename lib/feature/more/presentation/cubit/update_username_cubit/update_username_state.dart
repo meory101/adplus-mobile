@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/response/update_profile_username_response_entity.dart';
-
+import 'package:mzad_damascus/feature/more/domain/entity/response/update_profile_username_response_entity.dart';
+ 
 class UpdateUsernameState extends Equatable {
   final String error;
   final CubitStatus status;

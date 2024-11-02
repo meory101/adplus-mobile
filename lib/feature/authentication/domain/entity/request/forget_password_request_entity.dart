@@ -14,7 +14,7 @@ class ForgetPasswordRequestEntity {
     String? platform,
   }) {
     _username = username;
-    _platform = platform ?? "web";
+    _platform = platform ?? "app";
   }
 
   ForgetPasswordRequestEntity.fromJson(dynamic json) {

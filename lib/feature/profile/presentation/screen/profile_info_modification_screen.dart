@@ -13,14 +13,11 @@ import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_username_request_entity.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
+ import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_cubit.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_state.dart';
-import 'package:mzad_damascus/router/router.dart';
+ import 'package:mzad_damascus/router/router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/helper/app_image_helper.dart';
@@ -44,7 +41,6 @@ class _ProfileInfoModificationScreenState
     extends State<ProfileInfoModificationScreen> {
   File? profileImage;
   UpdateProfileRequestEntity entity = UpdateProfileRequestEntity();
-  UpdateUsernameRequestEntity entity1 = UpdateUsernameRequestEntity();
 
   GlobalKey<FormState> formKey = GlobalKey();
   @override
@@ -229,91 +225,7 @@ class _ProfileInfoModificationScreenState
                 SizedBox(
                   height: AppHeightManager.h1point8,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TitleAppFormFiled(
-                        initValue:
-                            widget.args.profileInfo?.user?.username ?? "",
-                        title: "Username (required)",
-                        hint: "Name",
-                        onChanged: (value) {
-                          print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-                          print(value);
-                          entity1.username = value ?? "";
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your username';
-                          }
-
-                          bool isEmail = RegExp(
-                                  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
-                              .hasMatch(value);
-                          bool isPhone =
-                              RegExp(r'^[0-9]{10,15}$').hasMatch(value);
-
-                          if (!isEmail && !isPhone) {
-                            return 'Username must be a valid phone number or email';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0, left: 10),
-                        child: BlocConsumer<UpdateUsernameCubit,
-                            UpdateUsernameState>(
-                          listener: (context, state) {
-                            if (state.status == CubitStatus.success) {
-                              Navigator.of(context)
-                                  .pushNamed(RouteNamedScreens.verfiyusername);
-                            }
-                            if (state.status == CubitStatus.error) {
-                              NoteMessage.showErrorSnackBar(
-                                  context: context,
-                                  text: "Failed to update username");
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state.status == CubitStatus.loading) {
-                              return const CircularProgressIndicator();
-                            }
-                            return MainAppButton(
-                              onTap: () {
-                                print(
-                                    "sssssssssssssssssssssssssssssssssssssssssssssssssss");
-                                print(entity1.username);
-                                if ((formKey.currentState?.validate() ??
-                                    false)) {
-                                  context
-                                      .read<UpdateUsernameCubit>()
-                                      .updateusername(
-                                        context: context,
-                                        entity: entity1,
-                                      );
-                                }
-                              },
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColorManager.mainColor,
-                              height: AppHeightManager.h5,
-                              width: AppWidthManager.w10,
-                              child: Center(
-                                child: AppTextWidget(
-                                  text: "Save",
-                                  color: AppColorManager.background,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+               
 
                 SizedBox(
                   height: AppHeightManager.h1point8,

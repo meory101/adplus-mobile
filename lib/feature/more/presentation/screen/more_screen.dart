@@ -9,6 +9,7 @@ import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_state.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 
@@ -79,6 +80,17 @@ class MoreScreen extends StatelessWidget {
               );
             },
           ),
+          MoreListTile(
+            icon: Icons.edit,
+            label: 'Change UserName',
+            color: AppColorManager.lightBlue,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditUsernameScreen()),
+              );
+            },
+          ),
           const Divider(color: AppColorManager.borderGrey),
           MoreListTile(
             icon: Icons.wallet_travel,
@@ -128,7 +140,7 @@ class MoreScreen extends StatelessWidget {
                     context.read<LogoutCubit>().logout(context: context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColorManager.red,  
+                    backgroundColor: AppColorManager.red,
                     padding:
                         EdgeInsets.symmetric(vertical: AppHeightManager.h2),
                   ),
