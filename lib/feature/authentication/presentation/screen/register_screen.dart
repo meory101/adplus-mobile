@@ -193,9 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
-                        context: context,
-                        text: state.error ?? "Registration failed",
-                      );
+                          context: context, text:  state.error);
                     }
                   },
                   builder: (context, state) {

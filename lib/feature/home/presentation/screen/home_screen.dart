@@ -63,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (length == 3) {
       for (int i = 0; i < length; i++) {
         cards.add(StandardCard(
+          itemCount: 3,
           index: i,
           onTap: () {
             onCategoryTaped(subcategories[i]);

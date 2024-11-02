@@ -38,10 +38,9 @@ class _CommentsSectionState extends State<CommentsSection> {
     super.initState();
   }
 
-  ScrollController? scrollController;
+  ScrollController? scrollController = ScrollController();
 
   initScroll() {
-    scrollController ??= ScrollController();
     scrollController?.addListener(() {
       double pixels = scrollController?.position.pixels ?? 0.0;
       double maxScrollExtent =
@@ -49,9 +48,9 @@ class _CommentsSectionState extends State<CommentsSection> {
 
       if (pixels >= maxScrollExtent) {
         print('holaaaaaaaaaaaaaaaaa');
-        // context
-        //     .read<GetCommentsCubit>()
-        //     .getComments(buildContext: context);
+        context.read<GetCommentsCubit>().getComments(
+            context: context,
+            entity: GetCommentsRequestEntity(itemId: widget.itemId));
       }
     });
   }
@@ -61,7 +60,7 @@ class _CommentsSectionState extends State<CommentsSection> {
     return BlocConsumer<GetCommentsCubit, GetCommentsState>(
         listener: (context, state) {
       if (state.status == CubitStatus.error) {
-        NoteMessage.showErrorSnackBar(context: context, text: "");
+        NoteMessage.showErrorSnackBar(context: context, text: state.error);
       }
     }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
@@ -221,8 +220,8 @@ class _CommentsSectionState extends State<CommentsSection> {
                             ),
                           ),
                           Visibility(
-                            visible: scrollController?.position.pixels ==
-                                scrollController?.position.maxScrollExtent,
+                            // visible: scrollController?.position.pixels ==
+                            //     scrollController?.position.maxScrollExtent,
                             // visible: state.status == CubitStatus.loadMore,
                             child: Center(
                               child: Padding(

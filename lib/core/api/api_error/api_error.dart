@@ -1,5 +1,7 @@
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 
 import 'api_error_method.dart';
 import 'api_error_response_entity.dart';
@@ -61,21 +63,16 @@ abstract class ApiErrorHandler {
     if ((failure.response?.body ?? "").isNotEmpty) {
       final ErrorResponseEntity errorResponseEntity;
       try {
-        //todo
-        print('api server error');
-        print(failure.response?.body);
-        errorResponseEntity =
-            errorResponseEntityFromJson(failure.response?.body ?? '{}');
+        errorResponseEntity = errorResponseEntityFromJson(
+            jsonDecode(failure.response?.body ?? "")['errors'] ?? '{}');
 
-        errorEntity.errorMessage = errorResponseEntity.message;
+        errorEntity.errorMessage =
+            jsonDecode(failure.response?.body ?? "")['errors'].toString();
         errorEntity.statusCode = failure.response?.statusCode ?? 0;
         errorEntity.errorCode = errorResponseEntity.errorCode;
-        if (buildContext != null &&
-            ApiStatusCode.invalidSessionToken() == errorEntity.errorCode) {
-          ApiErrorMethod.invalidSessionToken(context: buildContext);
-        }
-      } catch (e) {
-        errorEntity.errorMessage = "serverError";
+      }
+      catch (e) {
+        errorEntity.errorMessage =  jsonDecode(failure.response?.body ?? "")['errors'].toString();
       }
     }
     return Future.value(errorEntity);

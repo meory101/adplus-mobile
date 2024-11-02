@@ -15,13 +15,15 @@ class StandardCard extends StatelessWidget {
   final String imagePath;
   final VoidCallback onTap;
   final int index;
+  final int? itemCount;
 
   const StandardCard(
       {super.key,
-        required this.title,
-        required this.imagePath,
-        required this.onTap,
-        required this.index});
+      required this.title,
+      required this.imagePath,
+      required this.onTap,
+      this.itemCount,
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +35,26 @@ class StandardCard extends StatelessWidget {
             clipBehavior: Clip.antiAliasWithSaveLayer,
             width: AppWidthManager.w25,
             height: AppHeightManager.h20,
-            margin: EdgeInsets.only(
-                right: index % 2 == 0
-                    ? LanguageHelper.checkIfLTR(context: context)
-                    ? AppWidthManager.w3Point8
-                    : 0
-                    : 0,
-                left: index % 2 == 0
-                    ? !LanguageHelper.checkIfLTR(context: context)
-                    ? AppWidthManager.w3Point8
-                    : 0
-                    : 0,
-                bottom: AppWidthManager.w3Point8),
+            margin: itemCount == 3
+                ? EdgeInsets.only(
+                    left: LanguageHelper.checkIfLTR(context: context)
+                        ? AppWidthManager.w3Point8
+                        : 0,
+                    right: !LanguageHelper.checkIfLTR(context: context)
+                        ? AppWidthManager.w3Point8
+                        : 0)
+                : EdgeInsets.only(
+                    right: index % 2 == 0
+                        ? LanguageHelper.checkIfLTR(context: context)
+                            ? AppWidthManager.w3Point8
+                            : 0
+                        : 0,
+                    left: index % 2 == 0
+                        ? !LanguageHelper.checkIfLTR(context: context)
+                            ? AppWidthManager.w3Point8
+                            : 0
+                        : 0,
+                    bottom: AppWidthManager.w3Point8),
             decoration: BoxDecoration(
                 boxShadow: ThemeManager.cardShadow,
                 color: AppColorManager.lightGreyOpacity6,
