@@ -40,7 +40,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
     return BlocConsumer<GetProfileInfoCubit, GetProfileInfoState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error) {
-          NoteMessage.showErrorSnackBar(context: context, text: "");
+          NoteMessage.showErrorSnackBar(context: context, text: state.error);
         }
       },
       builder: (context, state) {

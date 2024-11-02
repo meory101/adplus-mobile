@@ -99,8 +99,8 @@ class _CategoryAttributeFormScreenState
                   GetCategoryAttributesState>(
                 listener: (context, state) {
                   if (state.status == CubitStatus.error) {
-                    //TODO make real error message
-                    NoteMessage.showErrorSnackBar(context: context, text: "");
+                    NoteMessage.showErrorSnackBar(
+                        context: context, text:  state.error);
                   }
                 },
                 builder: (context, state) {

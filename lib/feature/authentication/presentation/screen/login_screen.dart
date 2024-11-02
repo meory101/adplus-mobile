@@ -148,7 +148,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           .pushNamedAndRemoveUntil(RouteNamedScreens.mainBottomAppBar, (route) => false,);
                     }
                     if (state.status == CubitStatus.error) {
-                      NoteMessage.showErrorSnackBar(context: context, text: "");
+                      NoteMessage.showErrorSnackBar(
+                          context: context, text:  state.error);
                     }
                   },
                   builder: (context, state) {
