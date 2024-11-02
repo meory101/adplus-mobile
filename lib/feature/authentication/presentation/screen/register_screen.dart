@@ -193,9 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
-                        context: context,
-                        text: state.error ?? "Registration failed",
-                      );
+                          context: context, text:  state.error);
                     }
                   },
                   builder: (context, state) {
@@ -236,7 +234,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed(RouteNamedScreens.login);
+                            .pushReplacementNamed(RouteNamedScreens.login);
                       },
                       child: AppTextWidget(
                         text: "Login",

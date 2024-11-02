@@ -55,7 +55,8 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
       bottomSheet: BlocConsumer<AddAdvertisementCubit, AddAdvertisementState>(
         listener: (context, state) {
           if (state.status == CubitStatus.error) {
-            NoteMessage.showErrorSnackBar(context: context, text: "");
+            NoteMessage.showErrorSnackBar(
+                context: context, text:  state.error);
           }
           if (state.status == CubitStatus.success) {
             Navigator.of(context).pushNamedAndRemoveUntil(
@@ -172,8 +173,9 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                 BlocConsumer<GetCitiesCubit, GetCitiesState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.error) {
-                      //TODO
-                      NoteMessage.showErrorSnackBar(context: context, text: "");
+
+                      NoteMessage.showErrorSnackBar(
+                          context: context, text:  state.error);
                     }
                   },
                   builder: (context, state) {
@@ -194,6 +196,11 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                       },
                     );
                     return TitleDropDownFormFieldWidget(
+                      validator: (city) {
+                        if((city?.name??"").isEmpty){
+                          return "required";
+                        }
+                      },
                         onChanged: (selectedCity) {
                           AdvertisementModel.entity?.cityId =
                               num.parse(selectedCity?.id ?? "0");

@@ -32,9 +32,8 @@ class _CategoriesOptionsListViewState extends State<CategoriesOptionsListView> {
     return BlocConsumer<GetCategoriesCubit, GetCategoriesState>(
         listener: (context, state) {
       if (state.status == CubitStatus.error) {
-        //TODO make real error message
         NoteMessage.showErrorSnackBar(
-            context: context, text:  "");
+            context: context, text:  state.error);
       }
     }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {

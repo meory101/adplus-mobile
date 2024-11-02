@@ -127,9 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     MainAppButton(
                       onTap: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
+                        Navigator.of(context).pushNamed(
                           RouteNamedScreens.forgetpassword,
-                          (route) => false,
                         );
                       },
                       child: AppTextWidget(
@@ -146,10 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
                       Navigator.of(context)
-                          .pushNamed(RouteNamedScreens.advertisementLanguage);
+                          .pushNamedAndRemoveUntil(RouteNamedScreens.mainBottomAppBar, (route) => false,);
                     }
                     if (state.status == CubitStatus.error) {
-                      NoteMessage.showErrorSnackBar(context: context, text: "");
+                      NoteMessage.showErrorSnackBar(
+                          context: context, text:  state.error);
                     }
                   },
                   builder: (context, state) {

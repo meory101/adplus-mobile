@@ -18,9 +18,12 @@ import 'package:mzad_damascus/feature/authentication/presentation/screen/forget_
 import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
@@ -47,7 +50,8 @@ import '../feature/intro/presentation/screen/splash_screen.dart';
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
-  static String init = login;
+  static String init = mainBottomAppBar;
+
   // AppSharedPreferences.getToken().isEmpty ? register : mainBottomAppBar;
   static const String splash = "/splash";
   static const String login = "/login";
@@ -146,12 +150,26 @@ abstract class AppRouter {
         argument as AdvertisementDetailsArgs;
 
         return SlidUpBuilderRoute(
-            page: BlocProvider(
-          create: (context) => di.sl<AdvDetailsCubit>()
-            ..getAdvDetails(
-                context: context,
-                entity: GetAdvDetailsRequestEntity(
-                    itemId: argument.advertisement?.itemId)),
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => di.sl<AdvDetailsCubit>()
+                ..getAdvDetails(
+                    context: context,
+                    entity: GetAdvDetailsRequestEntity(
+                        itemId: argument.advertisement?.itemId)),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<GetCommentsCubit>()
+                ..getComments(
+                    context: context,
+                    entity: GetCommentsRequestEntity(
+                        page: 1, itemId: argument.advertisement?.itemId)),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<AddCommentCubit>(),
+            ),
+          ],
           child: AdvertisementDetailsScreen(
             args: argument,
           ),

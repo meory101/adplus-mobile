@@ -42,7 +42,9 @@ class _InsidePageCategoryAdvsScreenState
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: entity);
   }
+
   AdData? advertisement;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,32 +54,37 @@ class _InsidePageCategoryAdvsScreenState
           listener: (context, state) {},
           builder: (context, state) {
             if (state.status == CubitStatus.loading) {
-              return const AppCircularProgressWidget();
+              return SizedBox(
+                  height: AppHeightManager.h70,
+                  child: const Center(child: AppCircularProgressWidget()));
             }
             List<AdData> advs = state.entity.data?.adData ?? [];
+            print( advs.length);
+            print('8888888888888888888888');
             return InkWell(
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(RouteNamedScreens.advertisementDetails,arguments: AdvertisementDetailsArgs(advertisement: advertisement));
+                Navigator.of(context).pushNamed(
+                    RouteNamedScreens.advertisementDetails,
+                    arguments:
+                        AdvertisementDetailsArgs(advertisement: advertisement));
               },
               child: Column(
                 children: [
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: AppWidthManager.w2,
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.6),
+                    child: DynamicHeightGridView(
+                      crossAxisSpacing: AppWidthManager.w2,
+                      crossAxisCount: 2,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: advs.length,
-                      itemBuilder: (context, index) {
-                         advertisement = advs[index];
+                      builder: (context, index) {
+                        advertisement = advs[index];
                         return Column(
                           children: [
                             Container(
+                                height: AppHeightManager.h30,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 decoration: BoxDecoration(
                                   color: AppColorManager.lightGreyOpacity6,
@@ -86,7 +93,8 @@ class _InsidePageCategoryAdvsScreenState
                                 ),
                                 child: MainImageWidget(
                                   imageUrl: AppConstantManager.imageBaseUrl +
-                                      (advertisement?.photos?.first.photo ?? ""),
+                                      (advertisement?.photos?.first.photo ??
+                                          ""),
                                   borderRadius: BorderRadius.circular(
                                       AppRadiusManager.r15),
                                 )),
@@ -97,7 +105,7 @@ class _InsidePageCategoryAdvsScreenState
                                   height: AppHeightManager.h08,
                                 ),
                                 AppTextWidget(
-                                  text: advertisement?.itemId.toString() ?? "",
+                                  text: advertisement?.name.toString() ?? "",
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   fontSize: FontSizeManager.fs15,
