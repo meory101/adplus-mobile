@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/more/data/remote/profile_remote.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/verfiy_username_request_entity.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/response/edit_password_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/update_profile_username_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/verfiy_username_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/repository/profile_repository.dart';
@@ -46,7 +48,16 @@ class MoreRepositoryImplements implements MoreRepository {
       },
     );
   }
-  
+   @override
+ Future<Either<ApiFailure,EditPasswordResponseEntity>> editpassword(
+      {required EditPasswordRequestEntity entity}) async {
+    return Connector<EditPasswordResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.editpassword(entity: entity);
+        return Right(result);
+      },
+    );
+  }
   
   }
 

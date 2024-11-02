@@ -9,6 +9,7 @@ import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_state.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
@@ -70,13 +71,13 @@ class MoreScreen extends StatelessWidget {
             onTap: () {},
           ),
           MoreListTile(
-            icon: Icons.person,
-            label: 'Profile',
+            icon: Icons.password,
+            label: 'Change Pssword',
             color: AppColorManager.lightBlue,
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
+                MaterialPageRoute(builder: (context) => EditPasswordScreen()),
               );
             },
           ),
@@ -120,7 +121,8 @@ class MoreScreen extends StatelessWidget {
           BlocConsumer<LogoutCubit, LogoutState>(
             listener: (context, state) {
               if (state.status == CubitStatus.error) {
-                NoteMessage.showErrorSnackBar(context: context, text: "");
+                NoteMessage.showErrorSnackBar(
+                    context: context, text: state.error);
               }
               if (state.status == CubitStatus.success) {
                 Navigator.of(context).pushNamedAndRemoveUntil(
@@ -131,7 +133,15 @@ class MoreScreen extends StatelessWidget {
             },
             builder: (context, state) {
               if (state.status == CubitStatus.loading) {
-                return AppCircularProgressWidget();
+                return SizedBox(
+                    height: AppHeightManager.h5,
+                    width: AppHeightManager.h2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AppCircularProgressWidget(),
+                      ],
+                    ));
               }
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),

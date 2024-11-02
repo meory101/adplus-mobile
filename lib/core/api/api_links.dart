@@ -16,6 +16,8 @@ class ApiPostUrl {
   static String forgetpassword = "api/auth/forgotPassword";
   static String updateUsername = "api/auth/UpdateUsername";
     static String verfiyusername = "api/auth/VerifyUsername";
+        static String editpassword = "api/auth/UpdatePassword";
+
 
 
   static String addAdv = "api/item/create-item";

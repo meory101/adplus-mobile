@@ -13,11 +13,11 @@ import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
- import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
- import 'package:mzad_damascus/router/router.dart';
+import 'package:mzad_damascus/router/router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/helper/app_image_helper.dart';
@@ -182,226 +182,81 @@ class _ProfileInfoModificationScreenState
                 SizedBox(
                   height: AppHeightManager.h4,
                 ),
-
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TitleAppFormFiled(
-                        initValue: widget.args.profileInfo?.user?.name ?? "",
-                        title: "name (required)",
-                        hint: "name",
-                        onChanged: (value) {
-                          entity.name = value ?? "";
-                          return null;
-                        },
-                        validator: (value) {
-                          if ((value ?? "").isEmpty) {
-                            return "required";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0, left: 10),
-                        child: MainAppButton(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColorManager.mainColor,
-                          height: AppHeightManager.h5,
-                          width: AppWidthManager.w10,
-                          child: Center(
-                              child: AppTextWidget(
-                            text: "save",
-                            color: AppColorManager.background,
-                          )),
-                        ),
-                      ),
-                    )
-                  ],
+                TitleAppFormFiled(
+                  initValue: widget.args.profileInfo?.user?.name ?? "",
+                  title: "name (required)",
+                  hint: "name",
+                  onChanged: (value) {
+                    entity.name = value ?? "";
+                    return null;
+                  },
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "required";
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: AppHeightManager.h1point8,
                 ),
-               
-
                 SizedBox(
                   height: AppHeightManager.h1point8,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TitleAppFormFiled(
-                        initValue: widget.args.profileInfo?.user?.email ?? "",
-                        title: "email",
-                        hint: "email",
-                        onChanged: (value) {
-                          entity.email = value ?? "";
-
-                          return null;
-                        },
-                        validator: (value) {
-                          return null;
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0, left: 10),
-                        child: MainAppButton(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColorManager.mainColor,
-                          height: AppHeightManager.h5,
-                          width: AppWidthManager.w10,
-                          child: Center(
-                              child: AppTextWidget(
-                            text: "save",
-                            color: AppColorManager.background,
-                          )),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: AppHeightManager.h1point8,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TitleAppFormFiled(
-                        initValue:
-                            widget.args.profileInfo?.user?.whatsapp ?? "",
-                        title: "whatsapp number",
-                        hint: "whatsapp number",
-                        onChanged: (value) {
-                          entity.whatsapp = value ?? "";
-
-                          return null;
-                        },
-                        validator: (value) {
-                          return null;
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0, left: 10),
-                        child: MainAppButton(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColorManager.mainColor,
-                          height: AppHeightManager.h5,
-                          width: AppWidthManager.w10,
-                          child: Center(
-                              child: AppTextWidget(
-                            text: "save",
-                            color: AppColorManager.background,
-                          )),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: AppHeightManager.h1point8,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TitleAppFormFiled(
-                        initValue: widget.args.profileInfo?.user?.phone ?? "",
-                        title: "phone",
-                        hint: "phone",
-                        onChanged: (value) {
-                          entity.phone = value ?? "";
-
-                          return null;
-                        },
-                        validator: (value) {
-                          return null;
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0, left: 10),
-                        child: MainAppButton(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColorManager.mainColor,
-                          height: AppHeightManager.h5,
-                          width: AppWidthManager.w10,
-                          child: Center(
-                              child: AppTextWidget(
-                            text: "save",
-                            color: AppColorManager.background,
-                          )),
-                        ),
-                      ),
-                    )
-                  ],
                 ),
                 SizedBox(
                   height: AppHeightManager.h4,
                 ),
-                // BlocConsumer<UpdateProfileImageCubit, UpdateProfileImageState>(
-                //   listener: (context, state) {
-                //     if (state.status == CubitStatus.success) {
-                //       Navigator.of(context).pop();
-                //     }
-                //   },
-                //   builder: (context, state) {
-                //     return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-                //       listener: (context, state) {
-                //         if (state.status == CubitStatus.error) {
-                //           NoteMessage.showErrorSnackBar(
-                //               context: context, text: "");
-                //         }
-                //         if (state.status == CubitStatus.success) {
-                //           if (profileImage != null) {
-                //             context
-                //                 .read<UpdateProfileImageCubit>()
-                //                 .updateProfile(
-                //                     context: context,
-                //                     profileImage: profileImage!);
-                //             return;
-                //           }
-                //           Navigator.of(context).pop();
-                //         }
-                //       },
-                //       builder: (context, state) {
-                //         if (state.status == CubitStatus.loading) {
-                //           return const CircularProgressIndicator();
-                //         }
-                //         return MainAppButton(
-                //           onTap: () {
-                //             if ((formKey.currentState?.validate() ?? false)) {
-                //               context.read<UpdateProfileCubit>().updateProfile(
-                //                   context: context, entity: entity);
-                //             }
-                //           },
-                //           alignment: Alignment.center,
-                //           width: AppWidthManager.w100,
-                //           height: AppHeightManager.h6,
-                //           color: AppColorManager.mainColor,
-                //           child: AppTextWidget(
-                //             text: "save",
-                //             fontSize: FontSizeManager.fs15,
-                //             fontWeight: FontWeight.w500,
-                //             color: AppColorManager.white,
-                //           ),
-                //         );
-                //       },
-                //     );
-                //   },
-                // )
+                BlocConsumer<UpdateProfileImageCubit, UpdateProfileImageState>(
+                  listener: (context, state) {
+                    if (state.status == CubitStatus.success) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  builder: (context, state) {
+                    return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
+                      listener: (context, state) {
+                        if (state.status == CubitStatus.error) {
+                          NoteMessage.showErrorSnackBar(
+                              context: context, text: "");
+                        }
+                        if (state.status == CubitStatus.success) {
+                          if (profileImage != null) {
+                            context
+                                .read<UpdateProfileImageCubit>()
+                                .updateProfile(
+                                    context: context,
+                                    profileImage: profileImage!);
+                            return;
+                          }
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state.status == CubitStatus.loading) {
+                          return const CircularProgressIndicator();
+                        }
+                        return MainAppButton(
+                          onTap: () {
+                            if ((formKey.currentState?.validate() ?? false)) {
+                              context.read<UpdateProfileCubit>().updateProfile(
+                                  context: context, entity: entity);
+                            }
+                          },
+                          alignment: Alignment.center,
+                          width: AppWidthManager.w100,
+                          height: AppHeightManager.h6,
+                          color: AppColorManager.mainColor,
+                          child: AppTextWidget(
+                            text: "save",
+                            fontSize: FontSizeManager.fs15,
+                            fontWeight: FontWeight.w500,
+                            color: AppColorManager.white,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                )
               ],
             ),
           ),
