@@ -16,9 +16,9 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/register
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_state.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_state.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/request/verfiy_username_request_entity.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/verfiyusername_cubit/verfiy_username_state.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/verfiy_username_request_entity.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_state.dart';
 import 'package:mzad_damascus/router/router.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 

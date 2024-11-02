@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-UpdateUsernameResponseEntity updateUsernameResponseEntityFromJson(String str) =>
-    UpdateUsernameResponseEntity.fromJson(json.decode(str));
+EditPasswordResponseEntity editPasswordResponseEntityFromJson(String str) =>
+    EditPasswordResponseEntity.fromJson(json.decode(str));
 
-String updateUsernameResponseEntityToJson(UpdateUsernameResponseEntity data) =>
+String editPasswordResponseEntityToJson(EditPasswordResponseEntity data) =>
     json.encode(data.toJson());
 
-class UpdateUsernameResponseEntity {
+class EditPasswordResponseEntity {
   String? _message;
   bool? _success;
   List<dynamic>? _errors;
   Map<String, dynamic>? _data;
 
-  UpdateUsernameResponseEntity({
+  EditPasswordResponseEntity({
     String? message,
     bool? success,
     List<dynamic>? errors,
@@ -24,7 +24,7 @@ class UpdateUsernameResponseEntity {
     _data = data ?? {};
   }
 
-  UpdateUsernameResponseEntity.fromJson(Map<String, dynamic> json) {
+  EditPasswordResponseEntity.fromJson(Map<String, dynamic> json) {
     _message = json['message'];
     _success = json['success'];
     _errors = json['errors'] ?? [];

@@ -27,14 +27,16 @@ import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.da
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/add_comment_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_details_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_advs_by_attribute_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_comments_usecase.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
-import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:mzad_damascus/feature/profile/data/repository/profile_repository_implements.dart';
 import 'package:mzad_damascus/feature/profile/domain/repository/profile_repository.dart';
@@ -74,7 +76,10 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeRemote>(() => HomeRemoteImplement());
   sl.registerLazySingleton(() => GetAdvDetailsUsecase(repository: sl()));
   sl.registerFactory(() => AdvDetailsCubit(usecase: sl()));
-
+ sl.registerLazySingleton<MoreRepository>(
+      () => MoreRepositoryImplements(remote: sl()));
+  sl.registerLazySingleton<MoreRemote>(() => MoreRemoteImplement());
+  // تسجيلات خدمات الإعلان
   sl.registerFactory(() => GetCategoryAttributesCubit(usecase: sl()));
   sl.registerFactory(() => AddAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => GetCitiesCubit(usecase: sl()));
@@ -92,9 +97,14 @@ Future<void> init() async {
 
   sl.registerFactory(() => RegisterCubit(usecase: sl()));
 
+  sl.registerLazySingleton(() => EditPasswordUsecase(repository: sl()));
+  sl.registerFactory(() => EditPasswordCubit(usecase: sl()));
+
   sl.registerLazySingleton(() => RegisterUsecase(repository: sl()));
+  ///////////////verfication
   sl.registerFactory(() => VerficationCubit(usecase: sl()));
   sl.registerLazySingleton(() => VerficationUsecase(repository: sl()));
+/////////////////
   sl.registerFactory(() => ResetCubit(usecase: sl()));
   sl.registerLazySingleton(() => ResetPasswordUsecase(repository: sl()));
 
