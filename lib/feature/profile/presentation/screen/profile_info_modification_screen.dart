@@ -10,6 +10,7 @@ import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/form_field/title_app_form_filed.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
+import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
@@ -45,8 +46,10 @@ class _ProfileInfoModificationScreenState
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   void initState() {
+    profileImage =null;
     entity.username = widget.args.profileInfo?.user?.username;
     entity.name = widget.args.profileInfo?.user?.name;
+    entity.description = widget.args.profileInfo?.user?.description;
     super.initState();
   }
 
@@ -69,8 +72,8 @@ class _ProfileInfoModificationScreenState
                       replacement: Container(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         alignment: Alignment.center,
-                        width: AppWidthManager.w20,
-                        height: AppWidthManager.w20,
+                        width: AppWidthManager.w25,
+                        height: AppWidthManager.w25,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -224,15 +227,23 @@ class _ProfileInfoModificationScreenState
                 BlocConsumer<UpdateProfileImageCubit, UpdateProfileImageState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
+                      print('success hereeeeeeeeeeeeeeeeeeeeee');
                       Navigator.of(context).pop();
+                    }
+                    if (state.status == CubitStatus.error) {
+                      NoteMessage.showErrorSnackBar(
+                          context: context, text: state.error);
                     }
                   },
                   builder: (context, state) {
+                    if(state.status ==CubitStatus.loading){
+                      return const AppCircularProgressWidget();
+                    }
                     return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
                       listener: (context, state) {
                         if (state.status == CubitStatus.error) {
                           NoteMessage.showErrorSnackBar(
-                              context: context, text: "");
+                              context: context, text: state.error);
                         }
                         if (state.status == CubitStatus.success) {
                           if (profileImage != null) {
@@ -241,9 +252,12 @@ class _ProfileInfoModificationScreenState
                                 .updateProfile(
                                     context: context,
                                     profileImage: profileImage!);
-                            return;
+
                           }
-                          Navigator.of(context).pop();
+                        else{
+                            Navigator.of(context).pop();
+                          }
+
                         }
                       },
                       builder: (context, state) {

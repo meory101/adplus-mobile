@@ -38,9 +38,11 @@ class ProfileRemoteImplement extends ProfileRemote {
       {required UpdateProfileRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.updateProfile, body: entity.toJson());
+    print("sssssssssssssssssss");
+    print(response.body);
+    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      print("sssssssssssssssssss");
-      print(response.body);
+
       return updateProfileResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
@@ -54,6 +56,9 @@ class ProfileRemoteImplement extends ProfileRemote {
         files: [profileImage],
         url: ApiPostUrl.updateProfileImage,
         imageKey: 'image');
+    print("sssssssssssssssssss");
+    print(response.body);
+    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {

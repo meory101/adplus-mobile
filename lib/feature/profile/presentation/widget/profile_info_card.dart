@@ -81,6 +81,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                           shape: BoxShape.circle,
                         ),
                         child: MainImageWidget(
+                          fit: BoxFit.cover,
                           imageUrl: (AppConstantManager.imageBaseUrl +
                               (profileInfo?.user?.photo ?? "")),
                         ),
@@ -104,12 +105,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.textGrey,
                       ),
-                      AppTextWidget(
-                        text:
-                            "description : ${profileInfo?.user?.description ?? '--'}",
-                        fontSize: FontSizeManager.fs15,
-                        color: AppColorManager.textGrey,
-                      ),
+
                     ],
                   ),
                   InkWell(
@@ -149,6 +145,20 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                       ],
                     ),
                   )
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextWidget(
+                      text:
+                      "description : ${profileInfo?.user?.description ?? '--'}",
+                      fontSize: FontSizeManager.fs15,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      color: AppColorManager.textGrey,
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: AppHeightManager.h1),
