@@ -22,6 +22,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_re
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
@@ -257,6 +258,10 @@ abstract class AppRouter {
         return FadeBuilderRoute(
             page: MultiBlocProvider(
           providers: [
+            BlocProvider(
+              create: (context) =>
+              di.sl<BannersCubit>()..getHomeBanners(context: context),
+            ),
             BlocProvider(
               create: (context) =>
                   di.sl<GetCategoriesCubit>()..getCategories(context: context),

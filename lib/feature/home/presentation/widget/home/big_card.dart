@@ -1,28 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/helper/language_helper.dart';
-import '../../../../core/resource/color_manager.dart';
-import '../../../../core/resource/constant_manager.dart';
-import '../../../../core/resource/font_manager.dart';
-import '../../../../core/resource/size_manager.dart';
-import '../../../../core/resource/theme_manager.dart';
-import '../../../../core/widget/image/main_image_widget.dart';
-import '../../../../core/widget/text/app_text_widget.dart';
+import '../../../../../core/helper/language_helper.dart';
+import '../../../../../core/resource/color_manager.dart';
+import '../../../../../core/resource/constant_manager.dart';
+import '../../../../../core/resource/font_manager.dart';
+import '../../../../../core/resource/size_manager.dart';
+import '../../../../../core/resource/theme_manager.dart';
+import '../../../../../core/widget/image/main_image_widget.dart';
+import '../../../../../core/widget/text/app_text_widget.dart';
 
-class FullWidthCard extends StatelessWidget {
+class BigCard extends StatelessWidget {
   final String title;
   final String imagePath;
-  final String? bgImage;
+  final int index;
   final VoidCallback onTap;
 
-  const FullWidthCard({
-    super.key,
-    required this.title,
-    required this.imagePath,
-    this.bgImage, // Background image
-    required this.onTap, // Make onTap required
-  });
+  const BigCard(
+      {super.key,
+        required this.title,
+        required this.imagePath,
+        required this.onTap,
+        required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +31,19 @@ class FullWidthCard extends StatelessWidget {
         children: [
           Container(
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            width: AppWidthManager.w100,
+            width: AppWidthManager.w60,
             height: AppHeightManager.h20,
+            margin: EdgeInsets.only(
+              left:   index % 2 == 0
+            ? !LanguageHelper.checkIfLTR(context: context)
+                ? AppWidthManager.w3Point8
+                : 0
+              : 0,
+                right: index % 2 == 0
+                    ? LanguageHelper.checkIfLTR(context: context)
+                    ? AppWidthManager.w3Point8
+                    : 0
+                    : 0, ),
             decoration: BoxDecoration(
                 boxShadow: ThemeManager.cardShadow,
                 color: AppColorManager.lightGreyOpacity6,
@@ -53,7 +63,6 @@ class FullWidthCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           SizedBox(height: AppHeightManager.h1point8,),
-
         ],
       ),
     );

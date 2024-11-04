@@ -1,9 +1,11 @@
 
 import 'dart:convert';
 
+import 'package:mzad_damascus/feature/home/domain/entity/request/banners_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
@@ -23,6 +25,7 @@ abstract class HomeRemote {
   Future<AdvsByAttributeResponseEntity> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
   Future<GetAdvDetailsResponseEntity> getAdvDetails({required GetAdvDetailsRequestEntity entity});
   Future<bool> addComment({required AddCommentRequestEntity entity});
+  Future<BannersResponseEntity> getBanners();
   Future<GetCommentsResponseEntity> getComments({required GetCommentsRequestEntity entity});
 
 }
@@ -101,10 +104,21 @@ class HomeRemoteImplement extends HomeRemote {
     await ApiMethods().post(
         body: entity.toJson(),
         url: ApiPostUrl.getComments);
-    print(response.body);
-    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getCommentsResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<BannersResponseEntity> getBanners() async{
+    final response =
+        await ApiMethods().post(
+        body: {},
+        url: ApiPostUrl.getBanners);
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return bannersResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

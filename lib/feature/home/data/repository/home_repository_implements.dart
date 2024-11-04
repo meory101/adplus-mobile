@@ -5,6 +5,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
@@ -84,6 +85,16 @@ class HomeRepositoryImplements implements HomeRepository {
     return Connector<GetCommentsResponseEntity>().connect(
       remote: () async {
         final result = await remote.getComments(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, BannersResponseEntity>> getBanners() {
+    return Connector<BannersResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getBanners();
         return Right(result);
       },
     );

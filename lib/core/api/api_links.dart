@@ -15,8 +15,8 @@ class ApiPostUrl {
   static String resetPassword = "api/auth/resetPassword";
   static String forgetpassword = "api/auth/forgotPassword";
   static String updateUsername = "api/auth/UpdateUsername";
-    static String verfiyusername = "api/auth/VerifyUsername";
-        static String editpassword = "api/auth/UpdatePassword";
+  static String verfiyusername = "api/auth/VerifyUsername";
+  static String editpassword = "api/auth/UpdatePassword";
 
 
 
@@ -25,6 +25,7 @@ class ApiPostUrl {
   static String updateProfile = "api/auth/UpdateProfile";
   static String updateProfileImage = "api/auth/UploadProfileImage";
   static String getItemsById = "api/item/getItemsById";
+  static String getBanners = "api/banner/getBanners";
 }
 
 class ApiDeleteUrl {}

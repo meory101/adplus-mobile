@@ -6,18 +6,19 @@ import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cub
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
-import '../widget/big_card.dart';
-import '../widget/full_width_card.dart';
-import '../widget/home_banners.dart';
+import '../widget/home/big_card.dart';
+import '../widget/home/full_width_card.dart';
+import '../widget/home/home_banners.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widget/standard_card.dart';
+import '../widget/home/standard_card.dart';
 
 /// Eng. Nour Othman(meory)
 
@@ -44,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           LanguageHelper.checkIfLTR(context: context)?
           subcategories.first.enName ?? "" : subcategories.first.name ?? "",
           imagePath: subcategories.first.photo1 ?? "",
+
         ),
       );
     } else if (length == 2) {
@@ -66,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
           subcategories.last.enName ?? "" : subcategories.last.name ?? "",
           imagePath: subcategories.last.photo1 ?? ""));
     } else if (length == 3) {
+
       for (int i = 0; i < length; i++) {
         cards.add(StandardCard(
           itemCount: 3,
