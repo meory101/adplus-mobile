@@ -27,6 +27,7 @@ class ApiPostUrl {
   static String getItemsById = "api/item/getItemsById";
   static String getBanners = "api/banner/HomeBanners";
   static String getInsidePageBanners = "api/banner/InsideBanners";
+  static String addReaction = "api/reaction/postReactions";
 }
 
 class ApiDeleteUrl {}

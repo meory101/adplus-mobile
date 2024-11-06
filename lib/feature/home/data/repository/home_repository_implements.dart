@@ -13,6 +13,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_r
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
 import '../../domain/entity/request/add_comment_request_entity.dart';
+import '../../domain/entity/request/add_reaction_request_entity.dart';
 import '../../domain/repository/home_repository.dart';
 
 /// Eng.Nour Othman(meory)*
@@ -95,6 +96,16 @@ class HomeRepositoryImplements implements HomeRepository {
     return Connector<BannersResponseEntity>().connect(
       remote: () async {
         final result = await remote.getBanners(source: source);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, bool>> addReaction({required AddReactionRequestEntity entity}) async{
+    return Connector<bool>().connect(
+      remote: () async {
+        final result = await remote.addReaction(entity: entity);
         return Right(result);
       },
     );

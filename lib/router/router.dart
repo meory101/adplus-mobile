@@ -95,9 +95,7 @@ abstract class AppRouter {
             BlocProvider(
               create: (context) => di.sl<AdvsByAttributeCubit>(),
             ),
-            BlocProvider(
-              create: (context) => di.sl<BannersCubit>(),
-            ),
+
           ],
           child: InsidePageCategoryAdvsScreen(
             args: argument,
@@ -203,6 +201,9 @@ abstract class AppRouter {
             providers: [
               BlocProvider(
                 create: (context) => di.sl<CategoryInsidePageCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => di.sl<BannersCubit>(),
               ),
               BlocProvider(
                 create: (context) => di.sl<AdvsByAttributeCubit>(),

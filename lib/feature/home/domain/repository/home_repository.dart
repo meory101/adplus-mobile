@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/add_reaction_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside_page_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
@@ -21,6 +22,7 @@ abstract class HomeRepository {
   Future<Either<ApiFailure,AdvsByAttributeResponseEntity>> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
   Future<Either<ApiFailure, GetAdvDetailsResponseEntity>>getAdvDetails({required GetAdvDetailsRequestEntity entity});
   Future<Either<ApiFailure, bool>> addComment({required AddCommentRequestEntity entity});
+  Future<Either<ApiFailure, bool>> addReaction({required AddReactionRequestEntity entity});
   Future<Either< ApiFailure,GetCommentsResponseEntity>> getComments({required GetCommentsRequestEntity entity});
 
 }
