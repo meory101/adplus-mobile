@@ -15,7 +15,8 @@ import '../../../domain/entity/response/banners_response_entity.dart';
 /// Eng.Nour Othman(meory)*
 
 class HomeBanners extends StatefulWidget {
-  const HomeBanners({super.key});
+ final int source;
+  const HomeBanners({super.key,required this.source});
 
   @override
   State<HomeBanners> createState() => _HomeBannersState();
@@ -23,6 +24,11 @@ class HomeBanners extends StatefulWidget {
 
 class _HomeBannersState extends State<HomeBanners> {
   int selectedIndex =0;
+  @override
+  void initState() {
+    context.read<BannersCubit>().getHomeBanners(context: context, source: widget.source);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<BannersCubit, BannersState>(
@@ -33,7 +39,8 @@ class _HomeBannersState extends State<HomeBanners> {
       },
       builder: (context, state) {
         if (state.status == CubitStatus.loading) {
-          return CarouselSlider(
+          return
+            CarouselSlider(
               options: CarouselOptions(
                 onPageChanged: (index, reason) {
                   setState(() {
@@ -58,65 +65,68 @@ class _HomeBannersState extends State<HomeBanners> {
               ]);
         }
         List<Banners>? banners = state.entity.data?.data;
-        return Column(
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                onPageChanged: (index, reason) {
+        return Visibility(
+          visible: (banners?.length ??0 )>0,
+          child: Column(
+            children: [
+              CarouselSlider(
+                options: CarouselOptions(
+                  onPageChanged: (index, reason) {
 
-                },
-                aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,
-                enableInfiniteScroll: true,
-                autoPlay: true,
-                viewportFraction: 1,
+                  },
+                  aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,
+                  enableInfiniteScroll: true,
+                  autoPlay: true,
+                  viewportFraction: 1,
+                ),
+                items: List.generate(
+                  banners?.length ?? 0,
+                  (index) {
+                    return Container(
+                        width: AppWidthManager.w92,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(AppRadiusManager.r15)),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: MainImageWidget(
+                          imageUrl: AppConstantManager.imageBaseUrl+(banners?[index].photo??"")
+                        ));
+                  },
+                ),
               ),
-              items: List.generate(
-                banners?.length ?? 0,
-                (index) {
-                  return Container(
-                      width: AppWidthManager.w92,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(AppRadiusManager.r15)),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: MainImageWidget(
-                        imageUrl: AppConstantManager.imageBaseUrl+(banners?[index].photo??"")
-                      ));
-                },
+              SizedBox(
+                height: AppHeightManager.h1point8,
               ),
-            ),
-            SizedBox(
-              height: AppHeightManager.h1point8,
-            ),
-            DotsIndicator(
-              dotsCount:  banners?.length ?? 0,
-              position: selectedIndex,
-              decorator: DotsDecorator(
-                spacing: EdgeInsets.only(
-                    left: LanguageHelper.checkIfLTR(context: context)
-                        ? AppWidthManager.w1Point8
-                        : 0,
-                    right: !LanguageHelper.checkIfLTR(context: context)
-                        ? AppWidthManager.w1Point8
-                        : 0),
-                activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppRadiusManager.r10,
+              DotsIndicator(
+                dotsCount:  banners?.length ?? 1,
+                position: selectedIndex,
+                decorator: DotsDecorator(
+                  spacing: EdgeInsets.only(
+                      left: LanguageHelper.checkIfLTR(context: context)
+                          ? AppWidthManager.w1Point8
+                          : 0,
+                      right: !LanguageHelper.checkIfLTR(context: context)
+                          ? AppWidthManager.w1Point8
+                          : 0),
+                  activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      AppRadiusManager.r10,
+                    ),
                   ),
+                  activeSize: Size(
+                    AppWidthManager.w6,
+                    AppHeightManager.h08,
+                  ),
+                  size: Size(
+                    AppWidthManager.w1Point5,
+                    AppWidthManager.w1Point5,
+                  ),
+                  activeColor: AppColorManager.mainColor,
+                  color: AppColorManager.borderGrey,
                 ),
-                activeSize: Size(
-                  AppWidthManager.w6,
-                  AppHeightManager.h08,
-                ),
-                size: Size(
-                  AppWidthManager.w1Point5,
-                  AppWidthManager.w1Point5,
-                ),
-                activeColor: AppColorManager.mainColor,
-                color: AppColorManager.borderGrey,
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

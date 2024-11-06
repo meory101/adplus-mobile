@@ -25,7 +25,7 @@ abstract class HomeRemote {
   Future<AdvsByAttributeResponseEntity> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
   Future<GetAdvDetailsResponseEntity> getAdvDetails({required GetAdvDetailsRequestEntity entity});
   Future<bool> addComment({required AddCommentRequestEntity entity});
-  Future<BannersResponseEntity> getBanners();
+  Future<BannersResponseEntity> getBanners({required int source});
   Future<GetCommentsResponseEntity> getComments({required GetCommentsRequestEntity entity});
 
 }
@@ -112,11 +112,13 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<BannersResponseEntity> getBanners() async{
+  Future<BannersResponseEntity> getBanners({required int source} ) async{
+    // source =0 => home;
+    // source =1 => insidepage;
     final response =
         await ApiMethods().post(
         body: {},
-        url: ApiPostUrl.getBanners);
+        url:source==0? ApiPostUrl.getBanners :ApiPostUrl.getInsidePageBanners);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return bannersResponseEntityFromJson(response.body);
     } else {

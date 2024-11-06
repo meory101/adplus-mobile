@@ -51,7 +51,8 @@ class _InsidePageCategoryAdvsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainAppBar(title: ''),
-      body: SingleChildScrollView(
+      body:
+      SingleChildScrollView(
         child: BlocConsumer<AdvsByAttributeCubit, AdvsByAttributeState>(
           listener: (context, state) {},
           builder: (context, state) {

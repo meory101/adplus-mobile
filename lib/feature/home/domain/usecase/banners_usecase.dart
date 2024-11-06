@@ -13,7 +13,7 @@ class BannersUsecase {
     required this.repository,
   });
 
-  Future<Either<ApiFailure, BannersResponseEntity>> call() async {
-    return await repository.getBanners();
+  Future<Either<ApiFailure, BannersResponseEntity>> call({required int source}) async {
+    return await repository.getBanners( source: source);
   }
 }

@@ -18,6 +18,9 @@ abstract class EnumManager {
   static String list = "list";
 
 
+  static int homeBannerSource = 0;
+  static int insidePageBannerSource = 1;
+
   static Map<String,TextInputType> attributeTextInputType ={
     text : TextInputType.text,
     number : TextInputType.number,

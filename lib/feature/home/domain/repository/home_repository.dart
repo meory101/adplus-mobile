@@ -16,7 +16,7 @@ import '../entity/response/get_comments_response_entity.dart';
 
 abstract class HomeRepository {
   Future<Either<ApiFailure, GetCategoriesResponseEntity>> getCategories();
-  Future<Either<ApiFailure, BannersResponseEntity>> getBanners();
+  Future<Either<ApiFailure, BannersResponseEntity>> getBanners({required int source});
   Future<Either<ApiFailure, CategoryInsidePageResponseEntity>> getCategoryInsidePage({required CategoryInsidePageRequestEntity entity});
   Future<Either<ApiFailure,AdvsByAttributeResponseEntity>> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
   Future<Either<ApiFailure, GetAdvDetailsResponseEntity>>getAdvDetails({required GetAdvDetailsRequestEntity entity});

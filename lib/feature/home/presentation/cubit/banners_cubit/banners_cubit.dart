@@ -27,9 +27,9 @@ class BannersCubit extends Cubit<BannersState> {
   }) : super(BannersState.initial());
 
   void getHomeBanners(
-      {required BuildContext context,}) async {
+      {required BuildContext context,required int source}) async {
     emit(state.copyWith(status: CubitStatus.loading));
-    final result = await usecase();
+    final result = await usecase(source: source);
 
     if (isClosed) return;
     result.fold(

@@ -15,7 +15,9 @@ class ApiMethods {
 
   ApiMethods({Map<String, String>? header, this.isSecondBaseUrl}) {
     if (header == null) {
-      headers = {'Content-Type': 'application/json'};
+      headers = {'Content-Type': 'application/json',
+      'platform' : 'app'
+      };
       // headers = {
       //   "Content-type": "application/json",
       //   "Accept": "application/json",

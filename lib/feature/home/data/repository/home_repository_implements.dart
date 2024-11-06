@@ -91,10 +91,10 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, BannersResponseEntity>> getBanners() {
+  Future<Either<ApiFailure, BannersResponseEntity>> getBanners({required int source}) {
     return Connector<BannersResponseEntity>().connect(
       remote: () async {
-        final result = await remote.getBanners();
+        final result = await remote.getBanners(source: source);
         return Right(result);
       },
     );

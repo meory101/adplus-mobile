@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
@@ -169,7 +170,8 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: AppHeightManager.h2,
               ),
-              const HomeBanners(),
+               HomeBanners(                    source: EnumManager.homeBannerSource,
+               ),
               SizedBox(
                 height: AppHeightManager.h3,
               ),

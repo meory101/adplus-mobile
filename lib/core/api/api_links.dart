@@ -25,7 +25,8 @@ class ApiPostUrl {
   static String updateProfile = "api/auth/UpdateProfile";
   static String updateProfileImage = "api/auth/UploadProfileImage";
   static String getItemsById = "api/item/getItemsById";
-  static String getBanners = "api/banner/getBanners";
+  static String getBanners = "api/banner/HomeBanners";
+  static String getInsidePageBanners = "api/banner/InsideBanners";
 }
 
 class ApiDeleteUrl {}
