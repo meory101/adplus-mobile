@@ -2,8 +2,12 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/myfolloweing_response_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/myfollower_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/update_profile_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/repository/profile_repository.dart';
 import '../../../../core/api/api_error/api_failures.dart';
@@ -51,8 +55,28 @@ class ProfileRepositoryImplements implements ProfileRepository {
       },
     );
   }
-
- 
+  @override
+  Future<Either<ApiFailure, MyFollowersResponseEntity>> getMyFollowers({
+    required MyFollowersRequestEntity entity,
+  }) async {
+    return Connector<MyFollowersResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getMyFollowers(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+  @override
+  Future<Either<ApiFailure, MyFollowingResponseEntity>> getMyFollowing({
+    required MyFollowingRequestEntity entity,
+  }) async {
+    return Connector<MyFollowingResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getMyFollowing(entity: entity);
+        return Right(result);
+      },
+    );
+  }
   
   }
 

@@ -60,9 +60,10 @@ class MoreRepositoryImplements implements MoreRepository {
       },
     );
   }
-   @override
- Future<Either<ApiFailure,MyItemResponseEntity>> myitem(
-      {required MyItemRequestEntity entity}) async {
+  @override
+  Future<Either<ApiFailure, MyItemResponseEntity>> myitem({
+    required MyItemRequestEntity entity,
+  }) async {
     return Connector<MyItemResponseEntity>().connect(
       remote: () async {
         final result = await remote.myitem(entity: entity);
@@ -70,5 +71,6 @@ class MoreRepositoryImplements implements MoreRepository {
       },
     );
   }
+
   }
 

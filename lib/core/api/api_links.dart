@@ -15,16 +15,17 @@ class ApiPostUrl {
   static String resetPassword = "api/auth/resetPassword";
   static String forgetpassword = "api/auth/forgotPassword";
   static String updateUsername = "api/auth/UpdateUsername";
-    static String verfiyusername = "api/auth/VerifyUsername";
-        static String editpassword = "api/auth/UpdatePassword";
-
-
+  static String verfiyusername = "api/auth/VerifyUsername";
+  static String editpassword = "api/auth/UpdatePassword";
 
   static String addAdv = "api/item/create-item";
   static String getItemsByAttribute = "api/item/getItemsByAttribute";
   static String updateProfile = "api/auth/UpdateProfile";
   static String updateProfileImage = "api/auth/UploadProfileImage";
   static String getItemsById = "api/item/getItemsById";
+  static String myitem = "api/item/MyItems";
+  static String myfollower = "api/following/myFollowers";
+  static String myfolloweing = "api/following/myFollowing";
 }
 
 class ApiDeleteUrl {}

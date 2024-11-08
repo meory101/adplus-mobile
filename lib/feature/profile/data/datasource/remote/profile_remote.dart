@@ -2,14 +2,17 @@ import 'dart:io';
 
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/verfication_response.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/myfolloweing_response_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/myfollower_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/update_profile_response_entity.dart';
 import '../../../../../core/api/api_error/api_exception.dart';
 import '../../../../../core/api/api_error/api_status_code.dart';
 import '../../../../../core/api/api_links.dart';
 import '../../../../../core/api/api_methods.dart';
-
+import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
 abstract class ProfileRemote {
   Future<GetProfileInfoResponseEntity> getProfileInfo();
 
@@ -20,6 +23,10 @@ abstract class ProfileRemote {
   Future<bool> updateProfileImage({
     required File profileImage,
   });
+    Future<MyFollowersResponseEntity> getMyFollowers({required MyFollowersRequestEntity entity});
+      Future<MyFollowingResponseEntity> getMyFollowing({required MyFollowingRequestEntity entity}); // new
+
+
 }
 
 class ProfileRemoteImplement extends ProfileRemote {
@@ -56,6 +63,34 @@ class ProfileRemoteImplement extends ProfileRemote {
         imageKey: 'image');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+   @override
+  Future<MyFollowersResponseEntity> getMyFollowers({
+    required MyFollowersRequestEntity entity,
+  }) async {
+    final response = await ApiMethods().get(
+      url: "${ApiPostUrl.myfollower}?page=${entity.page}",
+    );
+    
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return myFollowersResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+  @override
+  Future<MyFollowingResponseEntity> getMyFollowing({
+    required MyFollowingRequestEntity entity,
+  }) async {
+    final response = await ApiMethods().get(
+      url: "${ApiPostUrl.myfolloweing}?page=${entity.page}",
+    );
+    
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return myFollowingResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

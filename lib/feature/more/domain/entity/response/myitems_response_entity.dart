@@ -64,8 +64,9 @@ class Data {
         _data?.add(Item.fromJson(v));
       });
     }
-    _pagination =
-        json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
+    _pagination = json['pagination'] != null
+        ? Pagination.fromJson(json['pagination'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -158,12 +159,12 @@ class Item {
         _reactions?.add(Reaction.fromJson(v));
       });
     }
-    if (json['author'] != null) {
-      _author = [];
-      json['author'].forEach((v) {
-        _author?.add(Author.fromJson(v));
-      });
+    if (json['author'] != null && json['author'] is List) {
+      _author = List<Author>.from(
+        (json['author'] as List).map((x) => Author.fromJson(x)),
+      );
     }
+
     _description = json['description'];
     _keywords = json['keywords'];
     _startingPrice = json['starting_price'];
@@ -229,7 +230,12 @@ class Photo {
 }
 
 class Comment {
-  Comment({num? commentId, num? clientId, num? itemId, String? comment, String? createdAt}) {
+  Comment(
+      {num? commentId,
+      num? clientId,
+      num? itemId,
+      String? comment,
+      String? createdAt}) {
     _commentId = commentId;
     _clientId = clientId;
     _itemId = itemId;
@@ -242,6 +248,12 @@ class Comment {
   num? _itemId;
   String? _comment;
   String? _createdAt;
+
+  num? get commentId => _commentId;
+  num? get clientId => _clientId;
+  num? get itemId => _itemId;
+  String? get comment => _comment;
+  String? get createdAt => _createdAt;
 
   Comment.fromJson(Map<String, dynamic> json) {
     _commentId = json['comment_id'];
@@ -263,7 +275,12 @@ class Comment {
 }
 
 class Reaction {
-  Reaction({num? reactionId, String? reactionType, num? itemId, num? clientId, String? createdAt}) {
+  Reaction(
+      {num? reactionId,
+      String? reactionType,
+      num? itemId,
+      num? clientId,
+      String? createdAt}) {
     _reactionId = reactionId;
     _reactionType = reactionType;
     _itemId = itemId;
@@ -276,6 +293,12 @@ class Reaction {
   num? _itemId;
   num? _clientId;
   String? _createdAt;
+
+  num? get reactionId => _reactionId;
+  String? get reactionType => _reactionType;
+  num? get itemId => _itemId;
+  num? get clientId => _clientId;
+  String? get createdAt => _createdAt;
 
   Reaction.fromJson(Map<String, dynamic> json) {
     _reactionId = json['reaction_id'];
@@ -297,7 +320,13 @@ class Reaction {
 }
 
 class Author {
-  Author({num? clientId, String? name, String? email, String? phone, String? address, String? photo}) {
+  Author(
+      {num? clientId,
+      String? name,
+      String? email,
+      String? phone,
+      String? address,
+      String? photo}) {
     _clientId = clientId;
     _name = name;
     _email = email;
@@ -312,6 +341,13 @@ class Author {
   String? _phone;
   String? _address;
   String? _photo;
+
+  num? get clientId => _clientId;
+  String? get name => _name;
+  String? get email => _email;
+  String? get phone => _phone;
+  String? get address => _address;
+  String? get photo => _photo;
 
   Author.fromJson(Map<String, dynamic> json) {
     _clientId = json['client_id'];
@@ -357,7 +393,8 @@ class Attribute {
 }
 
 class Pagination {
-  Pagination({num? totalItems, num? totalPages, num? currentPage, num? perPage}) {
+  Pagination(
+      {num? totalItems, num? totalPages, num? currentPage, num? perPage}) {
     _totalItems = totalItems;
     _totalPages = totalPages;
     _currentPage = currentPage;
@@ -368,6 +405,11 @@ class Pagination {
   num? _totalPages;
   num? _currentPage;
   num? _perPage;
+
+  num? get totalItems => _totalItems;
+  num? get totalPages => _totalPages;
+  num? get currentPage => _currentPage;
+  num? get perPage => _perPage;
 
   Pagination.fromJson(Map<String, dynamic> json) {
     _totalItems = json['total_items'];

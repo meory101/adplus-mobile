@@ -68,7 +68,7 @@ class GetProfileInfoResponseEntity {
 
 /// user : {"client_id":107,"name":"Murad","username":"+963999999999","email":null,"phone":"+963999999999","whatsapp":"963999999999","address":null,"photo":null,"token_expires":0,"is_verified":1,"error_login":0, "description": "User description"}
 
-class ProfileInfo {
+class   ProfileInfo {
   ProfileInfo({
     User? user,
   }) {

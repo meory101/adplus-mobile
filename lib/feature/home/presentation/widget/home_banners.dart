@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/core/resource/image_manager.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import '../../../../core/widget/image/main_image_widget.dart';
-
 
 /// Eng.Nour Othman(meory)*
 
@@ -14,12 +14,9 @@ class HomeBanners extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-
-      Column(
+    return Column(
       children: [
         CarouselSlider(
-
             options: CarouselOptions(
               onPageChanged: (index, reason) {},
               aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,
@@ -35,8 +32,8 @@ class HomeBanners extends StatelessWidget {
                           BorderRadius.circular(AppRadiusManager.r15)),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: MainImageWidget(
-                    imageUrl: "",
-                  ))
+                      height: AppHeightManager.h10,
+                      imagePath: AppImageManager.splash))
             ]),
         SizedBox(
           height: AppHeightManager.h1point8,
