@@ -5,6 +5,7 @@ import 'package:mzad_damascus/core/model/comment.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
+import 'package:mzad_damascus/core/widget/loading/shimmer/comment_section_shimmer.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_comment_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
@@ -65,15 +66,9 @@ class _CommentsSectionState extends State<CommentsSection> {
       }
     }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
-        return ListView.builder(shrinkWrap: true,
-           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return ShimmerContainer(
-                width: AppWidthManager.w60, height: AppHeightManager.h2);
-          },
-        );
+        return const CommentSectionShimmer();
       }
+
       List<Comment>? comments = state.entity.data?.data;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
