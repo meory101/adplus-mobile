@@ -1,21 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mzad_damascus/core/model/comment.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
-import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
-import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/adv_details_attribute_grid_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/adv_details_auther_data.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/adv_details_bottom_sheet.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/adv_details_images_slider.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/comments_section.dart';
+import '../../../../core/widget/loading/shimmer/adv_details_screen_shimmer.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_adv_details_response_entity.dart';
 
@@ -42,12 +40,7 @@ class _AdvertisementDetailsScreenState
       }
     }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
-        return SizedBox(
-          height: AppHeightManager.h100,
-          child: const Center(
-            child: AppCircularProgressWidget(),
-          ),
-        );
+        return const AdvDetailsScreenShimmer();
       }
       advDetails = state.entity.data;
       return Scaffold(

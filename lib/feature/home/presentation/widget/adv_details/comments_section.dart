@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/model/comment.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
+import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_comment_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
@@ -64,11 +65,13 @@ class _CommentsSectionState extends State<CommentsSection> {
       }
     }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
-        return const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppCircularProgressWidget(),
-          ],
+        return ListView.builder(shrinkWrap: true,
+           physics: const NeverScrollableScrollPhysics(),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return ShimmerContainer(
+                width: AppWidthManager.w60, height: AppHeightManager.h2);
+          },
         );
       }
       List<Comment>? comments = state.entity.data?.data;
@@ -274,7 +277,8 @@ class _CommentsSectionState extends State<CommentsSection> {
           BlocConsumer<AddCommentCubit, AddCommentState>(
             listener: (context, state) {
               if (state.status == CubitStatus.error) {
-                NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                NoteMessage.showErrorSnackBar(
+                    context: context, text: state.error);
               }
               if (state.status == CubitStatus.success) {
                 context.read<GetCommentsCubit>().getComments(
