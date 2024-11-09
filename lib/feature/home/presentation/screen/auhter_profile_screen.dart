@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
+import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/add_follow_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 
 import '../../../../core/resource/color_manager.dart';
@@ -15,7 +21,7 @@ import '../../../../core/widget/loading/shimmer/profile_info_card_shimmer.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../profile/domain/entity/response/profile_by_username_response_entity.dart';
-import '../../../profile/presentation/widget/profile_following_info_card.dart';
+import '../cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 
 class AuthorProfileScreen extends StatefulWidget {
   final AuthorProfileArgs arg;
@@ -30,7 +36,8 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(title: "",
+      appBar: const MainAppBar(
+        title: "",
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,12 +54,13 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                 if (state.status == CubitStatus.loading) {
                   return const ProfileInfoCardShimmer();
                 }
-      
+
                 ProfileByUsernameData? profileInfo = state.entity.data;
                 return DecoratedContainer(
                   borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                   margin: EdgeInsets.symmetric(horizontal: AppWidthManager.w3),
-                  padding: EdgeInsets.symmetric(horizontal:  AppWidthManager.w3Point8),
+                  margin: EdgeInsets.symmetric(horizontal: AppWidthManager.w3),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppWidthManager.w3Point8),
                   child: Column(
                     children: [
                       Row(
@@ -74,9 +82,9 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                     ),
                                     child: MainImageWidget(
                                       fit: BoxFit.cover,
-                                      imageUrl: (AppConstantManager
-                                              .imageBaseUrl +
-                                          (profileInfo?.user?.photo ?? "")),
+                                      imageUrl:
+                                          (AppConstantManager.imageBaseUrl +
+                                              (profileInfo?.user?.photo ?? "")),
                                     ),
                                   ),
                                   SizedBox(
@@ -91,8 +99,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                           AppTextWidget(
                                             text: 'followers',
                                             fontSize: FontSizeManager.fs16,
-                                            color:
-                                                AppColorManager.textAppColor,
+                                            color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w600,
                                           ),
                                           AppTextWidget(
@@ -101,8 +108,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                                     "0")
                                                 .toString(),
                                             fontSize: FontSizeManager.fs16,
-                                            color:
-                                                AppColorManager.textAppColor,
+                                            color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ],
@@ -115,8 +121,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                           AppTextWidget(
                                             text: 'following',
                                             fontSize: FontSizeManager.fs16,
-                                            color:
-                                                AppColorManager.textAppColor,
+                                            color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w600,
                                           ),
                                           AppTextWidget(
@@ -125,8 +130,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                                     "0")
                                                 .toString(),
                                             fontSize: FontSizeManager.fs16,
-                                            color:
-                                                AppColorManager.textAppColor,
+                                            color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ],
@@ -139,8 +143,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                           AppTextWidget(
                                             text: 'advertisement',
                                             fontSize: FontSizeManager.fs16,
-                                            color:
-                                                AppColorManager.textAppColor,
+                                            color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w600,
                                           ),
                                           //todo
@@ -150,8 +153,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                                     "0")
                                                 .toString(),
                                             fontSize: FontSizeManager.fs16,
-                                            color:
-                                                AppColorManager.textAppColor,
+                                            color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ],
@@ -184,14 +186,90 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(height: AppHeightManager.h1point8),
                       Row(
-
+                        children: [
+                          BlocConsumer<AddFollowCubit, AddFollowState>(
+                            listener: (context, state) {
+                              if(state.status == CubitStatus.error){
+                                NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                              }
+                            },
+                            builder: (context, state) {
+                              if(state.status == CubitStatus.loading){
+                                return ShimmerContainer(
+                                  height: AppHeightManager.h4,
+                                  width: AppWidthManager.w20,
+                                );
+                              }
+                              return MainAppButton(
+                                onTap: () {
+                                  print( profileInfo?.user?.clientId);
+                                  print('0000000000000000000000000000000000000000');
+                                  context.read<AddFollowCubit>().addFollow(
+                                      context: context,
+                                      entity: AddFollowRequestEntity(
+                                          followingId:
+                                              profileInfo?.user?.clientId));
+                                },
+                                alignment: Alignment.center,
+                                borderRadius:
+                                    BorderRadius.circular(AppRadiusManager.r5),
+                                height: AppHeightManager.h4,
+                                color: AppColorManager.mainColor,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppWidthManager.w6),
+                                child: AppTextWidget(
+                                  text: "follow",
+                                  color: AppColorManager.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: FontSizeManager.fs15,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            width: AppWidthManager.w2,
+                          ),
+                          MainAppButton(
+                            onTap: () {
+                              UrlLauncherHelper.makeCall(
+                                  phoneNumber: profileInfo?.user?.phone ?? "");
+                            },
+                            alignment: Alignment.center,
+                            borderRadius:
+                                BorderRadius.circular(AppRadiusManager.r5),
+                            height: AppHeightManager.h4,
+                            color: AppColorManager.green,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: AppWidthManager.w6),
+                            child: AppTextWidget(
+                              text: "call",
+                              color: AppColorManager.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: FontSizeManager.fs15,
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(height: AppHeightManager.h2),
                     ],
                   ),
                 );
               },
+            ),
+            BlocConsumer<GetAdvByUserCubit,GetAdvByUserState>(
+              listener: (context, state) {
+                if(state.status == CubitStatus.error){
+                  NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                }
+              },
+            builder: (context, state) {
+                if(state.status == CubitStatus.loading){
+                  // return//
+                }
+              return Container();
+            },
             )
           ],
         ),

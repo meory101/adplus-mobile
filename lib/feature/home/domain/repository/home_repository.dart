@@ -4,9 +4,11 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
+import '../../../more/domain/entity/response/myitems_response_entity.dart';
 import '../entity/request/add_comment_request_entity.dart';
 import '../entity/request/advs_by_attribute_request_entity.dart';
 import '../entity/request/get_adv_details_request_entity.dart';
+import '../entity/request/get_advs_by_user_request_entity.dart';
 import '../entity/request/get_comments_request_entity.dart';
 import '../entity/response/advs_by_attribute_response_entity.dart';
 import '../entity/response/banners_response_entity.dart';
@@ -24,5 +26,6 @@ abstract class HomeRepository {
   Future<Either<ApiFailure, bool>> addComment({required AddCommentRequestEntity entity});
   Future<Either<ApiFailure, bool>> addReaction({required AddReactionRequestEntity entity});
   Future<Either< ApiFailure,GetCommentsResponseEntity>> getComments({required GetCommentsRequestEntity entity});
+  Future<Either< ApiFailure,MyItemResponseEntity>> getAdvByUser({required GetAdvsByUserRequestEntity entity});
 
 }

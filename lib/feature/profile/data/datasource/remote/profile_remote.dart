@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
-import 'package:mzad_damascus/feature/authentication/domain/entity/response/verfication_response.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/remove_follow_request_entity.dart';
@@ -64,9 +61,7 @@ class ProfileRemoteImplement extends ProfileRemote {
       {required UpdateProfileRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.updateProfile, body: entity.toJson());
-    print("sssssssssssssssssss");
-    print(response.body);
-    print(response.statusCode);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
 
       return updateProfileResponseEntityFromJson(response.body);
@@ -82,9 +77,7 @@ class ProfileRemoteImplement extends ProfileRemote {
         files: [profileImage],
         url: ApiPostUrl.updateProfileImage,
         imageKey: 'image');
-    print("sssssssssssssssssss");
-    print(response.body);
-    print(response.statusCode);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {
@@ -99,16 +92,12 @@ class ProfileRemoteImplement extends ProfileRemote {
     final response = await ApiMethods().post(
       url: "${ApiPostUrl.myfollower}?page=${entity.page}",
     );
-    print("sssssssssssssssssss");
-    print(response.body);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myFollowersResponseEntityFromJson(response.body);
-    } else {
-      print("sssssssssssssssssss");
-      print(response.body);
-      throw ApiServerException(response: response);
     }
+      throw ApiServerException(response: response);
+
   }
 
   @override
@@ -149,7 +138,11 @@ class ProfileRemoteImplement extends ProfileRemote {
       url: ApiPostUrl.addfollow,
       body: entity.toJson(),
     );
-
+    print(entity.followingId);
+    print('--------------------------------------');
+    print(response.body);
+    print(response.statusCode);
+    print('-----------------------------------------');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return addFollowResponseEntityFromJson(response.body);
     } else {

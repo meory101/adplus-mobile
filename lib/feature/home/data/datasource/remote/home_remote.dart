@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_reaction_request_entity.dart';
-import 'package:mzad_damascus/feature/home/domain/entity/request/banners_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
@@ -16,12 +15,15 @@ import '../../../../../core/api/api_error/api_exception.dart';
 import '../../../../../core/api/api_error/api_status_code.dart';
 import '../../../../../core/api/api_links.dart';
 import '../../../../../core/api/api_methods.dart';
+import '../../../../more/domain/entity/response/myitems_response_entity.dart';
 import '../../../domain/entity/request/add_comment_request_entity.dart';
 import '../../../domain/entity/request/advs_by_attribute_request_entity.dart';
 import '../../../domain/entity/request/category_inside_page_request_entity.dart';
+import '../../../domain/entity/request/get_advs_by_user_request_entity.dart';
 
 abstract class HomeRemote {
   Future<GetCategoriesResponseEntity> getCategories();
+  Future<MyItemResponseEntity> getAdvByUser({required GetAdvsByUserRequestEntity entity});
   Future<CategoryInsidePageResponseEntity> getCategoryInsidePage({required CategoryInsidePageRequestEntity entity});
   Future<AdvsByAttributeResponseEntity> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
   Future<GetAdvDetailsResponseEntity> getAdvDetails({required GetAdvDetailsRequestEntity entity});
@@ -137,6 +139,20 @@ class HomeRemoteImplement extends HomeRemote {
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<MyItemResponseEntity> getAdvByUser({required GetAdvsByUserRequestEntity entity})async {
+    final response =
+    await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.itemsByClient);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return myItemResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

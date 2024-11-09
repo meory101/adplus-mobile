@@ -3,6 +3,7 @@ import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.da
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside_page_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
@@ -10,6 +11,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/category_insid
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_response_entity.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/response/myitems_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
 import '../../domain/entity/request/add_comment_request_entity.dart';
@@ -106,6 +108,16 @@ class HomeRepositoryImplements implements HomeRepository {
     return Connector<bool>().connect(
       remote: () async {
         final result = await remote.addReaction(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, MyItemResponseEntity>> getAdvByUser({required GetAdvsByUserRequestEntity entity}) async{
+    return Connector<MyItemResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getAdvByUser(entity: entity);
         return Right(result);
       },
     );

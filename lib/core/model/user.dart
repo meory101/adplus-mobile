@@ -48,6 +48,10 @@ class User {
   }
 
   User.fromJson(dynamic json) {
+    print( json['client_id']);
+    print('ffffffffffffffffff');
+    print(json);
+    print('000000000000000000000000');
     _description = json['description'];
     _clientId = json['client_id'];
     _followersCount = json['follower_count'];

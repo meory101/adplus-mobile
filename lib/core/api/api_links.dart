@@ -7,6 +7,7 @@ class ApiGetUrl {
 
 class ApiPostUrl {
   static String getCategoryAttributes = "api/category/category-info";
+  static String itemsByClient = "api/item/ItemsByClient";
   static String getComments = "api/comment/getComments";
   static String addComment = "api/comment/postComments";
   static String getCategoryInsidePage = "api/category/inside-page";

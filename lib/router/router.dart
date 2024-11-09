@@ -19,12 +19,14 @@ import 'package:mzad_damascus/feature/authentication/presentation/screen/forget_
 import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
@@ -39,6 +41,7 @@ import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_scr
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
@@ -130,12 +133,19 @@ abstract class AppRouter {
       case RouteNamedScreens.authorProfile:
         argument as AuthorProfileArgs;
         return FadeBuilderRoute(
-            page: BlocProvider(
-          create: (context) => di.sl<ProfileByUsernameCubit>()
-            ..getProfileByUsername(
-                context: context,
-                entity: ProfileByUsernameRequestEntity(
-                    username: argument.userName)),
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+                create: (context) => di.sl<AddFollowCubit>(),),
+            BlocProvider(
+              create: (context) => di.sl<GetAdvByUserCubit>()),
+            BlocProvider(
+                create: (context) => di.sl<ProfileByUsernameCubit>()
+                  ..getProfileByUsername(
+                      context: context,
+                      entity: ProfileByUsernameRequestEntity(
+                          username: argument.userName))),
+          ],
           child: AuthorProfileScreen(
             arg: argument,
           ),

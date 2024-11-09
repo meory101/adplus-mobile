@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
+import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
@@ -43,9 +44,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
       body: BlocConsumer<MyitemCubit, MyitemState>(
         listener: (context, state) {
           if (state.status == CubitStatus.error && state.error.isNotEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error)),
-            );
+            NoteMessage.showErrorSnackBar(context: context, text: state.error);
           }
         },
         builder: (context, state) {

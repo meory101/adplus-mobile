@@ -28,6 +28,7 @@ import 'package:mzad_damascus/feature/home/data/repository/home_repository_imple
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/add_comment_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/banners_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_by_user_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_details_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_advs_by_attribute_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase.dart';
@@ -38,6 +39,7 @@ import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/more/data/remote/more_remote.dart';
@@ -54,12 +56,14 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cub
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:mzad_damascus/feature/profile/data/repository/profile_repository_implements.dart';
 import 'package:mzad_damascus/feature/profile/domain/repository/profile_repository.dart';
+import 'package:mzad_damascus/feature/profile/domain/usecase/add_follow_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/get_profile_info_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/myfollowers_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/myfollowing_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/profile_by_username_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_image_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_usecase.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
@@ -76,9 +80,11 @@ Future<void> init() async {
   sl.registerFactory(() => BannersCubit(usecase: sl()));
   sl.registerFactory(() => AdvsByAttributeCubit(usecase: sl()));
   sl.registerFactory(() => CategoryInsidePageCubit(usecase: sl()));
+  sl.registerFactory(() => GetAdvByUserCubit(usecase: sl()));
   sl.registerFactory(() => GetCommentsCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetAdvByUserUsecase(repository: sl()));
   sl.registerLazySingleton(() => BannersUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddCommentUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetCommentsUsecase(repository: sl()));
@@ -138,8 +144,10 @@ Future<void> init() async {
   sl.registerFactory(() => MyitemCubit(usecase: sl()));
   sl.registerFactory(() => VerfiyUsernameCubit(usecase: sl()));
   sl.registerFactory(() => ProfileByUsernameCubit(usecase: sl()));
+  sl.registerFactory(() => AddFollowCubit(usecase: sl()));
   sl.registerLazySingleton(() => VerfiyusernameUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetProfileByUsernameUsecase(repository: sl()));
+  sl.registerLazySingleton(() => AddFollowUsecase(repository: sl()));
   sl.registerFactory(() => GetProfileInfoCubit(usecase: sl()));
   sl.registerFactory(() => UpdateProfileImageCubit(usecase: sl()));
   sl.registerFactory(() => UpdateProfileCubit(usecase: sl()));

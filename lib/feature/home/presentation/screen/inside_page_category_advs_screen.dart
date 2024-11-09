@@ -345,33 +345,32 @@ class _InsidePageCategoryAdvsScreenState
           builder: (context, state) {
             if (state.status == CubitStatus.loading) {
               return const AdvsByAttributeShimmer();
-
             }
             List<AdData> advs = state.entity.data?.adData ?? [];
-            return InkWell(
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                    RouteNamedScreens.advertisementDetails,
-                    arguments:
-                        AdvertisementDetailsArgs(advertisement: advertisement));
-              },
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: AppHeightManager.h10,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
-                    child: DynamicHeightGridView(
-                      crossAxisSpacing: AppWidthManager.w2,
-                      crossAxisCount: 2,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: advs.length,
-                      builder: (context, index) {
-                        advertisement = advs[index];
-                        return Column(
+
+            return Column(
+              children: [
+                SizedBox(
+                  height: AppHeightManager.h10,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
+                  child: DynamicHeightGridView(
+                    crossAxisSpacing: AppWidthManager.w2,
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: advs.length,
+                    builder: (context, index) {
+                      advertisement = advs[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              RouteNamedScreens.advertisementDetails,
+                              arguments: AdvertisementDetailsArgs(
+                                  advertisement: advs[index]));
+                        },
+                        child: Column(
                           children: [
                             Container(
                                 height: AppHeightManager.h30,
@@ -416,12 +415,12 @@ class _InsidePageCategoryAdvsScreenState
                               ],
                             )
                           ],
-                        );
-                      },
-                    ),
-                  )
-                ],
-              ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
             );
           },
         ),
