@@ -43,10 +43,10 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
               context: context,
               entity: MyFollowingRequestEntity(page: 1),
             ),
-        ),
+        ),                                                             
       ],
       child: _buildContent(),
-    );
+    );  
   }
 
   Widget _buildContent() {

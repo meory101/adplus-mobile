@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
@@ -14,8 +16,6 @@ class MyItemsScreen extends StatefulWidget {
   @override
   State<MyItemsScreen> createState() => _MyItemsScreenState();
 }
-
-// ... previous imports and code remain the same ...
 
 class _MyItemsScreenState extends State<MyItemsScreen> {
   final List<String> _filters = ['All', 'Active', 'Favourite', 'End'];
@@ -79,12 +79,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                 setState(() {
                   _selectedFilterIndex = index;
                 });
-                context.read<MyitemCubit>().myitem(
-                      context: context,
-                      entity: MyItemRequestEntity(
-                        page: 1,
-                      ),
-                    );
+                _loadItems();
               },
               backgroundColor: Colors.grey.shade100,
               selectedColor: AppColorManager.black.withOpacity(0.1),
@@ -186,34 +181,14 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
       return _buildPlaceholderImage();
     }
 
-    final imageUrl = 'https://api.mzad-damascus.com/storage/items/$photoUrl';
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
-      child: Image.network(
-        imageUrl,
+      child: SizedBox(
         width: 100,
         height: 100,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          print('Error loading image: $imageUrl');
-          return _buildPlaceholderImage();
-        },
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return SizedBox(
-            width: 100,
-            height: 100,
-            child: Center(
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                    : null,
-              ),
-            ),
-          );
-        },
+        child: MainImageWidget(
+          imageUrl: AppConstantManager.imageBaseUrl + photoUrl,
+        ),
       ),
     );
   }

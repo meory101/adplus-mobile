@@ -13,6 +13,7 @@ import '../../../../../core/api/api_error/api_status_code.dart';
 import '../../../../../core/api/api_links.dart';
 import '../../../../../core/api/api_methods.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
+
 abstract class ProfileRemote {
   Future<GetProfileInfoResponseEntity> getProfileInfo();
 
@@ -23,10 +24,10 @@ abstract class ProfileRemote {
   Future<bool> updateProfileImage({
     required File profileImage,
   });
-    Future<MyFollowersResponseEntity> getMyFollowers({required MyFollowersRequestEntity entity});
-      Future<MyFollowingResponseEntity> getMyFollowing({required MyFollowingRequestEntity entity}); // new
-
-
+  Future<MyFollowersResponseEntity> getMyFollowers(
+      {required MyFollowersRequestEntity entity});
+  Future<MyFollowingResponseEntity> getMyFollowing(
+      {required MyFollowingRequestEntity entity}); // new
 }
 
 class ProfileRemoteImplement extends ProfileRemote {
@@ -67,28 +68,34 @@ class ProfileRemoteImplement extends ProfileRemote {
       throw ApiServerException(response: response);
     }
   }
-   @override
+
+  @override
   Future<MyFollowersResponseEntity> getMyFollowers({
     required MyFollowersRequestEntity entity,
   }) async {
-    final response = await ApiMethods().get(
+    final response = await ApiMethods().post(
       url: "${ApiPostUrl.myfollower}?page=${entity.page}",
     );
-    
+    print("sssssssssssssssssss");
+    print(response.body);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myFollowersResponseEntityFromJson(response.body);
     } else {
+      print("sssssssssssssssssss");
+      print(response.body);
       throw ApiServerException(response: response);
     }
   }
+
   @override
   Future<MyFollowingResponseEntity> getMyFollowing({
     required MyFollowingRequestEntity entity,
   }) async {
-    final response = await ApiMethods().get(
+    final response = await ApiMethods().post(
       url: "${ApiPostUrl.myfolloweing}?page=${entity.page}",
     );
-    
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myFollowingResponseEntityFromJson(response.body);
     } else {
