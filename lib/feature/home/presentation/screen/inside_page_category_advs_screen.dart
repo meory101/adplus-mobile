@@ -344,8 +344,20 @@ class _InsidePageCategoryAdvsScreenState
           listener: (context, state) {},
           builder: (context, state) {
             if (state.status == CubitStatus.loading) {
-              return const AdvsByAttributeShimmer();
+            return  Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppWidthManager.w3Point8),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: AppHeightManager.h10,
+                    ),
+                    const AdvsByAttributeShimmer()
+                  ],
+                ),
+              );
             }
+
             List<AdData> advs = state.entity.data?.adData ?? [];
 
             return Column(

@@ -4,6 +4,7 @@ import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
@@ -117,7 +118,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
     );
   }
 
-  Widget _buildItemCard(Item item) {
+  Widget _buildItemCard(AdData item) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(
@@ -154,7 +155,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildStatItem(Icons.remove_red_eye,
-                          item.author?.length ?? 0, 'مشاهدة'),
+                          0, 'مشاهدة'),
                       _buildStatItem(
                           Icons.favorite, item.reactions?.length ?? 0, 'إعجاب'),
                       _buildStatItem(
@@ -170,7 +171,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
     );
   }
 
-  Widget _buildItemImage(Item item) {
+  Widget _buildItemImage(AdData item) {
     if (item.photos == null || item.photos!.isEmpty) {
       return _buildPlaceholderImage();
     }

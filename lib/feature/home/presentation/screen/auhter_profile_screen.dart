@@ -1,3 +1,4 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,8 @@ import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/add_follow_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
@@ -17,11 +20,15 @@ import '../../../../core/resource/cubit_status_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/image/main_image_widget.dart';
+import '../../../../core/widget/loading/shimmer/advs_by_attribute_shimmer.dart';
 import '../../../../core/widget/loading/shimmer/profile_info_card_shimmer.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
+import '../../../../router/router.dart';
+import '../../../more/domain/entity/response/myitems_response_entity.dart';
 import '../../../profile/domain/entity/response/profile_by_username_response_entity.dart';
 import '../cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
+import 'advertisement_details_screen.dart';
 
 class AuthorProfileScreen extends StatefulWidget {
   final AuthorProfileArgs arg;
@@ -33,6 +40,8 @@ class AuthorProfileScreen extends StatefulWidget {
 }
 
 class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
+  AdData? advertisement;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +57,13 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                 if (state.status == CubitStatus.error) {
                   NoteMessage.showErrorSnackBar(
                       context: context, text: state.error);
+                }
+                if (state.status == CubitStatus.success) {
+                  context.read<GetAdvByUserCubit>().getAdvsByUser(
+                      context: context,
+                      entity: GetAdvsByUserRequestEntity(
+                          clientId: state.entity.data?.user?.clientId,
+                          page: 1));
                 }
               },
               builder: (context, state) {
@@ -191,12 +207,13 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                         children: [
                           BlocConsumer<AddFollowCubit, AddFollowState>(
                             listener: (context, state) {
-                              if(state.status == CubitStatus.error){
-                                NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                              if (state.status == CubitStatus.error) {
+                                NoteMessage.showErrorSnackBar(
+                                    context: context, text: state.error);
                               }
                             },
                             builder: (context, state) {
-                              if(state.status == CubitStatus.loading){
+                              if (state.status == CubitStatus.loading) {
                                 return ShimmerContainer(
                                   height: AppHeightManager.h4,
                                   width: AppWidthManager.w20,
@@ -204,8 +221,6 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                               }
                               return MainAppButton(
                                 onTap: () {
-                                  print( profileInfo?.user?.clientId);
-                                  print('0000000000000000000000000000000000000000');
                                   context.read<AddFollowCubit>().addFollow(
                                       context: context,
                                       entity: AddFollowRequestEntity(
@@ -258,18 +273,98 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                 );
               },
             ),
-            BlocConsumer<GetAdvByUserCubit,GetAdvByUserState>(
+            SizedBox(
+              height: AppHeightManager.h1point8,
+            ),
+            BlocConsumer<GetAdvByUserCubit, GetAdvByUserState>(
               listener: (context, state) {
-                if(state.status == CubitStatus.error){
-                  NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                if (state.status == CubitStatus.error) {
+                  NoteMessage.showErrorSnackBar(
+                      context: context, text: state.error);
                 }
               },
-            builder: (context, state) {
-                if(state.status == CubitStatus.loading){
-                  // return//
+
+              builder: (context, state) {
+
+                if (state.status == CubitStatus.loading) {
+                  return
+                      Padding(
+                        padding:  EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+                        child: const AdvsByAttributeShimmer(),
+                      );
+
+
                 }
-              return Container();
-            },
+
+                List<AdData>? advs = state.entity.data?.data ?? [];
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
+                  child: DynamicHeightGridView(
+                    crossAxisSpacing: AppWidthManager.w2,
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: advs.length,
+                    builder: (context, index) {
+                      advertisement = advs[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              RouteNamedScreens.advertisementDetails,
+                              arguments: AdvertisementDetailsArgs(
+                                  advertisement: advs[index]));
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                                height: AppHeightManager.h30,
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                decoration: BoxDecoration(
+                                  color: AppColorManager.lightGreyOpacity6,
+                                  borderRadius: BorderRadius.circular(
+                                      AppRadiusManager.r15),
+                                ),
+                                child: MainImageWidget(
+                                  imageUrl: AppConstantManager.imageBaseUrl +
+                                      (advertisement?.photos?.first.photo ??
+                                          ""),
+                                  borderRadius: BorderRadius.circular(
+                                      AppRadiusManager.r15),
+                                )),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: AppHeightManager.h08,
+                                ),
+                                AppTextWidget(
+                                  text: advertisement?.name.toString() ?? "",
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  fontSize: FontSizeManager.fs15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                AppTextWidget(
+                                  text:
+                                      advertisement?.startingPrice.toString() ??
+                                          "",
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  fontSize: FontSizeManager.fs14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                SizedBox(
+                                  height: AppHeightManager.h1point8,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             )
           ],
         ),

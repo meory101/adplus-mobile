@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../../../home/domain/entity/response/advs_by_attribute_response_entity.dart';
+
 // دوال للتحويل بين JSON وكائنات الدارت
 MyItemResponseEntity myItemResponseEntityFromJson(String str) =>
     MyItemResponseEntity.fromJson(json.decode(str));
@@ -44,24 +46,24 @@ class MyItemResponseEntity {
 
 class Data {
   Data({
-    List<Item>? data,
+    List<AdData>? data,
     Pagination? pagination,
   }) {
     _data = data;
     _pagination = pagination;
   }
 
-  List<Item>? _data;
+  List<AdData>? _data;
   Pagination? _pagination;
 
-  List<Item>? get data => _data;
+  List<AdData>? get data => _data;
   Pagination? get pagination => _pagination;
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(Item.fromJson(v));
+        _data?.add(AdData.fromJson(v));
       });
     }
     _pagination = json['pagination'] != null
@@ -81,128 +83,6 @@ class Data {
   }
 }
 
-class Item {
-  Item({
-    num? categoryId,
-    num? cityId,
-    String? name,
-    num? biddingStatus,
-    List<Photo>? photos,
-    List<Comment>? comments,
-    List<Reaction>? reactions,
-    List<Author>? author,
-    String? description,
-    String? keywords,
-    num? startingPrice,
-    List<Attribute>? attributes,
-  }) {
-    _categoryId = categoryId;
-    _cityId = cityId;
-    _name = name;
-    _biddingStatus = biddingStatus;
-    _photos = photos;
-    _comments = comments;
-    _reactions = reactions;
-    _author = author;
-    _description = description;
-    _keywords = keywords;
-    _startingPrice = startingPrice;
-    _attributes = attributes;
-  }
-
-  num? _categoryId;
-  num? _cityId;
-  String? _name;
-  num? _biddingStatus;
-  List<Photo>? _photos;
-  List<Comment>? _comments;
-  List<Reaction>? _reactions;
-  List<Author>? _author;
-  String? _description;
-  String? _keywords;
-  num? _startingPrice;
-  List<Attribute>? _attributes;
-
-  num? get categoryId => _categoryId;
-  num? get cityId => _cityId;
-  String? get name => _name;
-  num? get biddingStatus => _biddingStatus;
-  List<Photo>? get photos => _photos;
-  List<Comment>? get comments => _comments;
-  List<Reaction>? get reactions => _reactions;
-  List<Author>? get author => _author;
-  String? get description => _description;
-  String? get keywords => _keywords;
-  num? get startingPrice => _startingPrice;
-  List<Attribute>? get attributes => _attributes;
-
-  Item.fromJson(Map<String, dynamic> json) {
-    _categoryId = json['category_id'];
-    _cityId = json['city_id'];
-    _name = json['name'];
-    _biddingStatus = json['bidding_status'];
-    if (json['photos'] != null) {
-      _photos = [];
-      json['photos'].forEach((v) {
-        _photos?.add(Photo.fromJson(v));
-      });
-    }
-    if (json['comments'] != null) {
-      _comments = [];
-      json['comments'].forEach((v) {
-        _comments?.add(Comment.fromJson(v));
-      });
-    }
-    if (json['reactions'] != null) {
-      _reactions = [];
-      json['reactions'].forEach((v) {
-        _reactions?.add(Reaction.fromJson(v));
-      });
-    }
-    if (json['author'] != null && json['author'] is List) {
-      _author = List<Author>.from(
-        (json['author'] as List).map((x) => Author.fromJson(x)),
-      );
-    }
-
-    _description = json['description'];
-    _keywords = json['keywords'];
-    _startingPrice = json['starting_price'];
-    if (json['attributes'] != null) {
-      _attributes = [];
-      json['attributes'].forEach((v) {
-        _attributes?.add(Attribute.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['category_id'] = _categoryId;
-    map['city_id'] = _cityId;
-    map['name'] = _name;
-    map['bidding_status'] = _biddingStatus;
-    if (_photos != null) {
-      map['photos'] = _photos?.map((v) => v.toJson()).toList();
-    }
-    if (_comments != null) {
-      map['comments'] = _comments?.map((v) => v.toJson()).toList();
-    }
-    if (_reactions != null) {
-      map['reactions'] = _reactions?.map((v) => v.toJson()).toList();
-    }
-    if (_author != null) {
-      map['author'] = _author?.map((v) => v.toJson()).toList();
-    }
-    map['description'] = _description;
-    map['keywords'] = _keywords;
-    map['starting_price'] = _startingPrice;
-    if (_attributes != null) {
-      map['attributes'] = _attributes?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
 
 class Photo {
   Photo({num? imageId, String? photo}) {

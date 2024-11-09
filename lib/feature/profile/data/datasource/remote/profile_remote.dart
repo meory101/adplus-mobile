@@ -50,6 +50,9 @@ class ProfileRemoteImplement extends ProfileRemote {
   Future<GetProfileInfoResponseEntity> getProfileInfo() async {
     final response = await ApiMethods().get(url: ApiGetUrl.getProfileInfo);
     if (ApiStatusCode.success().contains(response.statusCode)) {
+      print(response.body);
+      print(response.statusCode);
+      print('--------------------------------');
       return getProfileInfoResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);

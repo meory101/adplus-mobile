@@ -8,13 +8,7 @@ class AdvsByAttributeShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
-      child: Column(
-        children: [
-          SizedBox(
-            height: AppHeightManager.h10,
-          ),
+    return
           Center(
             child: GridView.builder(
               shrinkWrap: true,
@@ -32,9 +26,8 @@ class AdvsByAttributeShimmer extends StatelessWidget {
               },
             ),
 
-          ),
-        ],
-      ),
+
+
     );
   }
 }
