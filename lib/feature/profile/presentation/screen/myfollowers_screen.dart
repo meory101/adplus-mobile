@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/injection/injection_container.dart' as di;
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_state.dart';
+import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/font_manager.dart';
+import '../../../../core/widget/text/app_text_widget.dart';
 
 class MyFollowersScreen extends StatelessWidget {
   const MyFollowersScreen({super.key});
@@ -18,33 +22,60 @@ class MyFollowersScreen extends StatelessWidget {
           entity: MyFollowersRequestEntity(page: 1),
         ),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('My Followers'),
+        appBar: MainAppBar(
+          title: ('My Followers'),
         ),
         body: BlocBuilder<MyFollowersCubit, MyFollowersState>(
           builder: (context, state) {
-            if (state.status==CubitStatus.loading) {
+            if (state.status == CubitStatus.loading) {
               return const Center(child: CircularProgressIndicator());
             }
-            
-            final followers = state.entity.data?['followers'] as List?;
-            
-            if (followers == null || followers.isEmpty) {
+
+            if (state.status == CubitStatus.error) {
+              return Center(
+                child: Text(state.error),
+              );
+            }
+
+            final followersList = state.entity.data?.data;
+
+            if (followersList == null || followersList.isEmpty) {
               return const Center(
                 child: Text('No followers yet'),
               );
             }
 
             return ListView.builder(
-              itemCount: followers.length,
+              itemCount: followersList.length,
               itemBuilder: (context, index) {
-                final follower = followers[index];
+                final followerItem = followersList[index];
+                final following = followerItem.following;
+
                 return ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(follower.avatar ?? ''),
+                    backgroundImage: following?.photo != null
+                        ? NetworkImage('YOUR_BASE_URL/${following?.photo}')
+                        : null,
+                    child: following?.photo == null
+                        ? const Icon(Icons.person)
+                        : null,
                   ),
-                  title: Text(follower.name ?? 'Unknown'),
-                  subtitle: Text(follower.username ?? ''),
+                  title: AppTextWidget(
+                    text: following?.name ?? 'Unknown',
+                    fontSize: FontSizeManager.fs16,
+                    color: AppColorManager.textAppColor,
+                  ),
+                  subtitle: AppTextWidget(
+                    text: following?.username ?? '',
+                    fontSize: FontSizeManager.fs14,
+                    color: AppColorManager.textGrey,
+                  ),
+                  trailing: following?.whatsapp != null
+                      ? Icon(
+                          Icons. call,
+                          color: AppColorManager.green,
+                        )
+                      : null,
                 );
               },
             );

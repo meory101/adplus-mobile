@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/injection/injection_container.dart' as di;
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_state.dart';
 import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/font_manager.dart';
+import '../../../../core/widget/text/app_text_widget.dart';
 
 class MyFollowingScreen extends StatelessWidget {
   const MyFollowingScreen({super.key});
@@ -19,40 +22,62 @@ class MyFollowingScreen extends StatelessWidget {
           entity: MyFollowingRequestEntity(page: 1),
         ),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Following'),
-          backgroundColor: AppColorManager.textAppColor,
+        appBar: MainAppBar(
+          title: ('Following'),
         ),
         body: BlocBuilder<MyFollowingCubit, MyFollowingState>(
           builder: (context, state) {
-            if (state.status==CubitStatus.loading) {
-              return const CircularProgressIndicator();
+            if (state.status == CubitStatus.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
 
-            if (state.status==CubitStatus.error) {
+            if (state.status == CubitStatus.error) {
               return Center(
                 child: Text(state.error),
               );
             }
 
-            final following = state.entity.data?['following'] as List?;
-            
-            if (following == null || following.isEmpty) {
+            final followingList = state.entity.data?.data;
+
+            if (followingList == null || followingList.isEmpty) {
               return const Center(
                 child: Text('You are not following anyone yet'),
               );
             }
 
             return ListView.builder(
-              itemCount: following.length,
+              itemCount: followingList.length,
               itemBuilder: (context, index) {
-                final user = following[index];
+                final followingItem = followingList[index];
+                final follower = followingItem.follower;
+                
                 return ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(user['avatar'] ?? ''),
+                    backgroundImage: follower?.photo != null 
+                        ? NetworkImage('YOUR_BASE_URL/${follower?.photo}')
+                        : null,
+                    child: follower?.photo == null 
+                        ? const Icon(Icons.person)
+                        : null,
                   ),
-                  title: Text(user['name'] ?? 'Unknown'),
-                  subtitle: Text(user['username'] ?? ''),
+                  title: AppTextWidget(
+                    text: follower?.name ?? 'Unknown',
+                    fontSize: FontSizeManager.fs16,
+                    color: AppColorManager.textAppColor,
+                  ),
+                  subtitle: AppTextWidget(
+                    text: follower?.username ?? '',
+                    fontSize: FontSizeManager.fs14,
+                    color: AppColorManager.textGrey,
+                  ),
+                  trailing: follower?.whatsapp != null 
+                      ? Icon(
+                          Icons.clear_all,
+                          color: AppColorManager.green,
+                        )
+                      : null,
                 );
               },
             );
