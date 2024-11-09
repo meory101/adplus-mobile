@@ -15,10 +15,14 @@ class MyitemCubit extends Cubit<MyitemState> {
     required this.usecase,
   }) : super(MyitemState.initial());
 
-  void myitem(
-      {required BuildContext context,
-      required MyItemRequestEntity entity}) async {
-    emit(state.copyWith(status: CubitStatus.loading));
+  Future<void> myitem({
+    required BuildContext context,
+    required MyItemRequestEntity entity,
+    bool loadMore = false,
+  }) async {
+    if (!loadMore) {
+      emit(state.copyWith(status: CubitStatus.loading));
+    }
     final result = await usecase(entity: entity);
 
     if (isClosed) return;

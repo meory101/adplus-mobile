@@ -35,15 +35,13 @@ abstract class ProfileRemote {
   Future<ProfileByUsernameResponseEntity> getProfileByUsername({
     required ProfileByUsernameRequestEntity entity,
   });
-   Future<AddFollowResponseEntity> addFollow({
+  Future<AddFollowResponseEntity> addFollow({
     required AddFollowRequestEntity entity,
   });
   Future<RemoveFollowResponseEntity> removeFollow({
     required RemoveFollowRequestEntity entity,
   });
-
 }
-
 
 class ProfileRemoteImplement extends ProfileRemote {
   @override
@@ -110,7 +108,8 @@ class ProfileRemoteImplement extends ProfileRemote {
     final response = await ApiMethods().post(
       url: "${ApiPostUrl.myfolloweing}?page=${entity.page}",
     );
-
+    print("sssssssssssssssssss");
+    print(response.body);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myFollowingResponseEntityFromJson(response.body);
     } else {
@@ -133,7 +132,8 @@ class ProfileRemoteImplement extends ProfileRemote {
       throw ApiServerException(response: response);
     }
   }
-   @override
+
+  @override
   Future<AddFollowResponseEntity> addFollow({
     required AddFollowRequestEntity entity,
   }) async {
@@ -152,7 +152,8 @@ class ProfileRemoteImplement extends ProfileRemote {
       throw ApiServerException(response: response);
     }
   }
-   @override
+
+  @override
   Future<RemoveFollowResponseEntity> removeFollow({
     required RemoveFollowRequestEntity entity,
   }) async {
