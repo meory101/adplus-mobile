@@ -119,10 +119,12 @@ class HomeRemoteImplement extends HomeRemote {
   Future<BannersResponseEntity> getBanners({required int source} ) async{
     // source =0 => home;
     // source =1 => insidepage;
+
     final response =
         await ApiMethods().post(
         body: {},
         url:source==0? ApiPostUrl.getBanners :ApiPostUrl.getInsidePageBanners);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return bannersResponseEntityFromJson(response.body);
     } else {

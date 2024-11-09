@@ -82,7 +82,7 @@ class _HomeBannersState extends State<HomeBanners> {
                 items: List.generate(
                   banners?.length ?? 0,
                   (index) {
-                    return Container(
+                        return Container(
                         width: AppWidthManager.w92,
                         decoration: BoxDecoration(
                             borderRadius:
