@@ -40,9 +40,11 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cub
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
@@ -136,9 +138,16 @@ abstract class AppRouter {
             page: MultiBlocProvider(
           providers: [
             BlocProvider(
-                create: (context) => di.sl<AddFollowCubit>(),),
+              create: (context) => di.sl<MyFollowingCubit>()
+                ..getMyFollowing(
+                  context: context,
+                  entity: MyFollowingRequestEntity(page: 1),
+                ),
+            ),
             BlocProvider(
-              create: (context) => di.sl<GetAdvByUserCubit>()),
+              create: (context) => di.sl<AddFollowCubit>(),
+            ),
+            BlocProvider(create: (context) => di.sl<GetAdvByUserCubit>()),
             BlocProvider(
                 create: (context) => di.sl<ProfileByUsernameCubit>()
                   ..getProfileByUsername(
