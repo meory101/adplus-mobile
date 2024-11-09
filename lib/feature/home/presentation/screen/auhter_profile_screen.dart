@@ -292,10 +292,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                         padding:  EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
                         child: const AdvsByAttributeShimmer(),
                       );
-
-
                 }
-
                 List<AdData>? advs = state.entity.data?.data ?? [];
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
