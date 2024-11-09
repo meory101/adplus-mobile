@@ -12,6 +12,7 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%2
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_state.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 
@@ -51,7 +52,9 @@ class MoreScreen extends StatelessWidget {
             icon: Icons.announcement,
             label: 'My Ads',
             color: AppColorManager.green,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, RouteNamedScreens.myitem);
+            },
           ),
           MoreListTile(
             icon: Icons.star_border,
