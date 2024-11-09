@@ -20,6 +20,7 @@ import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_categ
 import 'package:mzad_damascus/feature/home/presentation/widget/home/home_banners.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
+import '../../domain/entity/response/get_adv_details_response_entity.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
 
 class CategoryInsidePageScreen extends StatefulWidget {
@@ -114,6 +115,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                     Navigator.of(context).pushNamed(
                                         RouteNamedScreens.insidePageCategoryAdvs,
                                         arguments: InsidePageCategoryAdvArgs(
+                                          categoryId: widget.args.subCategory.categoryId??-1,
                                             entity: entity));
                                   },
                                   child: DecoratedContainer(

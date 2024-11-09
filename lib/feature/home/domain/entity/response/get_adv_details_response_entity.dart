@@ -526,6 +526,10 @@ class Attributes {
     _attribute = attribute;
   }
 
+  set itemAttributeId(num? value) {
+    _itemAttributeId = value;
+  }
+
   Attributes.fromJson(dynamic json) {
     _itemAttributeId = json['item_attribute_id'];
     _itemId = json['item_id'];
@@ -577,6 +581,22 @@ class Attributes {
       map['attribute'] = _attribute?.toJson();
     }
     return map;
+  }
+
+  set itemId(num? value) {
+    _itemId = value;
+  }
+
+  set attributeId(num? value) {
+    _attributeId = value;
+  }
+
+  set value(String? value) {
+    _value = value;
+  }
+
+  set attribute(Attribute? value) {
+    _attribute = value;
   }
 }
 

@@ -179,7 +179,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                     },
                     child: Column(
                       children: [
-                        SvgPicture.asset(AppIconManager.home,
+                        SvgPicture.asset(AppIconManager.more,
                             colorFilter: ColorFilter.mode(
                                 selectedIndex == 3
                                     ? AppColorManager.mainColor

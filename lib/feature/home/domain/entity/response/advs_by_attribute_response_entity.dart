@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../../../../../core/model/comment.dart';
 import '../../../../../core/model/pagination.dart';
+import 'get_adv_details_response_entity.dart';
 /// success : true
 /// message : "Items retrieved successfully."
 /// data : {"adData":[{"category_id":1,"city_id":1,"name":"Electronics","bidding_status":1,"photos":[{"image_id":1,"photo":"photo.jpg"}],"comments":[{"comment_id":101,"client_id":101,"item_id":45,"comment":"This is a great item!","created_at":"2024-09-16T12:00:00Z"}],"reactions":[{"reaction_id":501,"reaction_type":"like","item_id":45,"client_id":45,"created_at":"2024-09-16T12:00:00Z"}],"author":[{"client_id":501,"name":"string","email":"string","phone":"963999999999","address":"string","photo":"photo.jpg"}],"description":"Category description","keywords":"electronics, gadgets","starting_price":50000,"min_increase_price":10000,"bidding_start_time":"2024-10-01T12:00:00Z","attributes":[{"attribute_id":1,"value":"Black"}]}],"pagination":{"total_items":100,"total_pages":10,"current_page":1,"per_page":10}}
@@ -271,41 +272,6 @@ AdData copyWith({  num? categoryId,
 
 }
 
-/// attribute_id : 1
-/// value : "Black"
-
-Attributes attributesFromJson(String str) => Attributes.fromJson(json.decode(str));
-String attributesToJson(Attributes data) => json.encode(data.toJson());
-class Attributes {
-  Attributes({
-      num? attributeId, 
-      String? value,}){
-    _attributeId = attributeId;
-    _value = value;
-}
-
-  Attributes.fromJson(dynamic json) {
-    _attributeId = json['attribute_id'];
-    _value = json['value'];
-  }
-  num? _attributeId;
-  String? _value;
-Attributes copyWith({  num? attributeId,
-  String? value,
-}) => Attributes(  attributeId: attributeId ?? _attributeId,
-  value: value ?? _value,
-);
-  num? get attributeId => _attributeId;
-  String? get value => _value;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['attribute_id'] = _attributeId;
-    map['value'] = _value;
-    return map;
-  }
-
-}
 
 /// client_id : 501
 /// name : "string"

@@ -12,7 +12,6 @@ import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_ca
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_state.dart';
-import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/container/dialog_container.dart';
 import '../../../../core/widget/form_field/title_app_form_filed.dart';

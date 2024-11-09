@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import '../response/get_adv_details_response_entity.dart';
 /// page : 1
 /// attributes : [{"attribute_id":19,"value":"مرسيدس"}]
 
@@ -47,40 +49,4 @@ AdvsByAttributeRequestEntity copyWith({  num? page,
   set attributes(List<Attributes>? value) {
     _attributes = value;
   }
-}
-
-/// attribute_id : 19
-/// value : "مرسيدس"
-
-Attributes attributesFromJson(String str) => Attributes.fromJson(json.decode(str));
-String attributesToJson(Attributes data) => json.encode(data.toJson());
-class Attributes {
-  Attributes({
-      num? attributeId,
-      String? value,}){
-    _attributeId = attributeId;
-    _value = value;
-}
-
-  Attributes.fromJson(dynamic json) {
-    _attributeId = json['attribute_id'];
-    _value = json['value'];
-  }
-  num? _attributeId;
-  String? _value;
-Attributes copyWith({  num? attributeId,
-  String? value,
-}) => Attributes(  attributeId: attributeId ?? _attributeId,
-  value: value ?? _value,
-);
-  num? get attributeId => _attributeId;
-  String? get value => _value;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['attribute_id'] = _attributeId;
-    map['value'] = _value;
-    return map;
-  }
-
 }

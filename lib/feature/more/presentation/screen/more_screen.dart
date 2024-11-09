@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
@@ -118,51 +119,54 @@ class MoreScreen extends StatelessWidget {
             onTap: () {},
           ),
           const Divider(color: AppColorManager.borderGrey),
-          BlocConsumer<LogoutCubit, LogoutState>(
-            listener: (context, state) {
-              if (state.status == CubitStatus.error) {
-                NoteMessage.showErrorSnackBar(
-                    context: context, text: state.error);
-              }
-              if (state.status == CubitStatus.success) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  RouteNamedScreens.login,
-                  (route) => false,
+           Visibility(
+             visible: AppSharedPreferences.getToken().isNotEmpty,
+             child: BlocConsumer<LogoutCubit, LogoutState>(
+              listener: (context, state) {
+                if (state.status == CubitStatus.error) {
+                  NoteMessage.showErrorSnackBar(
+                      context: context, text: state.error);
+                }
+                if (state.status == CubitStatus.success) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    RouteNamedScreens.login,
+                    (route) => false,
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state.status == CubitStatus.loading) {
+                  return SizedBox(
+                      height: AppHeightManager.h5,
+                      width: AppHeightManager.h2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppCircularProgressWidget(),
+                        ],
+                      ));
+                }
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.read<LogoutCubit>().logout(context: context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColorManager.red,
+                      padding:
+                          EdgeInsets.symmetric(vertical: AppHeightManager.h2),
+                    ),
+                    child: AppTextWidget(
+                      text: 'تسجيل الخروج',
+                      color: AppColorManager.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 );
-              }
-            },
-            builder: (context, state) {
-              if (state.status == CubitStatus.loading) {
-                return SizedBox(
-                    height: AppHeightManager.h5,
-                    width: AppHeightManager.h2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AppCircularProgressWidget(),
-                      ],
-                    ));
-              }
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
-                child: ElevatedButton(
-                  onPressed: () {
-                    context.read<LogoutCubit>().logout(context: context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColorManager.red,
-                    padding:
-                        EdgeInsets.symmetric(vertical: AppHeightManager.h2),
-                  ),
-                  child: AppTextWidget(
-                    text: 'تسجيل الخروج',
-                    color: AppColorManager.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              );
-            },
-          ),
+              },
+                       ),
+           ),
         ],
       ),
     );

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/model/comment.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
@@ -294,6 +296,10 @@ class _CommentsSectionState extends State<CommentsSection> {
               return MainAppButton(
                 onTap: () {
                   if ((entity.comment ?? "").isEmpty) {
+                    return;
+                  }
+                  if(AppSharedPreferences.getToken().isEmpty){
+                    showLoginBottomSheet(context: context);
                     return;
                   }
                   context

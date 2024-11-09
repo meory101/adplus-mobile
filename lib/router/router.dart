@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
@@ -54,9 +55,11 @@ import '../feature/intro/presentation/screen/splash_screen.dart';
 
 abstract class RouteNamedScreens {
   static String init =
-      // mainBottomAppBar;
+  // mainBottomAppBar;
 
-      AppSharedPreferences.getToken().isEmpty ? register : mainBottomAppBar;
+  AppSharedPreferences
+      .getToken()
+      .isEmpty ? register : mainBottomAppBar;
   static const String splash = "/splash";
   static const String login = "/login";
   static const String register = "/register";
@@ -91,109 +94,119 @@ abstract class AppRouter {
         argument as InsidePageCategoryAdvArgs;
         return FadeBuilderRoute(
             page: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => di.sl<AdvsByAttributeCubit>(),
-            ),
-
-          ],
-          child: InsidePageCategoryAdvsScreen(
-            args: argument,
-          ),
-        ));
+              providers: [
+                BlocProvider(
+                  create: (context) => di.sl<AdvsByAttributeCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) =>
+                  di.sl<GetCategoryAttributesCubit>()
+                    ..getCategoryAttributes(context: context, entity:
+                    GetCategoryAttributesRequestEntity(
+                      categoryId: argument.categoryId,
+                    )),
+                ),
+              ],
+              child: InsidePageCategoryAdvsScreen(
+                args: argument,
+              ),
+            ));
       case RouteNamedScreens.login:
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<LoginCubit>(),
-          child: const LoginScreen(),
-        ));
+              create: (context) => di.sl<LoginCubit>(),
+              child: const LoginScreen(),
+            ));
       case RouteNamedScreens.editusername:
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<UpdateUsernameCubit>(),
-          child: const EditUsernameScreen(),
-        ));
+              create: (context) => di.sl<UpdateUsernameCubit>(),
+              child: const EditUsernameScreen(),
+            ));
       case RouteNamedScreens.resetpassword:
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<ResetCubit>(),
-          child: const ResetPasswordScreen(),
-        ));
+              create: (context) => di.sl<ResetCubit>(),
+              child: const ResetPasswordScreen(),
+            ));
       case RouteNamedScreens.forgetpassword:
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<ForgetPasswordCubit>(),
-          child: const ForgetPasswordScreen(),
-        ));
+              create: (context) => di.sl<ForgetPasswordCubit>(),
+              child: const ForgetPasswordScreen(),
+            ));
       case RouteNamedScreens.register:
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<RegisterCubit>(),
-          child: const RegisterScreen(),
-        ));
+              create: (context) => di.sl<RegisterCubit>(),
+              child: const RegisterScreen(),
+            ));
       case RouteNamedScreens.editpassword:
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<EditPasswordCubit>(),
-          child: const EditPasswordScreen(),
-        ));
+              create: (context) => di.sl<EditPasswordCubit>(),
+              child: const EditPasswordScreen(),
+            ));
       case RouteNamedScreens.verfiyusername:
         argument as VerfiyusernameArgs;
 
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<VerfiyUsernameCubit>(),
-          child: VerfiyUsernameScreen(
-            args: argument,
-          ),
-        ));
+              create: (context) => di.sl<VerfiyUsernameCubit>(),
+              child: VerfiyUsernameScreen(
+                args: argument,
+              ),
+            ));
       case RouteNamedScreens.advertisementLanguage:
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
       case RouteNamedScreens.verfication:
         argument as VerificationCodeArgs;
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<VerficationCubit>(),
-          child: VerificationScreen(
-            args: argument,
-          ),
-        ));
+              create: (context) => di.sl<VerficationCubit>(),
+              child: VerificationScreen(
+                args: argument,
+              ),
+            ));
       case RouteNamedScreens.advertisementDetails:
         argument as AdvertisementDetailsArgs;
 
         return SlidUpBuilderRoute(
             page: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => di.sl<AdvDetailsCubit>()
-                ..getAdvDetails(
-                    context: context,
-                    entity: GetAdvDetailsRequestEntity(
-                        itemId: argument.advertisement?.itemId)),
-            ),
-            BlocProvider(
-              create: (context) => di.sl<GetCommentsCubit>()
-                ..getComments(
-                    context: context,
-                    entity: GetCommentsRequestEntity(
-                        page: 1, itemId: argument.advertisement?.itemId)),
-            ),
-            BlocProvider(
-              create: (context) => di.sl<AddCommentCubit>(),
-            ),
-          ],
-          child: AdvertisementDetailsScreen(
-            args: argument,
-          ),
-        ));
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                  di.sl<AdvDetailsCubit>()
+                    ..getAdvDetails(
+                        context: context,
+                        entity: GetAdvDetailsRequestEntity(
+                            itemId: argument.advertisement?.itemId)),
+                ),
+                BlocProvider(
+                  create: (context) =>
+                  di.sl<GetCommentsCubit>()
+                    ..getComments(
+                        context: context,
+                        entity: GetCommentsRequestEntity(
+                            page: 1, itemId: argument.advertisement?.itemId)),
+                ),
+                BlocProvider(
+                  create: (context) => di.sl<AddCommentCubit>(),
+                ),
+              ],
+              child: AdvertisementDetailsScreen(
+                args: argument,
+              ),
+            ));
 
       case RouteNamedScreens.advertisementCategory:
         return SlidLeftBuilderRoute(
             page: BlocProvider(
-          create: (context) =>
-              di.sl<GetCategoriesCubit>()..getCategories(context: context),
-          child: const AdvertisementCategoryScreen(),
-        ));
+              create: (context) =>
+              di.sl<GetCategoriesCubit>()
+                ..getCategories(context: context),
+              child: const AdvertisementCategoryScreen(),
+            ));
       case RouteNamedScreens.categoryInsidePage:
         argument as CategoryInsidePageArgs;
         return SlidLeftBuilderRoute(
@@ -202,6 +215,7 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) => di.sl<CategoryInsidePageCubit>(),
               ),
+
               BlocProvider(
                 create: (context) => di.sl<BannersCubit>(),
               ),
@@ -216,69 +230,71 @@ abstract class AppRouter {
       case RouteNamedScreens.advertisement:
         return SlidLeftBuilderRoute(
             page: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) =>
-                  di.sl<GetCitiesCubit>()..getCities(context: context),
-            ),
-            BlocProvider(
-              create: (context) => di.sl<AddAdvertisementCubit>(),
-            )
-          ],
-          child: AdvertisementScreen(),
-        ));
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                  di.sl<GetCitiesCubit>()
+                    ..getCities(context: context),
+                ),
+                BlocProvider(
+                  create: (context) => di.sl<AddAdvertisementCubit>(),
+                )
+              ],
+              child: AdvertisementScreen(),
+            ));
       case RouteNamedScreens.categoryAttributeForm:
         argument as CategoryAttributeFormArgs;
         return SlidLeftBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<GetCategoryAttributesCubit>(),
-          child: CategoryAttributeFormScreen(
-            args: argument,
-          ),
-        ));
+              create: (context) => di.sl<GetCategoryAttributesCubit>(),
+              child: CategoryAttributeFormScreen(
+                args: argument,
+              ),
+            ));
       case RouteNamedScreens.profileModification:
         argument as ProfileInfoModificationArgs;
         return SlidLeftBuilderRoute(
             page: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => di.sl<UpdateProfileCubit>(),
-            ),
-            BlocProvider(
-              create: (context) => di.sl<UpdateProfileImageCubit>(),
-            ),
-            BlocProvider(
-              create: (context) => di.sl<GetProfileInfoCubit>(),
-            ),
-            BlocProvider(
-              create: (context) => di.sl<VerfiyUsernameCubit>(),
-            ),
-          ],
-          child: ProfileInfoModificationScreen(
-            args: argument,
-          ),
-        ));
+              providers: [
+                BlocProvider(
+                  create: (context) => di.sl<UpdateProfileCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) => di.sl<UpdateProfileImageCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) => di.sl<GetProfileInfoCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) => di.sl<VerfiyUsernameCubit>(),
+                ),
+              ],
+              child: ProfileInfoModificationScreen(
+                args: argument,
+              ),
+            ));
       case RouteNamedScreens.mainBottomAppBar:
         return FadeBuilderRoute(
             page: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) =>
-              di.sl<BannersCubit>(),
-            ),
-            BlocProvider(
-              create: (context) =>
-                  di.sl<GetCategoriesCubit>()..getCategories(context: context),
-            ),
-            BlocProvider(create: (context) => di.sl<LogoutCubit>()),
-            BlocProvider(
-              create: (context) => di.sl<LoginCubit>(),
-              child: const LoginScreen(),
-            ),
-            BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
-          ],
-          child: const MainBottomAppBar(),
-        ));
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                      di.sl<BannersCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) =>
+                  di.sl<GetCategoriesCubit>()
+                    ..getCategories(context: context),
+                ),
+                BlocProvider(create: (context) => di.sl<LogoutCubit>()),
+                BlocProvider(
+                  create: (context) => di.sl<LoginCubit>(),
+                  child: const LoginScreen(),
+                ),
+                BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
+              ],
+              child: const MainBottomAppBar(),
+            ));
     }
     return FadeBuilderRoute(page: const NotFoundScreen());
   }
