@@ -41,7 +41,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(title: "My Ads"),
+      appBar: const MainAppBar(title: "My Ads"),
       body: BlocConsumer<MyitemCubit, MyitemState>(
         listener: (context, state) {
           if (state.status == CubitStatus.error && state.error.isNotEmpty) {
@@ -73,6 +73,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: FilterChip(
+
               label: Text(_filters[index]),
               selected: _selectedFilterIndex == index,
               onSelected: (selected) {
@@ -151,17 +152,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildStatItem(Icons.remove_red_eye,
-                          0, 'مشاهدة'),
-                      _buildStatItem(
-                          Icons.favorite, item.reactions?.length ?? 0, 'إعجاب'),
-                      _buildStatItem(
-                          Icons.comment, item.comments?.length ?? 0, 'تعليق'),
-                    ],
-                  ),
+
                 ],
               ),
             ),
@@ -211,19 +202,4 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
     );
   }
 
-  Widget _buildStatItem(IconData icon, int count, String label) {
-    return Row(
-      children: [
-        Icon(icon, size: 16, color: Colors.grey),
-        const SizedBox(width: 4),
-        Text(
-          '$count $label',
-          style: const TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    );
-  }
 }
