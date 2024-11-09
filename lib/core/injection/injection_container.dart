@@ -57,27 +57,15 @@ import 'package:mzad_damascus/feature/profile/domain/repository/profile_reposito
 import 'package:mzad_damascus/feature/profile/domain/usecase/get_profile_info_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/myfollowers_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/myfollowing_usecase.dart';
+import 'package:mzad_damascus/feature/profile/domain/usecase/profile_by_username_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_image_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_usecase.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
-
-import '../../feature/home/domain/usecase/get_adv_details_usecase.dart';
-import '../../feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
-import '../../feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
-import '../../feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
-import '../../feature/more/data/remote/profile_remote.dart';
-import '../../feature/more/data/repository/profile_repository_implements.dart';
-import '../../feature/more/domain/repository/profile_repository.dart';
-import '../../feature/more/domain/usecase/edit_password_usecase.dart';
-import '../../feature/more/domain/usecase/update_username_usecase.dart';
-import '../../feature/more/domain/usecase/verfiyusername_usecase.dart';
-import '../../feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
-import '../../feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
-import '../../feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -149,7 +137,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => MyitemUsecase(repository: sl()));
   sl.registerFactory(() => MyitemCubit(usecase: sl()));
   sl.registerFactory(() => VerfiyUsernameCubit(usecase: sl()));
+  sl.registerFactory(() => ProfileByUsernameCubit(usecase: sl()));
   sl.registerLazySingleton(() => VerfiyusernameUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetProfileByUsernameUsecase(repository: sl()));
   sl.registerFactory(() => GetProfileInfoCubit(usecase: sl()));
   sl.registerFactory(() => UpdateProfileImageCubit(usecase: sl()));
   sl.registerFactory(() => UpdateProfileCubit(usecase: sl()));

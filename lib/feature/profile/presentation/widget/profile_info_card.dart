@@ -42,7 +42,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GetProfileInfoCubit, GetProfileInfoState>(
+    return
+      BlocConsumer<GetProfileInfoCubit, GetProfileInfoState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error) {
           NoteMessage.showErrorSnackBar(context: context, text: state.error);
