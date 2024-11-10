@@ -9,9 +9,6 @@ import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_state.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 
@@ -51,9 +48,7 @@ class MoreScreen extends StatelessWidget {
             icon: Icons.announcement,
             label: 'My Ads',
             color: AppColorManager.green,
-            onTap: () {
-              Navigator.pushNamed(context, RouteNamedScreens.myitem);
-            },
+            onTap: () {},
           ),
           MoreListTile(
             icon: Icons.star_border,
@@ -74,24 +69,13 @@ class MoreScreen extends StatelessWidget {
             onTap: () {},
           ),
           MoreListTile(
-            icon: Icons.password,
-            label: 'Change Pssword',
+            icon: Icons.person,
+            label: 'Profile',
             color: AppColorManager.lightBlue,
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => EditPasswordScreen()),
-              );
-            },
-          ),
-          MoreListTile(
-            icon: Icons.edit,
-            label: 'Change UserName',
-            color: AppColorManager.lightBlue,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditUsernameScreen()),
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
               );
             },
           ),
@@ -124,8 +108,7 @@ class MoreScreen extends StatelessWidget {
           BlocConsumer<LogoutCubit, LogoutState>(
             listener: (context, state) {
               if (state.status == CubitStatus.error) {
-                NoteMessage.showErrorSnackBar(
-                    context: context, text: state.error);
+                NoteMessage.showErrorSnackBar(context: context, text: state.error);
               }
               if (state.status == CubitStatus.success) {
                 Navigator.of(context).pushNamedAndRemoveUntil(
@@ -136,15 +119,7 @@ class MoreScreen extends StatelessWidget {
             },
             builder: (context, state) {
               if (state.status == CubitStatus.loading) {
-                return SizedBox(
-                    height: AppHeightManager.h5,
-                    width: AppHeightManager.h2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AppCircularProgressWidget(),
-                      ],
-                    ));
+                return AppCircularProgressWidget();
               }
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
@@ -153,7 +128,7 @@ class MoreScreen extends StatelessWidget {
                     context.read<LogoutCubit>().logout(context: context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColorManager.red,
+                    backgroundColor: AppColorManager.red,  
                     padding:
                         EdgeInsets.symmetric(vertical: AppHeightManager.h2),
                   ),

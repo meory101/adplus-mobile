@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/model/comment.dart';
+import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
@@ -34,12 +35,10 @@ class _AdvertisementDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return
-
-      BlocConsumer<AdvDetailsCubit, AdvDetailsState>(
+    return BlocConsumer<AdvDetailsCubit, AdvDetailsState>(
         listener: (context, state) {
       if (state.status == CubitStatus.error) {
-        NoteMessage.showErrorSnackBar(context: context, text: "");
+        NoteMessage.showErrorSnackBar(context: context, text: state.error);
       }
     }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
@@ -52,69 +51,76 @@ class _AdvertisementDetailsScreenState
       }
       advDetails = state.entity.data;
       return Scaffold(
-        // bottomSheet: StatefulBuilder(builder: (context, setState) {
-        //   return Visibility(
-        //     visible: advDetails != null,
-        //     child: AdvDetailsBottomSheet(
-        //       advDetails: advDetails,
-        //     ),
-        //   );
-        // }),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AdvDetailsImagesSlider(advDetails: advDetails),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppWidthManager.w3Point8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppTextWidget(
-                          maxLines: 2,
-                          fontWeight: FontWeight.w700,
-                          fontSize: FontSizeManager.fs15,
-                          text: advDetails?.name ?? ""),
-                      SizedBox(
-                        height: AppHeightManager.h05,
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AdvDetailsImagesSlider(advDetails: advDetails),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppWidthManager.w3Point8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTextWidget(
+                              maxLines: 2,
+                              fontWeight: FontWeight.w700,
+                              fontSize: FontSizeManager.fs15,
+                              text: advDetails?.name ?? ""),
+                          SizedBox(
+                            height: AppHeightManager.h05,
+                          ),
+                          AppTextWidget(
+                              maxLines: 2,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSizeManager.fs15,
+                              text: advDetails?.startingPrice.toString() ?? ""),
+                          SizedBox(
+                            height: AppHeightManager.h1point5,
+                          ),
+                          AdvDetailsAutherData(advDetails: advDetails),
+                          SizedBox(
+                            height: AppHeightManager.h1point5,
+                          ),
+                          AdvDetailsAttributeGridView(advDetails: advDetails),
+                          SizedBox(
+                            height: AppHeightManager.h1point5,
+                          ),
+                          AppTextWidget(
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSizeManager.fs15,
+                              text: advDetails?.description ?? ""),
+                          SizedBox(
+                            height: AppHeightManager.h1point5,
+                          ),
+                          CommentsSection(
+                            itemId: widget.args.advertisement?.itemId,
+                          ),
+                          SizedBox(
+                            height: AppHeightManager.h12,
+                          ),
+                        ],
                       ),
-                      AppTextWidget(
-                          maxLines: 2,
-                          fontWeight: FontWeight.w600,
-                          fontSize: FontSizeManager.fs15,
-                          text: advDetails?.startingPrice.toString() ?? ""),
-                      SizedBox(
-                        height: AppHeightManager.h1point5,
-                      ),
-                      AdvDetailsAutherData(advDetails: advDetails),
-                      SizedBox(
-                        height: AppHeightManager.h1point5,
-                      ),
-                      AdvDetailsAttributeGridView(advDetails: advDetails),
-                      SizedBox(
-                        height: AppHeightManager.h1point5,
-                      ),
-                      AppTextWidget(
-                          fontWeight: FontWeight.w600,
-                          fontSize: FontSizeManager.fs15,
-                          text: advDetails?.description ?? ""),
-                      SizedBox(
-                        height: AppHeightManager.h1point5,
-                      ),
-                       CommentsSection(itemId: widget.args.advertisement?.itemId,),
-
-
-
-                      SizedBox(
-                        height: AppHeightManager.h12,
-                      ),
-                    ],
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: AppHeightManager.h02,
+                child: Container(
+                  color: AppColorManager.white,
+                  height: AppHeightManager.h9,
+                  child: AdvDetailsBottomSheet(
+                    advDetails: advDetails,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );

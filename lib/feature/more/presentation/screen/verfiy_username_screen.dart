@@ -80,7 +80,7 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
                 if (state.status == CubitStatus.error) {
                   NoteMessage.showErrorSnackBar(
                       context: context,
-                      text: "Verification failed. Please try again.");
+                      text: state.error);
                 }
               },
               builder: (context, state) {
@@ -97,7 +97,7 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
                     } else {
                       NoteMessage.showErrorSnackBar(
                           context: context,
-                          text: "Please enter a valid 6-digit code.");
+                          text: state.error);
                     }
                   },
                   height: AppHeightManager.h6,

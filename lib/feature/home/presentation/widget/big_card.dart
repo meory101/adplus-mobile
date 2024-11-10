@@ -27,19 +27,23 @@ class BigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Stack(
+      child: Column(
         children: [
           Container(
             clipBehavior: Clip.antiAliasWithSaveLayer,
             width: AppWidthManager.w60,
             height: AppHeightManager.h20,
             margin: EdgeInsets.only(
+              left:   index % 2 == 0
+            ? !LanguageHelper.checkIfLTR(context: context)
+                ? AppWidthManager.w3Point8
+                : 0
+              : 0,
                 right: index % 2 == 0
                     ? LanguageHelper.checkIfLTR(context: context)
                     ? AppWidthManager.w3Point8
                     : 0
-                    : 0,
-                bottom: AppWidthManager.w3Point8),
+                    : 0, ),
             decoration: BoxDecoration(
                 boxShadow: ThemeManager.cardShadow,
                 color: AppColorManager.lightGreyOpacity6,
@@ -49,23 +53,16 @@ class BigCard extends StatelessWidget {
               imageUrl: AppConstantManager.imageBaseUrl + imagePath,
             ),
           ),
-          Positioned(
-            right: LanguageHelper.checkIfLTR(context: context)
-                ? AppWidthManager.w3
-                : 0,
-            left: !LanguageHelper.checkIfLTR(context: context)
-                ? AppWidthManager.w3
-                : 0,
-            bottom               : AppHeightManager.h2point5,
-
-            child: AppTextWidget(
-              text: title,
-              fontSize: FontSizeManager.fs15,
-              fontWeight: FontWeight.w600,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          )
+          SizedBox(height: AppHeightManager.h05,),
+          AppTextWidget(
+            text: title,
+            fontSize: FontSizeManager.fs15,
+            fontWeight: FontWeight.w700,
+            color: AppColorManager.mainColor,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(height: AppHeightManager.h1point8,),
         ],
       ),
     );

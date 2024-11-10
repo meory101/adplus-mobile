@@ -17,6 +17,7 @@ class HomeBanners extends StatelessWidget {
     return Column(
       children: [
         CarouselSlider(
+
             options: CarouselOptions(
               onPageChanged: (index, reason) {},
               aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,

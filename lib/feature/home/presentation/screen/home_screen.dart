@@ -38,12 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
       cards.add(
         FullWidthCard(
           onTap: () {
-
             onCategoryTaped(subcategories.first);
           },
-          title: LanguageHelper.checkIfLTR(context: context)
-              ? subcategories.first.enName ?? ""
-              : subcategories.first.name ?? "",
+          title:
+          LanguageHelper.checkIfLTR(context: context)?
+          subcategories.first.enName ?? "" : subcategories.first.name ?? "",
           imagePath: subcategories.first.photo1 ?? "",
         ),
       );
@@ -53,18 +52,18 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () {
             onCategoryTaped(subcategories.first);
           },
-          title: LanguageHelper.checkIfLTR(context: context)
-              ? subcategories.first.enName ?? ""
-              : subcategories.first.name ?? "",
+          title:
+          LanguageHelper.checkIfLTR(context: context)?
+          subcategories.first.enName ?? "" : subcategories.first.name ?? "",
           imagePath: subcategories.first.photo1 ?? ""));
       cards.add(BigCard(
           index: 1,
           onTap: () {
             onCategoryTaped(subcategories.last);
           },
-          title:  LanguageHelper.checkIfLTR(context: context)
-              ? subcategories.first.enName ?? ""
-              : subcategories.first.name ?? "",
+          title:
+          LanguageHelper.checkIfLTR(context: context)?
+          subcategories.last.enName ?? "" : subcategories.last.name ?? "",
           imagePath: subcategories.last.photo1 ?? ""));
     } else if (length == 3) {
       for (int i = 0; i < length; i++) {
@@ -74,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () {
             onCategoryTaped(subcategories[i]);
           },
-          title: LanguageHelper.checkIfLTR(context: context)
-              ? subcategories.first.enName ?? ""
-              : subcategories.first.name ?? "",
+          title:
+          LanguageHelper.checkIfLTR(context: context)?
+          subcategories[i].enName ?? "" : subcategories[i].name ?? "",
           imagePath: subcategories[i].photo1 ?? "",
         ));
       }
@@ -88,9 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 onCategoryTaped(subcategories[i]);
               },
-              title: LanguageHelper.checkIfLTR(context: context)
-                  ? subcategories.first.enName ?? ""
-                  : subcategories.first.name ?? "",
+              title:
+              LanguageHelper.checkIfLTR(context: context)?
+              subcategories[i].enName ?? "" : subcategories[i].name ?? "",
               imagePath: subcategories[i].photo1 ?? "",
             ),
           );
@@ -98,29 +97,29 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         i % 3 == 0
             ? cards.add(
-                BigCard(
-                  index: i,
-                  onTap: () {
-                    onCategoryTaped(subcategories[i]);
-                  },
-                  title: LanguageHelper.checkIfLTR(context: context)
-                      ? subcategories.first.enName ?? ""
-                      : subcategories.first.name ?? "",
-                  imagePath: subcategories[i].photo1 ?? "",
-                ),
-              )
+          BigCard(
+            index: i,
+            onTap: () {
+              onCategoryTaped(subcategories[i]);
+            },
+            title:
+            LanguageHelper.checkIfLTR(context: context)?
+            subcategories[i].enName ?? "" : subcategories[i].name ?? "",
+            imagePath: subcategories[i].photo1 ?? "",
+          ),
+        )
             : cards.add(
-                StandardCard(
-                  index: i,
-                  onTap: () {
-                    onCategoryTaped(subcategories[i]);
-                  },
-                  title: LanguageHelper.checkIfLTR(context: context)
-                      ? subcategories.first.enName ?? ""
-                      : subcategories.first.name ?? "",
-                  imagePath: subcategories[i].photo1 ?? "",
-                ),
-              );
+          StandardCard(
+            index: i,
+            onTap: () {
+              onCategoryTaped(subcategories[i]);
+            },
+            title:
+            LanguageHelper.checkIfLTR(context: context)?
+            subcategories[i].enName ?? "" : subcategories[i].name ?? "",
+            imagePath: subcategories[i].photo1 ?? "",
+          ),
+        );
       }
     }
 
@@ -202,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return SizedBox(
                           height: AppHeightManager.h50,
                           child:
-                              const Center(child: AppCircularProgressWidget()));
+                          const Center(child: AppCircularProgressWidget()));
                     }
                     categories = state.entity.data ?? [];
 
@@ -213,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: List.generate(
                           categories.length,
-                          (index) {
+                              (index) {
                             List<SubCategory> subCategories =
                                 categories[index].children ?? [];
                             List<Widget> cards = generateCards(subCategories);
@@ -221,15 +220,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               visible: cards.isNotEmpty,
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                    bottom: AppHeightManager.h2point5),
+                                    bottom: AppHeightManager.h1),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     AppTextWidget(
-                                        text: "${categories[index].name}",
+                                        text: LanguageHelper.checkIfLTR(
+                                            context: context)
+                                            ? categories[index].enName ??"--" : categories[index].name??"--",
                                         fontSize: FontSizeManager.fs15,
                                         color: AppColorManager.textAppColor,
-                                        fontWeight: FontWeight.w600),
+                                        fontWeight: FontWeight.w700),
                                     SizedBox(
                                       height: AppHeightManager.h1point8,
                                     ),
