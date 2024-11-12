@@ -45,7 +45,9 @@ class MoreScreen extends StatelessWidget {
             icon: Icons.add,
             label: 'Add Ads',
             color: AppColorManager.pinkAccent,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(RouteNamedScreens.advertisementLanguage);
+            },
           ),
           const Divider(color: AppColorManager.borderGrey),
           MoreListTile(

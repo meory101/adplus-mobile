@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mzad_damascus/core/model/user.dart';
+
 import '../../../../../core/model/comment.dart';
 import '../../../../../core/model/pagination.dart';
 import 'get_adv_details_response_entity.dart';
@@ -112,8 +114,8 @@ class AdData {
       num? biddingStatus, 
       List<Photos>? photos, 
       List<Comment>? comments,
-      List<Reactions>? reactions, 
-      Author? author,
+      List<Reactions>? reactions,
+    User? author,
       String? description, 
       String? keywords, 
       num? startingPrice, 
@@ -164,7 +166,7 @@ class AdData {
       });
     }
     if (json['author'] != null) {
-        _author=(Author.fromJson(json['author']));
+        _author=(User.fromJson(json['author']));
     }
     _description = json['description'];
     _keywords = json['keywords'];
@@ -186,7 +188,7 @@ class AdData {
   List<Photos>? _photos;
   List<Comment>? _comments;
   List<Reactions>? _reactions;
-  Author? _author;
+  User? _author;
   String? _description;
   String? _keywords;
   num? _startingPrice;
@@ -201,7 +203,7 @@ AdData copyWith({  num? categoryId,
   List<Photos>? photos,
   List<Comment>? comments,
   List<Reactions>? reactions,
-  Author? author,
+  User? author,
   String? description,
   String? keywords,
   num? startingPrice,
@@ -232,7 +234,7 @@ AdData copyWith({  num? categoryId,
   List<Photos>? get photos => _photos;
   List<Comment>? get comments => _comments;
   List<Reactions>? get reactions => _reactions;
-  Author? get author => _author;
+  User? get author => _author;
   String? get description => _description;
   String? get keywords => _keywords;
   num? get startingPrice => _startingPrice;
@@ -279,71 +281,6 @@ AdData copyWith({  num? categoryId,
 /// phone : "963999999999"
 /// address : "string"
 /// photo : "photo.jpg"
-
-Author authorFromJson(String str) => Author.fromJson(json.decode(str));
-String authorToJson(Author data) => json.encode(data.toJson());
-class Author {
-  Author({
-      num? clientId, 
-      String? name, 
-      String? email, 
-      String? phone, 
-      String? address, 
-      String? photo,}){
-    _clientId = clientId;
-    _name = name;
-    _email = email;
-    _phone = phone;
-    _address = address;
-    _photo = photo;
-}
-
-  Author.fromJson(dynamic json) {
-    _clientId = json['client_id'];
-    _name = json['name'];
-    _email = json['email'];
-    _phone = json['phone'];
-    _address = json['address'];
-    _photo = json['photo'];
-  }
-  num? _clientId;
-  String? _name;
-  String? _email;
-  String? _phone;
-  String? _address;
-  String? _photo;
-Author copyWith({  num? clientId,
-  String? name,
-  String? email,
-  String? phone,
-  String? address,
-  String? photo,
-}) => Author(  clientId: clientId ?? _clientId,
-  name: name ?? _name,
-  email: email ?? _email,
-  phone: phone ?? _phone,
-  address: address ?? _address,
-  photo: photo ?? _photo,
-);
-  num? get clientId => _clientId;
-  String? get name => _name;
-  String? get email => _email;
-  String? get phone => _phone;
-  String? get address => _address;
-  String? get photo => _photo;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['client_id'] = _clientId;
-    map['name'] = _name;
-    map['email'] = _email;
-    map['phone'] = _phone;
-    map['address'] = _address;
-    map['photo'] = _photo;
-    return map;
-  }
-
-}
 
 /// reaction_id : 501
 /// reaction_type : "like"

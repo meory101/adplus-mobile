@@ -1,6 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:mzad_damascus/core/model/user.dart';
+
 import '../../feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 
 Comment commentFromJson(String str) => Comment.fromJson(json.decode(str));
@@ -12,7 +14,7 @@ class Comment {
     num? itemId,
     String? comment,
     String? createdAt,
-    Author? client,}){
+    User? client,}){
     _commentId = commentId;
     _clientId = clientId;
     _itemId = itemId;
@@ -27,20 +29,20 @@ class Comment {
     _itemId = json['item_id'];
     _comment = json['comment'];
     _createdAt = json['created_at'];
-    _client = json['client'] != null ? Author.fromJson(json['client']) : null;
+    _client = json['client'] != null ? User.fromJson(json['client']) : null;
   }
   num? _commentId;
   num? _clientId;
   num? _itemId;
   String? _comment;
   String? _createdAt;
-  Author? _client;
+  User? _client;
   Comment copyWith({  num? commentId,
     num? clientId,
     num? itemId,
     String? comment,
     String? createdAt,
-    Author? client,
+    User? client,
   }) => Comment(  commentId: commentId ?? _commentId,
     clientId: clientId ?? _clientId,
     itemId: itemId ?? _itemId,
@@ -53,7 +55,7 @@ class Comment {
   num? get itemId => _itemId;
   String? get comment => _comment;
   String? get createdAt => _createdAt;
-  Author? get client => _client;
+  User? get client => _client;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

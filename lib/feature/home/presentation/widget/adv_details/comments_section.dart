@@ -12,6 +12,8 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/add_comment_req
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/constant_manager.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
@@ -63,10 +65,10 @@ class _CommentsSectionState extends State<CommentsSection> {
   Widget build(BuildContext context) {
     return BlocConsumer<GetCommentsCubit, GetCommentsState>(
         listener: (context, state) {
-      if (state.status == CubitStatus.error) {
-        NoteMessage.showErrorSnackBar(context: context, text: state.error);
-      }
-    }, builder: (context, state) {
+          if (state.status == CubitStatus.error) {
+            NoteMessage.showErrorSnackBar(context: context, text: state.error);
+          }
+        }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
         return const CommentSectionShimmer();
       }
@@ -92,38 +94,46 @@ class _CommentsSectionState extends State<CommentsSection> {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: AppWidthManager.w11,
-                            width: AppWidthManager.w11,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            decoration:
-                                const BoxDecoration(shape: BoxShape.circle),
-                            child: MainImageWidget(
-                              imageUrl: AppConstantManager.imageBaseUrl +
-                                  (comments?[index].client?.photo ?? ""),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              RouteNamedScreens.authorProfile,
+                              arguments: AuthorProfileArgs(
+                                  userName: comments?[index].client?.username));
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              height: AppWidthManager.w11,
+                              width: AppWidthManager.w11,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              decoration:
+                              const BoxDecoration(shape: BoxShape.circle),
+                              child: MainImageWidget(
+                                imageUrl: AppConstantManager.imageBaseUrl +
+                                    (comments?[index].client?.photo ?? ""),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: AppWidthManager.w2,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AppTextWidget(
-                                  maxLines: 2,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: FontSizeManager.fs15,
-                                  text: comments?[index].client?.name ?? ""),
-                              AppTextWidget(
-                                  maxLines: 2,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: FontSizeManager.fs15,
-                                  text: comments?[index].comment ?? ""),
-                            ],
-                          )
-                        ],
+                            SizedBox(
+                              width: AppWidthManager.w2,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppTextWidget(
+                                    maxLines: 2,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: FontSizeManager.fs15,
+                                    text: comments?[index].client?.name ?? ""),
+                                AppTextWidget(
+                                    maxLines: 2,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: FontSizeManager.fs15,
+                                    text: comments?[index].comment ?? ""),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: AppHeightManager.h1point8,
@@ -173,15 +183,15 @@ class _CommentsSectionState extends State<CommentsSection> {
                                           height: AppWidthManager.w11,
                                           width: AppWidthManager.w11,
                                           clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
+                                          Clip.antiAliasWithSaveLayer,
                                           decoration: const BoxDecoration(
                                               shape: BoxShape.circle),
                                           child: MainImageWidget(
                                             imageUrl: AppConstantManager
-                                                    .imageBaseUrl +
+                                                .imageBaseUrl +
                                                 (comments?[index]
-                                                        .client
-                                                        ?.photo ??
+                                                    .client
+                                                    ?.photo ??
                                                     ""),
                                           ),
                                         ),
@@ -190,23 +200,23 @@ class _CommentsSectionState extends State<CommentsSection> {
                                         ),
                                         Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             AppTextWidget(
                                                 maxLines: 2,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: FontSizeManager.fs15,
                                                 text: comments?[index]
-                                                        .client
-                                                        ?.name ??
+                                                    .client
+                                                    ?.name ??
                                                     ""),
                                             AppTextWidget(
                                                 maxLines: 2,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: FontSizeManager.fs15,
                                                 text:
-                                                    comments?[index].comment ??
-                                                        ""),
+                                                comments?[index].comment ??
+                                                    ""),
                                           ],
                                         )
                                       ],
@@ -298,7 +308,9 @@ class _CommentsSectionState extends State<CommentsSection> {
                   if ((entity.comment ?? "").isEmpty) {
                     return;
                   }
-                  if(AppSharedPreferences.getToken().isEmpty){
+                  if (AppSharedPreferences
+                      .getToken()
+                      .isEmpty) {
                     showLoginBottomSheet(context: context);
                     return;
                   }
