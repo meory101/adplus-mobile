@@ -18,6 +18,7 @@ class _CategoryInsidePageShimmerState extends State<CategoryInsidePageShimmer> {
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
             ShimmerContainer(
                 width: AppWidthManager.w20, height: AppHeightManager.h2),
@@ -48,27 +49,28 @@ class _CategoryInsidePageShimmerState extends State<CategoryInsidePageShimmer> {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 20,
+              itemCount: 4,
               itemBuilder: (context, index) {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       children: [
                         ShimmerContainer(
-                            width: AppWidthManager.w20,
-                            height: AppHeightManager.h7),
+                            width: AppWidthManager.w25,
+                            height: AppHeightManager.h10),
                         SizedBox(
                           width: AppHeightManager.h1point8,
                         ),
                         ShimmerContainer(
-                            width: AppWidthManager.w20,
-                            height: AppHeightManager.h7),
+                            width: AppWidthManager.w25,
+                            height: AppHeightManager.h10),
                         SizedBox(
                           width: AppHeightManager.h1point8,
                         ),
                         ShimmerContainer(
-                            width: AppWidthManager.w20,
-                            height: AppHeightManager.h7),
+                            width: AppWidthManager.w25,
+                            height: AppHeightManager.h10),
                       ],
                     ),
                     SizedBox(

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
+import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
@@ -20,8 +24,8 @@ class MyItemsScreen extends StatefulWidget {
 }
 
 class _MyItemsScreenState extends State<MyItemsScreen> {
-  final List<String> _filters = ['All', 'Active', 'Favourite', 'End'];
-  int _selectedFilterIndex = 0;
+  final List<String> filters = ['All', 'Active', 'Favourite', 'End'];
+  int selectedFilterIndex = 0;
 
   @override
   void initState() {
@@ -57,36 +61,43 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
               ),
             ],
           );
-        },  
+        },
       ),
     );
   }
 
   Widget _buildFilterButtons() {
     return Container(
-      height: 40,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      height: AppHeightManager.h5,
+      margin: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: _filters.length,
+        itemCount: filters.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(right: 8),
+            padding: EdgeInsets.only(
+                right: LanguageHelper.checkIfLTR(context: context)
+                    ? AppWidthManager.w2
+                    : 0,
+                left: !LanguageHelper.checkIfLTR(context: context)
+                    ? AppWidthManager.w2
+                    : 0),
             child: FilterChip(
-
-              label: Text(_filters[index]),
-              selected: _selectedFilterIndex == index,
+              color: WidgetStateProperty.all(AppColorManager.lightGreyOpacity6),
+              label: Text(filters[index]),
+              selected: selectedFilterIndex == index,
               onSelected: (selected) {
                 setState(() {
-                  _selectedFilterIndex = index;
+                  selectedFilterIndex = index;
                 });
                 _loadItems();
               },
-              backgroundColor: Colors.grey.shade100,
-              selectedColor: AppColorManager.black.withOpacity(0.1),
+              backgroundColor: AppColorManager.lightGreyOpacity6,
+              selectedColor: AppColorManager.black,
               labelStyle: TextStyle(
-                color: _selectedFilterIndex == index
-                    ? AppColorManager.background
+                fontSize: FontSizeManager.fs15,
+                color: selectedFilterIndex == index
+                    ? AppColorManager.black
                     : Colors.black,
               ),
             ),
@@ -105,33 +116,30 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
 
     if (items.isEmpty) {
       return const Center(
-        child: Text('لا توجد إعلانات حالياً'),
+        child: AppTextWidget(text: "no advertisements")
       );
     }
 
-    return RefreshIndicator(
-      onRefresh: () async => _loadItems(),
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: items.length,
-        itemBuilder: (context, index) => _buildItemCard(items[index]),
-      ),
+    return ListView.builder(
+      padding:  EdgeInsets.all(AppWidthManager.w3Point8),
+      itemCount: items.length,
+      itemBuilder: (context, index) => _buildItemCard(items[index]),
     );
   }
 
   Widget _buildItemCard(AdData item) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin:  EdgeInsets.only(bottom: AppWidthManager.w3Point8),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadiusManager.r10),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding:  EdgeInsets.all(AppRadiusManager.r10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildItemImage(item),
-            const SizedBox(width: 12),
+             SizedBox(width: AppRadiusManager.r10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +160,6 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-
                 ],
               ),
             ),
@@ -201,5 +208,4 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
       ),
     );
   }
-
 }

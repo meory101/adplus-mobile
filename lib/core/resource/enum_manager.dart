@@ -18,6 +18,9 @@ abstract class EnumManager {
   static String list = "list";
 
 
+  static String likeReaction  = 'like';
+
+
   static int homeBannerSource = 0;
   static int insidePageBannerSource = 1;
 
