@@ -9,6 +9,8 @@ import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
@@ -128,45 +130,53 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   }
 
   Widget _buildItemCard(AdData item) {
-    return Card(
-      margin:  EdgeInsets.only(bottom: AppWidthManager.w3Point8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-      ),
-      child: Padding(
-        padding:  EdgeInsets.all(AppRadiusManager.r10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildItemImage(item),
-             SizedBox(width: AppRadiusManager.r10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name ?? '',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '${item.startingPrice ?? 0} ر.س',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                ],
-              ),
-            ),
-          ],
+    return
+      InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(RouteNamedScreens.advertisementDetails,
+          arguments: AdvertisementDetailsArgs(advertisement: item)
+          );
+        },
+        child: Card(
+        margin:  EdgeInsets.only(bottom: AppWidthManager.w3Point8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
         ),
-      ),
-    );
+        child: Padding(
+          padding:  EdgeInsets.all(AppRadiusManager.r10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildItemImage(item),
+               SizedBox(width: AppRadiusManager.r10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name ?? '',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${item.startingPrice ?? 0} ر.س',
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+            ),
+      );
   }
 
   Widget _buildItemImage(AdData item) {
