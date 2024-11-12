@@ -27,6 +27,7 @@ import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.da
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/add_comment_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/add_reaction_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/banners_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_by_user_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_details_usecase.dart';
@@ -35,6 +36,7 @@ import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase
 import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_comments_usecase.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
@@ -82,9 +84,11 @@ Future<void> init() async {
   sl.registerFactory(() => CategoryInsidePageCubit(usecase: sl()));
   sl.registerFactory(() => GetAdvByUserCubit(usecase: sl()));
   sl.registerFactory(() => GetCommentsCubit(usecase: sl()));
+  sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvByUserUsecase(repository: sl()));
+  sl.registerLazySingleton(() => AddReactionUsecase(repository: sl()));
   sl.registerLazySingleton(() => BannersUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddCommentUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetCommentsUsecase(repository: sl()));

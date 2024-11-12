@@ -22,6 +22,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
@@ -216,6 +217,9 @@ abstract class AppRouter {
         return SlidUpBuilderRoute(
             page: MultiBlocProvider(
           providers: [
+            BlocProvider(
+              create: (context) => di.sl<AddReactionCubit>(),
+            ),
             BlocProvider(
               create: (context) => di.sl<AdvDetailsCubit>()
                 ..getAdvDetails(
