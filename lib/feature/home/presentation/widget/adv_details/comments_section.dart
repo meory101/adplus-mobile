@@ -54,7 +54,6 @@ class _CommentsSectionState extends State<CommentsSection> {
           scrollController?.position.maxScrollExtent ?? 0.0;
 
       if (pixels >= maxScrollExtent) {
-        print('holaaaaaaaaaaaaaaaaa');
         context.read<GetCommentsCubit>().getComments(
             context: context,
             entity: GetCommentsRequestEntity(itemId: widget.itemId));

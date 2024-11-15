@@ -28,8 +28,9 @@ class MoreListTile extends StatelessWidget {
       ),
       title: AppTextWidget(
           text: label,
-          fontSize: FontSizeManager.fs15,
           fontWeight: FontWeight.w500,
+          fontSize: FontSizeManager.fs16,
+          maxLines: 2,
           color: AppColorManager.textAppColor),
       onTap: onTap,
     );

@@ -73,20 +73,38 @@ class GetProfileInfoResponseEntity {
 class   ProfileInfo {
   ProfileInfo({
     User? user,
+    num? followersCount,
+    num? followingCount,
+    num? items,
   }) {
     _user = user;
+    _items = items;
+    _followersCount =followersCount ;
+    _followingCount = followingCount;
   }
 
   ProfileInfo.fromJson(dynamic json) {
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
+    _items = json['items'];
+    _followersCount = json['followers'];
+    _followingCount =  json['following'];
   }
 
   User? _user;
+  num? _followersCount;
+  num? _followingCount;
+  num? _items;
 
   ProfileInfo copyWith({
     User? user,
+    num? followersCount,
+    num? followingCount,
+    num? items,
   }) =>
       ProfileInfo(
+         followersCount: followersCount ?? _followersCount,
+         followingCount: followingCount ?? _followingCount,
+        items: items ?? _items,
         user: user ?? _user,
       );
 

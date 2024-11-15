@@ -73,21 +73,19 @@ abstract class ApiErrorHandler {
         errorEntity.errorCode = errorResponseEntity.errorCode;
         if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
             'Unauthenticated.') {
-          Navigator.of(buildContext).pushNamedAndRemoveUntil(
+          Navigator.of(buildContext).pushNamed(
             RouteNamedScreens.login,
-            (route) => false,
+
           );
         }
       } catch (e) {
         errorEntity.errorMessage =
             jsonDecode(failure.response?.body ?? "")['errors'].toString();
-        print(errorEntity.errorMessage);
-        print('00000000000000000000000000000000000');
         if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
             'Unauthenticated.') {
-          Navigator.of(buildContext).pushNamedAndRemoveUntil(
+          Navigator.of(buildContext).pushNamed(
             RouteNamedScreens.login,
-                (route) => false,
+
           );
         }
       }

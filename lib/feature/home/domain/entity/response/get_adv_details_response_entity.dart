@@ -120,6 +120,7 @@ class AdvDetails {
     num? status,
     num? star,
     num? underReview,
+    num? likeCount,
     num? biddingStatus,
     num? homepageAppear,
     num? ord,
@@ -131,6 +132,7 @@ class AdvDetails {
     User? author,
   }) {
     _itemId = itemId;
+    _likeCount = likeCount;
     _categoryId = categoryId;
     _cityId = cityId;
     _name = name;
@@ -155,6 +157,7 @@ class AdvDetails {
   }
 
   AdvDetails.fromJson(dynamic json) {
+    _likeCount = json['like_count'];
     _itemId = json['item_id'];
     _categoryId = json['category_id'];
     _cityId = json['city_id'];
@@ -184,19 +187,6 @@ class AdvDetails {
         _attributes?.add(Attributes.fromJson(v));
       });
     }
-    //TODO ADD COMMENTS REACTIONS MODELS
-    // if (json['comments'] != null) {
-    //   _comments = [];
-    //   json['comments'].forEach((v) {
-    //     _comments?.add(Dynamic.fromJson(v));
-    //   });
-    // }
-    // if (json['reaction'] != null) {
-    //   _reaction = [];
-    //   json['reaction'].forEach((v) {
-    //     _reaction?.add(Dynamic.fromJson(v));
-    //   });
-    // }
     _author = json['author'] != null ? User.fromJson(json['author']) : null;
   }
 
@@ -213,6 +203,7 @@ class AdvDetails {
   num? _status;
   num? _star;
   num? _underReview;
+  num? _likeCount;
   num? _biddingStatus;
   num? _homepageAppear;
   num? _ord;
@@ -239,6 +230,7 @@ class AdvDetails {
     num? underReview,
     num? biddingStatus,
     num? homepageAppear,
+    num? likeCount,
     num? ord,
     String? biddingStartTime,
     List<Photos>? photos,
@@ -248,6 +240,7 @@ class AdvDetails {
     User? author,
   }) =>
       AdvDetails(
+        likeCount:likeCount ?? _likeCount,
         itemId: itemId ?? _itemId,
         categoryId: categoryId ?? _categoryId,
         cityId: cityId ?? _cityId,
@@ -279,6 +272,7 @@ class AdvDetails {
   num? get cityId => _cityId;
 
   String? get name => _name;
+  num? get likeCount => _likeCount;
 
   num? get startingPrice => _startingPrice;
 

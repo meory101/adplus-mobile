@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
@@ -75,8 +77,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: AppWidthManager.w25,
-                        height: AppWidthManager.w25,
+                        width: AppWidthManager.w23,
+                        height: AppWidthManager.w23,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
@@ -97,12 +99,12 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                       SizedBox(height: AppHeightManager.h02),
                       AppTextWidget(
                         text:
-                            "username : ${profileInfo?.user?.username ?? '--'}",
+                            profileInfo?.user?.username ?? '--',
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.textGrey,
                       ),
                       AppTextWidget(
-                        text: "email : ${profileInfo?.user?.username ?? '--'}",
+                        text: profileInfo?.user?.username ?? '--',
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.textGrey,
                       ),
@@ -128,7 +130,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                             child: Row(
                               children: [
                                 AppTextWidget(
-                                  text: "Edit",
+                                  text: "edit".tr(),
                                   fontWeight: FontWeight.w500,
                                   fontSize: FontSizeManager.fs15,
                                 ),
@@ -153,7 +155,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                   Expanded(
                     child: AppTextWidget(
                       text:
-                      "description : ${profileInfo?.user?.description ?? '--'}",
+                      profileInfo?.user?.description ?? '--',
                       fontSize: FontSizeManager.fs15,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,

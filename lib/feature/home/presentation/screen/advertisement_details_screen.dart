@@ -22,6 +22,8 @@ import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/adv_d
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/comments_section.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/icon_manager.dart';
+import '../../../../core/storage/shared/shared_pref.dart';
+import '../../../../core/widget/bottom_sheet/login_bottom_sheet.dart';
 import '../../../../core/widget/loading/shimmer/adv_details_screen_shimmer.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_adv_details_response_entity.dart';
@@ -99,19 +101,84 @@ class _AdvertisementDetailsScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AppTextWidget(
-                              maxLines: 2,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSizeManager.fs16,
-                              text: advDetails?.name ?? ""),
-                          SizedBox(
-                            height: AppHeightManager.h02,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  
+                                  
+                                  AppTextWidget(
+                                      maxLines: 2,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: FontSizeManager.fs16,
+                                      
+                                      text: advDetails?.name ?? ""),
+                                  AppTextWidget(
+                                      maxLines: 2,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: FontSizeManager.fs16,
+                                      text: advDetails?.startingPrice.toString() ?? ""),
+                                ],
+                              ),
+                            ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  AppTextWidget(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: FontSizeManager.fs16,
+                                      text: (advDetails?.likeCount ?? "").toString()),
+                                  SizedBox(width: AppWidthManager.w2,),
+                                  CircleAvatar(
+                                    backgroundColor:
+                                    AppColorManager.grey.withOpacity(0.3),
+                                    child: BlocConsumer<AddReactionCubit,
+                                        AddReactionState>(
+                                      listener: (context, state) {
+                                        if(state.status == CubitStatus.error){
+                                          NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                                        }
+                                      },
+                                      builder: (context, state) {
+                                        if(state.status ==CubitStatus.loading){
+                                          return const AppCircularProgressWidget();
+                                        }
+                                        return IconButton(
+                                            onPressed: () {
+                                              if (AppSharedPreferences
+                                                  .getToken()
+                                                  .isEmpty) {
+                                                showLoginBottomSheet(context: context);
+                                                return;
+                                              }
+                                              context
+                                                  .read<AddReactionCubit>()
+                                                  .addReaction(
+                                                  context: context,
+                                                  entity:
+                                                  AddReactionRequestEntity(
+                                                      itemId: advDetails?.itemId,
+                                                      reactionType:
+                                                      EnumManager
+                                                          .likeReaction));
+                                            },
+                                            icon: const Icon(
+                                              Icons.thumb_up_alt_rounded,
+                                              color: AppColorManager.white,
+                                            ));
+                                      },
+                                    ),
+                                  ),
+
+
+                                ],
+                              ),
+                            ],
                           ),
-                          AppTextWidget(
-                              maxLines: 2,
-                              fontWeight: FontWeight.w700,
-                              fontSize: FontSizeManager.fs16,
-                              text: advDetails?.startingPrice.toString() ?? ""),
+
                           SizedBox(
                             height: AppHeightManager.h1point5,
                           ),
@@ -127,45 +194,7 @@ class _AdvertisementDetailsScreenState
                               fontWeight: FontWeight.w600,
                               fontSize: FontSizeManager.fs16,
                               text: advDetails?.description ?? ""),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor:
-                                    AppColorManager.grey.withOpacity(0.3),
-                                child: BlocConsumer<AddReactionCubit,
-                                    AddReactionState>(
-                                  listener: (context, state) {
-                                    if(state.status == CubitStatus.error){
-                                      NoteMessage.showErrorSnackBar(context: context, text: state.error);
-                                    }
-                                  },
-                                  builder: (context, state) {
-                                    if(state.status ==CubitStatus.loading){
-                                      return const AppCircularProgressWidget();
-                                    }
-                                    return IconButton(
-                                        onPressed: () {
-                                          context
-                                              .read<AddReactionCubit>()
-                                              .addReaction(
-                                                  context: context,
-                                                  entity:
-                                                      AddReactionRequestEntity(
-                                                          itemId: advDetails?.itemId,
-                                                          reactionType:
-                                                              EnumManager
-                                                                  .likeReaction));
-                                        },
-                                        icon: const Icon(
-                                          Icons.thumb_up_alt_rounded,
-                                          color: AppColorManager.white,
-                                        ));
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
+
                           CommentsSection(
                             itemId: widget.args.advertisement?.itemId,
                           ),

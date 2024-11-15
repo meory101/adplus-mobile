@@ -145,11 +145,8 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                         }
                         return MainAppButton(
                           onTap: () {
-                            print(
-                                "sssssssssssssssssssssssssssssssssssssssssssssssssss");
-                            print(entity.password);
                             if ((formKey.currentState?.validate() ?? false)) {
-                              print('kkkkk');
+
                               context.read<EditPasswordCubit>().editpassword(
                                     context: context,
                                     entity: entity,

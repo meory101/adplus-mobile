@@ -45,9 +45,8 @@ class _EditUsernameScreenState extends State<EditUsernameScreen> {
                     title: "Username (required)",
                     hint: "Name",
                     onChanged: (value) {
-                      print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-                      print(value);
                       entity.username = value ?? "";
+                      return null;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -88,11 +87,9 @@ class _EditUsernameScreenState extends State<EditUsernameScreen> {
                         }
                         return MainAppButton(
                           onTap: () {
-                            print(
-                                "sssssssssssssssssssssssssssssssssssssssssssssssssss");
-                            print(entity.username);
+
                             if ((formKey.currentState?.validate() ?? false)) {
-                              print('kkkkk');
+
                               context
                                   .read<UpdateUsernameCubit>()
                                   .updateusername(

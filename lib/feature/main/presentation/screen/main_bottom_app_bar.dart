@@ -129,11 +129,9 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                       onTap: () {
                         if (AppSharedPreferences.getToken().isEmpty) {
                           Navigator.of(context)
-                              .pushNamed(RouteNamedScreens.register);
+                              .pushNamed(RouteNamedScreens.login);
                           return;
                         }
-                        Navigator.of(context)
-                            .pushNamed(RouteNamedScreens.advertisementLanguage);
                         Navigator.of(context)
                             .pushNamed(RouteNamedScreens.advertisementLanguage);
                       },

@@ -22,8 +22,8 @@ void showLoginBottomSheet({required BuildContext context}) {
             boxShadow: [
               BoxShadow(
                 color: AppColorManager.lightGreyOpacity6,
-                spreadRadius: 10,
-                blurRadius: 10,
+                spreadRadius: 1,
+                blurRadius: 1,
               ),
             ],
             borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
@@ -55,8 +55,8 @@ void showLoginBottomSheet({required BuildContext context}) {
                       height: AppHeightManager.h5,
                       onTap: () {
 
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            RouteNamedScreens.login, (route) => false);
+                        Navigator.of(context).pushNamed(
+                            RouteNamedScreens.login);
                       },
                       color: AppColorManager.mainColor,
                       alignment: Alignment.center,

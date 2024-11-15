@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
@@ -89,9 +91,10 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
           ),
           SizedBox(height: AppWidthManager.w2),
           AppTextWidget(
-            text: "Followers",
-            fontSize: FontSizeManager.fs14,
+            text: "followers".tr(),
+            fontSize: FontSizeManager.fs15,
             color: AppColorManager.textGrey,
+            fontWeight: FontWeight.w600,
           ),
         ],
       ),
@@ -116,9 +119,10 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
           ),
           SizedBox(height: AppWidthManager.w2),
           AppTextWidget(
-            text: "Following",
-            fontSize: FontSizeManager.fs14,
+            text: "following".tr(),
+            fontSize: FontSizeManager.fs15,
             color: AppColorManager.textGrey,
+            fontWeight: FontWeight.w600,
           ),
         ],
       ),
@@ -133,7 +137,7 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
             final totalItems =
                 state.entity.data?.pagination?.totalItems?.toString() ?? '0';
             return AppTextWidget(
-              text: '$totalItems/100',
+              text: totalItems,
               fontSize: FontSizeManager.fs15,
               fontWeight: FontWeight.w700,
               color: AppColorManager.textAppColor,
@@ -142,9 +146,11 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
         ),
         SizedBox(height: AppWidthManager.w2),
         AppTextWidget(
-          text: 'Posted Ads',
-          fontSize: FontSizeManager.fs14,
+          text: 'advertisements'.tr(),
+          fontSize: FontSizeManager.fs15,
           color: AppColorManager.textGrey,
+          fontWeight: FontWeight.w600,
+          maxLines: 2,
         ),
       ],
     );
@@ -161,9 +167,10 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
         ),
         SizedBox(height: AppWidthManager.w2),
         AppTextWidget(
-          text: 'WhatsApp',
-          fontSize: FontSizeManager.fs14,
+          text: 'whatsApp'.tr(),
+          fontSize: FontSizeManager.fs15,
           color: AppColorManager.textGrey,
+          fontWeight: FontWeight.w600,
         ),
       ],
     );

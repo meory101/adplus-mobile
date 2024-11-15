@@ -21,6 +21,8 @@ import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
+import '../../../../core/storage/shared/shared_pref.dart';
+import '../../../../core/widget/bottom_sheet/login_bottom_sheet.dart';
 import '../../../../core/widget/image/main_image_widget.dart';
 import '../../../../core/widget/loading/shimmer/advs_by_attribute_shimmer.dart';
 import '../../../../core/widget/loading/shimmer/profile_info_card_shimmer.dart';
@@ -133,8 +135,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                             fontWeight: FontWeight.w600,
                                           ),
                                           AppTextWidget(
-                                            text: (profileInfo?.user
-                                                        ?.followersCount ??
+                                            text: (profileInfo?.followersCount ??
                                                     "0")
                                                 .toString(),
                                             fontSize: FontSizeManager.fs16,
@@ -155,8 +156,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                             fontWeight: FontWeight.w600,
                                           ),
                                           AppTextWidget(
-                                            text: (profileInfo?.user
-                                                        ?.followingCount ??
+                                            text: (profileInfo?.followingCount ??
                                                     "0")
                                                 .toString(),
                                             fontSize: FontSizeManager.fs16,
@@ -177,8 +177,8 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                             fontWeight: FontWeight.w600,
                                           ),
                                           AppTextWidget(
-                                            text: (profileInfo?.user
-                                                        ?.followingCount ??
+                                            text: (profileInfo
+                                                        ?.items ??
                                                     "0")
                                                 .toString(),
                                             fontSize: FontSizeManager.fs16,
@@ -234,6 +234,12 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                               }
                               return MainAppButton(
                                 onTap: () {
+                                  if (AppSharedPreferences
+                                      .getToken()
+                                      .isEmpty) {
+                                    showLoginBottomSheet(context: context);
+                                    return;
+                                  }
                                   context.read<AddFollowCubit>().addFollow(
                                       context: context,
                                       entity: AddFollowRequestEntity(
@@ -250,7 +256,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                 child: AppTextWidget(
                                   text: "follow".tr(),
                                   color: AppColorManager.white,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: FontSizeManager.fs15,
                                 ),
                               );
@@ -274,7 +280,8 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                             child: AppTextWidget(
                               text: "call".tr(),
                               color: AppColorManager.white,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
+
                               fontSize: FontSizeManager.fs15,
                             ),
                           )

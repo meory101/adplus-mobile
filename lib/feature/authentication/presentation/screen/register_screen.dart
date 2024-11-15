@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,7 +27,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool passwordVisible = false;
   bool confirmPasswordVisible = false;
-  bool passwordsMatch = false;  
+  bool passwordsMatch = false;
 
   RegisterRequestEntity entity = RegisterRequestEntity();
   GlobalKey<FormState> formKey = GlobalKey();
@@ -45,73 +46,73 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 AppTextWidget(
-                  text: "Create a New Account",
+                  text: "createNewAccount".tr(),
                   color: AppColorManager.textAppColor,
                   fontSize: FontSizeManager.fs20,
                   fontWeight: FontWeight.w700,
                 ),
                 SizedBox(height: AppHeightManager.h5),
-                 AppTextFormField(
+                AppTextFormField(
                   textInputType: TextInputType.name,
-                  hintText: "Full Name",
+                  hintText: "fullNameHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.name = value;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your full name';
+                      return "fullNameRequired".tr();
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                 AppTextFormField(
+                AppTextFormField(
                   textInputType: TextInputType.text,
-                  hintText: "Username (Email or Phone)",
+                  hintText: "usernameHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.username = value;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your username';
+                      return "usernameRequired".tr();
                     }
-                     
+
                     bool isEmail = RegExp(
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
                         .hasMatch(value);
                     bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
 
                     if (!isEmail && !isPhone) {
-                      return 'Username must be a valid phone number or email';
+                      return "usernameInvalid".tr();
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                 AppTextFormField(
+                AppTextFormField(
                   textInputType: TextInputType.number,
-                  hintText: "Phone Number",
+                  hintText: "phoneNumberHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.whatsapp = value;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your phone number';
+                      return "phoneNumberRequired".tr();
                     }
                     bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
                     if (!isPhone) {
-                      return 'Invalid phone number';
+                      return "invalidPhoneNumber".tr();
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                 AppTextFormField(
+                AppTextFormField(
                   maxLines: 1,
-                  hintText: "Password",
+                  hintText: "passwordHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.password = value;
@@ -119,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return "passwordRequired".tr();
                     }
                     return null;
                   },
@@ -137,9 +138,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: !passwordVisible,
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
-                 AppTextFormField(
+                AppTextFormField(
                   maxLines: 1,
-                  hintText: "Confirm Password",
+                  hintText: "confirmPasswordHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.passwordConfirmation = value;
@@ -147,10 +148,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please confirm your password';
+                      return "confirmPasswordRequired".tr();
                     }
                     if (entity.password != value) {
-                      return 'Passwords do not match';
+                      return "passwordsDoNotMatch".tr();
                     }
                     return null;
                   },
@@ -172,13 +173,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: AppHeightManager.h1point8),
                 passwordsMatch
                     ? Text(
-                        'Passwords match',
-                        style: TextStyle(color: Colors.green),
-                      )
+                  "passwordsMatch".tr(),
+                  style: TextStyle(color: Colors.green),
+                )
                     : Text(
-                        'Passwords do not match',
-                        style: TextStyle(color: Colors.red),
-                      ),
+                  "passwordsDoNotMatch".tr(),
+                  style: TextStyle(color: Colors.red),
+                ),
                 SizedBox(height: AppHeightManager.h3),
                 BlocConsumer<RegisterCubit, RegisterState>(
                   listener: (context, state) {
@@ -193,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
-                          context: context, text:  state.error);
+                          context: context, text: state.error);
                     }
                   },
                   builder: (context, state) {
@@ -202,8 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     return MainAppButton(
                       onTap: () {
-                        if (formKey.currentState?.validate() ??
-                            false && passwordsMatch) {
+                        if (formKey.currentState?.validate() ?? false && passwordsMatch) {
                           context
                               .read<RegisterCubit>()
                               .register(entity: entity, context: context);
@@ -213,7 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: AppColorManager.mainColor,
                       alignment: Alignment.center,
                       child: AppTextWidget(
-                        text: "Create Account",
+                        text: "createAccount".tr(),
                         color: Colors.white,
                         fontSize: FontSizeManager.fs16,
                         fontWeight: FontWeight.w600,
@@ -226,7 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     AppTextWidget(
-                      text: "Already have an account?",
+                      text: "alreadyHaveAccount".tr(),
                       color: AppColorManager.textAppColor,
                       fontSize: FontSizeManager.fs15,
                     ),
@@ -237,7 +237,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             .pushReplacementNamed(RouteNamedScreens.login);
                       },
                       child: AppTextWidget(
-                        text: "Login",
+                        text: "login".tr(),
                         color: AppColorManager.mainColor,
                         fontSize: FontSizeManager.fs15,
                         fontWeight: FontWeight.w600,

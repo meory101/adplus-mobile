@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
@@ -55,7 +57,7 @@ class _AdvertisementCategoryScreenState
                 height: AppHeightManager.h2point5,
               ),
               AppTextWidget(
-                  text: "Choose Category",
+                  text: "chooseCategory".tr(),
                   fontSize: FontSizeManager.fs16,
                   color: AppColorManager.textAppColor,
                   fontWeight: FontWeight.w600),

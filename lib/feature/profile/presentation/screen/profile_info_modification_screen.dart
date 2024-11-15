@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,7 +57,7 @@ class _ProfileInfoModificationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(title: "edit profile"),
+      appBar:  MainAppBar(title: "editProfile".tr()),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppWidthManager.w3Point8),
@@ -157,7 +158,7 @@ class _ProfileInfoModificationScreenState
                     ),
                     Positioned(
                       bottom: AppHeightManager.h1,
-                      left: AppWidthManager.w12,
+                      left: AppWidthManager.w14,
                       right: 0,
                       child: InkWell(
                         overlayColor: const WidgetStatePropertyAll(
@@ -187,8 +188,8 @@ class _ProfileInfoModificationScreenState
                 ),
                 TitleAppFormFiled(
                   initValue: widget.args.profileInfo?.user?.name ?? "",
-                  title: "name (required)",
-                  hint: "name",
+                  title: "name(required)".tr(),
+                  hint: "name".tr(),
                   onChanged: (value) {
                     entity.name = value ?? "";
                     return null;
@@ -205,8 +206,8 @@ class _ProfileInfoModificationScreenState
                 ),
                 TitleAppFormFiled(
                   initValue: widget.args.profileInfo?.user?.description ?? "",
-                  title: "Description ",
-                  hint: "description",
+                  title: "description".tr(),
+                  hint: "description".tr(),
                   onChanged: (value) {
                     entity.description = value ?? "";
                     return null;
@@ -227,7 +228,6 @@ class _ProfileInfoModificationScreenState
                 BlocConsumer<UpdateProfileImageCubit, UpdateProfileImageState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
-                      print('success hereeeeeeeeeeeeeeeeeeeeee');
                       Navigator.of(context).pop();
                     }
                     if (state.status == CubitStatus.error) {
@@ -277,8 +277,8 @@ class _ProfileInfoModificationScreenState
                           color: AppColorManager.mainColor,
                           child: AppTextWidget(
                             text: "save",
-                            fontSize: FontSizeManager.fs15,
-                            fontWeight: FontWeight.w500,
+                            fontSize: FontSizeManager.fs16,
+                            fontWeight: FontWeight.w600,
                             color: AppColorManager.white,
                           ),
                         );

@@ -57,25 +57,41 @@ class ProfileByUsernameData {
     User? user,
     bool? isVerified,
     bool? captcha,
+    num? followersCount,
+    num? followingCount,
+    num? items,
   }) {
     _user = user;
     _isVerified = isVerified;
     _captcha = captcha;
+      _items = items;
+    _followersCount =followersCount ;
+     _followingCount = followingCount;
   }
 
   ProfileByUsernameData.fromJson(dynamic json) {
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
     _isVerified = json['is_verified'];
+    _items = json['items'];
     _captcha = json['captcha'];
+    _followersCount = json['followers'];
+    _followingCount =  json['following'];
   }
 
   User? _user;
   bool? _isVerified;
   bool? _captcha;
+  num? _followersCount;
+  num? _followingCount;
+  num? _items;
+
 
   User? get user => _user;
   bool? get isVerified => _isVerified;
   bool? get captcha => _captcha;
+   num? get followersCount => _followersCount;
+  num? get followingCount => _followingCount;
+  num? get items => _items;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

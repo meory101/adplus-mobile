@@ -33,6 +33,7 @@ class User {
     num? followingCount,
     num? errorLogin,
   }) {
+
     _clientId = clientId;
     _name = name;
     _username = username;
@@ -48,14 +49,10 @@ class User {
   }
 
   User.fromJson(dynamic json) {
-    print( json['client_id']);
-    print('ffffffffffffffffff');
-    print(json);
-    print('000000000000000000000000');
     _description = json['description'];
     _clientId = json['client_id'];
-    _followersCount = json['follower_count'];
-    _followingCount = json['following_count'];
+    _followersCount = json['follower_count'] ?? json['followers'];
+    _followingCount = json['following_count']  ?? json['following'];
     _name = json['name'];
     _username = json['username'];
     _email = json['email'];

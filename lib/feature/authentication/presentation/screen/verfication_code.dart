@@ -1,8 +1,6 @@
-import 'dart:math';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
@@ -28,6 +26,7 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   final TextEditingController codeController = TextEditingController();
   VerificationRequestEntity entity = VerificationRequestEntity();
+
   @override
   void initState() {
     entity.username = widget.args.username;
@@ -38,8 +37,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(
-        title: 'Verification Code',
+      appBar:  MainAppBar(
+        title: 'verificationCode'.tr(), // Localized title
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -47,10 +46,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Enter the 6-digit code sent to your Email',
-              style: TextStyle(color: Colors.blue, fontSize: 15),
+              'enterVerificationCode'.tr(), // Localized message
+              style: const TextStyle(color: Colors.blue, fontSize: 15),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: PinCodeTextField(
@@ -62,11 +61,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 keyboardType: TextInputType.number,
                 onDone: (value) {
                   entity.authCode = value;
-
                 },
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             BlocConsumer<VerficationCubit, VerficationState>(
               listener: (context, state) {
                 if (state.status == CubitStatus.success) {
@@ -76,7 +74,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 if (state.status == CubitStatus.error) {
                   NoteMessage.showErrorSnackBar(
                       context: context,
-                      text: "Verification failed. Please try again.");
+                      text: "verificationFailed".tr()); // Localized error message
                 }
               },
               builder: (context, state) {
@@ -93,14 +91,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     } else {
                       NoteMessage.showErrorSnackBar(
                           context: context,
-                          text: "Please enter a valid 6-digit code.");
+                          text: "validCodeRequired".tr()); // Localized prompt
                     }
                   },
                   height: AppHeightManager.h6,
                   color: AppColorManager.mainColor,
                   alignment: Alignment.center,
                   child: AppTextWidget(
-                    text: "Verify Account",
+                    text: "verifyAccount".tr(), // Localized button text
                     color: Colors.white,
                     fontSize: FontSizeManager.fs16,
                     fontWeight: FontWeight.w600,

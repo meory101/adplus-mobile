@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -42,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 AppTextWidget(
-                  text: "Welcome Back",
+                  text: "welcomeBack".tr(),
                   fontSize: FontSizeManager.fs20,
                   fontWeight: FontWeight.bold,
                   color: AppColorManager.black,
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           AppColorManager.textGrey, BlendMode.srcIn),
                     ),
                   ),
-                  hintText: "Username (Email or Phone)",
+                  hintText: "name".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.username = value;
@@ -67,16 +68,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your username';
+                      return "usernameRequired".tr();
                     }
 
                     bool isEmail = RegExp(
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
                         .hasMatch(value);
                     bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
 
                     if (!isEmail && !isPhone) {
-                      return 'Username must be a valid phone number or email';
+                      return "usernameInvalid".tr();
                     }
                     return null;
                   },
@@ -85,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppTextFormField(
                   maxLines: 1,
                   textInputType: TextInputType.visiblePassword,
-                  hintText: "Password",
+                  hintText: "passwordHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   prefixIcon: Padding(
                     padding: EdgeInsets.symmetric(
@@ -102,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return "passwordRequired".tr();
                     }
                     return null;
                   },
@@ -132,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       },
                       child: AppTextWidget(
-                        text: "Forgot Password?",
+                        text: "forgotPassword".tr(),
                         color: AppColorManager.mainColor,
                         fontSize: FontSizeManager.fs15,
                         fontWeight: FontWeight.w600,
@@ -145,11 +146,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
                       Navigator.of(context)
-                          .pushNamedAndRemoveUntil(RouteNamedScreens.mainBottomAppBar, (route) => false,);
+                          .pushNamedAndRemoveUntil(RouteNamedScreens.mainBottomAppBar, (route) => false);
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
-                          context: context, text:  state.error);
+                          context: context, text: state.error);
                     }
                   },
                   builder: (context, state) {
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: AppColorManager.mainColor,
                       alignment: Alignment.center,
                       child: AppTextWidget(
-                        text: "Login",
+                        text: "login".tr(),
                         color: AppColorManager.white,
                         fontSize: FontSizeManager.fs16,
                         fontWeight: FontWeight.w600,
@@ -181,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     AppTextWidget(
-                      text: "Don't have an account?",
+                      text: "noAccount".tr(),
                       color: AppColorManager.textAppColor,
                       fontSize: FontSizeManager.fs15,
                     ),
@@ -192,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             .pushNamed(RouteNamedScreens.register);
                       },
                       child: AppTextWidget(
-                        text: "Create Account",
+                        text: "createAccount".tr(),
                         color: AppColorManager.mainColor,
                         fontSize: FontSizeManager.fs15,
                         fontWeight: FontWeight.w600,

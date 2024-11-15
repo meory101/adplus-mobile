@@ -48,9 +48,6 @@ class ProfileRemoteImplement extends ProfileRemote {
   Future<GetProfileInfoResponseEntity> getProfileInfo() async {
     final response = await ApiMethods().get(url: ApiGetUrl.getProfileInfo);
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      print(response.body);
-      print(response.statusCode);
-      print('--------------------------------');
       return getProfileInfoResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
@@ -108,8 +105,7 @@ class ProfileRemoteImplement extends ProfileRemote {
     final response = await ApiMethods().post(
       url: "${ApiPostUrl.myfolloweing}?page=${entity.page}",
     );
-    print("sssssssssssssssssss");
-    print(response.body);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myFollowingResponseEntityFromJson(response.body);
     } else {
@@ -125,7 +121,6 @@ class ProfileRemoteImplement extends ProfileRemote {
       url: ApiPostUrl.profilebyusername,
       body: entity.toJson(),
     );
-
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return profileByUsernameResponseEntityFromJson(response.body);
     } else {
@@ -141,11 +136,6 @@ class ProfileRemoteImplement extends ProfileRemote {
       url: ApiPostUrl.addfollow,
       body: entity.toJson(),
     );
-    print(entity.followingId);
-    print('--------------------------------------');
-    print(response.body);
-    print(response.statusCode);
-    print('-----------------------------------------');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return addFollowResponseEntityFromJson(response.body);
     } else {
