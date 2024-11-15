@@ -1,3 +1,4 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../resource/size_manager.dart';
@@ -10,19 +11,31 @@ class AdvsByAttributeShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return
           Center(
-            child: GridView.builder(
+            child: DynamicHeightGridView(
               shrinkWrap: true,
+
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: AppWidthManager.w2,
-                  crossAxisSpacing: AppWidthManager.w2
-              ),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return ShimmerContainer(
-                    width: AppWidthManager.w40,
-                    height: AppHeightManager.h30);
+
+              crossAxisSpacing: AppWidthManager.w2,
+              crossAxisCount: 2,
+                 itemCount : 10,
+              builder: (context, index) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ShimmerContainer(
+                        width: AppWidthManager.w45,
+                      height: AppHeightManager.h30,),
+                    SizedBox(height: AppHeightManager.h1point8,),
+                    ShimmerContainer(
+                      width: AppWidthManager.w10,
+                      height: AppHeightManager.h2,),
+                    SizedBox(height: AppHeightManager.h08,),
+                    ShimmerContainer(
+                      width: AppWidthManager.w20,
+                      height: AppHeightManager.h2,),
+                  ],
+                );
               },
             ),
 

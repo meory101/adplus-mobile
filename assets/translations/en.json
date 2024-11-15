@@ -1,4 +1,22 @@
 {
+  "home": "Home",
+  "categories": "Categories",
+  "profile": "Profile",
+  "more": "More",
+  "bidding" : "Bidding",
+  "all"  : "All",
+  "comments" : "Comments",
+  "yourComment" : "Your Comment",
+  "saveComment" : "Save Comment",
+  "whatsapp" :   "Whatsapp" ,
+  "message" : "Message",
+  "makeCall" : "Make Call",
+  "follow" : "Follow",
+  "call" : "Call",
+  "followers" : "Followers",
+  "following" : "Following",
+  "advertisements" : "Advertisements"
+
 
 }
 

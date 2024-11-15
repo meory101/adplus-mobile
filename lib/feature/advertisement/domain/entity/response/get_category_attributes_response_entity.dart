@@ -245,7 +245,8 @@ class CategoryAttributes {
       num? attributeId, 
       num? categoryId, 
       String? attributeName, 
-      num? ord, 
+      String? attributeNameEn,
+      num? ord,
       AttributeType? attributeType, 
       List<AttributeTypeList>? attributeTypeList,}){
     _attributeId = attributeId;
@@ -254,10 +255,12 @@ class CategoryAttributes {
     _ord = ord;
     _attributeType = attributeType;
     _attributeTypeList = attributeTypeList;
+    _attributeNameEn= attributeNameEn;
 }
 
   CategoryAttributes.fromJson(dynamic json) {
     _attributeId = json['attribute_id'];
+    _attributeNameEn = json['attribute_en_name'];
     _categoryId = json['category_id'];
     _attributeName = json['attribute_name'];
     _ord = json['ord'];
@@ -270,6 +273,7 @@ class CategoryAttributes {
     }
   }
   num? _attributeId;
+  String? _attributeNameEn;
   num? _categoryId;
   String? _attributeName;
   num? _ord;
@@ -278,6 +282,7 @@ class CategoryAttributes {
 CategoryAttributes copyWith({  num? attributeId,
   num? categoryId,
   String? attributeName,
+  String? attributeNameEn,
   num? ord,
   AttributeType? attributeType,
   List<AttributeTypeList>? attributeTypeList,
@@ -285,12 +290,14 @@ CategoryAttributes copyWith({  num? attributeId,
   categoryId: categoryId ?? _categoryId,
   attributeName: attributeName ?? _attributeName,
   ord: ord ?? _ord,
+  attributeNameEn: attributeNameEn ?? _attributeNameEn,
   attributeType: attributeType ?? _attributeType,
   attributeTypeList: attributeTypeList ?? _attributeTypeList,
 );
   num? get attributeId => _attributeId;
   num? get categoryId => _categoryId;
   String? get attributeName => _attributeName;
+  String? get attributeNameEn => _attributeNameEn;
   num? get ord => _ord;
   AttributeType? get attributeType => _attributeType;
   List<AttributeTypeList>? get attributeTypeList => _attributeTypeList;
@@ -322,29 +329,36 @@ class AttributeTypeList {
   AttributeTypeList({
       num? typeListId, 
       String? option, 
+      String? optionEn,
       dynamic photo,}){
     _typeListId = typeListId;
     _option = option;
     _photo = photo;
+    _optionEn = optionEn;
 }
 
   AttributeTypeList.fromJson(dynamic json) {
     _typeListId = json['type_list_id'];
     _option = json['option'];
     _photo = json['photo'];
+    _optionEn = json['en_option'];
   }
   num? _typeListId;
   String? _option;
+  String? _optionEn;
   dynamic _photo;
 AttributeTypeList copyWith({  num? typeListId,
   String? option,
+  String? optionEn,
   dynamic photo,
 }) => AttributeTypeList(  typeListId: typeListId ?? _typeListId,
   option: option ?? _option,
+  optionEn: optionEn ?? _optionEn,
   photo: photo ?? _photo,
 );
   num? get typeListId => _typeListId;
   String? get option => _option;
+  String? get optionEn => _optionEn;
   dynamic get photo => _photo;
 
   Map<String, dynamic> toJson() {

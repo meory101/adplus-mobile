@@ -57,18 +57,18 @@ class StandardCard extends StatelessWidget {
             decoration: BoxDecoration(
                 boxShadow: ThemeManager.cardShadow,
                 color: AppColorManager.lightGreyOpacity6,
-                borderRadius: BorderRadius.circular(AppRadiusManager.r15)),
+                borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
             child: MainImageWidget(
-              borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+              borderRadius: BorderRadius.circular(AppRadiusManager.r10),
               imageUrl: AppConstantManager.imageBaseUrl + imagePath,
             ),
           ),
           SizedBox(height: AppHeightManager.h05,),
           AppTextWidget(
             text: title,
-            fontSize: FontSizeManager.fs15,
-            fontWeight: FontWeight.w700,
-            color: AppColorManager.mainColor,
+            fontSize: FontSizeManager.fs16,
+            fontWeight: FontWeight.w600,
+            color: AppColorManager.black,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),

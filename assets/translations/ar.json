@@ -1,5 +1,21 @@
 {
-
+  "home": "الرئيسية",
+  "categories": "الفئات",
+  "profile": "الملف الشخصي",
+  "more": "المزيد",
+  "bidding" : "مزايدة",
+  "all"  : "الكل",
+  "comments" : "التعليقات",
+  "yourComment" : "اكتب تعليقك",
+  "saveComment" : "حفظ التعليق",
+  "whatsapp" :   "واتساب" ,
+  "message" : "رسالة",
+  "makeCall" : "اتصال",
+  "follow": "متابعة",
+  "call": "اتصال",
+  "followers": "المتابعون",
+  "following": "يتابع",
+  "advertisements": "الإعلانات"
 }
 
 

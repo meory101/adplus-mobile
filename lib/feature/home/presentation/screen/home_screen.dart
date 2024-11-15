@@ -3,11 +3,11 @@ import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
-import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
@@ -137,98 +137,110 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: AppHeightManager.h3,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppWidthManager.w3Point8,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            context.read<BannersCubit>().getHomeBanners(
+                context: context, source: EnumManager.homeBannerSource);
+            return context
+                .read<GetCategoriesCubit>()
+                .getCategories(context: context);
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: AppHeightManager.h3,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SvgPicture.asset(
-                      AppIconManager.notification,
-                      colorFilter: const ColorFilter.mode(
-                          AppColorManager.mainColor, BlendMode.srcIn),
-                    ),
-                    SizedBox(
-                      width: AppWidthManager.w3Point8,
-                    ),
-                    SvgPicture.asset(
-                      AppIconManager.search,
-                      colorFilter: const ColorFilter.mode(
-                          AppColorManager.mainColor, BlendMode.srcIn),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: AppHeightManager.h2,
-              ),
-               HomeBanners(                    source: EnumManager.homeBannerSource,
-               ),
-              SizedBox(
-                height: AppHeightManager.h3,
-              ),
-              BlocConsumer<GetCategoriesCubit, GetCategoriesState>(
-                  listener: (context, state) {},
-                  builder: (context, state) {
-                    if (state.status == CubitStatus.loading) {
-                      return SizedBox(
-                          height: AppHeightManager.h50,
-                          child:
-                              const Center(child: AppCircularProgressWidget()));
-                    }
-                    categories = state.entity.data ?? [];
-
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppWidthManager.w3Point8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: List.generate(
-                          categories.length,
-                          (index) {
-                            List<SubCategory> subCategories =
-                                categories[index].children ?? [];
-                            List<Widget> cards = generateCards(subCategories);
-                            return Visibility(
-                              visible: cards.isNotEmpty,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: AppHeightManager.h1),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppTextWidget(
-                                        text: LanguageHelper.checkIfLTR(
-                                                context: context)
-                                            ? categories[index].enName ?? "--"
-                                            : categories[index].name ?? "--",
-                                        fontSize: FontSizeManager.fs15,
-                                        color: AppColorManager.textAppColor,
-                                        fontWeight: FontWeight.w700),
-                                    SizedBox(
-                                      height: AppHeightManager.h1point8,
-                                    ),
-                                    Wrap(
-                                      children: cards,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppWidthManager.w3Point8,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SvgPicture.asset(
+                        AppIconManager.notification,
+                        colorFilter: const ColorFilter.mode(
+                            AppColorManager.mainColor, BlendMode.srcIn),
                       ),
-                    );
-                  }),
-            ],
+                      SizedBox(
+                        width: AppWidthManager.w3Point8,
+                      ),
+                      SvgPicture.asset(
+                        AppIconManager.search,
+                        colorFilter: const ColorFilter.mode(
+                            AppColorManager.mainColor, BlendMode.srcIn),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: AppHeightManager.h2,
+                ),
+                HomeBanners(
+                  source: EnumManager.homeBannerSource,
+                ),
+                SizedBox(
+                  height: AppHeightManager.h3,
+                ),
+                BlocConsumer<GetCategoriesCubit, GetCategoriesState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      if (state.status == CubitStatus.loading) {
+                        return SizedBox(
+                            height: AppHeightManager.h50,
+                            child: const Center(
+                                child: AppCircularProgressWidget()));
+                      }
+                      categories = state.entity.data ?? [];
+
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppWidthManager.w3Point8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: List.generate(
+                            categories.length,
+                            (index) {
+                              List<SubCategory> subCategories =
+                                  categories[index].children ?? [];
+                              List<Widget> cards = generateCards(subCategories);
+                              return Visibility(
+                                visible: cards.isNotEmpty,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: AppHeightManager.h1),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AppTextWidget(
+                                          text: LanguageHelper.checkIfLTR(
+                                                  context: context)
+                                              ? categories[index].enName ?? ""
+                                              : categories[index].name ?? "",
+                                          fontSize: FontSizeManager.fs17,
+                                          color: AppColorManager.textAppColor,
+                                          fontWeight: FontWeight.w700),
+                                      SizedBox(
+                                        height: AppHeightManager.h1point8,
+                                      ),
+                                      Wrap(
+                                        children: cards,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    }),
+              ],
+            ),
           ),
         ),
       ),

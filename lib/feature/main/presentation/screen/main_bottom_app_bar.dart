@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
@@ -101,14 +102,14 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                     },
                     child: Column(
                       children: [
-                        SvgPicture.asset(AppIconManager.home,
+                        SvgPicture.asset(AppIconManager.bidding,
                             colorFilter: ColorFilter.mode(
                                 selectedIndex == 1
                                     ? AppColorManager.mainColor
                                     : AppColorManager.grey,
                                 BlendMode.srcIn)),
                         AppTextWidget(
-                          text: "categories".tr(),
+                          text: "bidding".tr(),
                           color: selectedIndex == 1
                               ? AppColorManager.mainColor
                               : AppColorManager.grey,

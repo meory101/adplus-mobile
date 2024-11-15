@@ -101,16 +101,16 @@ class _AdvertisementDetailsScreenState
                         children: [
                           AppTextWidget(
                               maxLines: 2,
-                              fontWeight: FontWeight.w700,
-                              fontSize: FontSizeManager.fs15,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSizeManager.fs16,
                               text: advDetails?.name ?? ""),
                           SizedBox(
-                            height: AppHeightManager.h05,
+                            height: AppHeightManager.h02,
                           ),
                           AppTextWidget(
                               maxLines: 2,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSizeManager.fs15,
+                              fontWeight: FontWeight.w700,
+                              fontSize: FontSizeManager.fs16,
                               text: advDetails?.startingPrice.toString() ?? ""),
                           SizedBox(
                             height: AppHeightManager.h1point5,
@@ -125,7 +125,7 @@ class _AdvertisementDetailsScreenState
                           ),
                           AppTextWidget(
                               fontWeight: FontWeight.w600,
-                              fontSize: FontSizeManager.fs15,
+                              fontSize: FontSizeManager.fs16,
                               text: advDetails?.description ?? ""),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,

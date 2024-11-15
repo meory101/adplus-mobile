@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,8 +80,9 @@ class _CommentsSectionState extends State<CommentsSection> {
         children: [
           AppTextWidget(
               fontWeight: FontWeight.w700,
-              fontSize: FontSizeManager.fs15,
-              text: "comments"),
+              fontSize: FontSizeManager.fs16,
+
+              text: "comments".tr()),
           SizedBox(
             height: AppHeightManager.h1point5,
           ),
@@ -122,7 +124,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                               children: [
                                 AppTextWidget(
                                     maxLines: 2,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                     fontSize: FontSizeManager.fs15,
                                     text: comments?[index].client?.name ?? ""),
                                 AppTextWidget(
@@ -268,8 +270,8 @@ class _CommentsSectionState extends State<CommentsSection> {
             height: AppHeightManager.h05,
           ),
           TitleAppFormFiled(
-            hint: "your comment",
-            title: "your comment",
+            hint: "yourComment".tr(),
+            title:  "yourComment".tr(),
             onChanged: (value) {
               entity.comment = value;
               return null;
@@ -323,9 +325,9 @@ class _CommentsSectionState extends State<CommentsSection> {
                 color: AppColorManager.mainColor,
                 alignment: Alignment.center,
                 child: AppTextWidget(
-                  text: "save comment",
-                  fontSize: FontSizeManager.fs15,
-                  fontWeight: FontWeight.w500,
+                  text: "saveComment".tr(),
+                  fontSize: FontSizeManager.fs16,
+                  fontWeight: FontWeight.w600,
                   color: AppColorManager.white,
                 ),
               );

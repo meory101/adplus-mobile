@@ -1,4 +1,5 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,8 +54,6 @@ class _InsidePageCategoryAdvsScreenState
   AdvsByAttributeRequestEntity entity = AdvsByAttributeRequestEntity();
 
   getAdvs(AdvsByAttributeRequestEntity entity) {
-    print(entity.attributes?.first.value);
-    print(entity.attributes?.first.attributeId);
     context
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: entity);
@@ -182,7 +181,6 @@ class _InsidePageCategoryAdvsScreenState
                                                             .name);
                                                   }
                                                 }
-                                                print(viewCondition);
                                                 setState(() {});
                                                 return;
                                               }
@@ -202,9 +200,6 @@ class _InsidePageCategoryAdvsScreenState
                                                     attribute;
                                               }
                                               setState(() {});
-                                              print('00000000000000000000000');
-                                              print(viewCondition);
-                                              print(attributeMap);
                                             },
                                             child: Container(
                                                 margin: EdgeInsets.only(
@@ -262,7 +257,12 @@ class _InsidePageCategoryAdvsScreenState
                                                           .spaceBetween,
                                                   children: [
                                                     AppTextWidget(
-                                                        text: optionsList[i]
+                                                        text:
+                                                        attribute.value ==
+                                                            "all" ?
+                                                            "all".tr()
+                                                            :
+                                                        optionsList[i]
                                                                 .name ??
                                                             ""),
                                                     Radio(
@@ -357,7 +357,6 @@ class _InsidePageCategoryAdvsScreenState
                 ),
               );
             }
-
             List<AdData> advs = state.entity.data?.adData ?? [];
 
             return Column(

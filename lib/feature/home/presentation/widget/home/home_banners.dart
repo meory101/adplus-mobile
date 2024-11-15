@@ -57,7 +57,7 @@ class _HomeBannersState extends State<HomeBanners> {
                     width: AppWidthManager.w92,
                     decoration: BoxDecoration(
                         borderRadius:
-                            BorderRadius.circular(AppRadiusManager.r15)),
+                            BorderRadius.circular(AppRadiusManager.r10)),
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     child: MainImageWidget(
                       imageUrl: "",
@@ -72,7 +72,9 @@ class _HomeBannersState extends State<HomeBanners> {
               CarouselSlider(
                 options: CarouselOptions(
                   onPageChanged: (index, reason) {
-
+                  setState(() {
+                    selectedIndex = index;
+                  });
                   },
                   aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,
                   enableInfiniteScroll: true,
@@ -86,7 +88,7 @@ class _HomeBannersState extends State<HomeBanners> {
                         width: AppWidthManager.w92,
                         decoration: BoxDecoration(
                             borderRadius:
-                                BorderRadius.circular(AppRadiusManager.r15)),
+                                BorderRadius.circular(AppRadiusManager.r10)),
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: MainImageWidget(
                           imageUrl: AppConstantManager.imageBaseUrl+(banners?[index].photo??"")

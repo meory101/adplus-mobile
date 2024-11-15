@@ -45,8 +45,8 @@ class AdvDetailsAutherData extends StatelessWidget {
           children: [
             AppTextWidget(
                 maxLines: 2,
-                fontWeight: FontWeight.w600,
-                fontSize: FontSizeManager.fs15,
+                fontWeight: FontWeight.w700,
+                fontSize: FontSizeManager.fs16,
                 text: advDetails?.author?.name ?? ""),
             Row(
               children: [

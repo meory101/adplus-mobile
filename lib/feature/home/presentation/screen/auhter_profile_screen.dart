@@ -1,7 +1,9 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
@@ -68,7 +70,19 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
               },
               builder: (context, state) {
                 if (state.status == CubitStatus.loading) {
-                  return const ProfileInfoCardShimmer();
+                  return Column(
+                    children: [
+                      const ProfileInfoCardShimmer(),
+                      SizedBox(
+                        height: AppHeightManager.h1point8,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppWidthManager.w3Point8),
+                        child: const AdvsByAttributeShimmer(),
+                      )
+                    ],
+                  );
                 }
 
                 ProfileByUsernameData? profileInfo = state.entity.data;
@@ -113,7 +127,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                       Column(
                                         children: [
                                           AppTextWidget(
-                                            text: 'followers',
+                                            text: 'followers'.tr(),
                                             fontSize: FontSizeManager.fs16,
                                             color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w600,
@@ -135,7 +149,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                       Column(
                                         children: [
                                           AppTextWidget(
-                                            text: 'following',
+                                            text: 'following'.tr(),
                                             fontSize: FontSizeManager.fs16,
                                             color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w600,
@@ -157,12 +171,11 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                       Column(
                                         children: [
                                           AppTextWidget(
-                                            text: 'advertisement',
+                                            text: 'advertisement'.tr(),
                                             fontSize: FontSizeManager.fs16,
                                             color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w600,
                                           ),
-                                          //todo
                                           AppTextWidget(
                                             text: (profileInfo?.user
                                                         ?.followingCount ??
@@ -235,7 +248,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: AppWidthManager.w6),
                                 child: AppTextWidget(
-                                  text: "follow",
+                                  text: "follow".tr(),
                                   color: AppColorManager.white,
                                   fontWeight: FontWeight.w500,
                                   fontSize: FontSizeManager.fs15,
@@ -259,7 +272,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: AppWidthManager.w6),
                             child: AppTextWidget(
-                              text: "call",
+                              text: "call".tr(),
                               color: AppColorManager.white,
                               fontWeight: FontWeight.w500,
                               fontSize: FontSizeManager.fs15,
@@ -283,15 +296,13 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                       context: context, text: state.error);
                 }
               },
-
               builder: (context, state) {
-
                 if (state.status == CubitStatus.loading) {
-                  return
-                      Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
-                        child: const AdvsByAttributeShimmer(),
-                      );
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppWidthManager.w3Point8),
+                    child: const AdvsByAttributeShimmer(),
+                  );
                 }
                 List<AdData>? advs = state.entity.data?.data ?? [];
                 return Padding(

@@ -4,6 +4,7 @@ abstract class AppIconManager {
   static const String notification = '$_iconBasePath/notification.svg';
   static const String search = '$_iconBasePath/search.svg';
   static const String done = '$_iconBasePath/done.svg';
+  static const String bidding = '$_iconBasePath/bidding.svg';
 
   static const String language = '$_iconBasePath/language.svg';
   static const String likes = '$_iconBasePath/likes.svg';
