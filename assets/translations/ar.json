@@ -94,7 +94,17 @@
   "city": "مدينة",
   "title": "العنوان",
   "price": "السعر",
-  "required": "مطلوب"
+  "required": "مطلوب",
+  "nameRequired": "الاسم (مطلوب)",
+  "editPassword": "تعديل كلمة المرور",
+  "enterPassword": "يرجى إدخال كلمة المرور",
+  "passwordChangeSuccess": "تم تغيير كلمة المرور بنجاح",
+  "saveNewPassword": "حفظ كلمة المرور الجديدة",
+  "editUsername": "تعديل اسم المستخدم",
+  "nameHint": "الاسم",
+  "enterUsername": "يرجى إدخال اسم المستخدم",
+  "updateUsernameFailed": "فشل تحديث اسم المستخدم",
+  "saveUsername": "حفظ اسم المستخدم"
 }
 
 

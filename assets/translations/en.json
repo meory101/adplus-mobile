@@ -94,6 +94,15 @@
   "city": "City",
   "title": "Title",
   "price": "Price",
-  "required": "Required"
+  "required": "Required",
+  "editPassword": "Edit Password",
+  "enterPassword": "Please enter your password",
+  "passwordChangeSuccess": "Password changed successfully",
+  "saveNewPassword": "Save New Password",
+  "editUsername": "Edit Username",
+  "nameHint": "Name",
+  "enterUsername": "Please enter your username",
+  "updateUsernameFailed": "Failed to update username",
+  "saveUsername": "Save Username"
 }
 

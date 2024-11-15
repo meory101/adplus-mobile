@@ -171,7 +171,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                       Column(
                                         children: [
                                           AppTextWidget(
-                                            text: 'advertisement'.tr(),
+                                            text: 'advertisements'.tr(),
                                             fontSize: FontSizeManager.fs16,
                                             color: AppColorManager.textAppColor,
                                             fontWeight: FontWeight.w600,

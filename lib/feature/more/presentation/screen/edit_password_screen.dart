@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
@@ -8,17 +9,11 @@ import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/comments_section.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
-import 'package:mzad_damascus/feature/more/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_state.dart';
-import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
-import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_state.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/verfiy_username_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
-
-import '../../../../core/widget/form_field/title_app_form_filed.dart';
+import '../../../../core/resource/font_manager.dart';
 import '../../../../core/injection/injection_container.dart' as di;
 
 class EditPasswordScreen extends StatefulWidget {
@@ -37,10 +32,11 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
   bool confirmPasswordVisible = false;
   bool passwordsMatch = false;
   GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(title: "Edit Password"),
+      appBar: MainAppBar(title: "editPassword".tr()), // Localized title
       body: SingleChildScrollView(
         child: BlocProvider(
           create: (context) => di.sl<EditPasswordCubit>(),
@@ -53,7 +49,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                   SizedBox(height: AppHeightManager.h1point8),
                   AppTextFormField(
                     maxLines: 1,
-                    hintText: "Password",
+                    hintText: "passwordHint".tr(), // Localized hint
                     hintStyle: const TextStyle(color: AppColorManager.textGrey),
                     onChanged: (value) {
                       entity.password = value;
@@ -61,15 +57,13 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
+                        return 'enterPassword'.tr(); // Localized validation message
                       }
                       return null;
                     },
                     suffixIcon: IconButton(
                       icon: Icon(
-                        passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                        passwordVisible ? Icons.visibility : Icons.visibility_off,
                         color: AppColorManager.textGrey,
                       ),
                       onPressed: () {
@@ -83,7 +77,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                   SizedBox(height: AppHeightManager.h1point8),
                   AppTextFormField(
                     maxLines: 1,
-                    hintText: "Confirm Password",
+                    hintText: "confirmPasswordHint".tr(), // Localized hint
                     hintStyle: const TextStyle(color: AppColorManager.textGrey),
                     onChanged: (value) {
                       entity.passwordConfirmation = value;
@@ -91,18 +85,16 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please confirm your password';
+                        return 'confirmPasswordRequired'.tr(); // Localized validation message
                       }
                       if (entity.password != value) {
-                        return 'Passwords do not match';
+                        return 'passwordsDoNotMatch'.tr(); // Localized validation message
                       }
                       return null;
                     },
                     suffixIcon: IconButton(
                       icon: Icon(
-                        confirmPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                        confirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
                         color: AppColorManager.textGrey,
                       ),
                       onPressed: () {
@@ -116,20 +108,20 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                   SizedBox(height: AppHeightManager.h1point8),
                   passwordsMatch
                       ? Text(
-                          'Passwords match',
-                          style: TextStyle(color: Colors.green),
-                        )
+                    'passwordsMatch'.tr(), // Localized match message
+                    style: TextStyle(color: Colors.green),
+                  )
                       : Text(
-                          'Passwords do not match',
-                          style: TextStyle(color: Colors.red),
-                        ),
+                    'passwordsDoNotMatch'.    tr(), // Localized mismatch message
+                    style: TextStyle(color: Colors.red),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(25),
                     child: BlocConsumer<EditPasswordCubit, EditPasswordState>(
                       listener: (context, state) {
                         if (state.status == CubitStatus.success) {
                           NoteMessage.showSuccessSnackBar(
-                              context: context, text: 'Passwor change');
+                              context: context, text: 'passwordChangeSuccess'.tr()); // Localized success message
                           Navigator.of(context).pushNamed(
                             RouteNamedScreens.mainBottomAppBar,
                           );
@@ -146,21 +138,22 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                         return MainAppButton(
                           onTap: () {
                             if ((formKey.currentState?.validate() ?? false)) {
-
                               context.read<EditPasswordCubit>().editpassword(
-                                    context: context,
-                                    entity: entity,
-                                  );
+                                context: context,
+                                entity: entity,
+                              );
                             }
                           },
                           borderRadius: BorderRadius.circular(10),
                           color: AppColorManager.mainColor,
                           height: AppHeightManager.h5,
-                          width: AppWidthManager.w30,
+                          width: AppWidthManager.w100,
                           child: Center(
                             child: AppTextWidget(
-                              text: "Save New Password",
-                              color: AppColorManager.background,
+                              text: "saveNewPassword".tr(), // Localized button text
+                              color: AppColorManager.white,
+                              fontSize: FontSizeManager.fs16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         );

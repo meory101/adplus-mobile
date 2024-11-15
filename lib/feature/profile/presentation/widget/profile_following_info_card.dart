@@ -167,7 +167,7 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
         ),
         SizedBox(height: AppWidthManager.w2),
         AppTextWidget(
-          text: 'whatsApp'.tr(),
+          text: 'whatsapp'.tr(),
           fontSize: FontSizeManager.fs15,
           color: AppColorManager.textGrey,
           fontWeight: FontWeight.w600,
