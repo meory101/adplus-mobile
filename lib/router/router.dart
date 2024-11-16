@@ -18,6 +18,7 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/verficat
 import 'package:mzad_damascus/feature/authentication/presentation/screen/forget_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
@@ -27,8 +28,10 @@ import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/check_like_cubit/check_like_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/remove_like/remove_like_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
@@ -65,7 +68,7 @@ import '../feature/intro/presentation/screen/splash_screen.dart';
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
-  static String init =splash;
+  static String init = splash;
   static const String splash = "/splash";
   static const String login = "/login";
   static const String register = "/register";
@@ -218,6 +221,16 @@ abstract class AppRouter {
           providers: [
             BlocProvider(
               create: (context) => di.sl<AddReactionCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<RemoveLikeCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<CheckLikeCubit>()
+                ..checkLike(
+                    context: context,
+                    entity: CheckLikeRequestEntity(
+                        itemId: argument.advertisement?.itemId)),
             ),
             BlocProvider(
               create: (context) => di.sl<AdvDetailsCubit>()

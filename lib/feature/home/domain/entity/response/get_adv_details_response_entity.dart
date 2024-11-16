@@ -452,16 +452,19 @@ class Attribute {
     num? attributeId,
     num? categoryId,
     String? attributeName,
+    String? attributeNameEn,
     num? ord,
   }) {
     _attributeId = attributeId;
     _categoryId = categoryId;
     _attributeName = attributeName;
+    _attributeNameEn= attributeNameEn;
     _ord = ord;
   }
 
   Attribute.fromJson(dynamic json) {
     _attributeId = json['attribute_id'];
+    _attributeNameEn = json['attribute_en_name'];
     _categoryId = json['category_id'];
     _attributeName = json['attribute_name'];
     _ord = json['ord'];
@@ -470,15 +473,18 @@ class Attribute {
   num? _attributeId;
   num? _categoryId;
   String? _attributeName;
+  String? _attributeNameEn;
   num? _ord;
 
   Attribute copyWith({
     num? attributeId,
     num? categoryId,
     String? attributeName,
+    String? attributeNameEn,
     num? ord,
   }) =>
       Attribute(
+        attributeNameEn: attributeNameEn ?? _attributeNameEn,
         attributeId: attributeId ?? _attributeId,
         categoryId: categoryId ?? _categoryId,
         attributeName: attributeName ?? _attributeName,
@@ -490,6 +496,7 @@ class Attribute {
   num? get categoryId => _categoryId;
 
   String? get attributeName => _attributeName;
+  String? get attributeNameEn => _attributeNameEn;
 
   num? get ord => _ord;
 

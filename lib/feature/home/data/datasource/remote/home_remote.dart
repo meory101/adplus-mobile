@@ -19,10 +19,14 @@ import '../../../../more/domain/entity/response/myitems_response_entity.dart';
 import '../../../domain/entity/request/add_comment_request_entity.dart';
 import '../../../domain/entity/request/advs_by_attribute_request_entity.dart';
 import '../../../domain/entity/request/category_inside_page_request_entity.dart';
+import '../../../domain/entity/request/check_like_request_entity.dart';
 import '../../../domain/entity/request/get_advs_by_user_request_entity.dart';
+import '../../../domain/entity/response/check_like_response_entity.dart';
 
 abstract class HomeRemote {
   Future<GetCategoriesResponseEntity> getCategories();
+  Future<CheckLikeResponseEntity> checkLike({required CheckLikeRequestEntity entity});
+  Future<bool> removeLike({required CheckLikeRequestEntity entity});
   Future<MyItemResponseEntity> getAdvByUser({required GetAdvsByUserRequestEntity entity});
   Future<CategoryInsidePageResponseEntity> getCategoryInsidePage({required CategoryInsidePageRequestEntity entity});
   Future<AdvsByAttributeResponseEntity> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
@@ -80,8 +84,9 @@ class HomeRemoteImplement extends HomeRemote {
         await ApiMethods().post(
         body: entity.toJson(),
         url: ApiPostUrl.getItemsById);
-      print(entity.itemId);
-      print('-------------------------------------');
+
+    print(response.body);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getAdvDetailsResponseEntityFromJson(response.body);
     } else {
@@ -146,6 +151,7 @@ class HomeRemoteImplement extends HomeRemote {
     }
   }
 
+
   @override
   Future<MyItemResponseEntity> getAdvByUser({required GetAdvsByUserRequestEntity entity})async {
     final response =
@@ -155,6 +161,36 @@ class HomeRemoteImplement extends HomeRemote {
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myItemResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<CheckLikeResponseEntity> checkLike({required CheckLikeRequestEntity entity})async {
+    final response =
+    await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.checkLike);
+    print(response.body);
+    print(response.statusCode);
+    print('ffffffffffffffffffffffffffffff');
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return checkLikeResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<bool> removeLike({required CheckLikeRequestEntity entity})async {
+    final response =
+    await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.removeLike);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return true;
     } else {
       throw ApiServerException(response: response);
     }

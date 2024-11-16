@@ -72,26 +72,19 @@ abstract class ApiErrorHandler {
             jsonDecode(failure.response?.body ?? "")['errors'].toString();
         errorEntity.statusCode = failure.response?.statusCode ?? 0;
         errorEntity.errorCode = errorResponseEntity.errorCode;
-        AppSharedPreferences.clear();
-        // if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
-        //     'Unauthenticated.') {
-        //   Navigator.of(buildContext).pushNamed(
-        //     RouteNamedScreens.login,
-        //
-        //   );
-        // }
+        if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
+            'Unauthenticated.') {
+          AppSharedPreferences.clear();
+        }
       } catch (e) {
         errorEntity.errorMessage =
             jsonDecode(failure.response?.body ?? "")['errors'].toString();
-        AppSharedPreferences.clear();
 
-        // if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
-       //      'Unauthenticated.') {
-       //    Navigator.of(buildContext).pushNamed(
-       //      RouteNamedScreens.login,
-       //
-       //    );
-       //  }
+        if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
+            'Unauthenticated.') {
+          AppSharedPreferences.clear();
+
+        }
       }
     }
     return Future.value(errorEntity);

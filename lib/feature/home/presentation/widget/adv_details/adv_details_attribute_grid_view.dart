@@ -1,5 +1,6 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 
 import '../../../../../core/resource/font_manager.dart';
@@ -26,14 +27,22 @@ class AdvDetailsAttributeGridView extends StatelessWidget {
                     maxLines: 2,
                     fontWeight: FontWeight.w500,
                     fontSize: FontSizeManager.fs16,
-                    text: advDetails
-                            ?.attributes?[index].attribute?.attributeName ??
-                        ""),
+                    text:
+                    LanguageHelper.checkIfLTR(context: context)?
+                    ( advDetails
+                        ?.attributes?[index].attribute?.attributeNameEn ??
+                        "") :( advDetails
+                        ?.attributes?[index].attribute?.attributeName ??
+                        "") ),
+
                 AppTextWidget(
                     maxLines: 2,
                     fontWeight: FontWeight.w700,
                     fontSize: FontSizeManager.fs15,
-                    text: advDetails?.attributes?[index].value ?? ""),
+                    text:
+                    advDetails?.attributes?[index].value ?? ""
+
+                ),
               ],
             ),
           );

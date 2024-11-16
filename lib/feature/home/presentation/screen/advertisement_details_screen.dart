@@ -11,10 +11,15 @@ import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_reaction_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/check_like_cubit/check_like_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/remove_like/remove_like_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/adv_details_attribute_grid_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/adv_details_auther_data.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/adv_details_bottom_sheet.dart';
@@ -104,81 +109,187 @@ class _AdvertisementDetailsScreenState
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  
-                                  
-                                  AppTextWidget(
-                                      maxLines: 2,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: FontSizeManager.fs16,
-                                      
-                                      text: advDetails?.name ?? ""),
-                                  AppTextWidget(
-                                      maxLines: 2,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: FontSizeManager.fs16,
-                                      text: advDetails?.startingPrice.toString() ?? ""),
-                                ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppTextWidget(
+                                        maxLines: 2,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: FontSizeManager.fs16,
+                                        text: advDetails?.name ?? ""),
+                                    AppTextWidget(
+                                        maxLines: 2,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: FontSizeManager.fs16,
+                                        text: advDetails?.startingPrice
+                                                .toString() ??
+                                            ""),
+                                  ],
+                                ),
                               ),
-                            ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   AppTextWidget(
                                       fontWeight: FontWeight.w600,
                                       fontSize: FontSizeManager.fs16,
-                                      text: (advDetails?.likeCount ?? "").toString()),
-                                  SizedBox(width: AppWidthManager.w2,),
+                                      text: (advDetails?.likeCount ?? "")
+                                          .toString()),
+                                  SizedBox(
+                                    width: AppWidthManager.w2,
+                                  ),
                                   CircleAvatar(
                                     backgroundColor:
-                                    AppColorManager.grey.withOpacity(0.3),
-                                    child: BlocConsumer<AddReactionCubit,
-                                        AddReactionState>(
+                                        AppColorManager.grey.withOpacity(0.3),
+                                    child: BlocConsumer<RemoveLikeCubit,
+                                        RemoveLikeState>(
                                       listener: (context, state) {
-                                        if(state.status == CubitStatus.error){
-                                          NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                                        if (state.status == CubitStatus.error) {
+                                          NoteMessage.showErrorSnackBar(
+                                              context: context,
+                                              text: state.error);
+                                        }
+                                        if (state.status ==
+                                            CubitStatus.success) {
+                                          context
+                                              .read<AdvDetailsCubit>()
+                                              .getAdvDetails(
+                                              context: context,
+                                              entity:
+                                              GetAdvDetailsRequestEntity(
+                                                  itemId: widget
+                                                      .args
+                                                      .advertisement
+                                                      ?.itemId));
+                                          context
+                                              .read<CheckLikeCubit>()
+                                              .checkLike(
+                                              context: context,
+                                              entity:
+                                              CheckLikeRequestEntity(
+                                                  itemId: widget
+                                                      .args
+                                                      .advertisement
+                                                      ?.itemId));
                                         }
                                       },
                                       builder: (context, state) {
-                                        if(state.status ==CubitStatus.loading){
+                                        if (state.status ==
+                                            CubitStatus.loading) {
                                           return const AppCircularProgressWidget();
                                         }
-                                        return IconButton(
-                                            onPressed: () {
-                                              if (AppSharedPreferences
-                                                  .getToken()
-                                                  .isEmpty) {
-                                                showLoginBottomSheet(context: context);
-                                                return;
-                                              }
+                                        return BlocConsumer<AddReactionCubit,
+                                            AddReactionState>(
+                                          listener: (context, state) {
+                                            if (state.status ==
+                                                CubitStatus.error) {
+                                              NoteMessage.showErrorSnackBar(
+                                                  context: context,
+                                                  text: state.error);
+                                            }
+                                            if (state.status ==
+                                                CubitStatus.success) {
                                               context
-                                                  .read<AddReactionCubit>()
-                                                  .addReaction(
+                                                  .read<AdvDetailsCubit>()
+                                                  .getAdvDetails(
                                                   context: context,
                                                   entity:
-                                                  AddReactionRequestEntity(
-                                                      itemId: advDetails?.itemId,
-                                                      reactionType:
-                                                      EnumManager
-                                                          .likeReaction));
-                                            },
-                                            icon: const Icon(
-                                              Icons.thumb_up_alt_rounded,
-                                              color: AppColorManager.white,
-                                            ));
+                                                  GetAdvDetailsRequestEntity(
+                                                      itemId: widget
+                                                          .args
+                                                          .advertisement
+                                                          ?.itemId));
+                                              context
+                                                  .read<CheckLikeCubit>()
+                                                  .checkLike(
+                                                      context: context,
+                                                      entity:
+                                                          CheckLikeRequestEntity(
+                                                              itemId: widget
+                                                                  .args
+                                                                  .advertisement
+                                                                  ?.itemId));
+                                            }
+                                          },
+                                          builder: (context, state) {
+                                            if (state.status ==
+                                                CubitStatus.loading) {
+                                              return const AppCircularProgressWidget();
+                                            }
+                                            return BlocConsumer<CheckLikeCubit,
+                                                CheckLikeState>(
+                                              listener: (context, state) {
+                                                if (state.status ==
+                                                    CubitStatus.error) {
+                                                  NoteMessage.showErrorSnackBar(
+                                                      context: context,
+                                                      text: state.error);
+                                                }
+                                              },
+                                              builder: (context, state) {
+                                                if (state.status ==
+                                                    CubitStatus.loading) {
+                                                  return const AppCircularProgressWidget();
+                                                }
+                                                bool like = (state
+                                                        .entity.data?.exists ??
+                                                    false);
+
+                                                return IconButton(
+                                                    onPressed: () {
+                                                      if (AppSharedPreferences
+                                                              .getToken()
+                                                          .isEmpty) {
+                                                        showLoginBottomSheet(
+                                                            context: context);
+                                                        return;
+                                                      }
+                                                      if (like == true) {
+                                                        context
+                                                            .read<
+                                                                RemoveLikeCubit>()
+                                                            .removeLike(
+                                                                context:
+                                                                    context,
+                                                                entity:
+                                                                    CheckLikeRequestEntity(
+                                                                  itemId:
+                                                                      advDetails
+                                                                          ?.itemId,
+                                                                ));
+                                                      } else {
+                                                        context.read<AddReactionCubit>().addReaction(
+                                                            context: context,
+                                                            entity: AddReactionRequestEntity(
+                                                                itemId:
+                                                                    advDetails
+                                                                        ?.itemId,
+                                                                reactionType:
+                                                                    EnumManager
+                                                                        .likeReaction));
+                                                      }
+                                                    },
+                                                    icon: Icon(
+                                                      Icons
+                                                          .thumb_up_alt_rounded,
+                                                      color: like == true
+                                                          ? AppColorManager
+                                                              .mainColor
+                                                          : AppColorManager
+                                                              .white,
+                                                    ));
+                                              },
+                                            );
+                                          },
+                                        );
                                       },
                                     ),
                                   ),
-
-
                                 ],
                               ),
                             ],
                           ),
-
                           SizedBox(
                             height: AppHeightManager.h1point5,
                           ),
@@ -194,7 +305,6 @@ class _AdvertisementDetailsScreenState
                               fontWeight: FontWeight.w600,
                               fontSize: FontSizeManager.fs16,
                               text: advDetails?.description ?? ""),
-
                           CommentsSection(
                             itemId: widget.args.advertisement?.itemId,
                           ),

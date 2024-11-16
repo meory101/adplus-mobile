@@ -57,33 +57,36 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
         SizedBox(
           height: AppHeightManager.h1point8,
         ),
-        DotsIndicator(
-          dotsCount:  widget.advDetails?.photos?.length ?? 0,
-          position: currentIndex,
-          decorator: DotsDecorator(
-            spacing: EdgeInsets.only(
-                left: LanguageHelper.checkIfLTR(context: context)
-                    ? AppWidthManager.w1Point8
-                    : 0,
-                right:
-                !LanguageHelper.checkIfLTR(context: context)
-                    ? AppWidthManager.w1Point8
-                    : 0),
-            activeShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                AppRadiusManager.r10,
+        Visibility(
+          visible: ( widget.advDetails?.photos?.length ?? 0)>1,
+          child: DotsIndicator(
+            dotsCount:  widget.advDetails?.photos?.length ?? 1,
+            position: currentIndex,
+            decorator: DotsDecorator(
+              spacing: EdgeInsets.only(
+                  left: LanguageHelper.checkIfLTR(context: context)
+                      ? AppWidthManager.w1Point8
+                      : 0,
+                  right:
+                  !LanguageHelper.checkIfLTR(context: context)
+                      ? AppWidthManager.w1Point8
+                      : 0),
+              activeShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  AppRadiusManager.r10,
+                ),
               ),
+              activeSize: Size(
+                AppWidthManager.w6,
+                AppHeightManager.h08,
+              ),
+              size: Size(
+                AppWidthManager.w1Point5,
+                AppWidthManager.w1Point5,
+              ),
+              activeColor: AppColorManager.mainColor,
+              color: AppColorManager.borderGrey,
             ),
-            activeSize: Size(
-              AppWidthManager.w6,
-              AppHeightManager.h08,
-            ),
-            size: Size(
-              AppWidthManager.w1Point5,
-              AppWidthManager.w1Point5,
-            ),
-            activeColor: AppColorManager.mainColor,
-            color: AppColorManager.borderGrey,
           ),
         ),
       ],

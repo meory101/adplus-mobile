@@ -31,7 +31,9 @@ class ApiPostUrl {
   static String removefollow = "api/following/removeFollow";
   static String getBanners = "api/banner/HomeBanners";
   static String getInsidePageBanners = "api/banner/InsideBanners";
-  static String addReaction = "api/reaction/postReactions";
+  static String addReaction = "api/reaction/addToLike";
+  static String checkLike = "api/reaction/checkLike";
+  static String removeLike = "api/reaction/removeLike";
 }
 
 class ApiDeleteUrl {}

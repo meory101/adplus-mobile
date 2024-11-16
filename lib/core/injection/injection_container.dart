@@ -29,21 +29,25 @@ import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dar
 import 'package:mzad_damascus/feature/home/domain/usecase/add_comment_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/add_reaction_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/banners_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/check_like_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_by_user_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_details_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_advs_by_attribute_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_comments_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/remove_like_usecase.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/check_like_cubit/check_like_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/remove_like/remove_like_cubit.dart';
 import 'package:mzad_damascus/feature/more/data/remote/more_remote.dart';
 import 'package:mzad_damascus/feature/more/data/repository/more_repository_implements.dart';
 import 'package:mzad_damascus/feature/more/domain/repository/more_repository.dart';
@@ -79,6 +83,8 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => CheckLikeCubit(usecase: sl()));
+  sl.registerFactory(() => RemoveLikeCubit(usecase: sl()));
   sl.registerFactory(() => BannersCubit(usecase: sl()));
   sl.registerFactory(() => AdvsByAttributeCubit(usecase: sl()));
   sl.registerFactory(() => CategoryInsidePageCubit(usecase: sl()));
@@ -87,6 +93,8 @@ Future<void> init() async {
   sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => RemoveLikeUsecase(repository: sl()));
+  sl.registerLazySingleton(() => CheckLikeUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvByUserUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddReactionUsecase(repository: sl()));
   sl.registerLazySingleton(() => BannersUsecase(repository: sl()));

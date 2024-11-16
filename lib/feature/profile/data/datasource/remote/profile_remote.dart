@@ -20,6 +20,7 @@ import '../../../domain/entity/request/add_follow_request_entity.dart';
 
 abstract class ProfileRemote {
   Future<GetProfileInfoResponseEntity> getProfileInfo();
+  // Future<GetProfileInfoResponseEntity> getProfileInfo();
 
   Future<UpdateProfileResponseEntity> updateProfile({
     required UpdateProfileRequestEntity entity,
