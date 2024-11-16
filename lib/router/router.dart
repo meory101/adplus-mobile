@@ -28,14 +28,18 @@ import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_det
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/verfiy_username_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/update_username_cubit/update_username_cubit.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
-import 'package:mzad_damascus/feature/profile/presentation/screen/verfiy_username_screen.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
 import '../core/injection/injection_container.dart' as di;
@@ -49,8 +53,7 @@ import '../feature/intro/presentation/screen/splash_screen.dart';
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
-  static String init = mainBottomAppBar;
-
+  static String init = splash;
   // AppSharedPreferences.getToken().isEmpty ? register : mainBottomAppBar;
   static const String splash = "/splash";
   static const String login = "/login";
@@ -69,6 +72,9 @@ abstract class RouteNamedScreens {
   static const String resetpassword = "/resetpassword";
   static const String forgetpassword = "/forgetpassword";
   static const String verfiyusername = "/verfiyusername";
+  static const String editusername = "/editusername";
+  static const String editpassword = "/editpassword";
+  static const String myitem = "/myitem";
 }
 
 abstract class AppRouter {
@@ -98,6 +104,12 @@ abstract class AppRouter {
             page: BlocProvider(
           create: (context) => di.sl<LoginCubit>(),
           child: const LoginScreen(),
+        ));
+      case RouteNamedScreens.editpassword:
+        return FadeBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<EditPasswordCubit>(),
+          child: const EditPasswordScreen(),
         ));
       case RouteNamedScreens.resetpassword:
         return FadeBuilderRoute(
@@ -213,6 +225,13 @@ abstract class AppRouter {
             args: argument,
           ),
         ));
+      case RouteNamedScreens.myitem:
+        return FadeBuilderRoute(
+          page: BlocProvider(
+            create: (context) => di.sl<MyitemCubit>(),
+            child: MyItemsScreen(),
+          ),
+        );
       case RouteNamedScreens.profileModification:
         argument as ProfileInfoModificationArgs;
         return SlidLeftBuilderRoute(

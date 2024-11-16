@@ -225,5 +225,5 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
         ),
       ],
     );
-  }
+   }
 }

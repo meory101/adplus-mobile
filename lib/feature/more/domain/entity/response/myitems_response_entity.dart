@@ -418,7 +418,7 @@ class Pagination {
     _perPage = json['per_page'];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {                                          
     final map = <String, dynamic>{};
     map['total_items'] = _totalItems;
     map['total_pages'] = _totalPages;
