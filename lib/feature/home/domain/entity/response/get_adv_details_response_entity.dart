@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../../../../core/model/user.dart';
+
 /// success : true
 /// message : "تمت العملية بنجاح"
 /// data : {"item_id":59,"category_id":4,"city_id":2,"name":"aad","starting_price":1000,"min_increase_price":1000,"type":null,"description":"adsfdfdfdfdfd","keywords":"سيارة,سابا,كيا","slug":null,"status":1,"star":0,"under_review":1,"bidding_status":1,"homepage_appear":0,"ord":1,"bidding_start_time":"2024-10-01 12:00:00","photos":[{"image_id":60,"item_id":59,"photo":"1730045154_671e64e281741.webp"},{"image_id":61,"item_id":59,"photo":"1730045154_671e64e2ad1a6.webp"}],"attributes":[{"item_attribute_id":81,"item_id":59,"attribute_id":24,"value":"اتوماتيك","attribute":{"attribute_id":24,"category_id":4,"attribute_name":"نوع الغيار","ord":1}},{"item_attribute_id":82,"item_id":59,"attribute_id":23,"value":"2000","attribute":{"attribute_id":23,"category_id":4,"attribute_name":"سنة الصنع","ord":1}},{"item_attribute_id":83,"item_id":59,"attribute_id":19,"value":"مرسيدس","attribute":{"attribute_id":19,"category_id":4,"attribute_name":"نوع المحرك","ord":1}},{"item_attribute_id":84,"item_id":59,"attribute_id":18,"value":"سيارات للبيع","attribute":{"attribute_id":18,"category_id":4,"attribute_name":"النوع","ord":1}},{"item_attribute_id":85,"item_id":59,"attribute_id":14,"value":"بيع","attribute":{"attribute_id":14,"category_id":4,"attribute_name":"نوع الإعلان","ord":1}}],"comments":[],"reaction":[],"author":{"client_id":47,"name":"hla","username":"hla@gmail.com","email":"hla@gmail.com","phone":"+963978567888","whatsapp":"+963978567888","address":null,"photo":"1729458413_671570ed9ea1e.webp","token_expires":0,"is_verified":1,"error_login":0}}
@@ -118,6 +120,7 @@ class AdvDetails {
     num? status,
     num? star,
     num? underReview,
+    num? likeCount,
     num? biddingStatus,
     num? homepageAppear,
     num? ord,
@@ -126,9 +129,10 @@ class AdvDetails {
     List<Attributes>? attributes,
     List<dynamic>? comments,
     List<dynamic>? reaction,
-    Author? author,
+    User? author,
   }) {
     _itemId = itemId;
+    _likeCount = likeCount;
     _categoryId = categoryId;
     _cityId = cityId;
     _name = name;
@@ -153,6 +157,7 @@ class AdvDetails {
   }
 
   AdvDetails.fromJson(dynamic json) {
+    _likeCount = json['like_count'];
     _itemId = json['item_id'];
     _categoryId = json['category_id'];
     _cityId = json['city_id'];
@@ -182,20 +187,7 @@ class AdvDetails {
         _attributes?.add(Attributes.fromJson(v));
       });
     }
-    //TODO ADD COMMENTS REACTIONS MODELS
-    // if (json['comments'] != null) {
-    //   _comments = [];
-    //   json['comments'].forEach((v) {
-    //     _comments?.add(Dynamic.fromJson(v));
-    //   });
-    // }
-    // if (json['reaction'] != null) {
-    //   _reaction = [];
-    //   json['reaction'].forEach((v) {
-    //     _reaction?.add(Dynamic.fromJson(v));
-    //   });
-    // }
-    _author = json['author'] != null ? Author.fromJson(json['author']) : null;
+    _author = json['author'] != null ? User.fromJson(json['author']) : null;
   }
 
   num? _itemId;
@@ -211,6 +203,7 @@ class AdvDetails {
   num? _status;
   num? _star;
   num? _underReview;
+  num? _likeCount;
   num? _biddingStatus;
   num? _homepageAppear;
   num? _ord;
@@ -219,7 +212,7 @@ class AdvDetails {
   List<Attributes>? _attributes;
   List<dynamic>? _comments;
   List<dynamic>? _reaction;
-  Author? _author;
+  User? _author;
 
   AdvDetails copyWith({
     num? itemId,
@@ -237,15 +230,17 @@ class AdvDetails {
     num? underReview,
     num? biddingStatus,
     num? homepageAppear,
+    num? likeCount,
     num? ord,
     String? biddingStartTime,
     List<Photos>? photos,
     List<Attributes>? attributes,
     List<dynamic>? comments,
     List<dynamic>? reaction,
-    Author? author,
+    User? author,
   }) =>
       AdvDetails(
+        likeCount:likeCount ?? _likeCount,
         itemId: itemId ?? _itemId,
         categoryId: categoryId ?? _categoryId,
         cityId: cityId ?? _cityId,
@@ -277,6 +272,7 @@ class AdvDetails {
   num? get cityId => _cityId;
 
   String? get name => _name;
+  num? get likeCount => _likeCount;
 
   num? get startingPrice => _startingPrice;
 
@@ -312,7 +308,7 @@ class AdvDetails {
 
   List<dynamic>? get reaction => _reaction;
 
-  Author? get author => _author;
+  User? get author => _author;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -352,159 +348,6 @@ class AdvDetails {
   }
 }
 
-/// client_id : 47
-/// name : "hla"
-/// username : "hla@gmail.com"
-/// email : "hla@gmail.com"
-/// phone : "+963978567888"
-/// whatsapp : "+963978567888"
-/// address : null
-/// photo : "1729458413_671570ed9ea1e.webp"
-/// token_expires : 0
-/// is_verified : 1
-/// error_login : 0
-
-Author authorFromJson(String str) => Author.fromJson(json.decode(str));
-
-String authorToJson(Author data) => json.encode(data.toJson());
-
-class Author {
-  Author({
-    num? clientId,
-    String? name,
-    String? username,
-    String? email,
-    String? phone,
-    String? whatsapp,
-    dynamic address,
-    String? photo,
-    num? tokenExpires,
-    num? isVerified,
-    num? followersCount,
-    num? followingCount,
-    num? errorLogin,
-  }) {
-    _clientId = clientId;
-    _name = name;
-    _username = username;
-    _email = email;
-    _phone = phone;
-    _whatsapp = whatsapp;
-    _address = address;
-    _photo = photo;
-    _tokenExpires = tokenExpires;
-    _isVerified = isVerified;
-    _errorLogin = errorLogin;
-  }
-
-  Author.fromJson(dynamic json) {
-    _clientId = json['client_id'];
-    _followersCount = json['follower_count'];
-    _followingCount = json['following_count'];
-    _name = json['name'];
-    _username = json['username'];
-    _email = json['email'];
-    _phone = json['phone'];
-    _whatsapp = json['whatsapp'];
-    _address = json['address'];
-    _photo = json['photo'];
-    _tokenExpires = json['token_expires'];
-    _isVerified = json['is_verified'];
-    _errorLogin = json['error_login'];
-  }
-
-  num? _clientId;
-  String? _name;
-  String? _username;
-  String? _email;
-  String? _phone;
-  String? _whatsapp;
-  dynamic _address;
-  String? _photo;
-  num? _tokenExpires;
-  num? _isVerified;
-  num? _followersCount;
-  num? _followingCount;
-  num? _errorLogin;
-
-  Author copyWith({
-    num? clientId,
-    String? name,
-    String? username,
-    String? email,
-    String? phone,
-    String? whatsapp,
-    dynamic address,
-    String? photo,
-    num? followingCount,
-    num? followersCount,
-
-    num? tokenExpires,
-    num? isVerified,
-    num? errorLogin,
-  }) =>
-      Author(
-        clientId: clientId ?? _clientId,
-        name: name ?? _name,
-        username: username ?? _username,
-        email: email ?? _email,
-        phone: phone ?? _phone,
-        whatsapp: whatsapp ?? _whatsapp,
-        address: address ?? _address,
-        photo: photo ?? _photo,
-        followersCount: followersCount??_followersCount,
-        followingCount: followingCount??_followingCount,
-        tokenExpires: tokenExpires ?? _tokenExpires,
-        isVerified: isVerified ?? _isVerified,
-        errorLogin: errorLogin ?? _errorLogin,
-      );
-
-  num? get clientId => _clientId;
-
-  String? get name => _name;
-
-  String? get username => _username;
-  num? get followersCount => _followersCount;
-  num? get followingCount => _followingCount;
-
-  String? get email => _email;
-
-  String? get phone => _phone;
-
-  String? get whatsapp => _whatsapp;
-
-  dynamic get address => _address;
-
-  String? get photo => _photo;
-
-  num? get tokenExpires => _tokenExpires;
-
-  num? get isVerified => _isVerified;
-
-  num? get errorLogin => _errorLogin;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['client_id'] = _clientId;
-    map['name'] = _name;
-    map['username'] = _username;
-    map['email'] = _email;
-    map['phone'] = _phone;
-    map['whatsapp'] = _whatsapp;
-    map['address'] = _address;
-    map['photo'] = _photo;
-    map['token_expires'] = _tokenExpires;
-    map['is_verified'] = _isVerified;
-    map['error_login'] = _errorLogin;
-    return map;
-  }
-}
-
-/// item_attribute_id : 81
-/// item_id : 59
-/// attribute_id : 24
-/// value : "اتوماتيك"
-/// attribute : {"attribute_id":24,"category_id":4,"attribute_name":"نوع الغيار","ord":1}
 
 Attributes attributesFromJson(String str) =>
     Attributes.fromJson(json.decode(str));
@@ -524,6 +367,10 @@ class Attributes {
     _attributeId = attributeId;
     _value = value;
     _attribute = attribute;
+  }
+
+  set itemAttributeId(num? value) {
+    _itemAttributeId = value;
   }
 
   Attributes.fromJson(dynamic json) {
@@ -577,6 +424,22 @@ class Attributes {
       map['attribute'] = _attribute?.toJson();
     }
     return map;
+  }
+
+  set itemId(num? value) {
+    _itemId = value;
+  }
+
+  set attributeId(num? value) {
+    _attributeId = value;
+  }
+
+  set value(String? value) {
+    _value = value;
+  }
+
+  set attribute(Attribute? value) {
+    _attribute = value;
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
@@ -15,10 +16,10 @@ class AdvertisementLanguageScreen extends StatefulWidget {
 
   @override
   State<AdvertisementLanguageScreen> createState() =>
-      _AdvertisementScreenState();
+      _AdvertisementLanguageScreenState();
 }
 
-class _AdvertisementScreenState extends State<AdvertisementLanguageScreen> {
+class _AdvertisementLanguageScreenState extends State<AdvertisementLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +29,7 @@ class _AdvertisementScreenState extends State<AdvertisementLanguageScreen> {
               .pushNamed(RouteNamedScreens.advertisementCategory);
         },
       ),
-      body:
-      DialogContainer(
+      body: DialogContainer(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,10 +42,11 @@ class _AdvertisementScreenState extends State<AdvertisementLanguageScreen> {
                 height: AppHeightManager.h2point5,
               ),
               AppTextWidget(
-                  text: "Choose Language",
-                  fontSize: FontSizeManager.fs16,
-                  color: AppColorManager.textAppColor,
-                  fontWeight: FontWeight.w600),
+                text: "chooseLanguage".tr(), // Localized text
+                fontSize: FontSizeManager.fs16,
+                color: AppColorManager.textAppColor,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(
                 height: AppHeightManager.h1point8,
               ),

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../../../../core/model/user.dart';
+
 /// success : true
 /// message : "تمت العملية بنجاح"
 /// data : {"user":{"client_id":107,"name":"Murad","username":"+963999999999","email":null,"phone":"+963999999999","whatsapp":"963999999999","address":null,"photo":null,"token_expires":0,"is_verified":1,"error_login":0, "description": "User description"}}
@@ -71,20 +73,38 @@ class GetProfileInfoResponseEntity {
 class   ProfileInfo {
   ProfileInfo({
     User? user,
+    num? followersCount,
+    num? followingCount,
+    num? items,
   }) {
     _user = user;
+    _items = items;
+    _followersCount =followersCount ;
+    _followingCount = followingCount;
   }
 
   ProfileInfo.fromJson(dynamic json) {
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
+    _items = json['items'];
+    _followersCount = json['followers'];
+    _followingCount =  json['following'];
   }
 
   User? _user;
+  num? _followersCount;
+  num? _followingCount;
+  num? _items;
 
   ProfileInfo copyWith({
     User? user,
+    num? followersCount,
+    num? followingCount,
+    num? items,
   }) =>
       ProfileInfo(
+         followersCount: followersCount ?? _followersCount,
+         followingCount: followingCount ?? _followingCount,
+        items: items ?? _items,
         user: user ?? _user,
       );
 
@@ -99,135 +119,4 @@ class   ProfileInfo {
   }
 }
 
-/// client_id : 107
-/// name : "Murad"
-/// username : "+963999999999"
-/// email : null
-/// phone : "+963999999999"
-/// whatsapp : "963999999999"
-/// address : null
-/// photo : null
-/// token_expires : 0
-/// is_verified : 1
-/// error_login : 0
-/// description : "User description"
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
-String userToJson(User data) => json.encode(data.toJson());
-
-class User {
-  User({
-    num? clientId,
-    String? name,
-    String? description,
-    String? username,
-    dynamic email,
-    String? phone,
-    String? whatsapp,
-    dynamic address,
-    dynamic photo,
-    num? tokenExpires,
-    num? isVerified,
-    num? errorLogin,
-  }) {
-    _clientId = clientId;
-    _name = name;
-    _description = description;
-    _username = username;
-    _email = email;
-    _phone = phone;
-    _whatsapp = whatsapp;
-    _address = address;
-    _photo = photo;
-    _tokenExpires = tokenExpires;
-    _isVerified = isVerified;
-    _errorLogin = errorLogin;
-  }
-
-  User.fromJson(dynamic json) {
-    _clientId = json['client_id'];
-    _name = json['name'];
-    _description = json['description'];
-    _username = json['username'];
-    _email = json['email'];
-    _phone = json['phone'];
-    _whatsapp = json['whatsapp'];
-    _address = json['address'];
-    _photo = json['photo'];
-    _tokenExpires = json['token_expires'];
-    _isVerified = json['is_verified'];
-    _errorLogin = json['error_login'];
-  }
-
-  num? _clientId;
-  String? _name;
-  String? _description;
-  String? _username;
-  dynamic _email;
-  String? _phone;
-  String? _whatsapp;
-  dynamic _address;
-  dynamic _photo;
-  num? _tokenExpires;
-  num? _isVerified;
-  num? _errorLogin;
-
-  User copyWith({
-    num? clientId,
-    String? name,
-    String? description,
-    String? username,
-    dynamic email,
-    String? phone,
-    String? whatsapp,
-    dynamic address,
-    dynamic photo,
-    num? tokenExpires,
-    num? isVerified,
-    num? errorLogin,
-  }) =>
-      User(
-        clientId: clientId ?? _clientId,
-        name: name ?? _name,
-        description: description ?? _description,
-        username: username ?? _username,
-        email: email ?? _email,
-        phone: phone ?? _phone,
-        whatsapp: whatsapp ?? _whatsapp,
-        address: address ?? _address,
-        photo: photo ?? _photo,
-        tokenExpires: tokenExpires ?? _tokenExpires,
-        isVerified: isVerified ?? _isVerified,
-        errorLogin: errorLogin ?? _errorLogin,
-      );
-
-  num? get clientId => _clientId;
-  String? get name => _name;
-  String? get description => _description;
-  String? get username => _username;
-  dynamic get email => _email;
-  String? get phone => _phone;
-  String? get whatsapp => _whatsapp;
-  dynamic get address => _address;
-  dynamic get photo => _photo;
-  num? get tokenExpires => _tokenExpires;
-  num? get isVerified => _isVerified;
-  num? get errorLogin => _errorLogin;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['client_id'] = _clientId;
-    map['name'] = _name;
-    map['description'] = _description;
-    map['username'] = _username;
-    map['email'] = _email;
-    map['phone'] = _phone;
-    map['whatsapp'] = _whatsapp;
-    map['address'] = _address;
-    map['photo'] = _photo;
-    map['token_expires'] = _tokenExpires;
-    map['is_verified'] = _isVerified;
-    map['error_login'] = _errorLogin;
-    return map;
-  }
-}

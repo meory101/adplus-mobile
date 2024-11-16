@@ -25,15 +25,15 @@ class AdvDetailsAttributeGridView extends StatelessWidget {
                 AppTextWidget(
                     maxLines: 2,
                     fontWeight: FontWeight.w500,
-                    fontSize: FontSizeManager.fs15,
+                    fontSize: FontSizeManager.fs16,
                     text: advDetails
                             ?.attributes?[index].attribute?.attributeName ??
                         ""),
                 AppTextWidget(
                     maxLines: 2,
                     fontWeight: FontWeight.w700,
-                    fontSize: FontSizeManager.fs14,
-                    text: advDetails?.attributes?[index].value ?? "--"),
+                    fontSize: FontSizeManager.fs15,
+                    text: advDetails?.attributes?[index].value ?? ""),
               ],
             ),
           );

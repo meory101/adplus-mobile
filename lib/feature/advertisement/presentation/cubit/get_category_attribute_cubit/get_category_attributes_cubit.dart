@@ -26,7 +26,7 @@ class GetCategoryAttributesCubit extends Cubit<GetCategoryAttributesState> {
     result.fold(
           (failure) async {
         final ErrorEntity errorEntity =
-        await ApiErrorHandler.mapFailure(failure:failure);
+        await ApiErrorHandler.mapFailure(failure:failure,buildContext: context);
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },

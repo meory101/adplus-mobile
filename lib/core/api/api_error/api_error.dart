@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/router/router.dart';
 
 import 'api_error_method.dart';
 import 'api_error_response_entity.dart';
@@ -25,7 +27,7 @@ class ErrorEntity {
 
 abstract class ApiErrorHandler {
   static Future<ErrorEntity> mapFailure({
-    BuildContext? buildContext,
+   required BuildContext buildContext,
     required ApiFailure failure,
   }) {
     ErrorEntity errorEntity = ErrorEntity();
@@ -57,7 +59,7 @@ abstract class ApiErrorHandler {
   }
 
   static Future<ErrorEntity> handleApiServerFailure(
-      {BuildContext? buildContext,
+      {required BuildContext buildContext,
       required ApiServerFailure failure,
       required ErrorEntity errorEntity}) {
     if ((failure.response?.body ?? "").isNotEmpty) {
@@ -70,9 +72,26 @@ abstract class ApiErrorHandler {
             jsonDecode(failure.response?.body ?? "")['errors'].toString();
         errorEntity.statusCode = failure.response?.statusCode ?? 0;
         errorEntity.errorCode = errorResponseEntity.errorCode;
-      }
-      catch (e) {
-        errorEntity.errorMessage =  jsonDecode(failure.response?.body ?? "")['errors'].toString();
+        AppSharedPreferences.clear();
+        // if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
+        //     'Unauthenticated.') {
+        //   Navigator.of(buildContext).pushNamed(
+        //     RouteNamedScreens.login,
+        //
+        //   );
+        // }
+      } catch (e) {
+        errorEntity.errorMessage =
+            jsonDecode(failure.response?.body ?? "")['errors'].toString();
+        AppSharedPreferences.clear();
+
+        // if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
+       //      'Unauthenticated.') {
+       //    Navigator.of(buildContext).pushNamed(
+       //      RouteNamedScreens.login,
+       //
+       //    );
+       //  }
       }
     }
     return Future.value(errorEntity);

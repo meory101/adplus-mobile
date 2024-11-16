@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
+import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
+import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
@@ -18,8 +26,8 @@ class MyItemsScreen extends StatefulWidget {
 }
 
 class _MyItemsScreenState extends State<MyItemsScreen> {
-  final List<String> _filters = ['All', 'Active', 'Favourite', 'End'];
-  int _selectedFilterIndex = 0;
+  final List<String> filters = ['All', 'Active', 'Favourite', 'End'];
+  int selectedFilterIndex = 0;
 
   @override
   void initState() {
@@ -39,13 +47,11 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(title: "My Ads"),
+      appBar: const MainAppBar(title: "My Ads"),
       body: BlocConsumer<MyitemCubit, MyitemState>(
         listener: (context, state) {
           if (state.status == CubitStatus.error && state.error.isNotEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error)),
-            );
+            NoteMessage.showErrorSnackBar(context: context, text: state.error);
           }
         },
         builder: (context, state) {
@@ -64,28 +70,36 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
 
   Widget _buildFilterButtons() {
     return Container(
-      height: 40,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      height: AppHeightManager.h5,
+      margin: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: _filters.length,
+        itemCount: filters.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(right: 8),
+            padding: EdgeInsets.only(
+                right: LanguageHelper.checkIfLTR(context: context)
+                    ? AppWidthManager.w2
+                    : 0,
+                left: !LanguageHelper.checkIfLTR(context: context)
+                    ? AppWidthManager.w2
+                    : 0),
             child: FilterChip(
-              label: Text(_filters[index]),
-              selected: _selectedFilterIndex == index,
+              color: WidgetStateProperty.all(AppColorManager.lightGreyOpacity6),
+              label: Text(filters[index]),
+              selected: selectedFilterIndex == index,
               onSelected: (selected) {
                 setState(() {
-                  _selectedFilterIndex = index;
+                  selectedFilterIndex = index;
                 });
                 _loadItems();
               },
-              backgroundColor: Colors.grey.shade100,
-              selectedColor: AppColorManager.black.withOpacity(0.1),
+              backgroundColor: AppColorManager.lightGreyOpacity6,
+              selectedColor: AppColorManager.black,
               labelStyle: TextStyle(
-                color: _selectedFilterIndex == index
-                    ? AppColorManager.background
+                fontSize: FontSizeManager.fs15,
+                color: selectedFilterIndex == index
+                    ? AppColorManager.black
                     : Colors.black,
               ),
             ),
@@ -104,74 +118,68 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
 
     if (items.isEmpty) {
       return const Center(
-        child: Text('لا توجد إعلانات حالياً'),
+        child: AppTextWidget(text: "no advertisements")
       );
     }
 
-    return RefreshIndicator(
-      onRefresh: () async => _loadItems(),
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: items.length,
-        itemBuilder: (context, index) => _buildItemCard(items[index]),
-      ),
+    return ListView.builder(
+      padding:  EdgeInsets.all(AppWidthManager.w3Point8),
+      itemCount: items.length,
+      itemBuilder: (context, index) => _buildItemCard(items[index]),
     );
   }
 
-  Widget _buildItemCard(Item item) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildItemImage(item),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.name ?? '',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '${item.startingPrice ?? 0} ر.س',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildStatItem(Icons.remove_red_eye,
-                          item.author?.length ?? 0, 'مشاهدة'),
-                      _buildStatItem(
-                          Icons.favorite, item.reactions?.length ?? 0, 'إعجاب'),
-                      _buildStatItem(
-                          Icons.comment, item.comments?.length ?? 0, 'تعليق'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+  Widget _buildItemCard(AdData item) {
+    return
+      InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(RouteNamedScreens.advertisementDetails,
+          arguments: AdvertisementDetailsArgs(advertisement: item)
+          );
+        },
+        child: Card(
+        margin:  EdgeInsets.only(bottom: AppWidthManager.w3Point8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
         ),
-      ),
-    );
+        child: Padding(
+          padding:  EdgeInsets.all(AppRadiusManager.r10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildItemImage(item),
+               SizedBox(width: AppRadiusManager.r10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name ?? '',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${item.startingPrice ?? 0} ر.س',
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+            ),
+      );
   }
 
-  Widget _buildItemImage(Item item) {
+  Widget _buildItemImage(AdData item) {
     if (item.photos == null || item.photos!.isEmpty) {
       return _buildPlaceholderImage();
     }
@@ -210,20 +218,4 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
       ),
     );
   }
-
-  Widget _buildStatItem(IconData icon, int count, String label) {
-    return Row(
-      children: [
-        Icon(icon, size: 16, color: Colors.grey),
-        const SizedBox(width: 4),
-        Text(
-          '$count $label',
-          style: const TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    );
-   }
 }

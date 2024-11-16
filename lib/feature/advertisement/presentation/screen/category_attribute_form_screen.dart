@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/widget/drop_down/NameAndId.dart';
@@ -12,7 +13,6 @@ import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_ca
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_state.dart';
-import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/container/dialog_container.dart';
 import '../../../../core/widget/form_field/title_app_form_filed.dart';
@@ -130,7 +130,10 @@ class _CategoryAttributeFormScreenState
                               (attributeListElement) {
                                 attributeListElements.add(
                                   NameAndId(
-                                    name: attributeListElement.option ?? '',
+                                    name:
+                                    LanguageHelper.checkIfLTR(context: context)?
+                                    attributeListElement.optionEn ?? "":
+                                    attributeListElement.option?? "",
                                     id: attributeListElement.typeListId
                                         .toString(),
                                   ),
@@ -146,13 +149,19 @@ class _CategoryAttributeFormScreenState
                                         ?.attributeType?.name ==
                                     EnumManager.list,
                                 replacement: TitleAppFormFiled(
-                                  title: currentAttribute?.attributeName ?? "",
+                                  title
+                                      :
+                                  LanguageHelper.checkIfLTR(context: context)?
+                                  currentAttribute?.attributeNameEn ?? "":
+                                  currentAttribute?.attributeName ?? "",
                                   textInputType: EnumManager
                                       .attributeTextInputType[attributes[index]
                                           .attributeType
                                           ?.name ??
                                       ""],
-                                  hint: attributes[index].attributeName ?? "",
+                                  hint: LanguageHelper.checkIfLTR(context: context)?
+                                  currentAttribute?.attributeNameEn ?? "":
+                                  currentAttribute?.attributeName ?? "",
                                   onChanged: (value) {
                                     setAttributeFormValue(
                                         value ?? "", currentAttribute);
@@ -177,9 +186,13 @@ class _CategoryAttributeFormScreenState
                                         value?.name ?? "", currentAttribute);
                                     return null;
                                   },
-                                  title: currentAttribute?.attributeName ?? "",
+                                  title: LanguageHelper.checkIfLTR(context: context)?
+                                  currentAttribute?.attributeNameEn ?? "":
+                                  currentAttribute?.attributeName ?? "",
                                   options: attributeListElements,
-                                  hint: currentAttribute?.attributeName ?? "",
+                                  hint: LanguageHelper.checkIfLTR(context: context)?
+                                  currentAttribute?.attributeNameEn ?? "":
+                                  currentAttribute?.attributeName ?? "",
                                 ),
                               ),
                               SizedBox(

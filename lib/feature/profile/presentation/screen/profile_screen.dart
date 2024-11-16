@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
@@ -46,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppTextWidget(
-                text: 'profile',
+                text: 'profile'.tr(),
                 fontSize: FontSizeManager.fs17,
                 color: AppColorManager.textAppColor,
                 fontWeight: FontWeight.w700),
@@ -73,13 +75,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
-              margin: EdgeInsets.all(16.0),
-              padding: EdgeInsets.all(16.0),
+              margin: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   SizedBox(height: AppHeightManager.h4),
                   AnimatedSwitcher(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     child: _buildContent(_selectedIndex),
                   ),
                   SizedBox(height: AppHeightManager.h4),

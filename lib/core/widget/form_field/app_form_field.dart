@@ -157,8 +157,7 @@ class AppTextFormField extends StatelessWidget {
       style: style ??
           TextStyle(
               color: textColor,
-              fontSize: FontSizeManager.fs15,
-
+              fontSize: FontSizeManager.fs16,
               fontFamily: FontFamilyManager.cairo),
     );
   }

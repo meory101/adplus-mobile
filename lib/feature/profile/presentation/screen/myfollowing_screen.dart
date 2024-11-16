@@ -6,7 +6,9 @@ import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_state.dart';
+import '../../../../core/helper/lanucher_helper.dart';
 import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 
@@ -55,15 +57,15 @@ class MyFollowingScreen extends StatelessWidget {
                 
                 return ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: follower?.photo != null 
-                        ? NetworkImage('YOUR_BASE_URL/${follower?.photo}')
+                    backgroundImage: follower?.photo != null
+                        ? NetworkImage('${AppConstantManager.imageBaseUrl}${follower?.photo}')
                         : null,
                     child: follower?.photo == null 
                         ? const Icon(Icons.person)
                         : null,
                   ),
                   title: AppTextWidget(
-                    text: follower?.name ?? 'Unknown',
+                    text: follower?.name ?? '',
                     fontSize: FontSizeManager.fs16,
                     color: AppColorManager.textAppColor,
                   ),
@@ -72,11 +74,16 @@ class MyFollowingScreen extends StatelessWidget {
                     fontSize: FontSizeManager.fs14,
                     color: AppColorManager.textGrey,
                   ),
-                  trailing: follower?.whatsapp != null 
-                      ? Icon(
-                          Icons.clear_all,
-                          color: AppColorManager.green,
-                        )
+                  trailing: follower?.phone != null
+                      ? IconButton(
+                      splashColor: AppColorManager.transparent,
+                      highlightColor: AppColorManager.transparent,
+                      onPressed: (){
+                        UrlLauncherHelper.makeCall(phoneNumber: follower?.phone);
+                      }, icon: Icon(
+                    Icons. call,
+                    color: AppColorManager.green,
+                  ))
                       : null,
                 );
               },

@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 
 import '../../../../core/helper/language_helper.dart';
@@ -9,6 +11,9 @@ import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../../router/router.dart';
+
+
+/// Eng. Nour Othman(meory)
 
 class AdvertisementAppBar extends StatelessWidget {
   final double completePercent;
@@ -37,7 +42,7 @@ class AdvertisementAppBar extends StatelessWidget {
                   ),
                 ),
                 AppTextWidget(
-                    text: "Back",
+                    text: "back".tr(),
                     fontSize: FontSizeManager.fs16,
                     color: AppColorManager.textAppColor,
                     fontWeight: FontWeight.w500),

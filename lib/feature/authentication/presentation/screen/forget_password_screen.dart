@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,8 +13,6 @@ import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/forget_password_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_state.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
@@ -42,7 +41,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             child: Column(
               children: [
                 AppTextWidget(
-                  text: "Reset Your Password",
+                  text: "resetYourPassword".tr(),
                   fontSize: FontSizeManager.fs20,
                   fontWeight: FontWeight.bold,
                   color: AppColorManager.black,
@@ -59,7 +58,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           AppColorManager.textGrey, BlendMode.srcIn),
                     ),
                   ),
-                  hintText: "Enter your email",
+                  hintText: "enterYourEmail".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.username = value;
@@ -67,13 +66,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return "emailRequired".tr();
                     }
                     bool isEmail = RegExp(
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
                         .hasMatch(value);
                     if (!isEmail) {
-                      return 'Please enter a valid email address';
+                      return "invalidEmail".tr();
                     }
                     return null;
                   },
@@ -89,7 +88,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
                           context: context,
-                          text: state.error ?? "Error occurred");
+                          text: state.error);
                     }
                   },
                   builder: (context, state) {
@@ -108,7 +107,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       color: AppColorManager.mainColor,
                       alignment: Alignment.center,
                       child: AppTextWidget(
-                        text: "Send Reset Link",
+                        text: "sendResetLink".tr(),
                         color: AppColorManager.white,
                         fontSize: FontSizeManager.fs16,
                         fontWeight: FontWeight.w600,

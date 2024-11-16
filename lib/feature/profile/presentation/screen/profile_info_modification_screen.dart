@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/form_field/title_app_form_filed.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
+import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
@@ -45,15 +47,17 @@ class _ProfileInfoModificationScreenState
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   void initState() {
+    profileImage =null;
     entity.username = widget.args.profileInfo?.user?.username;
     entity.name = widget.args.profileInfo?.user?.name;
+    entity.description = widget.args.profileInfo?.user?.description;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(title: "edit profile"),
+      appBar:  MainAppBar(title: "editProfile".tr()),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppWidthManager.w3Point8),
@@ -69,8 +73,8 @@ class _ProfileInfoModificationScreenState
                       replacement: Container(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         alignment: Alignment.center,
-                        width: AppWidthManager.w20,
-                        height: AppWidthManager.w20,
+                        width: AppWidthManager.w25,
+                        height: AppWidthManager.w25,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -154,7 +158,7 @@ class _ProfileInfoModificationScreenState
                     ),
                     Positioned(
                       bottom: AppHeightManager.h1,
-                      left: AppWidthManager.w12,
+                      left: AppWidthManager.w14,
                       right: 0,
                       child: InkWell(
                         overlayColor: const WidgetStatePropertyAll(
@@ -184,8 +188,8 @@ class _ProfileInfoModificationScreenState
                 ),
                 TitleAppFormFiled(
                   initValue: widget.args.profileInfo?.user?.name ?? "",
-                  title: "name (required)",
-                  hint: "name",
+                  title: "name(required)".tr(),
+                  hint: "name".tr(),
                   onChanged: (value) {
                     entity.name = value ?? "";
                     return null;
@@ -202,8 +206,8 @@ class _ProfileInfoModificationScreenState
                 ),
                 TitleAppFormFiled(
                   initValue: widget.args.profileInfo?.user?.description ?? "",
-                  title: "Description ",
-                  hint: "description",
+                  title: "description".tr(),
+                  hint: "description".tr(),
                   onChanged: (value) {
                     entity.description = value ?? "";
                     return null;
@@ -226,13 +230,20 @@ class _ProfileInfoModificationScreenState
                     if (state.status == CubitStatus.success) {
                       Navigator.of(context).pop();
                     }
+                    if (state.status == CubitStatus.error) {
+                      NoteMessage.showErrorSnackBar(
+                          context: context, text: state.error);
+                    }
                   },
                   builder: (context, state) {
+                    if(state.status ==CubitStatus.loading){
+                      return const AppCircularProgressWidget();
+                    }
                     return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
                       listener: (context, state) {
                         if (state.status == CubitStatus.error) {
                           NoteMessage.showErrorSnackBar(
-                              context: context, text: "");
+                              context: context, text: state.error);
                         }
                         if (state.status == CubitStatus.success) {
                           if (profileImage != null) {
@@ -241,9 +252,12 @@ class _ProfileInfoModificationScreenState
                                 .updateProfile(
                                     context: context,
                                     profileImage: profileImage!);
-                            return;
+
                           }
-                          Navigator.of(context).pop();
+                        else{
+                            Navigator.of(context).pop();
+                          }
+
                         }
                       },
                       builder: (context, state) {
@@ -263,8 +277,8 @@ class _ProfileInfoModificationScreenState
                           color: AppColorManager.mainColor,
                           child: AppTextWidget(
                             text: "save",
-                            fontSize: FontSizeManager.fs15,
-                            fontWeight: FontWeight.w500,
+                            fontSize: FontSizeManager.fs16,
+                            fontWeight: FontWeight.w600,
                             color: AppColorManager.white,
                           ),
                         );

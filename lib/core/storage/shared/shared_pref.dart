@@ -23,7 +23,7 @@ abstract class AppSharedPreferences {
 
 
   static String getLanguage() {
-    return _sharedPreferences.getString(AppKeyManager.language) ?? "ar";
+    return _sharedPreferences.getString(AppKeyManager.language) ?? "en";
   }
 
   static String getToken() {

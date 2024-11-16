@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
@@ -18,13 +19,18 @@ import 'package:mzad_damascus/feature/authentication/presentation/screen/forget_
 import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
@@ -33,13 +39,19 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myite
 import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/verfiy_username_screen.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/verfiy_username_screen.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
 import '../core/injection/injection_container.dart' as di;
@@ -53,8 +65,7 @@ import '../feature/intro/presentation/screen/splash_screen.dart';
 /// Eng.Nour Othman(meory)*
 
 abstract class RouteNamedScreens {
-  static String init = splash;
-  // AppSharedPreferences.getToken().isEmpty ? register : mainBottomAppBar;
+  static String init =splash;
   static const String splash = "/splash";
   static const String login = "/login";
   static const String register = "/register";
@@ -75,6 +86,7 @@ abstract class RouteNamedScreens {
   static const String editusername = "/editusername";
   static const String editpassword = "/editpassword";
   static const String myitem = "/myitem";
+  static const String authorProfile = '/author-profile';
 }
 
 abstract class AppRouter {
@@ -94,22 +106,64 @@ abstract class AppRouter {
             BlocProvider(
               create: (context) => di.sl<AdvsByAttributeCubit>(),
             ),
+            BlocProvider(
+              create: (context) => di.sl<GetCategoryAttributesCubit>()
+                ..getCategoryAttributes(
+                    context: context,
+                    entity: GetCategoryAttributesRequestEntity(
+                      categoryId: argument.categoryId,
+                    )),
+            ),
           ],
           child: InsidePageCategoryAdvsScreen(
             args: argument,
           ),
         ));
+      case RouteNamedScreens.myitem:
+        return FadeBuilderRoute(
+          page: BlocProvider(
+            create: (context) => di.sl<MyitemCubit>(),
+            child: const MyItemsScreen(),
+          ),
+        );
       case RouteNamedScreens.login:
         return FadeBuilderRoute(
             page: BlocProvider(
           create: (context) => di.sl<LoginCubit>(),
           child: const LoginScreen(),
         ));
-      case RouteNamedScreens.editpassword:
+      case RouteNamedScreens.authorProfile:
+        argument as AuthorProfileArgs;
+        return FadeBuilderRoute(
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => di.sl<MyFollowingCubit>()
+                ..getMyFollowing(
+                  context: context,
+                  entity: MyFollowingRequestEntity(page: 1),
+                ),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<AddFollowCubit>(),
+            ),
+            BlocProvider(create: (context) => di.sl<GetAdvByUserCubit>()),
+            BlocProvider(
+                create: (context) => di.sl<ProfileByUsernameCubit>()
+                  ..getProfileByUsername(
+                      context: context,
+                      entity: ProfileByUsernameRequestEntity(
+                          username: argument.userName))),
+          ],
+          child: AuthorProfileScreen(
+            arg: argument,
+          ),
+        ));
+      case RouteNamedScreens.editusername:
         return FadeBuilderRoute(
             page: BlocProvider(
-          create: (context) => di.sl<EditPasswordCubit>(),
-          child: const EditPasswordScreen(),
+          create: (context) => di.sl<UpdateUsernameCubit>(),
+          child: const EditUsernameScreen(),
         ));
       case RouteNamedScreens.resetpassword:
         return FadeBuilderRoute(
@@ -128,6 +182,12 @@ abstract class AppRouter {
             page: BlocProvider(
           create: (context) => di.sl<RegisterCubit>(),
           child: const RegisterScreen(),
+        ));
+      case RouteNamedScreens.editpassword:
+        return FadeBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<EditPasswordCubit>(),
+          child: const EditPasswordScreen(),
         ));
       case RouteNamedScreens.verfiyusername:
         argument as VerfiyusernameArgs;
@@ -156,6 +216,9 @@ abstract class AppRouter {
         return SlidUpBuilderRoute(
             page: MultiBlocProvider(
           providers: [
+            BlocProvider(
+              create: (context) => di.sl<AddReactionCubit>(),
+            ),
             BlocProvider(
               create: (context) => di.sl<AdvDetailsCubit>()
                 ..getAdvDetails(
@@ -195,6 +258,9 @@ abstract class AppRouter {
                 create: (context) => di.sl<CategoryInsidePageCubit>(),
               ),
               BlocProvider(
+                create: (context) => di.sl<BannersCubit>(),
+              ),
+              BlocProvider(
                 create: (context) => di.sl<AdvsByAttributeCubit>(),
               ),
             ],
@@ -225,13 +291,6 @@ abstract class AppRouter {
             args: argument,
           ),
         ));
-      case RouteNamedScreens.myitem:
-        return FadeBuilderRoute(
-          page: BlocProvider(
-            create: (context) => di.sl<MyitemCubit>(),
-            child: MyItemsScreen(),
-          ),
-        );
       case RouteNamedScreens.profileModification:
         argument as ProfileInfoModificationArgs;
         return SlidLeftBuilderRoute(
@@ -247,9 +306,6 @@ abstract class AppRouter {
               create: (context) => di.sl<GetProfileInfoCubit>(),
             ),
             BlocProvider(
-              create: (context) => di.sl<UpdateUsernameCubit>(),
-            ),
-            BlocProvider(
               create: (context) => di.sl<VerfiyUsernameCubit>(),
             ),
           ],
@@ -262,6 +318,9 @@ abstract class AppRouter {
             page: MultiBlocProvider(
           providers: [
             BlocProvider(
+              create: (context) => di.sl<BannersCubit>(),
+            ),
+            BlocProvider(
               create: (context) =>
                   di.sl<GetCategoriesCubit>()..getCategories(context: context),
             ),
@@ -271,6 +330,17 @@ abstract class AppRouter {
               child: const LoginScreen(),
             ),
             BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
+            BlocProvider(
+              create: (context) =>
+                  di.sl<GetCategoriesCubit>()..getCategories(context: context),
+            ),
+            BlocProvider(create: (context) => di.sl<LogoutCubit>()),
+            BlocProvider(
+              create: (context) => di.sl<LoginCubit>(),
+              child: const LoginScreen(),
+            ),
+            BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
+            BlocProvider(create: (context) => di.sl<MyitemCubit>()),
           ],
           child: const MainBottomAppBar(),
         ));

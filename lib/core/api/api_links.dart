@@ -7,6 +7,7 @@ class ApiGetUrl {
 
 class ApiPostUrl {
   static String getCategoryAttributes = "api/category/category-info";
+  static String itemsByClient = "api/item/ItemsByClient";
   static String getComments = "api/comment/getComments";
   static String addComment = "api/comment/postComments";
   static String getCategoryInsidePage = "api/category/inside-page";
@@ -18,7 +19,6 @@ class ApiPostUrl {
   static String verfiyusername = "api/auth/VerifyUsername";
   static String editpassword = "api/auth/UpdatePassword";
   static String profilebyusername = "api/auth/profileByUsername";
-
   static String addAdv = "api/item/create-item";
   static String getItemsByAttribute = "api/item/getItemsByAttribute";
   static String updateProfile = "api/auth/UpdateProfile";
@@ -27,10 +27,11 @@ class ApiPostUrl {
   static String myitem = "api/item/MyItems";
   static String myfollower = "api/following/myFollowers";
   static String myfolloweing = "api/following/myFollowing";
-    static String addfollow = "api/following/addFollow";
-        static String removefollow = "api/following/removeFollow";
-
-
+  static String addfollow = "api/following/addFollow";
+  static String removefollow = "api/following/removeFollow";
+  static String getBanners = "api/banner/HomeBanners";
+  static String getInsidePageBanners = "api/banner/InsideBanners";
+  static String addReaction = "api/reaction/postReactions";
 }
 
 class ApiDeleteUrl {}

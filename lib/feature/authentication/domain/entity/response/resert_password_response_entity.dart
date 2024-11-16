@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../../../../core/model/user.dart';
+
 ResetPasswordResponse resetPasswordResponseFromJson(String str) =>
     ResetPasswordResponse.fromJson(json.decode(str));
 
@@ -70,59 +72,3 @@ class ResetPasswordData {
   }
 }
 
-class User {
-  User({
-    required this.clientId,
-    required this.name,
-    required this.username,
-    this.email,
-    required this.phone,
-    required this.whatsapp,
-    this.address,
-    this.photo,
-    required this.tokenExpires,
-    required this.isVerified,
-    required this.errorLogin,
-  });
-
-  User.fromJson(Map<String, dynamic> json)
-      : clientId = json['client_id'],
-        name = json['name'],
-        username = json['username'],
-        email = json['email'],
-        phone = json['phone'],
-        whatsapp = json['whatsapp'],
-        address = json['address'],
-        photo = json['photo'],
-        tokenExpires = json['token_expires'],
-        isVerified = json['is_verified'],
-        errorLogin = json['error_login'];
-
-  final int clientId;
-  final String name;
-  final String username;
-  final dynamic email; // Could be String? depending on your needs
-  final String phone;
-  final String whatsapp;
-  final dynamic address; // Could be String? depending on your needs
-  final dynamic photo; // Could be String? depending on your needs
-  final int tokenExpires;
-  final int isVerified;
-  final int errorLogin;
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> map = {};
-    map['client_id'] = clientId;
-    map['name'] = name;
-    map['username'] = username;
-    map['email'] = email;
-    map['phone'] = phone;
-    map['whatsapp'] = whatsapp;
-    map['address'] = address;
-    map['photo'] = photo;
-    map['token_expires'] = tokenExpires;
-    map['is_verified'] = isVerified;
-    map['error_login'] = errorLogin;
-    return map;
-  }
-}

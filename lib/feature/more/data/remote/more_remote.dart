@@ -64,9 +64,6 @@ class MoreRemoteImplement extends MoreRemote {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.editpassword, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      print("editttttttttttttttttttttttttttttt");
-      print(response.body);
-      print(response.statusCode);
       return editPasswordResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
@@ -78,9 +75,6 @@ class MoreRemoteImplement extends MoreRemote {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.myitem, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      print("editttttttttttttttttttttttttttttt");
-      print(response.body);
-      print(response.statusCode);
       return myItemResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);

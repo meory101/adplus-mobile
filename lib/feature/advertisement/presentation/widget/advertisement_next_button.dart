@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/app/app.dart';
 
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
@@ -22,10 +24,10 @@ class AdvertisementNextButton extends StatelessWidget {
       width: AppWidthManager.w100,
       height: AppHeightManager.h6,
       child: AppTextWidget(
-          text:buttonText?? "Next",
+          text:buttonText?? "next".tr(),
           fontSize: FontSizeManager.fs16,
           color: AppColorManager.white,
-          fontWeight: FontWeight.w500),
+          fontWeight: FontWeight.w600),
     );
   }
 }

@@ -31,8 +31,12 @@ import 'package:mzad_damascus/feature/home/domain/usecase/get_advs_by_attribute_
 import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_comments_usecase.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/more/data/remote/more_remote.dart';
@@ -70,14 +74,21 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => BannersCubit(usecase: sl()));
   sl.registerFactory(() => AdvsByAttributeCubit(usecase: sl()));
   sl.registerFactory(() => CategoryInsidePageCubit(usecase: sl()));
+  sl.registerFactory(() => GetAdvByUserCubit(usecase: sl()));
   sl.registerFactory(() => GetCommentsCubit(usecase: sl()));
+  sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetAdvByUserUsecase(repository: sl()));
+  sl.registerLazySingleton(() => AddReactionUsecase(repository: sl()));
+  sl.registerLazySingleton(() => BannersUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddCommentUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetCommentsUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvsByAttributeUsecase(repository: sl()));
+
   sl.registerLazySingleton(
       () => GetCategoryInsidePageUsecase(repository: sl()));
   sl.registerLazySingleton<HomeRepository>(
@@ -85,7 +96,11 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeRemote>(() => HomeRemoteImplement());
   sl.registerLazySingleton(() => GetAdvDetailsUsecase(repository: sl()));
   sl.registerFactory(() => AdvDetailsCubit(usecase: sl()));
+  sl.registerLazySingleton<MoreRepository>(
+      () => MoreRepositoryImplements(remote: sl()));
 
+  sl.registerLazySingleton<MoreRemote>(() => MoreRemoteImplement());
+  // تسجيلات خدمات الإعلان
   sl.registerFactory(() => GetCategoryAttributesCubit(usecase: sl()));
   sl.registerFactory(() => AddAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => GetCitiesCubit(usecase: sl()));
@@ -107,9 +122,14 @@ Future<void> init() async {
 
   sl.registerFactory(() => RegisterCubit(usecase: sl()));
 
+  sl.registerLazySingleton(() => EditPasswordUsecase(repository: sl()));
+  sl.registerFactory(() => EditPasswordCubit(usecase: sl()));
+
   sl.registerLazySingleton(() => RegisterUsecase(repository: sl()));
+  ///////////////verfication
   sl.registerFactory(() => VerficationCubit(usecase: sl()));
   sl.registerLazySingleton(() => VerficationUsecase(repository: sl()));
+/////////////////
   sl.registerFactory(() => ResetCubit(usecase: sl()));
   sl.registerLazySingleton(() => ResetPasswordUsecase(repository: sl()));
   sl.registerLazySingleton(() => EditPasswordUsecase(repository: sl()));
@@ -124,8 +144,15 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LogoutUsecase(repository: sl()));
   sl.registerFactory(() => UpdateUsernameCubit(usecase: sl()));
   sl.registerLazySingleton(() => UpdateUsernameUsecase(repository: sl()));
+
+  sl.registerLazySingleton(() => MyitemUsecase(repository: sl()));
+  sl.registerFactory(() => MyitemCubit(usecase: sl()));
   sl.registerFactory(() => VerfiyUsernameCubit(usecase: sl()));
+  sl.registerFactory(() => ProfileByUsernameCubit(usecase: sl()));
+  sl.registerFactory(() => AddFollowCubit(usecase: sl()));
   sl.registerLazySingleton(() => VerfiyusernameUsecase(repository: sl()));
+  sl.registerLazySingleton(() => GetProfileByUsernameUsecase(repository: sl()));
+  sl.registerLazySingleton(() => AddFollowUsecase(repository: sl()));
   sl.registerFactory(() => GetProfileInfoCubit(usecase: sl()));
   sl.registerFactory(() => UpdateProfileImageCubit(usecase: sl()));
   sl.registerFactory(() => UpdateProfileCubit(usecase: sl()));
@@ -135,6 +162,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImplements(remote: sl()));
   sl.registerLazySingleton<ProfileRemote>(() => ProfileRemoteImplement());
+
   sl.registerFactory(() => MyFollowersCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetMyFollowersUsecase(repository: sl()));
   sl.registerFactory(() => MyFollowingCubit(usecase: sl()));

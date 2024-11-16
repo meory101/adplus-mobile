@@ -66,7 +66,6 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
                 keyboardType: TextInputType.number,
                 onDone: (value) {
                   entity.verificationCode = value;
-                  print("Code entered: $value");
                 },
               ),
             ),

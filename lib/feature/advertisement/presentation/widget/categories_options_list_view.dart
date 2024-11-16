@@ -84,12 +84,12 @@ class _CategoriesOptionsListViewState extends State<CategoriesOptionsListView> {
                     contentPadding: EdgeInsets.zero,
                     title: AppTextWidget(
                         text:
-                            //TODO change the name based on language
                             LanguageHelper.checkIfLTR(context: context)
-                                ? categories[index].name ?? ""
+                                ? categories[index].enName ?? ""
                                 : categories[index].name ?? ""
                     ,
-                      fontSize: FontSizeManager.fs15,
+                      fontSize: FontSizeManager.fs16,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),

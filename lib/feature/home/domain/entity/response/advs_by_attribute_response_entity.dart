@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:mzad_damascus/core/model/user.dart';
+
 import '../../../../../core/model/comment.dart';
 import '../../../../../core/model/pagination.dart';
+import 'get_adv_details_response_entity.dart';
 /// success : true
 /// message : "Items retrieved successfully."
 /// data : {"adData":[{"category_id":1,"city_id":1,"name":"Electronics","bidding_status":1,"photos":[{"image_id":1,"photo":"photo.jpg"}],"comments":[{"comment_id":101,"client_id":101,"item_id":45,"comment":"This is a great item!","created_at":"2024-09-16T12:00:00Z"}],"reactions":[{"reaction_id":501,"reaction_type":"like","item_id":45,"client_id":45,"created_at":"2024-09-16T12:00:00Z"}],"author":[{"client_id":501,"name":"string","email":"string","phone":"963999999999","address":"string","photo":"photo.jpg"}],"description":"Category description","keywords":"electronics, gadgets","starting_price":50000,"min_increase_price":10000,"bidding_start_time":"2024-10-01T12:00:00Z","attributes":[{"attribute_id":1,"value":"Black"}]}],"pagination":{"total_items":100,"total_pages":10,"current_page":1,"per_page":10}}
@@ -111,8 +114,8 @@ class AdData {
       num? biddingStatus, 
       List<Photos>? photos, 
       List<Comment>? comments,
-      List<Reactions>? reactions, 
-      Author? author,
+      List<Reactions>? reactions,
+    User? author,
       String? description, 
       String? keywords, 
       num? startingPrice, 
@@ -163,7 +166,7 @@ class AdData {
       });
     }
     if (json['author'] != null) {
-        _author=(Author.fromJson(json['author']));
+        _author=(User.fromJson(json['author']));
     }
     _description = json['description'];
     _keywords = json['keywords'];
@@ -185,7 +188,7 @@ class AdData {
   List<Photos>? _photos;
   List<Comment>? _comments;
   List<Reactions>? _reactions;
-  Author? _author;
+  User? _author;
   String? _description;
   String? _keywords;
   num? _startingPrice;
@@ -200,7 +203,7 @@ AdData copyWith({  num? categoryId,
   List<Photos>? photos,
   List<Comment>? comments,
   List<Reactions>? reactions,
-  Author? author,
+  User? author,
   String? description,
   String? keywords,
   num? startingPrice,
@@ -231,7 +234,7 @@ AdData copyWith({  num? categoryId,
   List<Photos>? get photos => _photos;
   List<Comment>? get comments => _comments;
   List<Reactions>? get reactions => _reactions;
-  Author? get author => _author;
+  User? get author => _author;
   String? get description => _description;
   String? get keywords => _keywords;
   num? get startingPrice => _startingPrice;
@@ -271,41 +274,6 @@ AdData copyWith({  num? categoryId,
 
 }
 
-/// attribute_id : 1
-/// value : "Black"
-
-Attributes attributesFromJson(String str) => Attributes.fromJson(json.decode(str));
-String attributesToJson(Attributes data) => json.encode(data.toJson());
-class Attributes {
-  Attributes({
-      num? attributeId, 
-      String? value,}){
-    _attributeId = attributeId;
-    _value = value;
-}
-
-  Attributes.fromJson(dynamic json) {
-    _attributeId = json['attribute_id'];
-    _value = json['value'];
-  }
-  num? _attributeId;
-  String? _value;
-Attributes copyWith({  num? attributeId,
-  String? value,
-}) => Attributes(  attributeId: attributeId ?? _attributeId,
-  value: value ?? _value,
-);
-  num? get attributeId => _attributeId;
-  String? get value => _value;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['attribute_id'] = _attributeId;
-    map['value'] = _value;
-    return map;
-  }
-
-}
 
 /// client_id : 501
 /// name : "string"
@@ -313,71 +281,6 @@ Attributes copyWith({  num? attributeId,
 /// phone : "963999999999"
 /// address : "string"
 /// photo : "photo.jpg"
-
-Author authorFromJson(String str) => Author.fromJson(json.decode(str));
-String authorToJson(Author data) => json.encode(data.toJson());
-class Author {
-  Author({
-      num? clientId, 
-      String? name, 
-      String? email, 
-      String? phone, 
-      String? address, 
-      String? photo,}){
-    _clientId = clientId;
-    _name = name;
-    _email = email;
-    _phone = phone;
-    _address = address;
-    _photo = photo;
-}
-
-  Author.fromJson(dynamic json) {
-    _clientId = json['client_id'];
-    _name = json['name'];
-    _email = json['email'];
-    _phone = json['phone'];
-    _address = json['address'];
-    _photo = json['photo'];
-  }
-  num? _clientId;
-  String? _name;
-  String? _email;
-  String? _phone;
-  String? _address;
-  String? _photo;
-Author copyWith({  num? clientId,
-  String? name,
-  String? email,
-  String? phone,
-  String? address,
-  String? photo,
-}) => Author(  clientId: clientId ?? _clientId,
-  name: name ?? _name,
-  email: email ?? _email,
-  phone: phone ?? _phone,
-  address: address ?? _address,
-  photo: photo ?? _photo,
-);
-  num? get clientId => _clientId;
-  String? get name => _name;
-  String? get email => _email;
-  String? get phone => _phone;
-  String? get address => _address;
-  String? get photo => _photo;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['client_id'] = _clientId;
-    map['name'] = _name;
-    map['email'] = _email;
-    map['phone'] = _phone;
-    map['address'] = _address;
-    map['photo'] = _photo;
-    return map;
-  }
-
-}
 
 /// reaction_id : 501
 /// reaction_type : "like"

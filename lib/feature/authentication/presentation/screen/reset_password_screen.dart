@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
@@ -14,9 +15,7 @@ import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({
-    super.key,
-  });
+  const ResetPasswordScreen({super.key});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -44,7 +43,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             child: Column(
               children: [
                 AppTextWidget(
-                  text: "Reset Password",
+                  text: "resetPassword".tr(),
                   color: AppColorManager.textAppColor,
                   fontSize: FontSizeManager.fs20,
                   fontWeight: FontWeight.w700,
@@ -52,7 +51,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 SizedBox(height: AppHeightManager.h5),
                 AppTextFormField(
                   textInputType: TextInputType.emailAddress,
-                  hintText: "email",
+                  hintText: "emailHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.username = value;
@@ -60,13 +59,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return "emailRequired".tr();
                     }
                     bool isEmail = RegExp(
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
                         .hasMatch(value);
                     if (!isEmail) {
-                      return 'Invalid email format';
+                      return "invalidEmailFormat".tr();
                     }
                     return null;
                   },
@@ -74,21 +73,22 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 SizedBox(height: AppHeightManager.h1point8),
                 AppTextFormField(
                   textInputType: TextInputType.emailAddress,
-                  hintText: "Code",
+                  hintText: "codeHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.code = value;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your code';
+                      return "codeRequired".tr();
                     }
+                    return null;
                   },
                 ),
                 SizedBox(height: AppHeightManager.h1point8),
                 AppTextFormField(
                   maxLines: 1,
-                  hintText: "New Password",
+                  hintText: "newPasswordHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.password = value;
@@ -96,7 +96,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your new password';
+                      return "newPasswordRequired".tr();
                     }
                     return null;
                   },
@@ -116,7 +116,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 SizedBox(height: AppHeightManager.h1point8),
                 AppTextFormField(
                   maxLines: 1,
-                  hintText: "Confirm New Password",
+                  hintText: "confirmNewPasswordHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.passwordConfirmation = value;
@@ -124,10 +124,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please confirm your new password';
+                      return "confirmPasswordRequired".tr();
                     }
                     if (entity.password != value) {
-                      return 'Passwords do not match';
+                      return "passwordsDoNotMatch".tr();
                     }
                     return null;
                   },
@@ -149,13 +149,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 SizedBox(height: AppHeightManager.h1point8),
                 passwordsMatch
                     ? Text(
-                        'Passwords match',
-                        style: TextStyle(color: Colors.green),
-                      )
+                  "passwordsMatch".tr(),
+                  style: TextStyle(color: Colors.green),
+                )
                     : Text(
-                        'Passwords do not match',
-                        style: TextStyle(color: Colors.red),
-                      ),
+                  "passwordsDoNotMatch".tr(),
+                  style: TextStyle(color: Colors.red),
+                ),
                 SizedBox(height: AppHeightManager.h3),
                 BlocConsumer<ResetCubit, ResetPasswordState>(
                   listener: (context, state) {
@@ -163,13 +163,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       Navigator.of(context).pushNamed(RouteNamedScreens.login);
                       NoteMessage.showSuccessSnackBar(
                         context: context,
-                        text: "Password reset successful",
+                        text: "passwordResetSuccess".tr(),
                       );
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
                         context: context,
-                        text: state.error ?? "Password reset failed",
+                        text: state.error ?? "passwordResetFailed".tr(),
                       );
                     }
                   },
@@ -179,8 +179,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     }
                     return MainAppButton(
                       onTap: () {
-                        if (formKey.currentState?.validate() ??
-                            false && passwordsMatch) {
+                        if (formKey.currentState?.validate() ?? false && passwordsMatch) {
                           context
                               .read<ResetCubit>()
                               .resetPassword(entity: entity, context: context);
@@ -190,7 +189,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       color: AppColorManager.mainColor,
                       alignment: Alignment.center,
                       child: AppTextWidget(
-                        text: "Reset Password",
+                        text: "resetPasswordButton".tr(),
                         color: Colors.white,
                         fontSize: FontSizeManager.fs16,
                         fontWeight: FontWeight.w600,

@@ -35,14 +35,8 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<LoginResponseEntity> login(
       {required LoginRequestEntity entity}) async {
-    print(AppSharedPreferences.getToken());
-    print('tollllll');
-
     final response =
         await ApiMethods().post(body: entity.toJson(), url: ApiPostUrl.login);
-    print("looooooooooooogin");
-    print(response.body);
-    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return loginResponseEntityFromJson(response.body);
     } else {
@@ -53,9 +47,6 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<LogoutResponseEntity> logout() async {
     final response = await ApiMethods().get(url: ApiGetUrl.logout);
-    print("looooooooooooogout");
-    print(response.body);
-    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return logoutResponseEntityFromJson(response.body);
     } else {
@@ -68,9 +59,6 @@ class AuthRemoteImplement extends AuthRemote {
       {required RegisterRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(body: entity.toJson(), url: ApiPostUrl.register);
-    print("regissssssssssssssssssssssster");
-    print(response.body);
-    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return registerResponseEntityFromJson(response.body);
     } else {
@@ -83,9 +71,7 @@ class AuthRemoteImplement extends AuthRemote {
       {required VerificationRequestEntity entity}) async {
     final response =
         await ApiMethods().post(body: entity.toJson(), url: ApiPostUrl.login);
-    print("verfiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiication");
-    print(response.body);
-    print(response.statusCode);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return verificationResponseEntityFromJson(response.body);
     } else {
@@ -98,9 +84,6 @@ class AuthRemoteImplement extends AuthRemote {
     final response = await ApiMethods().post(
         body: entity.toJson(),
         url: ApiPostUrl.resetPassword); // تأكد من أن لديك عنوان URL الصحيح
-    print("Resetting password");
-    print(response.body);
-    print(response.statusCode);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return resetPasswordResponseFromJson(
@@ -115,9 +98,6 @@ class AuthRemoteImplement extends AuthRemote {
     final response = await ApiMethods().post(
         body: entity.toJson(),
         url: ApiPostUrl.forgetpassword); // تأكد من أن لديك عنوان URL الصحيح
-    print("forget password");
-    print(response.body);
-    print(response.statusCode);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return forgetPasswordResponseEntityFromJson(

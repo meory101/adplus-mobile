@@ -15,7 +15,9 @@ class ApiMethods {
 
   ApiMethods({Map<String, String>? header, this.isSecondBaseUrl}) {
     if (header == null) {
-      headers = {'Content-Type': 'application/json'};
+      headers = {'Content-Type': 'application/json',
+      'platform' : 'app'
+      };
       // headers = {
       //   "Content-type": "application/json",
       //   "Accept": "application/json",
@@ -23,10 +25,7 @@ class ApiMethods {
       //   "X-Parse-REST-API-Key": "soa12345",
       //   "lang": AppSharedPreferences.getLanguage()
       // };
-      print('hereeeeeeeeeeeeeeeeeee');
       if (AppSharedPreferences.getToken().isNotEmpty) {
-        print(AppSharedPreferences.getToken());
-        print('token');
         headers['Authorization'] = 'Bearer ${AppSharedPreferences.getToken()}';
       }
     } else {

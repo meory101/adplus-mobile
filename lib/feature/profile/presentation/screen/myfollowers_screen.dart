@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/injection/injection_container.dart' as di;
+import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
@@ -54,14 +56,14 @@ class MyFollowersScreen extends StatelessWidget {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: following?.photo != null
-                        ? NetworkImage('YOUR_BASE_URL/${following?.photo}')
+                        ? NetworkImage('${AppConstantManager.imageBaseUrl}${following?.photo}')
                         : null,
                     child: following?.photo == null
                         ? const Icon(Icons.person)
                         : null,
                   ),
                   title: AppTextWidget(
-                    text: following?.name ?? 'Unknown',
+                    text: following?.name ?? '',
                     fontSize: FontSizeManager.fs16,
                     color: AppColorManager.textAppColor,
                   ),
@@ -70,11 +72,16 @@ class MyFollowersScreen extends StatelessWidget {
                     fontSize: FontSizeManager.fs14,
                     color: AppColorManager.textGrey,
                   ),
-                  trailing: following?.whatsapp != null
-                      ? Icon(
-                          Icons. call,
-                          color: AppColorManager.green,
-                        )
+                  trailing: following?.phone != null
+                      ? IconButton(
+                      splashColor: AppColorManager.transparent,
+                      highlightColor: AppColorManager.transparent,
+                      onPressed: (){
+                        UrlLauncherHelper.makeCall(phoneNumber: following?.phone);
+                  }, icon: Icon(
+                    Icons. call,
+                    color: AppColorManager.green,
+                  ))
                       : null,
                 );
               },

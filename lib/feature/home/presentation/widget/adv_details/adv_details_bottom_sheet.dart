@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
@@ -32,10 +34,11 @@ class AdvDetailsBottomSheet extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadiusManager.r5),
             padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3),
             child: AppTextWidget(
-              text: "whatsapp",
-              fontSize: FontSizeManager.fs15,
+              text: "whatsapp".tr(),
+              fontSize: FontSizeManager.fs16,
               fontWeight: FontWeight.w600,
               color: AppColorManager.white,
+              maxLines: 2,
             ),
           ),
           MainAppButton(
@@ -49,8 +52,10 @@ class AdvDetailsBottomSheet extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadiusManager.r5),
             padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3),
             child: AppTextWidget(
-              text: "message",
-              fontSize: FontSizeManager.fs15,
+              text: "message".tr(),
+              fontSize: FontSizeManager.fs16,
+
+
               fontWeight: FontWeight.w600,
               color: AppColorManager.white,
             ),
@@ -66,8 +71,8 @@ class AdvDetailsBottomSheet extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadiusManager.r5),
             padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3),
             child: AppTextWidget(
-              text: "make call",
-              fontSize: FontSizeManager.fs15,
+              text: "makeCall".tr(),
+              fontSize: FontSizeManager.fs16,
               fontWeight: FontWeight.w600,
               color: AppColorManager.white,
             ),

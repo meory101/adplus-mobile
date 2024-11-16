@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mzad_damascus/core/model/user.dart';
+
 ProfileByUsernameResponseEntity profileByUsernameResponseEntityFromJson(String str) =>
     ProfileByUsernameResponseEntity.fromJson(json.decode(str));
 
@@ -52,28 +54,44 @@ class ProfileByUsernameResponseEntity {
 
 class ProfileByUsernameData {
   ProfileByUsernameData({
-    ProfileUser? user,
+    User? user,
     bool? isVerified,
     bool? captcha,
+    num? followersCount,
+    num? followingCount,
+    num? items,
   }) {
     _user = user;
     _isVerified = isVerified;
     _captcha = captcha;
+      _items = items;
+    _followersCount =followersCount ;
+     _followingCount = followingCount;
   }
 
   ProfileByUsernameData.fromJson(dynamic json) {
-    _user = json['user'] != null ? ProfileUser.fromJson(json['user']) : null;
+    _user = json['user'] != null ? User.fromJson(json['user']) : null;
     _isVerified = json['is_verified'];
+    _items = json['items'];
     _captcha = json['captcha'];
+    _followersCount = json['followers'];
+    _followingCount =  json['following'];
   }
 
-  ProfileUser? _user;
+  User? _user;
   bool? _isVerified;
   bool? _captcha;
+  num? _followersCount;
+  num? _followingCount;
+  num? _items;
 
-  ProfileUser? get user => _user;
+
+  User? get user => _user;
   bool? get isVerified => _isVerified;
   bool? get captcha => _captcha;
+   num? get followersCount => _followersCount;
+  num? get followingCount => _followingCount;
+  num? get items => _items;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -86,90 +104,3 @@ class ProfileByUsernameData {
   }
 }
 
-class ProfileUser {
-  ProfileUser({
-    num? clientId,
-    String? name,
-    String? username,
-    dynamic email,
-    dynamic phone,
-    dynamic whatsapp,
-    dynamic address,
-    String? description,
-    String? photo,
-    num? tokenExpires,
-    num? isVerified,
-    num? errorLogin,
-  }) {
-    _clientId = clientId;
-    _name = name;
-    _username = username;
-    _email = email;
-    _phone = phone;
-    _whatsapp = whatsapp;
-    _address = address;
-    _description = description;
-    _photo = photo;
-    _tokenExpires = tokenExpires;
-    _isVerified = isVerified;
-    _errorLogin = errorLogin;
-  }
-
-  ProfileUser.fromJson(dynamic json) {
-    _clientId = json['client_id'];
-    _name = json['name'];
-    _username = json['username'];
-    _email = json['email'];
-    _phone = json['phone'];
-    _whatsapp = json['whatsapp'];
-    _address = json['address'];
-    _description = json['description'];
-    _photo = json['photo'];
-    _tokenExpires = json['token_expires'];
-    _isVerified = json['is_verified'];
-    _errorLogin = json['error_login'];
-  }
-
-  num? _clientId;
-  String? _name;
-  String? _username;
-  dynamic _email;
-  dynamic _phone;
-  dynamic _whatsapp;
-  dynamic _address;
-  String? _description;
-  String? _photo;
-  num? _tokenExpires;
-  num? _isVerified;
-  num? _errorLogin;
-
-  num? get clientId => _clientId;
-  String? get name => _name;
-  String? get username => _username;
-  dynamic get email => _email;
-  dynamic get phone => _phone;
-  dynamic get whatsapp => _whatsapp;
-  dynamic get address => _address;
-  String? get description => _description;
-  String? get photo => _photo;
-  num? get tokenExpires => _tokenExpires;
-  num? get isVerified => _isVerified;
-  num? get errorLogin => _errorLogin;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['client_id'] = _clientId;
-    map['name'] = _name;
-    map['username'] = _username;
-    map['email'] = _email;
-    map['phone'] = _phone;
-    map['whatsapp'] = _whatsapp;
-    map['address'] = _address;
-    map['description'] = _description;
-    map['photo'] = _photo;
-    map['token_expires'] = _tokenExpires;
-    map['is_verified'] = _isVerified;
-    map['error_login'] = _errorLogin;
-    return map;
-  }
-}
