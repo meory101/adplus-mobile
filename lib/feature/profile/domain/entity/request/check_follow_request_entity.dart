@@ -16,6 +16,11 @@ class CheckFollowRequestEntity {
 CheckFollowRequestEntity copyWith({  num? clientId,
 }) => CheckFollowRequestEntity(  clientId: clientId ?? _clientId,
 );
+
+  set clientId(num? value) {
+    _clientId = value;
+  }
+
   num? get clientId => _clientId;
 
   Map<String, dynamic> toJson() {

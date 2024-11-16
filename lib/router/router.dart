@@ -47,9 +47,11 @@ import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.da
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/check_follow_cubit/check_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/remove_follow_cubit/remove_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
@@ -149,6 +151,12 @@ abstract class AppRouter {
             ),
             BlocProvider(
               create: (context) => di.sl<AddFollowCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<CheckFollowCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<RemoveFollowCubit>(),
             ),
             BlocProvider(create: (context) => di.sl<GetAdvByUserCubit>()),
             BlocProvider(

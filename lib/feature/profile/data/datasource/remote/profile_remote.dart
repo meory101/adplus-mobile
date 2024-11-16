@@ -4,6 +4,7 @@ import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_u
 import 'package:mzad_damascus/feature/profile/domain/entity/request/remove_follow_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/add_follow_response.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/check_follow_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/myfolloweing_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/myfollower_response_entity.dart';
@@ -17,10 +18,11 @@ import '../../../../../core/api/api_methods.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
 
 import '../../../domain/entity/request/add_follow_request_entity.dart';
+import '../../../domain/entity/request/check_follow_request_entity.dart';
 
 abstract class ProfileRemote {
   Future<GetProfileInfoResponseEntity> getProfileInfo();
-  // Future<GetProfileInfoResponseEntity> getProfileInfo();
+  Future<CheckFollowResponseEntity> checkFollow({required CheckFollowRequestEntity entity});
 
   Future<UpdateProfileResponseEntity> updateProfile({
     required UpdateProfileRequestEntity entity,
@@ -155,6 +157,21 @@ class ProfileRemoteImplement extends ProfileRemote {
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return removeFollowResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<CheckFollowResponseEntity> checkFollow({required CheckFollowRequestEntity entity}) async{
+    final response = await ApiMethods().post(
+      url: ApiPostUrl.checkFollow,
+      body: entity.toJson(),
+    );
+
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return checkFollowResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

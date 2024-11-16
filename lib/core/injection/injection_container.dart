@@ -67,15 +67,20 @@ import 'package:mzad_damascus/feature/profile/domain/usecase/get_profile_info_us
 import 'package:mzad_damascus/feature/profile/domain/usecase/myfollowers_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/myfollowing_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/profile_by_username_usecase.dart';
+import 'package:mzad_damascus/feature/profile/domain/usecase/remove_follow_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_image_usecase.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/update_profile_usecase.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/check_follow_cubit/check_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/remove_follow_cubit/remove_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
+
+import '../../feature/profile/domain/usecase/check_follow_uscase.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -83,6 +88,9 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => CheckFollowCubit(usecase: sl()));
+  sl.registerFactory(() => RemoveFollowCubit(usecase: sl()));
+  sl.registerFactory(() => CheckFollowUscase(repository: sl()));
   sl.registerFactory(() => CheckLikeCubit(usecase: sl()));
   sl.registerFactory(() => RemoveLikeCubit(usecase: sl()));
   sl.registerFactory(() => BannersCubit(usecase: sl()));
@@ -93,6 +101,7 @@ Future<void> init() async {
   sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => RemoveFollowUsecase(repository: sl()));
   sl.registerLazySingleton(() => RemoveLikeUsecase(repository: sl()));
   sl.registerLazySingleton(() => CheckLikeUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvByUserUsecase(repository: sl()));

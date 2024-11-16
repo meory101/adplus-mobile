@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/add_follow_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/request/check_follow_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/remove_follow_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/add_follow_response.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/check_follow_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/myfolloweing_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/myfollower_response_entity.dart';
@@ -118,6 +120,16 @@ class ProfileRepositoryImplements implements ProfileRepository {
     return Connector<RemoveFollowResponseEntity>().connect(
       remote: () async {
         final result = await remote.removeFollow(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, CheckFollowResponseEntity>> checkFollow({required CheckFollowRequestEntity entity}) async{
+    return Connector<CheckFollowResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.checkFollow(entity: entity);
         return Right(result);
       },
     );
