@@ -71,23 +71,23 @@ abstract class ApiErrorHandler {
             jsonDecode(failure.response?.body ?? "")['errors'].toString();
         errorEntity.statusCode = failure.response?.statusCode ?? 0;
         errorEntity.errorCode = errorResponseEntity.errorCode;
-        if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
-            'Unauthenticated.') {
-          Navigator.of(buildContext).pushNamed(
-            RouteNamedScreens.login,
-
-          );
-        }
+        // if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
+        //     'Unauthenticated.') {
+        //   Navigator.of(buildContext).pushNamed(
+        //     RouteNamedScreens.login,
+        //
+        //   );
+        // }
       } catch (e) {
         errorEntity.errorMessage =
             jsonDecode(failure.response?.body ?? "")['errors'].toString();
-        if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
-            'Unauthenticated.') {
-          Navigator.of(buildContext).pushNamed(
-            RouteNamedScreens.login,
-
-          );
-        }
+        // if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
+        //     'Unauthenticated.') {
+        //   Navigator.of(buildContext).pushNamed(
+        //     RouteNamedScreens.login,
+        //
+        //   );
+        // }
       }
     }
     return Future.value(errorEntity);
