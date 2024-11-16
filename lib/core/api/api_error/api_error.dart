@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/router/router.dart';
 
@@ -71,6 +72,7 @@ abstract class ApiErrorHandler {
             jsonDecode(failure.response?.body ?? "")['errors'].toString();
         errorEntity.statusCode = failure.response?.statusCode ?? 0;
         errorEntity.errorCode = errorResponseEntity.errorCode;
+        AppSharedPreferences.clear();
         // if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
         //     'Unauthenticated.') {
         //   Navigator.of(buildContext).pushNamed(
@@ -81,13 +83,15 @@ abstract class ApiErrorHandler {
       } catch (e) {
         errorEntity.errorMessage =
             jsonDecode(failure.response?.body ?? "")['errors'].toString();
+        AppSharedPreferences.clear();
+
         // if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
-        //     'Unauthenticated.') {
-        //   Navigator.of(buildContext).pushNamed(
-        //     RouteNamedScreens.login,
-        //
-        //   );
-        // }
+       //      'Unauthenticated.') {
+       //    Navigator.of(buildContext).pushNamed(
+       //      RouteNamedScreens.login,
+       //
+       //    );
+       //  }
       }
     }
     return Future.value(errorEntity);
