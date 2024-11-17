@@ -35,6 +35,9 @@ class ApiPostUrl {
   static String checkLike = "api/reaction/checkLike";
   static String removeLike = "api/reaction/removeLike";
   static String checkFollow = "api/following/checkFollow";
+  static String addToFavorite = "api/reaction/addToFavorite";
+  static String checkFavorite = "api/reaction/checkFavorite";
+  static String removeFavorite = "api/reaction/removeFavorite";
 }
 
 class ApiDeleteUrl {}
