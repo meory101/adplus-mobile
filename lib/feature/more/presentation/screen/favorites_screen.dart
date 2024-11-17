@@ -17,7 +17,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(title: "favorite".tr()),
+      appBar: MainAppBar(title: "favourite".tr()),
       body:  const FavoriteListView(),
     );
   }

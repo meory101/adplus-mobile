@@ -142,10 +142,11 @@ abstract class AppRouter {
           page: MultiBlocProvider(
             providers: [
               BlocProvider(
-                  create: (context) => di.sl<FavoritesCubit>()
-                    ..getMyFavorites(
-                        context: context,
-                        entity: MyFavoritesRequestEntity(page: 1))),
+                create: (context) => di.sl<FavoritesCubit>()
+                  ..getMyFavorites(
+                      context: context,
+                      entity: MyFavoritesRequestEntity(page: 1)),
+              ),
             ],
             child: const FavoritesScreen(),
           ),
