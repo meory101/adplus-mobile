@@ -18,6 +18,11 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/verficat
 import 'package:mzad_damascus/feature/authentication/presentation/screen/forget_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
+import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
+import 'package:mzad_damascus/feature/favorite/domain/usecase/add_favorite_uscase.dart';
+import 'package:mzad_damascus/feature/favorite/domain/usecase/check_favorite_usecase.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/add_favorite_cubit/add_favorite_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/remove_favorite_cubit/remove_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
@@ -64,6 +69,7 @@ import '../feature/advertisement/presentation/screen/advertisement_category_scre
 import '../feature/advertisement/presentation/screen/advertisement_language_screen.dart';
 import '../feature/authentication/presentation/screen/login_screen.dart';
 import '../feature/authentication/presentation/screen/register_screen.dart';
+import '../feature/favorite/presentation/cubit/check_favorite_cubit/check_favorite_cubit.dart';
 import '../feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import '../feature/intro/presentation/screen/splash_screen.dart';
 
@@ -256,6 +262,19 @@ abstract class AppRouter {
             ),
             BlocProvider(
               create: (context) => di.sl<AddCommentCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<CheckFavoriteCubit>()
+                ..checkFavorite(
+                    context: context,
+                    entity: FavoriteRequestEntity(
+                        itemId: argument.advertisement?.itemId)),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<AddFavoriteCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<RemoveFavoriteCubit>(),
             ),
           ],
           child: AdvertisementDetailsScreen(

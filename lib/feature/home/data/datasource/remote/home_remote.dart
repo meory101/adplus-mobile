@@ -172,9 +172,6 @@ class HomeRemoteImplement extends HomeRemote {
     await ApiMethods().post(
         body: entity.toJson(),
         url: ApiPostUrl.checkLike);
-    print(response.body);
-    print(response.statusCode);
-    print('ffffffffffffffffffffffffffffff');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return checkLikeResponseEntityFromJson(response.body);
     } else {

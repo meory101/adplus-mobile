@@ -24,7 +24,7 @@ class FavoriteRemoteImplement extends FavoriteRemote {
 
   @override
   Future<bool> addFavorite({required FavoriteRequestEntity entity})async {
-    final response = await ApiMethods().get(url: ApiPostUrl.addToFavorite);
+    final response = await ApiMethods().post(url: ApiPostUrl.addToFavorite, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {
@@ -34,7 +34,7 @@ class FavoriteRemoteImplement extends FavoriteRemote {
 
   @override
   Future<CheckFavoriteResponseEntity> checkFavorite({required FavoriteRequestEntity entity}) async{
-    final response = await ApiMethods().get(url: ApiPostUrl.checkFavorite);
+    final response = await ApiMethods().post(url: ApiPostUrl.checkFavorite, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return checkFavoriteResponseEntityFromJson(response.body);
     } else {
@@ -44,7 +44,7 @@ class FavoriteRemoteImplement extends FavoriteRemote {
 
   @override
   Future<bool> removeFavorite({required FavoriteRequestEntity entity}) async{
-    final response = await ApiMethods().get(url: ApiPostUrl.removeFavorite);
+    final response = await ApiMethods().post(url: ApiPostUrl.removeFavorite, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {

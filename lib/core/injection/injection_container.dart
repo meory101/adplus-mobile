@@ -23,6 +23,15 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%2
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/reset_password_cubit/reset_password__cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/data/datasource/remote/favorite_remote.dart';
+import 'package:mzad_damascus/feature/favorite/data/repository/favorite_repository_impl.dart';
+import 'package:mzad_damascus/feature/favorite/domain/repository/favorite_repository.dart';
+import 'package:mzad_damascus/feature/favorite/domain/usecase/add_favorite_uscase.dart';
+import 'package:mzad_damascus/feature/favorite/domain/usecase/check_favorite_usecase.dart';
+import 'package:mzad_damascus/feature/favorite/domain/usecase/remove_follow_usecase.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/add_favorite_cubit/add_favorite_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/check_favorite_cubit/check_favorite_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/remove_favorite_cubit/remove_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.dart';
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
@@ -183,4 +192,16 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetMyFollowersUsecase(repository: sl()));
   sl.registerFactory(() => MyFollowingCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetMyFollowingUsecase(repository: sl()));
+
+  sl.registerFactory(() => CheckFavoriteCubit(usecase: sl()));
+  sl.registerFactory(() => RemoveFavoriteCubit(usecase: sl()));
+  sl.registerFactory(() => AddFavoriteCubit(usecase: sl()));
+  sl.registerFactory(() => CheckFavoriteUscase(repository: sl()));
+  sl.registerFactory(() => AddFavoriteUscase(repository: sl()));
+  sl.registerFactory(() => RemoveFavoriteUscase(repository: sl()));
+
+  sl.registerLazySingleton<FavoriteRepository>(
+          () => FavoriteRepositoryImpl(remote: sl()));
+  sl.registerLazySingleton<FavoriteRemote>(() => FavoriteRemoteImplement());
+
 }
