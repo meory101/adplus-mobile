@@ -36,6 +36,9 @@ void main() async {
         Locale(
           AppKeyManager.englishLocalizationCode,
         ),
+        Locale(
+          AppKeyManager.englishLocalizationCode,
+        ),
       ],
       path: AppConstantManager.assetTranslationPath,
       fallbackLocale: const Locale(
