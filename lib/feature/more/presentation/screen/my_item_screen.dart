@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
@@ -29,7 +31,12 @@ class MyItemsScreen extends StatefulWidget {
 }
 
 class _MyItemsScreenState extends State<MyItemsScreen> {
-  final List<String> filters = ['All', 'Active', 'underreview', 'rejected'];
+  final List<String> filters = [
+    'all'.tr(),
+    'active'.tr(),
+    'inReview'.tr(),
+    'rejected'.tr()
+  ];
   int selectedFilterIndex = 0;
 
   @override
@@ -50,7 +57,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(title: "My Ads"),
+      appBar:  MainAppBar(title: "myAds".tr()),
       body: BlocConsumer<MyitemCubit, MyitemState>(
         listener: (context, state) {
           if (state.status == CubitStatus.error && state.error.isNotEmpty) {
@@ -159,7 +166,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                      SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       '${item.startingPrice ?? 0}',
                       style: const TextStyle(
@@ -198,11 +205,11 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                           width: AppWidthManager.w5,
                         ),
                         Text(
-                          '${EnumManager.advsStateCode[item.status] ?? 0}',
+                          (EnumManager.advsStateCode[item.status] ?? "").tr(),
                           style: TextStyle(
                             color: EnumManager.advsStateColor[item.status] ??
                                 AppColorManager.amber,
-                            fontSize: FontSizeManager.fs16,
+                            fontSize: FontSizeManager.fs14,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

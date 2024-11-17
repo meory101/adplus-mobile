@@ -51,6 +51,7 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cu
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/favorites_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
@@ -102,6 +103,7 @@ abstract class RouteNamedScreens {
   static const String editpassword = "/editpassword";
   static const String myitem = "/myitem";
   static const String authorProfile = '/author-profile';
+  static const String favorites = '/favorites';
 }
 
 abstract class AppRouter {
@@ -134,6 +136,20 @@ abstract class AppRouter {
             args: argument,
           ),
         ));
+
+      case RouteNamedScreens.favorites:
+        return FadeBuilderRoute(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (context) => di.sl<FavoritesCubit>()
+                    ..getMyFavorites(
+                        context: context,
+                        entity: MyFavoritesRequestEntity(page: 1))),
+            ],
+            child: const FavoritesScreen(),
+          ),
+        );
       case RouteNamedScreens.myitem:
         return FadeBuilderRoute(
           page: BlocProvider(
@@ -364,20 +380,17 @@ abstract class AppRouter {
             BlocProvider(
               create: (context) => di.sl<BannersCubit>(),
             ),
-
             BlocProvider(
-              create: (context) =>
-              di.sl<CommentCubit>(),
+              create: (context) => di.sl<CommentCubit>(),
             ),
             BlocProvider(
-              create: (context) =>
-                  di.sl<LikesCubit>(),
+              create: (context) => di.sl<LikesCubit>(),
             ),
             BlocProvider(
-              create: (context) =>
-                  di.sl<FavoritesCubit>()..getMyFavorites(context: context, entity: MyFavoritesRequestEntity(
-                    page: 1
-                  )),
+              create: (context) => di.sl<FavoritesCubit>()
+                ..getMyFavorites(
+                    context: context,
+                    entity: MyFavoritesRequestEntity(page: 1)),
             ),
             BlocProvider(
               create: (context) =>
