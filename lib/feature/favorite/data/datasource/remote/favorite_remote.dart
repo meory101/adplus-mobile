@@ -1,4 +1,5 @@
 import 'package:mzad_damascus/feature/favorite/domain/entity/response/check_favorite_response_entity.dart';
+import 'package:mzad_damascus/feature/favorite/domain/entity/response/favorites_response_entity.dart';
 import '../../../../../core/api/api_error/api_exception.dart';
 import '../../../../../core/api/api_error/api_status_code.dart';
 import '../../../../../core/api/api_links.dart';
@@ -13,6 +14,9 @@ abstract class FavoriteRemote {
     required FavoriteRequestEntity entity,
   });
   Future<bool> removeFavorite({
+    required FavoriteRequestEntity entity,
+  });
+  Future<FavoritesResponseEntity> getMyFavorites({
     required FavoriteRequestEntity entity,
   });
 
@@ -47,6 +51,16 @@ class FavoriteRemoteImplement extends FavoriteRemote {
     final response = await ApiMethods().post(url: ApiPostUrl.removeFavorite, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<FavoritesResponseEntity> getMyFavorites({required FavoriteRequestEntity entity})async {
+    final response = await ApiMethods().post(url: ApiPostUrl.myFavoriteItems, body: entity.toJson());
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return favoritesResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

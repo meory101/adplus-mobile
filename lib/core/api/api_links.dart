@@ -38,6 +38,7 @@ class ApiPostUrl {
   static String addToFavorite = "api/reaction/addToFavorite";
   static String checkFavorite = "api/reaction/checkFavorite";
   static String removeFavorite = "api/reaction/removeFavorite";
+  static String myFavoriteItems = "api/item/myFavoriteItems";
 }
 
 class ApiDeleteUrl {}
