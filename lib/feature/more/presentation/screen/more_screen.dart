@@ -11,12 +11,12 @@ import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
-import 'package:mzad_damascus/feature/advertisement/presentation/widget/dialog/language_dialog.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_state.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
+import '../widget/dialog/language_dialog.dart';
 import '../widget/more_list_tile.dart';
 
 class MoreScreen extends StatelessWidget {
