@@ -36,11 +36,6 @@ import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.da
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/add_comment_usecase.dart';
-import 'package:mzad_damascus/feature/home/domain/usecase/add_reaction_usecase.dart';
-import 'package:mzad_damascus/feature/home/domain/usecase/banners_usecase.dart';
-import 'package:mzad_damascus/feature/home/domain/usecase/check_like_usecase.dart';
-import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_by_user_usecase.dart';
-import 'package:mzad_damascus/feature/home/domain/usecase/get_adv_details_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_advs_by_attribute_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
@@ -88,6 +83,15 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_user
 import 'package:mzad_damascus/feature/profile/presentation/cubit/remove_follow_cubit/remove_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
+import '../../feature/home/domain/usecase/add_reaction_usecase.dart';
+import '../../feature/home/domain/usecase/banners_usecase.dart';
+import '../../feature/home/domain/usecase/get_adv_by_user_usecase.dart';
+import '../../feature/home/domain/usecase/get_adv_details_usecase.dart';
+import '../../feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
+import '../../feature/profile/domain/usecase/add_follow_usecase.dart';
+import '../../feature/profile/domain/usecase/profile_by_username_usecase.dart';
+import '../../feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
+import '../../feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 
 import '../../feature/profile/domain/usecase/check_follow_uscase.dart';
 
@@ -119,6 +123,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddCommentUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetCommentsUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvsByAttributeUsecase(repository: sl()));
+
   sl.registerLazySingleton(
       () => GetCategoryInsidePageUsecase(repository: sl()));
   sl.registerLazySingleton<HomeRepository>(
@@ -158,7 +163,6 @@ Future<void> init() async {
 /////////////////
   sl.registerFactory(() => ResetCubit(usecase: sl()));
   sl.registerLazySingleton(() => ResetPasswordUsecase(repository: sl()));
-
   sl.registerFactory(() => ForgetPasswordCubit(usecase: sl()));
   sl.registerLazySingleton(() => ForgetPasswordUsecase(repository: sl()));
   sl.registerLazySingleton<AuthRepository>(

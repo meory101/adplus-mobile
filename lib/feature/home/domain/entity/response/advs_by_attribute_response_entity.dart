@@ -5,21 +5,28 @@ import 'package:mzad_damascus/core/model/user.dart';
 import '../../../../../core/model/comment.dart';
 import '../../../../../core/model/pagination.dart';
 import 'get_adv_details_response_entity.dart';
+
 /// success : true
 /// message : "Items retrieved successfully."
 /// data : {"adData":[{"category_id":1,"city_id":1,"name":"Electronics","bidding_status":1,"photos":[{"image_id":1,"photo":"photo.jpg"}],"comments":[{"comment_id":101,"client_id":101,"item_id":45,"comment":"This is a great item!","created_at":"2024-09-16T12:00:00Z"}],"reactions":[{"reaction_id":501,"reaction_type":"like","item_id":45,"client_id":45,"created_at":"2024-09-16T12:00:00Z"}],"author":[{"client_id":501,"name":"string","email":"string","phone":"963999999999","address":"string","photo":"photo.jpg"}],"description":"Category description","keywords":"electronics, gadgets","starting_price":50000,"min_increase_price":10000,"bidding_start_time":"2024-10-01T12:00:00Z","attributes":[{"attribute_id":1,"value":"Black"}]}],"pagination":{"total_items":100,"total_pages":10,"current_page":1,"per_page":10}}
 
-AdvsByAttributeResponseEntity advsByAttributeResponseEntityFromJson(String str) => AdvsByAttributeResponseEntity.fromJson(json.decode(str));
-String advsByAttributeResponseEntityToJson(AdvsByAttributeResponseEntity data) => json.encode(data.toJson());
+AdvsByAttributeResponseEntity advsByAttributeResponseEntityFromJson(
+        String str) =>
+    AdvsByAttributeResponseEntity.fromJson(json.decode(str));
+String advsByAttributeResponseEntityToJson(
+        AdvsByAttributeResponseEntity data) =>
+    json.encode(data.toJson());
+
 class AdvsByAttributeResponseEntity {
   AdvsByAttributeResponseEntity({
-      bool? success, 
-      String? message, 
-      Data? data,}){
+    bool? success,
+    String? message,
+    Data? data,
+  }) {
     _success = success;
     _message = message;
     _data = data;
-}
+  }
 
   AdvsByAttributeResponseEntity.fromJson(dynamic json) {
     _success = json['success'];
@@ -29,13 +36,16 @@ class AdvsByAttributeResponseEntity {
   bool? _success;
   String? _message;
   Data? _data;
-AdvsByAttributeResponseEntity copyWith({  bool? success,
-  String? message,
-  Data? data,
-}) => AdvsByAttributeResponseEntity(  success: success ?? _success,
-  message: message ?? _message,
-  data: data ?? _data,
-);
+  AdvsByAttributeResponseEntity copyWith({
+    bool? success,
+    String? message,
+    Data? data,
+  }) =>
+      AdvsByAttributeResponseEntity(
+        success: success ?? _success,
+        message: message ?? _message,
+        data: data ?? _data,
+      );
   bool? get success => _success;
   String? get message => _message;
   Data? get data => _data;
@@ -49,7 +59,6 @@ AdvsByAttributeResponseEntity copyWith({  bool? success,
     }
     return map;
   }
-
 }
 
 /// adData : [{"category_id":1,"city_id":1,"name":"Electronics","bidding_status":1,"photos":[{"image_id":1,"photo":"photo.jpg"}],"comments":[{"comment_id":101,"client_id":101,"item_id":45,"comment":"This is a great item!","created_at":"2024-09-16T12:00:00Z"}],"reactions":[{"reaction_id":501,"reaction_type":"like","item_id":45,"client_id":45,"created_at":"2024-09-16T12:00:00Z"}],"author":[{"client_id":501,"name":"string","email":"string","phone":"963999999999","address":"string","photo":"photo.jpg"}],"description":"Category description","keywords":"electronics, gadgets","starting_price":50000,"min_increase_price":10000,"bidding_start_time":"2024-10-01T12:00:00Z","attributes":[{"attribute_id":1,"value":"Black"}]}]
@@ -57,10 +66,12 @@ AdvsByAttributeResponseEntity copyWith({  bool? success,
 
 Data dataFromJson(String str) => Data.fromJson(json.decode(str));
 String dataToJson(Data data) => json.encode(data.toJson());
+
 class Data {
   Data({
     List<AdData>? adData,
-    Pagination? pagination,}) {
+    Pagination? pagination,
+  }) {
     _adData = adData;
     _pagination = pagination;
   }
@@ -72,17 +83,20 @@ class Data {
         _adData?.add(AdData.fromJson(v));
       });
     }
-    _pagination =
-    json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
+    _pagination = json['pagination'] != null
+        ? Pagination.fromJson(json['pagination'])
+        : null;
   }
 
   List<AdData>? _adData;
   Pagination? _pagination;
 
-  Data copyWith({ List<AdData>? adData,
+  Data copyWith({
+    List<AdData>? adData,
     Pagination? pagination,
   }) =>
-      Data(adData: adData ?? _adData,
+      Data(
+        adData: adData ?? _adData,
         pagination: pagination ?? _pagination,
       );
 
@@ -102,35 +116,40 @@ class Data {
   }
 }
 
-
-
 AdData adDataFromJson(String str) => AdData.fromJson(json.decode(str));
 String adDataToJson(AdData data) => json.encode(data.toJson());
+
 class AdData {
   AdData({
-      num? categoryId, 
-      num? cityId, 
-      String? name, 
-      num? biddingStatus, 
-      List<Photos>? photos, 
-      List<Comment>? comments,
-      List<Reactions>? reactions,
+    num? categoryId,
+    num? cityId,
+    num? commentCount,
+    num? likeCount,
+    num? status,
+    String? name,
+    num? biddingStatus,
+    List<Photos>? photos,
+    List<Comment>? comments,
+    List<Reactions>? reactions,
     User? author,
-      String? description, 
-      String? keywords, 
-      num? startingPrice, 
-      num? minIncreasePrice,
+    String? description,
+    String? keywords,
+    num? startingPrice,
+    num? minIncreasePrice,
     num? itemId,
-      String? biddingStartTime, 
-      List<Attributes>? attributes,}){
+    String? biddingStartTime,
+    List<Attributes>? attributes,
+  }) {
     _categoryId = categoryId;
     _cityId = cityId;
     _name = name;
     _biddingStatus = biddingStatus;
     _photos = photos;
-     _itemId = itemId;
-
-        _comments = comments;
+    _itemId = itemId;
+    _commentCount = commentCount;
+    _likeCount = likeCount;
+    _status = status;
+    _comments = comments;
     _reactions = reactions;
     _author = author;
     _description = description;
@@ -139,12 +158,15 @@ class AdData {
     _minIncreasePrice = minIncreasePrice;
     _biddingStartTime = biddingStartTime;
     _attributes = attributes;
-}
+  }
 
   AdData.fromJson(dynamic json) {
     _categoryId = json['category_id'];
     _cityId = json['city_id'];
     _name = json['name'];
+    _commentCount = json['comment_count'];
+    _likeCount = json['like_count'];
+    _status = json['under_review'];
     _biddingStatus = json['bidding_status'];
     _itemId = json['item_id'];
     if (json['photos'] != null) {
@@ -166,7 +188,7 @@ class AdData {
       });
     }
     if (json['author'] != null) {
-        _author=(User.fromJson(json['author']));
+      _author = (User.fromJson(json['author']));
     }
     _description = json['description'];
     _keywords = json['keywords'];
@@ -185,6 +207,9 @@ class AdData {
   String? _name;
   num? _biddingStatus;
   num? _itemId;
+  num? _commentCount;
+  num? _likeCount;
+  num? _status;
   List<Photos>? _photos;
   List<Comment>? _comments;
   List<Reactions>? _reactions;
@@ -195,41 +220,52 @@ class AdData {
   num? _minIncreasePrice;
   String? _biddingStartTime;
   List<Attributes>? _attributes;
-AdData copyWith({  num? categoryId,
-  num? itemId,
-  num? cityId,
-  String? name,
-  num? biddingStatus,
-  List<Photos>? photos,
-  List<Comment>? comments,
-  List<Reactions>? reactions,
-  User? author,
-  String? description,
-  String? keywords,
-  num? startingPrice,
-  num? minIncreasePrice,
-  String? biddingStartTime,
-  List<Attributes>? attributes,
-}) => AdData(  categoryId: categoryId ?? _categoryId,
-  cityId: cityId ?? _cityId,
-
-  itemId : _itemId ?? _itemId,
-  name: name ?? _name,
-  biddingStatus: biddingStatus ?? _biddingStatus,
-  photos: photos ?? _photos,
-  comments: comments ?? _comments,
-  reactions: reactions ?? _reactions,
-  author: author ?? _author,
-  description: description ?? _description,
-  keywords: keywords ?? _keywords,
-  startingPrice: startingPrice ?? _startingPrice,
-  minIncreasePrice: minIncreasePrice ?? _minIncreasePrice,
-  biddingStartTime: biddingStartTime ?? _biddingStartTime,
-  attributes: attributes ?? _attributes,
-);
+  AdData copyWith({
+    num? categoryId,
+    num? itemId,
+    num? cityId,
+    String? name,
+    num? commentCount,
+    num? likeCount,
+    num? status,
+    num? biddingStatus,
+    List<Photos>? photos,
+    List<Comment>? comments,
+    List<Reactions>? reactions,
+    User? author,
+    String? description,
+    String? keywords,
+    num? startingPrice,
+    num? minIncreasePrice,
+    String? biddingStartTime,
+    List<Attributes>? attributes,
+  }) =>
+      AdData(
+        categoryId: categoryId ?? _categoryId,
+        cityId: cityId ?? _cityId,
+        itemId: _itemId ?? _itemId,
+        name: name ?? _name,
+        commentCount: commentCount ?? _commentCount,
+        likeCount: likeCount ?? _likeCount,
+        status: status ?? status,
+        biddingStatus: biddingStatus ?? _biddingStatus,
+        photos: photos ?? _photos,
+        comments: comments ?? _comments,
+        reactions: reactions ?? _reactions,
+        author: author ?? _author,
+        description: description ?? _description,
+        keywords: keywords ?? _keywords,
+        startingPrice: startingPrice ?? _startingPrice,
+        minIncreasePrice: minIncreasePrice ?? _minIncreasePrice,
+        biddingStartTime: biddingStartTime ?? _biddingStartTime,
+        attributes: attributes ?? _attributes,
+      );
   num? get categoryId => _categoryId;
   num? get cityId => _cityId;
   String? get name => _name;
+  num? get commentCount => _commentCount;
+  num? get likeCount => _likeCount;
+  num? get status => _status;
   num? get biddingStatus => _biddingStatus;
   List<Photos>? get photos => _photos;
   List<Comment>? get comments => _comments;
@@ -241,7 +277,7 @@ AdData copyWith({  num? categoryId,
   num? get minIncreasePrice => _minIncreasePrice;
   String? get biddingStartTime => _biddingStartTime;
   List<Attributes>? get attributes => _attributes;
- num? get     itemId => _itemId;
+  num? get itemId => _itemId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -262,6 +298,9 @@ AdData copyWith({  num? categoryId,
     //   map['author'] = _author?.map((v) => v.toJson()).toList();
     // }
     map['description'] = _description;
+    map['under_review'] = _status;
+    map['like_count'] = _likeCount;
+    map['comment_count'] = _commentCount;
     map['keywords'] = _keywords;
     map['starting_price'] = _startingPrice;
     map['min_increase_price'] = _minIncreasePrice;
@@ -271,9 +310,7 @@ AdData copyWith({  num? categoryId,
     }
     return map;
   }
-
 }
-
 
 /// client_id : 501
 /// name : "string"
@@ -290,19 +327,21 @@ AdData copyWith({  num? categoryId,
 
 Reactions reactionsFromJson(String str) => Reactions.fromJson(json.decode(str));
 String reactionsToJson(Reactions data) => json.encode(data.toJson());
+
 class Reactions {
   Reactions({
-      num? reactionId, 
-      String? reactionType, 
-      num? itemId, 
-      num? clientId, 
-      String? createdAt,}){
+    num? reactionId,
+    String? reactionType,
+    num? itemId,
+    num? clientId,
+    String? createdAt,
+  }) {
     _reactionId = reactionId;
     _reactionType = reactionType;
     _itemId = itemId;
     _clientId = clientId;
     _createdAt = createdAt;
-}
+  }
 
   Reactions.fromJson(dynamic json) {
     _reactionId = json['reaction_id'];
@@ -316,17 +355,20 @@ class Reactions {
   num? _itemId;
   num? _clientId;
   String? _createdAt;
-Reactions copyWith({  num? reactionId,
-  String? reactionType,
-  num? itemId,
-  num? clientId,
-  String? createdAt,
-}) => Reactions(  reactionId: reactionId ?? _reactionId,
-  reactionType: reactionType ?? _reactionType,
-  itemId: itemId ?? _itemId,
-  clientId: clientId ?? _clientId,
-  createdAt: createdAt ?? _createdAt,
-);
+  Reactions copyWith({
+    num? reactionId,
+    String? reactionType,
+    num? itemId,
+    num? clientId,
+    String? createdAt,
+  }) =>
+      Reactions(
+        reactionId: reactionId ?? _reactionId,
+        reactionType: reactionType ?? _reactionType,
+        itemId: itemId ?? _itemId,
+        clientId: clientId ?? _clientId,
+        createdAt: createdAt ?? _createdAt,
+      );
   num? get reactionId => _reactionId;
   String? get reactionType => _reactionType;
   num? get itemId => _itemId;
@@ -342,17 +384,16 @@ Reactions copyWith({  num? reactionId,
     map['created_at'] = _createdAt;
     return map;
   }
-
 }
-
-
 
 Photos photosFromJson(String str) => Photos.fromJson(json.decode(str));
 String photosToJson(Photos data) => json.encode(data.toJson());
+
 class Photos {
   Photos({
     num? imageId,
-    String? photo,}) {
+    String? photo,
+  }) {
     _imageId = imageId;
     _photo = photo;
   }
@@ -365,10 +406,12 @@ class Photos {
   num? _imageId;
   String? _photo;
 
-  Photos copyWith({ num? imageId,
+  Photos copyWith({
+    num? imageId,
     String? photo,
   }) =>
-      Photos(imageId: imageId ?? _imageId,
+      Photos(
+        imageId: imageId ?? _imageId,
         photo: photo ?? _photo,
       );
 

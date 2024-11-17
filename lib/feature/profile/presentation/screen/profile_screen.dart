@@ -6,6 +6,7 @@ import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/profile_info_card.dart';
@@ -31,6 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     initProfileScreen();
     super.initState();
+    print(
+        "ssssssssssssssssssssssstokeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen");
+    print(AppSharedPreferences.getToken());
   }
 
   initProfileScreen() {

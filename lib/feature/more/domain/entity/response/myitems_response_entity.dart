@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import '../../../../home/domain/entity/response/advs_by_attribute_response_entity.dart';
 
-// دوال للتحويل بين JSON وكائنات الدارت
-MyItemResponseEntity myItemResponseEntityFromJson(String str) =>
+ MyItemResponseEntity myItemResponseEntityFromJson(String str) =>
     MyItemResponseEntity.fromJson(json.decode(str));
 String myItemResponseEntityToJson(MyItemResponseEntity data) =>
     json.encode(data.toJson());
@@ -200,42 +199,72 @@ class Reaction {
 }
 
 class Author {
-  Author(
-      {num? clientId,
-      String? name,
-      String? email,
-      String? phone,
-      String? address,
-      String? photo}) {
+  Author({
+    num? clientId,
+    String? name,
+    String? username,
+    dynamic email,
+    dynamic phone,
+    dynamic whatsapp,
+    dynamic address,
+    String? description,
+    String? photo,
+    num? tokenExpires,
+    num? isVerified,
+    num? errorLogin,
+  }) {
     _clientId = clientId;
     _name = name;
+    _username = username;
     _email = email;
     _phone = phone;
+    _whatsapp = whatsapp;
     _address = address;
+    _description = description;
     _photo = photo;
+    _tokenExpires = tokenExpires;
+    _isVerified = isVerified;
+    _errorLogin = errorLogin;
   }
 
   num? _clientId;
   String? _name;
-  String? _email;
-  String? _phone;
-  String? _address;
+  String? _username;
+  dynamic _email;
+  dynamic _phone;
+  dynamic _whatsapp;
+  dynamic _address;
+  String? _description;
   String? _photo;
+  num? _tokenExpires;
+  num? _isVerified;
+  num? _errorLogin;
 
   num? get clientId => _clientId;
   String? get name => _name;
-  String? get email => _email;
-  String? get phone => _phone;
-  String? get address => _address;
+  String? get username => _username;
+  dynamic get email => _email;
+  dynamic get phone => _phone;
+  dynamic get whatsapp => _whatsapp;
+  dynamic get address => _address;
+  String? get description => _description;
   String? get photo => _photo;
+  num? get tokenExpires => _tokenExpires;
+  num? get isVerified => _isVerified;
+  num? get errorLogin => _errorLogin;
 
   Author.fromJson(Map<String, dynamic> json) {
     _clientId = json['client_id'];
     _name = json['name'];
+    _username = json['username'];
     _email = json['email'];
     _phone = json['phone'];
+    _whatsapp = json['whatsapp'];
     _address = json['address'];
+    _description = json['description'];
     _photo = json['photo'];
+    _tokenExpires = json['token_expires'];
+    _isVerified = json['is_verified'];
   }
 
   Map<String, dynamic> toJson() {
@@ -298,7 +327,7 @@ class Pagination {
     _perPage = json['per_page'];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {                                          
     final map = <String, dynamic>{};
     map['total_items'] = _totalItems;
     map['total_pages'] = _totalPages;
