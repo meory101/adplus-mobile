@@ -1,29 +1,29 @@
-part of 'favorites_cubit.dart';
+part of 'likes_cubit.dart';
 
 /// Eng.Nour Othman(meory)*
 
 
-class FavoritesState extends Equatable {
+class LikesState extends Equatable {
   final String error;
   final CubitStatus status;
-  final FavoritesResponseEntity entity;
+  final LikesResponseEntity entity;
 
-  const FavoritesState(
+  const LikesState(
       {required this.error, required this.status, required this.entity});
 
-  factory FavoritesState.initial() {
-    return FavoritesState(
-        entity: FavoritesResponseEntity(),
+  factory LikesState.initial() {
+    return LikesState(
+        entity: LikesResponseEntity(),
         error: '',
         status: CubitStatus.initial);
   }
 
-  FavoritesState copyWith({
+  LikesState copyWith({
     String? error,
     CubitStatus? status,
-    FavoritesResponseEntity? entity,
+    LikesResponseEntity? entity,
   }) {
-    return FavoritesState(
+    return LikesState(
         error: error ?? this.error,
         status: status ?? this.status,
         entity: entity ?? this.entity);

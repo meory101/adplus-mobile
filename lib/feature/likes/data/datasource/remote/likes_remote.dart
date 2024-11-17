@@ -15,7 +15,7 @@ abstract class LikesRemote {
 
 }
 
-class FavoriteRemoteImplement extends LikesRemote {
+class LikesRemoteImplement extends LikesRemote {
   @override
   Future<LikesResponseEntity> getItemsHasReactions({required LikesRequestEntity entity})async {
     final response = await ApiMethods().post(url: ApiPostUrl.getItemsHasReactions, body: entity.toJson());

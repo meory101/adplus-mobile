@@ -13,6 +13,7 @@ class ApiPostUrl {
   static String addComment = "api/comment/postComments";
   static String getCategoryInsidePage = "api/category/inside-page";
   static String login = "api/auth/login";
+  static String getMyCommentsWithItems = "api/item/getMyCommentsWithItems";
   static String register = "api/auth/register";
   static String resetPassword = "api/auth/resetPassword";
   static String forgetpassword = "api/auth/forgotPassword";

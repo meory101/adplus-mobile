@@ -2,28 +2,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mzad_damascus/feature/comment/domain/entity/response/comments_response_entity.dart';
+import 'package:mzad_damascus/feature/comment/domain/usecase/comments_usecase.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
-import 'package:mzad_damascus/feature/favorite/domain/usecase/favorites_usecase.dart';
+import 'package:mzad_damascus/feature/favorite/domain/usecase/add_favorite_uscase.dart';
+import 'package:mzad_damascus/feature/likes/domain/entity/request/likes_request_entity.dart';
+import 'package:mzad_damascus/feature/likes/domain/entity/response/likes_response_entity.dart';
+import 'package:mzad_damascus/feature/likes/domain/usecase/liked_advertisements_usecase.dart';
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
-import '../../domain/entity/response/favorites_response_entity.dart';
 
-part 'favorites_state.dart';
+part 'comment_state.dart';
 
 /// Eng.Nour Othman(meory)*
 
-class FavoritesCubit extends Cubit<FavoritesState> {
-  final FavoritesUsecase usecase;
+class CommentCubit extends Cubit<CommentState> {
+  final CommentsUsecase usecase;
 
-  FavoritesCubit({
+  CommentCubit({
     required this.usecase,
-  }) : super(FavoritesState.initial());
+  }) : super(CommentState.initial());
 
-  void removeFavorite(
-      {required BuildContext context,
-      required FavoriteRequestEntity entity}) async {
+  void getComments(
+      {required BuildContext context}) async {
     emit(state.copyWith(status: CubitStatus.loading));
-    final result = await usecase(entity: entity);
+    final result = await usecase();
 
     if (isClosed) return;
     result.fold(
