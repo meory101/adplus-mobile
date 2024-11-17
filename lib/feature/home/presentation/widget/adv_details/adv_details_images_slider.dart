@@ -58,7 +58,7 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
           height: AppHeightManager.h1point8,
         ),
         DotsIndicator(
-          dotsCount:  widget.advDetails?.photos?.length ?? 0,
+          dotsCount:  widget.advDetails?.photos?.length ?? 1,
           position: currentIndex,
           decorator: DotsDecorator(
             spacing: EdgeInsets.only(

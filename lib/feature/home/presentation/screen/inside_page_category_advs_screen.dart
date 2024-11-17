@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_custom_selector/flutter_custom_selector.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';

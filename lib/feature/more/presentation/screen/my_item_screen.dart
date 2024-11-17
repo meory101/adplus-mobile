@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
@@ -26,7 +29,7 @@ class MyItemsScreen extends StatefulWidget {
 }
 
 class _MyItemsScreenState extends State<MyItemsScreen> {
-  final List<String> filters = ['All', 'Active', 'Favourite', 'End'];
+  final List<String> filters = ['All', 'Active', 'underreview', 'rejected'];
   int selectedFilterIndex = 0;
 
   @override
@@ -117,38 +120,34 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
     final items = state.entity.data?.data ?? [];
 
     if (items.isEmpty) {
-      return const Center(
-        child: AppTextWidget(text: "no advertisements")
-      );
+      return const Center(child: AppTextWidget(text: "no advertisements"));
     }
 
     return ListView.builder(
-      padding:  EdgeInsets.all(AppWidthManager.w3Point8),
+      padding: EdgeInsets.all(AppWidthManager.w3Point8),
       itemCount: items.length,
       itemBuilder: (context, index) => _buildItemCard(items[index]),
     );
   }
 
   Widget _buildItemCard(AdData item) {
-    return
-      InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed(RouteNamedScreens.advertisementDetails,
-          arguments: AdvertisementDetailsArgs(advertisement: item)
-          );
-        },
-        child: Card(
-        margin:  EdgeInsets.only(bottom: AppWidthManager.w3Point8),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pushNamed(RouteNamedScreens.advertisementDetails,
+            arguments: AdvertisementDetailsArgs(advertisement: item));
+      },
+      child: Card(
+        margin: EdgeInsets.only(bottom: AppWidthManager.w3Point8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadiusManager.r10),
         ),
         child: Padding(
-          padding:  EdgeInsets.all(AppRadiusManager.r10),
+          padding: EdgeInsets.all(AppRadiusManager.r10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildItemImage(item),
-               SizedBox(width: AppRadiusManager.r10),
+              SizedBox(width: AppRadiusManager.r10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,23 +159,63 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                      SizedBox(height: 8),
                     Text(
-                      '${item.startingPrice ?? 0} ر.س',
+                      '${item.startingPrice ?? 0}',
                       style: const TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        IconButton(
+                            iconSize: 15,
+                            color: AppColorManager.grey,
+                            onPressed: () {},
+                            icon: Icon(Icons.thumb_up_alt_rounded)),
+                        Text(
+                          '${item.likeCount ?? 0}',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        IconButton(
+                            iconSize: 15,
+                            color: AppColorManager.grey,
+                            onPressed: () {},
+                            icon: Icon(Icons.comment)),
+                        Text(
+                          '${item.commentCount ?? 0}',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: AppWidthManager.w5,
+                        ),
+                        Text(
+                          '${EnumManager.advsStateCode[item.status] ?? 0}',
+                          style: TextStyle(
+                            color: EnumManager.advsStateColor[item.status] ??
+                                AppColorManager.amber,
+                            fontSize: FontSizeManager.fs16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
             ],
           ),
         ),
-            ),
-      );
+      ),
+    );
   }
 
   Widget _buildItemImage(AdData item) {

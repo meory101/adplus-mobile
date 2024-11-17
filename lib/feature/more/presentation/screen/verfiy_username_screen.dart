@@ -1,9 +1,7 @@
-import 'dart:math';
-
+ 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
-import 'package:mzad_damascus/core/resource/color_manager.dart';
+ import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
@@ -11,11 +9,6 @@ import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/authentication/domain/entity/request/verfication_request.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_cubit.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/register_cubit/register_state.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_cubit.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/cubit/verfication_cubit/verfication_state.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/verfiy_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_state.dart';

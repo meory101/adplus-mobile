@@ -63,10 +63,15 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cub
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
-
+import '../../feature/home/domain/usecase/add_reaction_usecase.dart';
+import '../../feature/home/domain/usecase/banners_usecase.dart';
+import '../../feature/home/domain/usecase/get_adv_by_user_usecase.dart';
 import '../../feature/home/domain/usecase/get_adv_details_usecase.dart';
-import '../../feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
-import '../../feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
+import '../../feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
+import '../../feature/profile/domain/usecase/add_follow_usecase.dart';
+import '../../feature/profile/domain/usecase/profile_by_username_usecase.dart';
+import '../../feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
+import '../../feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -112,10 +117,6 @@ Future<void> init() async {
       () => AdvertisementRepositoryImpl(remote: sl()));
   sl.registerLazySingleton<AdvertisementRemote>(
       () => AdvertisementRemoteImplement());
-  sl.registerLazySingleton<MoreRepository>(
-      () => MoreRepositoryImplements(remote: sl()));
-
-  sl.registerLazySingleton<MoreRemote>(() => MoreRemoteImplement());
 
   sl.registerFactory(() => LoginCubit(usecase: sl()));
   sl.registerLazySingleton(() => LoginUsecase(repository: sl()));
@@ -132,8 +133,6 @@ Future<void> init() async {
 /////////////////
   sl.registerFactory(() => ResetCubit(usecase: sl()));
   sl.registerLazySingleton(() => ResetPasswordUsecase(repository: sl()));
-  sl.registerLazySingleton(() => EditPasswordUsecase(repository: sl()));
-  sl.registerFactory(() => EditPasswordCubit(usecase: sl()));
   sl.registerFactory(() => ForgetPasswordCubit(usecase: sl()));
   sl.registerLazySingleton(() => ForgetPasswordUsecase(repository: sl()));
   sl.registerLazySingleton<AuthRepository>(
@@ -167,7 +166,4 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetMyFollowersUsecase(repository: sl()));
   sl.registerFactory(() => MyFollowingCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetMyFollowingUsecase(repository: sl()));
-
-  sl.registerLazySingleton(() => MyitemUsecase(repository: sl()));
-  sl.registerFactory(() => MyitemCubit(usecase: sl()));
 }
