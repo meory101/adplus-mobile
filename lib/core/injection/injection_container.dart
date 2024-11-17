@@ -85,13 +85,9 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
 import '../../feature/home/domain/usecase/add_reaction_usecase.dart';
 import '../../feature/home/domain/usecase/banners_usecase.dart';
+import '../../feature/home/domain/usecase/check_like_usecase.dart';
 import '../../feature/home/domain/usecase/get_adv_by_user_usecase.dart';
 import '../../feature/home/domain/usecase/get_adv_details_usecase.dart';
-import '../../feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
-import '../../feature/profile/domain/usecase/add_follow_usecase.dart';
-import '../../feature/profile/domain/usecase/profile_by_username_usecase.dart';
-import '../../feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
-import '../../feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 
 import '../../feature/profile/domain/usecase/check_follow_uscase.dart';
 
