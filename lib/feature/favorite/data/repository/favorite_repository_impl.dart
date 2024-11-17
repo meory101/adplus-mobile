@@ -6,6 +6,7 @@ import 'package:mzad_damascus/feature/favorite/domain/entity/response/favorites_
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
 import '../../domain/entity/request/favorite_request_entity.dart';
+import '../../domain/entity/request/favorites_request_entity.dart';
 import '../../domain/repository/favorite_repository.dart';
 
 /// Eng.Nour Othman(meory)*
@@ -49,7 +50,7 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<Either<ApiFailure, FavoritesResponseEntity>> getMyFavorites({required FavoriteRequestEntity entity}) async{
+  Future<Either<ApiFailure, FavoritesResponseEntity>> getMyFavorites({required MyFavoritesRequestEntity entity}) async{
     return Connector<FavoritesResponseEntity>().connect(
       remote: () async {
         final result = await remote.getMyFavorites(entity: entity);

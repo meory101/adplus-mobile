@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
+import '../entity/request/favorites_request_entity.dart';
 import '../entity/response/check_favorite_response_entity.dart';
 import '../entity/response/favorites_response_entity.dart';
 
@@ -20,7 +21,7 @@ abstract class FavoriteRepository {
   });
 
   Future<Either<ApiFailure, FavoritesResponseEntity>> getMyFavorites(
-      {required FavoriteRequestEntity entity});
+      {required MyFavoritesRequestEntity entity});
     Future<Either<ApiFailure, bool>>
     removeFavorite({
       required FavoriteRequestEntity entity,

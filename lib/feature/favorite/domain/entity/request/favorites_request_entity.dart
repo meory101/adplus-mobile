@@ -1,20 +1,20 @@
 import 'dart:convert';
 /// page : 1
 
-FavoritesRequestEntity favoritesRequestEntityFromJson(String str) => FavoritesRequestEntity.fromJson(json.decode(str));
-String favoritesRequestEntityToJson(FavoritesRequestEntity data) => json.encode(data.toJson());
-class FavoritesRequestEntity {
-  FavoritesRequestEntity({
+MyFavoritesRequestEntity favoritesRequestEntityFromJson(String str) => MyFavoritesRequestEntity.fromJson(json.decode(str));
+String favoritesRequestEntityToJson(MyFavoritesRequestEntity data) => json.encode(data.toJson());
+class MyFavoritesRequestEntity {
+  MyFavoritesRequestEntity({
       num? page,}){
     _page = page;
 }
 
-  FavoritesRequestEntity.fromJson(dynamic json) {
+  MyFavoritesRequestEntity.fromJson(dynamic json) {
     _page = json['page'];
   }
   num? _page;
-FavoritesRequestEntity copyWith({  num? page,
-}) => FavoritesRequestEntity(  page: page ?? _page,
+MyFavoritesRequestEntity copyWith({  num? page,
+}) => MyFavoritesRequestEntity(  page: page ?? _page,
 );
   num? get page => _page;
 

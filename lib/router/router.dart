@@ -18,10 +18,12 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/verficat
 import 'package:mzad_damascus/feature/authentication/presentation/screen/forget_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
+import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
 import 'package:mzad_damascus/feature/favorite/domain/usecase/add_favorite_uscase.dart';
 import 'package:mzad_damascus/feature/favorite/domain/usecase/check_favorite_usecase.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/add_favorite_cubit/add_favorite_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/remove_favorite_cubit/remove_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
@@ -41,6 +43,7 @@ import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_det
 import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
+import 'package:mzad_damascus/feature/likes/presentation/cubit/likes_cubit/likes_cubit.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
@@ -69,6 +72,7 @@ import '../feature/advertisement/presentation/screen/advertisement_category_scre
 import '../feature/advertisement/presentation/screen/advertisement_language_screen.dart';
 import '../feature/authentication/presentation/screen/login_screen.dart';
 import '../feature/authentication/presentation/screen/register_screen.dart';
+import '../feature/favorite/domain/entity/request/favorites_request_entity.dart';
 import '../feature/favorite/presentation/cubit/check_favorite_cubit/check_favorite_cubit.dart';
 import '../feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import '../feature/intro/presentation/screen/splash_screen.dart';
@@ -359,6 +363,21 @@ abstract class AppRouter {
           providers: [
             BlocProvider(
               create: (context) => di.sl<BannersCubit>(),
+            ),
+
+            BlocProvider(
+              create: (context) =>
+              di.sl<CommentCubit>(),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  di.sl<LikesCubit>(),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  di.sl<FavoritesCubit>()..getMyFavorites(context: context, entity: MyFavoritesRequestEntity(
+                    page: 1
+                  )),
             ),
             BlocProvider(
               create: (context) =>

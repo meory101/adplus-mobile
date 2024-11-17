@@ -6,6 +6,7 @@ import '../../../../../core/api/api_links.dart';
 import '../../../../../core/api/api_methods.dart';
 
 import '../../../domain/entity/request/favorite_request_entity.dart';
+import '../../../domain/entity/request/favorites_request_entity.dart';
 abstract class FavoriteRemote {
   Future<CheckFavoriteResponseEntity> checkFavorite({
     required FavoriteRequestEntity entity,
@@ -17,7 +18,7 @@ abstract class FavoriteRemote {
     required FavoriteRequestEntity entity,
   });
   Future<FavoritesResponseEntity> getMyFavorites({
-    required FavoriteRequestEntity entity,
+    required MyFavoritesRequestEntity entity,
   });
 
 
@@ -57,7 +58,7 @@ class FavoriteRemoteImplement extends FavoriteRemote {
   }
 
   @override
-  Future<FavoritesResponseEntity> getMyFavorites({required FavoriteRequestEntity entity})async {
+  Future<FavoritesResponseEntity> getMyFavorites({required MyFavoritesRequestEntity entity})async {
     final response = await ApiMethods().post(url: ApiPostUrl.myFavoriteItems, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return favoritesResponseEntityFromJson(response.body);

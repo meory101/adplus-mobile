@@ -6,6 +6,7 @@ import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_re
 import 'package:mzad_damascus/feature/favorite/domain/usecase/favorites_usecase.dart';
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
+import '../../../domain/entity/request/favorites_request_entity.dart';
 import '../../../domain/entity/response/favorites_response_entity.dart';
 
 part 'favorites_state.dart';
@@ -21,7 +22,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
   void getMyFavorites(
       {required BuildContext context,
-      required FavoriteRequestEntity entity}) async {
+      required MyFavoritesRequestEntity entity}) async {
     emit(state.copyWith(status: CubitStatus.loading));
     final result = await usecase(entity: entity);
 
