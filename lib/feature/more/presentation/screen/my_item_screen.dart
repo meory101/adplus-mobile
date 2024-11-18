@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
@@ -8,21 +11,29 @@ import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
+import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete_adv_request_entity.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
-import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_under_review_request_entiity.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/update_adv_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
+import '../../../../core/storage/shared/shared_pref.dart';
+import '../../../advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_state.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
 import '../cubit/myitem_cubit/myitem_state.dart';
 import '../cubit/myitem_under_review/myitem_under_review_cubit.dart';
 import '../cubit/myitem_under_review/myitem_under_review_state.dart';
 import '../../domain/entity/request/myitem_request_entity.dart';
 import '../../domain/entity/response/myitems_response_entity.dart';
+import '../../../../core/injection/injection_container.dart' as di;
+import '../widget/dialog/delete_ad_dialog.dart';
 
 class MyItemsScreen extends StatefulWidget {
   const MyItemsScreen({Key? key}) : super(key: key);
@@ -32,7 +43,12 @@ class MyItemsScreen extends StatefulWidget {
 }
 
 class _MyItemsScreenState extends State<MyItemsScreen> {
-  final List<String> filters = ['All', 'Active', 'underreview', 'rejected'];
+  final List<String> filters = [
+    'all'.tr(),
+    'active'.tr(),
+    'inReview'.tr(),
+    'rejected'.tr()
+  ];
   int selectedFilterIndex = 0;
 
   @override
@@ -63,16 +79,23 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(title: "My Ads"),
-      body: Column(
-        children: [
-          _buildFilterButtons(),
-          Expanded(
-            child: selectedFilterIndex == 2
-                ? _buildUnderReviewList()
-                : _buildItemsList(),
-          ),
-        ],
+      appBar: MainAppBar(title: "myAds".tr()),
+      body: BlocConsumer<MyitemCubit, MyitemState>(
+        listener: (context, state) {
+          if (state.status == CubitStatus.error && state.error.isNotEmpty) {
+            NoteMessage.showErrorSnackBar(context: context, text: state.error);
+          }
+        },
+        builder: (context, state) {
+          return Column(
+            children: [
+              _buildFilterButtons(),
+              Expanded(
+                child: _buildItemsList(state),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -178,82 +201,128 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
         Navigator.of(context).pushNamed(RouteNamedScreens.advertisementDetails,
             arguments: AdvertisementDetailsArgs(advertisement: item));
       },
-      child: Card(
-        margin: EdgeInsets.only(bottom: AppWidthManager.w3Point8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+      child: Slidable(
+        endActionPane: ActionPane(
+          motion: const StretchMotion(),
+          extentRatio: 0.4,
+          children: [
+            SizedBox(
+              width: AppWidthManager.w3Point8,
+            ),
+            CircleAvatar(
+              backgroundColor: AppColorManager.mainColor.withOpacity(0.8),
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                        RouteNamedScreens.updateAdvs,
+                        arguments: UpdateAdvArgs(data: item));
+                  },
+                  icon: const Icon(
+                    Icons.edit,
+                  )),
+            ),
+            SizedBox(
+              width: AppWidthManager.w3Point8,
+            ),
+            CircleAvatar(
+              backgroundColor: AppColorManager.red.withOpacity(0.8),
+              child: IconButton(
+                  onPressed: () {
+                    showDeleteAdDialog(
+                        context: context,
+                        item: item,
+                        onSuccess: () {
+                          context.read<MyitemCubit>().myitem(
+                              context: context,
+                              entity: MyItemRequestEntity(page: 1));
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                  )),
+            ),
+            SizedBox(
+              width: AppWidthManager.w3Point8,
+            ),
+          ],
         ),
-        child: Padding(
-          padding: EdgeInsets.all(AppRadiusManager.r10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildItemImage(item),
-              SizedBox(width: AppRadiusManager.r10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.name ?? '',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+        child: Card(
+          margin: EdgeInsets.only(bottom: AppWidthManager.w3Point8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(AppRadiusManager.r10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildItemImage(item),
+                SizedBox(width: AppRadiusManager.r10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.name ?? '',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      '${item.startingPrice ?? 0}',
-                      style: const TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(height: 8),
+                      Text(
+                        '${item.startingPrice ?? 0}',
+                        style: const TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        IconButton(
-                            iconSize: 15,
-                            color: AppColorManager.grey,
-                            onPressed: () {},
-                            icon: Icon(Icons.thumb_up_alt_rounded)),
-                        Text(
-                          '${item.likeCount ?? 0}',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          IconButton(
+                              iconSize: 15,
+                              color: AppColorManager.grey,
+                              onPressed: () {},
+                              icon: Icon(Icons.thumb_up_alt_rounded)),
+                          Text(
+                            '${item.likeCount ?? 0}',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        IconButton(
-                            iconSize: 15,
-                            color: AppColorManager.grey,
-                            onPressed: () {},
-                            icon: Icon(Icons.comment)),
-                        Text(
-                          '${item.commentCount ?? 0}',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
+                          IconButton(
+                              iconSize: 15,
+                              color: AppColorManager.grey,
+                              onPressed: () {},
+                              icon: Icon(Icons.comment)),
+                          Text(
+                            '${item.commentCount ?? 0}',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: AppWidthManager.w5,
-                        ),
-                        Text(
-                          '${EnumManager.advsStateCode[item.status] ?? 0}',
-                          style: TextStyle(
-                            color: EnumManager.advsStateColor[item.status] ??
-                                AppColorManager.amber,
-                            fontSize: FontSizeManager.fs16,
-                            fontWeight: FontWeight.w700,
+                          SizedBox(
+                            width: AppWidthManager.w5,
                           ),
-                        ),
-                      ],
-                    )
-                  ],
+                          Text(
+                            (EnumManager.advsStateCode[item.status] ?? "").tr(),
+                            style: TextStyle(
+                              color: EnumManager.advsStateColor[item.status] ??
+                                  AppColorManager.amber,
+                              fontSize: FontSizeManager.fs14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

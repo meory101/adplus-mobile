@@ -7,8 +7,6 @@ import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/storage/shared/shared_pref.dart';
 import '../../../../../core/widget/button/main_app_button.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
-import '../../../../../core/injection/injection_container.dart' as di;
-import '../../../../../router/router.dart';
 
 
 /// Eng. Nour Othman(meory)

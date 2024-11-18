@@ -102,6 +102,10 @@
   "nameHint": "Name",
   "enterUsername": "Please enter your username",
   "updateUsernameFailed": "Failed to update username",
-  "saveUsername": "Save Username"
+  "saveUsername": "Save Username",
+  "unFollow" : "UnFollow",
+  "rejected" : "Rejected",
+  "active" : "Active",
+  "inReview" : "In Review"
 }
 

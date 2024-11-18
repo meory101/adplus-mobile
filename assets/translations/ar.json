@@ -104,7 +104,11 @@
   "nameHint": "الاسم",
   "enterUsername": "يرجى إدخال اسم المستخدم",
   "updateUsernameFailed": "فشل تحديث اسم المستخدم",
-  "saveUsername": "حفظ اسم المستخدم"
+  "saveUsername": "حفظ اسم المستخدم",
+  "unFollow" : "عدم المتابعة",
+  "rejected" : "مرفوضة",
+  "active" : "نشطة",
+  "inReview" : "قيد المراجعة"
 }
 
 

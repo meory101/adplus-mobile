@@ -2,12 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside_page_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/check_like_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_response_entity.dart';
@@ -118,6 +120,26 @@ class HomeRepositoryImplements implements HomeRepository {
     return Connector<MyItemResponseEntity>().connect(
       remote: () async {
         final result = await remote.getAdvByUser(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+   Future<Either<ApiFailure, CheckLikeResponseEntity>> checkLike({required CheckLikeRequestEntity entity}) async{
+    return Connector<CheckLikeResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.checkLike(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, bool>> removeLike({required CheckLikeRequestEntity entity})async {
+    return Connector<bool>().connect(
+      remote: () async {
+        final result = await remote.removeLike(entity: entity);
         return Right(result);
       },
     );

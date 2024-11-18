@@ -14,6 +14,8 @@ import 'package:mzad_damascus/feature/profile/domain/entity/response/myfollower_
 import 'package:mzad_damascus/feature/profile/domain/entity/response/profile_by_username_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/remove_follow_response_entity.dart';
  import '../../../../core/api/api_error/api_failures.dart';
+import '../entity/request/check_follow_request_entity.dart';
+import '../entity/response/check_follow_response_entity.dart';
 import '../entity/response/update_profile_response_entity.dart';
 
 /// Eng.Nour Othman(meory)*
@@ -38,4 +40,7 @@ abstract class ProfileRepository {
    Future<Either<ApiFailure, RemoveFollowResponseEntity>> removeFollow({
     required RemoveFollowRequestEntity entity,
   });
+
+  Future <Either<ApiFailure, CheckFollowResponseEntity>> checkFollow({required CheckFollowRequestEntity entity});
+
 }

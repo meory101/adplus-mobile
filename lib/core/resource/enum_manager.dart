@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 
 abstract class EnumManager {
@@ -11,7 +13,7 @@ abstract class EnumManager {
   static Map<num, String> advsStateCode = {
     -1: rejected,
     0: active,
-    1: underreview
+    1: underReview
   };
 
   static Map<num, Color> advsStateColor = {
@@ -22,7 +24,7 @@ abstract class EnumManager {
 
   static String rejected = "rejected";
   static String active = "active";
-  static String underreview = "underreview";
+  static String underReview = "inReview";
 
   static String text = "text";
   static String number = "number";
@@ -44,5 +46,5 @@ abstract class EnumManager {
     "": TextInputType.text
   };
 
-  static String advTypeCode = "نوع الإعلان";
+  // static String advTypeCode = "نوع الإعلان";
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/advertisement/data/datasource/remote/advertisement_remote.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete_adv_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/repository/advertisement_repository.dart';
 import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.dart';
@@ -50,6 +51,26 @@ class AdvertisementRepositoryImpl implements AdvertisementRepository {
     return Connector<bool>().connect(
       remote: () async {
         final result = await remote.addAdvertisement(entity: entity,files: files);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, bool>> updateAdvertisement({required AddAdvertisementRequestEntity entity, required List<File> files}) async{
+    return Connector<bool>().connect(
+      remote: () async {
+        final result = await remote.updateAdvertisement(entity: entity,files: files);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, bool>> deleteAdvertisement({required DeleteAdvRequestEntity entity})async {
+    return Connector<bool>().connect(
+      remote: () async {
+        final result = await remote.deleteAdvertisement(entity: entity);
         return Right(result);
       },
     );

@@ -3,10 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete_adv_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
@@ -18,6 +21,14 @@ import 'package:mzad_damascus/feature/authentication/presentation/cubit/verficat
 import 'package:mzad_damascus/feature/authentication/presentation/screen/forget_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
+import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
+import 'package:mzad_damascus/feature/favorite/domain/usecase/add_favorite_uscase.dart';
+import 'package:mzad_damascus/feature/favorite/domain/usecase/check_favorite_usecase.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/add_favorite_cubit/add_favorite_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/remove_favorite_cubit/remove_favorite_cubit.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
@@ -36,7 +47,6 @@ import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_categ
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
-import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_under_review/myitem_under_review_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
@@ -60,6 +70,8 @@ import '../feature/advertisement/presentation/screen/advertisement_category_scre
 import '../feature/advertisement/presentation/screen/advertisement_language_screen.dart';
 import '../feature/authentication/presentation/screen/login_screen.dart';
 import '../feature/authentication/presentation/screen/register_screen.dart';
+import '../feature/favorite/domain/entity/request/favorites_request_entity.dart';
+import '../feature/favorite/presentation/cubit/check_favorite_cubit/check_favorite_cubit.dart';
 import '../feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import '../feature/intro/presentation/screen/splash_screen.dart';
 
@@ -88,6 +100,8 @@ abstract class RouteNamedScreens {
   static const String editpassword = "/editpassword";
   static const String myitem = "/myitem";
   static const String authorProfile = '/author-profile';
+  static const String favorites = '/favorites';
+  static const String updateAdvs = '/update-Advs';
 }
 
 abstract class AppRouter {
@@ -120,6 +134,21 @@ abstract class AppRouter {
             args: argument,
           ),
         ));
+
+      case RouteNamedScreens.favorites:
+        return FadeBuilderRoute(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => di.sl<FavoritesCubit>()
+                  ..getMyFavorites(
+                      context: context,
+                      entity: MyFavoritesRequestEntity(page: 1)),
+              ),
+            ],
+            child: const FavoritesScreen(),
+          ),
+        );
       case RouteNamedScreens.myitem:
         return FadeBuilderRoute(
           page: MultiBlocProvider(
@@ -131,7 +160,27 @@ abstract class AppRouter {
                 create: (context) => di.sl<MyitemUnderReviewCubit>(),
               ),
             ],
+          page:
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(  create: (context) => di.sl<MyitemCubit>(),),
+              BlocProvider(  create: (context) => di.sl<DeleteAdvertisementCubit>(),)
+            ],
+
             child: const MyItemsScreen(),
+          ),
+        );
+      case RouteNamedScreens.updateAdvs:
+        argument as UpdateAdvArgs;
+        return FadeBuilderRoute(
+          page:
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(  create: (context) => di.sl<UpdateAdvertisementCubit>(),),
+              BlocProvider(  create: (context) => di.sl<MyitemCubit>(),),
+              BlocProvider(  create: (context) => di.sl<GetCitiesCubit>()..getCities(context: context),),
+            ],
+            child:  UpdateAdvScreen(args: argument,),
           ),
         );
 
@@ -155,6 +204,12 @@ abstract class AppRouter {
             ),
             BlocProvider(
               create: (context) => di.sl<AddFollowCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<CheckFollowCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<RemoveFollowCubit>(),
             ),
             BlocProvider(create: (context) => di.sl<GetAdvByUserCubit>()),
             BlocProvider(
@@ -229,6 +284,16 @@ abstract class AppRouter {
               create: (context) => di.sl<AddReactionCubit>(),
             ),
             BlocProvider(
+              create: (context) => di.sl<RemoveLikeCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<CheckLikeCubit>()
+                ..checkLike(
+                    context: context,
+                    entity: CheckLikeRequestEntity(
+                        itemId: argument.advertisement?.itemId)),
+            ),
+            BlocProvider(
               create: (context) => di.sl<AdvDetailsCubit>()
                 ..getAdvDetails(
                     context: context,
@@ -244,6 +309,19 @@ abstract class AppRouter {
             ),
             BlocProvider(
               create: (context) => di.sl<AddCommentCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<CheckFavoriteCubit>()
+                ..checkFavorite(
+                    context: context,
+                    entity: FavoriteRequestEntity(
+                        itemId: argument.advertisement?.itemId)),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<AddFavoriteCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<RemoveFavoriteCubit>(),
             ),
           ],
           child: AdvertisementDetailsScreen(
@@ -328,6 +406,18 @@ abstract class AppRouter {
           providers: [
             BlocProvider(
               create: (context) => di.sl<BannersCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<CommentCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<LikesCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<FavoritesCubit>()
+                ..getMyFavorites(
+                    context: context,
+                    entity: MyFavoritesRequestEntity(page: 1)),
             ),
             BlocProvider(
               create: (context) =>
