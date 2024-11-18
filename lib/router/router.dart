@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete_adv_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
@@ -153,8 +155,13 @@ abstract class AppRouter {
         );
       case RouteNamedScreens.myitem:
         return FadeBuilderRoute(
-          page: BlocProvider(
-            create: (context) => di.sl<MyitemCubit>(),
+          page:
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(  create: (context) => di.sl<MyitemCubit>(),),
+              BlocProvider(  create: (context) => di.sl<DeleteAdvertisementCubit>(),)
+            ],
+
             child: const MyItemsScreen(),
           ),
         );

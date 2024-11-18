@@ -6,6 +6,7 @@ import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
+import '../../../../core/widget/container/decorated_container.dart';
 import '../../../../core/widget/image/main_image_widget.dart';
 import '../../../../core/widget/loading/app_circular_progress_widget.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
@@ -47,14 +48,16 @@ class LikesListView extends StatelessWidget {
                         advertisement: AdData(
                             itemId: likes[index].itemId)));
               },
-              child: Container(
+              child: DecoratedContainer(
                 height: AppHeightManager.h17,
-                decoration: BoxDecoration(
-                    color: AppColorManager.white,
-                    borderRadius: BorderRadius.circular(
-                        AppRadiusManager.r10)),
-                margin: EdgeInsets.symmetric(
-                    horizontal: AppWidthManager.w3Point8),
+                color: AppColorManager.white,
+                borderRadius: BorderRadius.circular(
+                    AppRadiusManager.r10),
+                margin: EdgeInsets.only(
+                    left: AppWidthManager.w3Point8,
+                    right: AppWidthManager.w3Point8,
+                    bottom: AppHeightManager.h1point8
+                ),
                 child: Row(
                   children: [
                     Container(

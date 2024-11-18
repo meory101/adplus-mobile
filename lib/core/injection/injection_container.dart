@@ -3,11 +3,15 @@ import 'package:mzad_damascus/feature/advertisement/data/datasource/remote/adver
 import 'package:mzad_damascus/feature/advertisement/data/repository/advertisement_repository_impl.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/repository/advertisement_repository.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/add_advertisement_usecase.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/usecase/delete_adv_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/get_category_attributes_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/get_cities_usecase.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/usecase/update_adv_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/data/datasource/remote/auth_remote.dart';
 import 'package:mzad_damascus/feature/authentication/data/repository/auth_repository_implements.dart';
 import 'package:mzad_damascus/feature/authentication/domain/repository/auth_repository.dart';
@@ -109,6 +113,8 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => DeleteAdvertisementCubit(usecase: sl()));
+  sl.registerFactory(() => UpdateAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => CheckFollowCubit(usecase: sl()));
   sl.registerFactory(() => RemoveFollowCubit(usecase: sl()));
   sl.registerFactory(() => CheckFollowUscase(repository: sl()));
@@ -126,6 +132,8 @@ Future<void> init() async {
   sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => DeleteAdvUsecase(repository: sl()));
+  sl.registerLazySingleton(() => UpdateAdvUsecase(repository: sl()));
   sl.registerLazySingleton(() => RemoveFollowUsecase(repository: sl()));
   sl.registerLazySingleton(() => RemoveLikeUsecase(repository: sl()));
   sl.registerLazySingleton(() => CheckLikeUsecase(repository: sl()));

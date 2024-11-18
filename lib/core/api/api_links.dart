@@ -22,6 +22,8 @@ class ApiPostUrl {
   static String editpassword = "api/auth/UpdatePassword";
   static String profilebyusername = "api/auth/profileByUsername";
   static String addAdv = "api/item/create-item";
+  static String updateAdv = "api/item/update-item";
+  static String deleteAdv = "api/item/delete";
   static String getItemsByAttribute = "api/item/getItemsByAttribute";
   static String updateProfile = "api/auth/UpdateProfile";
   static String updateProfileImage = "api/auth/UploadProfileImage";

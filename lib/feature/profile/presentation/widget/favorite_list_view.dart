@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/constant_manager.dart';
@@ -49,14 +50,16 @@ class FavoriteListView extends StatelessWidget {
                     ))
                 );
               },
-              child: Container(
+              child: DecoratedContainer(
                 height: AppHeightManager.h17,
-                decoration: BoxDecoration(
                     color: AppColorManager.white,
                     borderRadius: BorderRadius.circular(
-                        AppRadiusManager.r10)),
-                margin: EdgeInsets.symmetric(
-                    horizontal: AppWidthManager.w3Point8),
+                        AppRadiusManager.r10),
+                margin: EdgeInsets.only(
+                    left: AppWidthManager.w3Point8,
+                    right: AppWidthManager.w3Point8,
+                    bottom: AppHeightManager.h1point8
+                ),
                 child: Row(
                   children: [
                     Container(
