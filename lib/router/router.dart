@@ -9,6 +9,7 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_adver
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
@@ -55,6 +56,7 @@ import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_scr
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/favorites_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/update_adv_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubit/add_follow_cubit.dart';
@@ -106,6 +108,7 @@ abstract class RouteNamedScreens {
   static const String myitem = "/myitem";
   static const String authorProfile = '/author-profile';
   static const String favorites = '/favorites';
+  static const String updateAdvs = '/update-Advs';
 }
 
 abstract class AppRouter {
@@ -163,6 +166,19 @@ abstract class AppRouter {
             ],
 
             child: const MyItemsScreen(),
+          ),
+        );
+      case RouteNamedScreens.updateAdvs:
+        argument as UpdateAdvArgs;
+        return FadeBuilderRoute(
+          page:
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(  create: (context) => di.sl<UpdateAdvertisementCubit>(),),
+              BlocProvider(  create: (context) => di.sl<MyitemCubit>(),),
+              BlocProvider(  create: (context) => di.sl<GetCitiesCubit>()..getCities(context: context),),
+            ],
+            child:  UpdateAdvScreen(args: argument,),
           ),
         );
       case RouteNamedScreens.login:

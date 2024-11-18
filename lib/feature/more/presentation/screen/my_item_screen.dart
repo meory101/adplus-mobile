@@ -11,6 +11,7 @@ import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
@@ -19,14 +20,18 @@ import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/update_adv_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
+import '../../../../core/storage/shared/shared_pref.dart';
 import '../../../advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_state.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
 import '../cubit/myitem_cubit/myitem_state.dart';
 import '../../domain/entity/request/myitem_request_entity.dart';
 import '../../domain/entity/response/myitems_response_entity.dart';
+import '../../../../core/injection/injection_container.dart' as di;
+import '../widget/dialog/delete_ad_dialog.dart';
 
 class MyItemsScreen extends StatefulWidget {
   const MyItemsScreen({Key? key}) : super(key: key);
@@ -159,7 +164,11 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
             CircleAvatar(
               backgroundColor: AppColorManager.mainColor.withOpacity(0.8),
               child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                        RouteNamedScreens.updateAdvs,
+                        arguments: UpdateAdvArgs(data: item));
+                  },
                   icon: const Icon(
                     Icons.edit,
                   )),
@@ -167,33 +176,22 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
             SizedBox(
               width: AppWidthManager.w3Point8,
             ),
-            BlocConsumer<DeleteAdvertisementCubit, DeleteAdvertisementState>(
-              listener: (context, state) {
-                if (state.status == CubitStatus.error) {
-                  NoteMessage.showErrorSnackBar(
-                      context: context, text: state.error);
-                }
-              },
-              builder: (context, state) {
-                if (state.status == CubitStatus.loading) {
-                  return const AppCircularProgressWidget();
-                }
-                return CircleAvatar(
-                  backgroundColor: AppColorManager.red.withOpacity(0.8),
-                  child: IconButton(
-                      onPressed: () {
-                        context
-                            .read<DeleteAdvertisementCubit>()
-                            .deleteAdvertisement(
-                                context: context,
-                                entity: DeleteAdvRequestEntity(
-                                    itemId: item.itemId));
-                      },
-                      icon: const Icon(
-                        Icons.delete,
-                      )),
-                );
-              },
+            CircleAvatar(
+              backgroundColor: AppColorManager.red.withOpacity(0.8),
+              child: IconButton(
+                  onPressed: () {
+                    showDeleteAdDialog(
+                        context: context,
+                        item: item,
+                        onSuccess: () {
+                          context.read<MyitemCubit>().myitem(
+                              context: context,
+                              entity: MyItemRequestEntity(page: 1));
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                  )),
             ),
             SizedBox(
               width: AppWidthManager.w3Point8,
