@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
+import 'package:mzad_damascus/feature/comment/domain/entity/response/comments_response_entity.dart';
 
+import '../../../../home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'attribute_form_value.dart';
 /// category_id : 4
 /// city_id : 3
@@ -24,9 +26,9 @@ class AddAdvertisementRequestEntity {
       num? minIncreasePrice, 
       String? description,
     String? keywords,
-      String? bidingStartTime,
+      bool? biddingStatus,
       num? itemId,
-    List<AttributeFormValue>? attributes,}){
+    List<Attributes>? attributes,}){
     _categoryId = categoryId;
     _itemId = itemId;
     _cityId = cityId;
@@ -35,7 +37,7 @@ class AddAdvertisementRequestEntity {
     _minIncreasePrice = minIncreasePrice;
     _description = description;
     _keywords = keywords;
-    _bidingStartTime = bidingStartTime;
+    _bidingStartTime = biddingStatus;
     _attributes = attributes;
 }
 
@@ -59,8 +61,8 @@ class AddAdvertisementRequestEntity {
   num? _minIncreasePrice;
   String? _description;
   String? _keywords;
-  String? _bidingStartTime;
-  List<AttributeFormValue>? _attributes;
+  bool? _bidingStartTime;
+  List<Attributes>? _attributes;
 AddAdvertisementRequestEntity copyWith({  num? categoryId,
   num? cityId,
   String? name,
@@ -69,7 +71,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   String? description,
   num? itemId,
   String? keywords,
-  String? bidingStartTime,
+  bool? biddingStatus,
   dynamic attributes,
 }) => AddAdvertisementRequestEntity(  categoryId: categoryId ?? _categoryId,
   cityId: cityId ?? _cityId,
@@ -79,7 +81,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   minIncreasePrice: minIncreasePrice ?? _minIncreasePrice,
   description: description ?? _description,
   keywords: keywords ?? _keywords,
-  bidingStartTime: bidingStartTime ?? _bidingStartTime,
+  biddingStatus: biddingStatus ?? _bidingStartTime,
   attributes: attributes ?? _attributes,
 );
   num? get categoryId => _categoryId;
@@ -90,8 +92,8 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   num? get minIncreasePrice => _minIncreasePrice;
   String? get description => _description;
   String? get keywords => _keywords;
-  String? get bidingStartTime => _bidingStartTime;
-  List<AttributeFormValue>? get attributes => _attributes;
+  bool? get biddingStatus => _bidingStartTime;
+  List<Attributes>? get attributes => _attributes;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -103,17 +105,17 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
     map['min_increase_price'] = _minIncreasePrice;
     map['description'] = _description;
     map['keywords'] = _keywords;
-    map['bidding_start_time'] = _bidingStartTime;
+    map['bidding_status'] = _bidingStartTime;
     map['attributes'] = _attributes;
     return map;
   }
 
-  set attributes(List<AttributeFormValue>? value) {
+  set attributes(List<Attributes>? value) {
     _attributes = value;
   }
 
 
-  set bidingStartTime(String? value) {
+  set biddingStatus(bool? value) {
     _bidingStartTime = value;
   }
 

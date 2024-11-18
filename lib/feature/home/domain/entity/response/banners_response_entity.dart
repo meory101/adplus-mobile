@@ -101,6 +101,7 @@ class Banners {
     num? bannerId,
     String? photo,
     num? status,
+    String? url,
     num? centerAppear,
     num? sideAppear,
     num? ord,
@@ -118,10 +119,12 @@ class Banners {
     _updatedAt = updatedAt;
     _createdBy = createdBy;
     _updatedBy = updatedBy;
+    _url = url;
   }
 
   Banners.fromJson(dynamic json) {
     _bannerId = json['banner_id'];
+    _url = json['url'];
     _photo = json['photo'];
     _status = json['status'];
     _centerAppear = json['center_appear'];
@@ -134,9 +137,12 @@ class Banners {
   }
   num? _bannerId;
   String? _photo;
+  String? _url;
   num? _status;
+
   num? _centerAppear;
   num? _sideAppear;
+  String? url;
   num? _ord;
   String? _createdAt;
   String? _updatedAt;
@@ -144,6 +150,7 @@ class Banners {
   dynamic _updatedBy;
   Banners copyWith({  num? bannerId,
     String? photo,
+    String? url,
     num? status,
     num? centerAppear,
     num? sideAppear,
@@ -152,8 +159,11 @@ class Banners {
     String? updatedAt,
     num? createdBy,
     dynamic updatedBy,
-  }) => Banners(  bannerId: bannerId ?? _bannerId,
+  }) => Banners(
+
+    bannerId: bannerId ?? _bannerId,
     photo: photo ?? _photo,
+    url: url??_url,
     status: status ?? _status,
     centerAppear: centerAppear ?? _centerAppear,
     sideAppear: sideAppear ?? _sideAppear,
@@ -166,6 +176,7 @@ class Banners {
   num? get bannerId => _bannerId;
   String? get photo => _photo;
   num? get status => _status;
+  String? get geyUrl => _url;
   num? get centerAppear => _centerAppear;
   num? get sideAppear => _sideAppear;
   num? get ord => _ord;

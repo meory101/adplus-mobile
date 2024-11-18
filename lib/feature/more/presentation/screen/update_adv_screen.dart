@@ -51,7 +51,10 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
 
   @override
   void initState() {
-    entity.itemId  =widget.args.data.itemId;
+    entity.itemId = widget.args.data.itemId;
+    entity.keywords = widget.args.data.keywords;
+    entity.attributes = widget.args.data.attributes;
+    entity.categoryId = widget.args.data.categoryId;
     entity.name = widget.args.data.name;
     entity.description = widget.args.data.description;
     entity.startingPrice = widget.args.data.startingPrice;
@@ -80,24 +83,25 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
             return const CircularProgressIndicator();
           }
           return AdvertisementNextButton(
-            buttonText: "save".tr(), // Localized text
-            onTap: () async {
-              print(entity.cityId);
-              print(entity.name);
-              // if (formKey.currentState!.validate() && advFiles.isNotEmpty) {
+              buttonText: "save".tr(), // Localized text
+              onTap: () async {
+                print(entity.cityId);
+                print(entity.name);
+                print(entity.categoryId);
+                print(entity.biddingStatus);
+                entity.biddingStatus = bool.parse("${entity.biddingStatus}");
+                // if (formKey.currentState!.validate() && advFiles.isNotEmpty) {
                 context.read<UpdateAdvertisementCubit>().updateAdvertisement(
                       context: context,
                       entity: entity,
                       files: advFiles,
-                    // );
-              // } else {
-              //   NoteMessage.showErrorSnackBar(
-              //     context: context,
-              //     text: "enterRequiredFields".tr(), // Localized text
-                );
-              }
-
-          );
+                      // );
+                      // } else {
+                      //   NoteMessage.showErrorSnackBar(
+                      //     context: context,
+                      //     text: "enterRequiredFields".tr(), // Localized text
+                    );
+              });
         },
       ),
       body: SafeArea(
@@ -306,6 +310,24 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                     title: "price".tr(),
                     onChanged: (value) {
                       entity.startingPrice = num.parse(value ?? "0");
+                      return null;
+                    },
+                    validator: (value) {
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: AppHeightManager.h1point8),
+                  TitleDropDownFormFieldWidget(
+                    options: [
+                      NameAndId(name: "available".tr(), id:"0" ),
+                      NameAndId(name: "unAvailable".tr(), id:"1" ),
+                    ],
+                    hint: (entity.biddingStatus !=null)
+                        ? entity.biddingStatus.toString()
+                        : "status".tr(),
+                    title: "status".tr(),
+                    onChanged: (value) {
+                      entity.biddingStatus = value?.id == "0" ? true:false;
                       return null;
                     },
                     validator: (value) {

@@ -18,6 +18,8 @@ import '../../../../core/widget/container/dialog_container.dart';
 import '../../../../core/widget/form_field/title_app_form_filed.dart';
 import '../../../../core/widget/loading/shimmer/category_attribute_form_list_view_shimmer.dart';
 import '../../../../router/router.dart';
+import '../../../comment/domain/entity/response/comments_response_entity.dart';
+import '../../../home/domain/entity/response/get_adv_details_response_entity.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
 
@@ -41,7 +43,7 @@ class _CategoryAttributeFormScreenState
     super.initState();
   }
 
-  List<AttributeFormValue> attributeFormValues = [];
+  List<Attributes> attributeFormValues = [];
   CategoryAttributes? currentAttribute;
 
   getCategoryAttributes() {
@@ -55,11 +57,11 @@ class _CategoryAttributeFormScreenState
     if (attribute == null) return;
     final existingValue = attributeFormValues.firstWhere(
           (formValue) => formValue.attributeId == attribute.attributeId,
-      orElse: () => AttributeFormValue(value: '', attributeId: null),
+      orElse: () => Attributes(value: '', attributeId: null),
     );
 
     if (existingValue.attributeId == null) {
-      attributeFormValues.add(AttributeFormValue(
+      attributeFormValues.add(Attributes(
         value: value,
         attributeId: attribute.attributeId,
       ));

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
@@ -70,6 +72,7 @@ class _HomeBannersState extends State<HomeBanners> {
           child: Column(
             children: [
               CarouselSlider(
+
                 options: CarouselOptions(
                   onPageChanged: (index, reason) {
                   setState(() {
@@ -78,21 +81,26 @@ class _HomeBannersState extends State<HomeBanners> {
                   },
                   aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,
                   enableInfiniteScroll: true,
-                  autoPlay: true,
+                  autoPlay: false,
                   viewportFraction: 1,
                 ),
                 items: List.generate(
                   banners?.length ?? 0,
                   (index) {
-                        return Container(
-                        width: AppWidthManager.w92,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(AppRadiusManager.r10)),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: MainImageWidget(
-                          imageUrl: AppConstantManager.imageBaseUrl+(banners?[index].photo??"")
-                        ));
+                        return InkWell(
+                          onTap: () {
+                            UrlLauncherHelper.openUrl(pageName: banners?[index].geyUrl??"");
+                          },
+                          child: Container(
+                          width: AppWidthManager.w92,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(AppRadiusManager.r10)),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: MainImageWidget(
+                            imageUrl: AppConstantManager.imageBaseUrl+(banners?[index].photo??"")
+                          )),
+                        );
                   },
                 ),
               ),
