@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_request_entity.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_under_review_request_entiity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/verfiy_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/edit_password_response_entity.dart';
@@ -21,6 +22,8 @@ abstract class MoreRepository {
     Future<Either<ApiFailure,VerifyUsernameResponseEntity>> verfiyusername({required VerifyUsernameRequestEntity entity}) ;
         Future<Either<ApiFailure,EditPasswordResponseEntity>> editpassword({required EditPasswordRequestEntity entity}) ;
                 Future<Either<ApiFailure,MyItemResponseEntity>> myitem({required MyItemRequestEntity entity}) ;
+                                Future<Either<ApiFailure,MyItemResponseEntity>> myitemunderreview({required MyItemUnderReviewRequestEntity entity}) ;
+
 
 
 

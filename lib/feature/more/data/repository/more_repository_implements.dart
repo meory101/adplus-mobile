@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/more/data/remote/more_remote.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_request_entity.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_under_review_request_entiity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/verfiy_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/edit_password_response_entity.dart';
@@ -28,7 +29,6 @@ class MoreRepositoryImplements implements MoreRepository {
     required this.remote,
   });
 
- 
   @override
   Future<Either<ApiFailure, UpdateUsernameResponseEntity>> updateUsername(
       {required UpdateUsernameRequestEntity entity}) async {
@@ -40,8 +40,8 @@ class MoreRepositoryImplements implements MoreRepository {
     );
   }
 
- @override
- Future<Either<ApiFailure,VerifyUsernameResponseEntity>> verfiyusername(
+  @override
+  Future<Either<ApiFailure, VerifyUsernameResponseEntity>> verfiyusername(
       {required VerifyUsernameRequestEntity entity}) async {
     return Connector<VerifyUsernameResponseEntity>().connect(
       remote: () async {
@@ -50,8 +50,9 @@ class MoreRepositoryImplements implements MoreRepository {
       },
     );
   }
-   @override
- Future<Either<ApiFailure,EditPasswordResponseEntity>> editpassword(
+
+  @override
+  Future<Either<ApiFailure, EditPasswordResponseEntity>> editpassword(
       {required EditPasswordRequestEntity entity}) async {
     return Connector<EditPasswordResponseEntity>().connect(
       remote: () async {
@@ -60,6 +61,7 @@ class MoreRepositoryImplements implements MoreRepository {
       },
     );
   }
+
   @override
   Future<Either<ApiFailure, MyItemResponseEntity>> myitem({
     required MyItemRequestEntity entity,
@@ -72,5 +74,15 @@ class MoreRepositoryImplements implements MoreRepository {
     );
   }
 
+  @override
+  Future<Either<ApiFailure, MyItemResponseEntity>> myitemunderreview({
+    required MyItemUnderReviewRequestEntity entity,
+  }) async {
+    return Connector<MyItemResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.myitemunderreview(entity: entity);
+        return Right(result);
+      },
+    );
   }
-
+}

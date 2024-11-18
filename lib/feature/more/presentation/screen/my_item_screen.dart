@@ -13,11 +13,14 @@ import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_under_review_request_entiity.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
 import '../cubit/myitem_cubit/myitem_state.dart';
+import '../cubit/myitem_under_review/myitem_under_review_cubit.dart';
+import '../cubit/myitem_under_review/myitem_under_review_state.dart';
 import '../../domain/entity/request/myitem_request_entity.dart';
 import '../../domain/entity/response/myitems_response_entity.dart';
 
@@ -39,34 +42,37 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   }
 
   void _loadItems() {
-    context.read<MyitemCubit>().myitem(
-          context: context,
-          entity: MyItemRequestEntity(
-            page: 1,
-          ),
-        );
+    if (selectedFilterIndex == 2) {
+      // underreview tab
+      context.read<MyitemUnderReviewCubit>().myitemunderreview(
+            context: context,
+            entity: MyItemUnderReviewRequestEntity(
+              page: 1,
+            ),
+          );
+    } else {
+      context.read<MyitemCubit>().myitem(
+            context: context,
+            entity: MyItemRequestEntity(
+              page: 1,
+            ),
+          );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainAppBar(title: "My Ads"),
-      body: BlocConsumer<MyitemCubit, MyitemState>(
-        listener: (context, state) {
-          if (state.status == CubitStatus.error && state.error.isNotEmpty) {
-            NoteMessage.showErrorSnackBar(context: context, text: state.error);
-          }
-        },
-        builder: (context, state) {
-          return Column(
-            children: [
-              _buildFilterButtons(),
-              Expanded(
-                child: _buildItemsList(state),
-              ),
-            ],
-          );
-        },
+      body: Column(
+        children: [
+          _buildFilterButtons(),
+          Expanded(
+            child: selectedFilterIndex == 2
+                ? _buildUnderReviewList()
+                : _buildItemsList(),
+          ),
+        ],
       ),
     );
   }
@@ -112,21 +118,57 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
     );
   }
 
-  Widget _buildItemsList(MyitemState state) {
-    if (state.status == CubitStatus.loading) {
-      return const Center(child: CircularProgressIndicator());
-    }
+  Widget _buildUnderReviewList() {
+    return BlocConsumer<MyitemUnderReviewCubit, MyitemUnderReviewState>(
+      listener: (context, state) {
+        if (state.status == CubitStatus.error && state.error.isNotEmpty) {
+          NoteMessage.showErrorSnackBar(context: context, text: state.error);
+        }
+      },
+      builder: (context, state) {
+        if (state.status == CubitStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-    final items = state.entity.data?.data ?? [];
+        final items = state.entity.data?.data ?? [];
 
-    if (items.isEmpty) {
-      return const Center(child: AppTextWidget(text: "no advertisements"));
-    }
+        if (items.isEmpty) {
+          return const Center(child: AppTextWidget(text: "no advertisements"));
+        }
 
-    return ListView.builder(
-      padding: EdgeInsets.all(AppWidthManager.w3Point8),
-      itemCount: items.length,
-      itemBuilder: (context, index) => _buildItemCard(items[index]),
+        return ListView.builder(
+          padding: EdgeInsets.all(AppWidthManager.w3Point8),
+          itemCount: items.length,
+          itemBuilder: (context, index) => _buildItemCard(items[index]),
+        );
+      },
+    );
+  }
+
+  Widget _buildItemsList() {
+    return BlocConsumer<MyitemCubit, MyitemState>(
+      listener: (context, state) {
+        if (state.status == CubitStatus.error && state.error.isNotEmpty) {
+          NoteMessage.showErrorSnackBar(context: context, text: state.error);
+        }
+      },
+      builder: (context, state) {
+        if (state.status == CubitStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final items = state.entity.data?.data ?? [];
+
+        if (items.isEmpty) {
+          return const Center(child: AppTextWidget(text: "no advertisements"));
+        }
+
+        return ListView.builder(
+          padding: EdgeInsets.all(AppWidthManager.w3Point8),
+          itemCount: items.length,
+          itemBuilder: (context, index) => _buildItemCard(items[index]),
+        );
+      },
     );
   }
 
@@ -159,7 +201,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                      SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       '${item.startingPrice ?? 0}',
                       style: const TextStyle(

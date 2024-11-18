@@ -4,6 +4,7 @@ import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/verfication_response.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_request_entity.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_under_review_request_entiity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/edit_password_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/myitems_response_entity.dart';
@@ -30,6 +31,9 @@ abstract class MoreRemote {
   });
    Future<MyItemResponseEntity> myitem({
     required MyItemRequestEntity entity,
+  });
+  Future<MyItemResponseEntity> myitemunderreview({
+    required MyItemUnderReviewRequestEntity entity,
   });
 }
 
@@ -74,6 +78,17 @@ class MoreRemoteImplement extends MoreRemote {
       {required MyItemRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.myitem, body: entity.toJson());
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return myItemResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+   @override
+  Future<MyItemResponseEntity> myitemunderreview(
+      {required MyItemUnderReviewRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(url: ApiPostUrl.myitemunderreview, body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myItemResponseEntityFromJson(response.body);
     } else {
