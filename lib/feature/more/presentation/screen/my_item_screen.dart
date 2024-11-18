@@ -20,12 +20,16 @@ import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_review_request_entiity.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_state.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/update_adv_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../../../../core/storage/shared/shared_pref.dart';
 import '../../../advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_state.dart';
+import '../../domain/entity/request/myitem_under_review_request_entiity.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
 import '../cubit/myitem_cubit/myitem_state.dart';
 import '../cubit/myitem_under_review/myitem_under_review_cubit.dart';
@@ -66,7 +70,16 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
               page: 1,
             ),
           );
+    } else if (selectedFilterIndex == 1) {
+      // reviewed items tab
+      context.read<MyitemReviewCubit>().myitemreview(
+            context: context,
+            entity: MyItemReviewRequestEntity(
+              page: 1,
+            ),
+          );
     } else {
+      // all items tab
       context.read<MyitemCubit>().myitem(
             context: context,
             entity: MyItemRequestEntity(
@@ -91,7 +104,11 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
             children: [
               _buildFilterButtons(),
               Expanded(
-                child: _buildItemsList(state),
+                child: selectedFilterIndex == 2
+                    ? _buildUnderReviewList()
+                    : selectedFilterIndex == 1
+                        ? _buildReviewedList()
+                        : _buildItemsList(),
               ),
             ],
           );
@@ -143,6 +160,33 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
 
   Widget _buildUnderReviewList() {
     return BlocConsumer<MyitemUnderReviewCubit, MyitemUnderReviewState>(
+      listener: (context, state) {
+        if (state.status == CubitStatus.error && state.error.isNotEmpty) {
+          NoteMessage.showErrorSnackBar(context: context, text: state.error);
+        }
+      },
+      builder: (context, state) {
+        if (state.status == CubitStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final items = state.entity.data?.data ?? [];
+
+        if (items.isEmpty) {
+          return const Center(child: AppTextWidget(text: "no advertisements"));
+        }
+
+        return ListView.builder(
+          padding: EdgeInsets.all(AppWidthManager.w3Point8),
+          itemCount: items.length,
+          itemBuilder: (context, index) => _buildItemCard(items[index]),
+        );
+      },
+    );
+  }
+
+  Widget _buildReviewedList() {
+    return BlocConsumer<MyitemReviewCubit, MyitemReviewState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error && state.error.isNotEmpty) {
           NoteMessage.showErrorSnackBar(context: context, text: state.error);
@@ -269,15 +313,13 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Text(
-                        '${item.startingPrice ?? 0}',
-                        style: const TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      SizedBox(height: AppHeightManager.h08),
+                      AppTextWidget(
+                        text: '${item.startingPrice ?? 0}',
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: AppHeightManager.h08),
                       Row(
                         children: [
                           IconButton(
@@ -285,36 +327,31 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                               color: AppColorManager.grey,
                               onPressed: () {},
                               icon: Icon(Icons.thumb_up_alt_rounded)),
-                          Text(
-                            '${item.likeCount ?? 0}',
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          AppTextWidget(
+                            text: '${item.likeCount ?? 0}',
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
                           ),
                           IconButton(
                               iconSize: 15,
                               color: AppColorManager.grey,
                               onPressed: () {},
                               icon: Icon(Icons.comment)),
-                          Text(
-                            '${item.commentCount ?? 0}',
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          AppTextWidget(
+                            text: '${item.commentCount ?? 0}',
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
                           ),
                           SizedBox(
                             width: AppWidthManager.w5,
                           ),
-                          Text(
-                            (EnumManager.advsStateCode[item.status] ?? "").tr(),
-                            style: TextStyle(
-                              color: EnumManager.advsStateColor[item.status] ??
-                                  AppColorManager.amber,
-                              fontSize: FontSizeManager.fs14,
-                              fontWeight: FontWeight.w700,
-                            ),
+                          AppTextWidget(
+                            text: (EnumManager.advsStateCode[item.status] ?? "")
+                                .tr(),
+                            color: EnumManager.advsStateColor[item.status] ??
+                                AppColorManager.amber,
+                            fontSize: FontSizeManager.fs14,
+                            fontWeight: FontWeight.w700,
                           ),
                         ],
                       )

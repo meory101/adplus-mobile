@@ -46,6 +46,7 @@ import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_p
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
@@ -63,6 +64,7 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/verfiy_username_screen.dart';
+import 'package:nested/nested.dart';
 import '../core/navigation/fade_builder_route.dart';
 import '../core/widget/page/not_found_page.dart';
 import '../core/injection/injection_container.dart' as di;
@@ -72,8 +74,16 @@ import '../feature/authentication/presentation/screen/login_screen.dart';
 import '../feature/authentication/presentation/screen/register_screen.dart';
 import '../feature/favorite/domain/entity/request/favorites_request_entity.dart';
 import '../feature/favorite/presentation/cubit/check_favorite_cubit/check_favorite_cubit.dart';
+import '../feature/home/presentation/cubit/check_like_cubit/check_like_cubit.dart';
 import '../feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
+import '../feature/home/presentation/cubit/remove_like/remove_like_cubit.dart';
 import '../feature/intro/presentation/screen/splash_screen.dart';
+import '../feature/likes/presentation/cubit/likes_cubit/likes_cubit.dart';
+import '../feature/more/presentation/cubit/myitem_under_review/myitem_under_review_cubit.dart';
+import '../feature/more/presentation/screen/favorites_screen.dart';
+import '../feature/more/presentation/screen/update_adv_screen.dart';
+import '../feature/profile/presentation/cubit/check_follow_cubit/check_follow_cubit.dart';
+import '../feature/profile/presentation/cubit/remove_follow_cubit/remove_follow_cubit.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -151,36 +161,39 @@ abstract class AppRouter {
         );
       case RouteNamedScreens.myitem:
         return FadeBuilderRoute(
+            page: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => di.sl<MyitemCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<MyitemUnderReviewCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<MyitemReviewCubit>(),
+            ),
+          ],
+          child: const MyItemsScreen(),
+        ));
+      case RouteNamedScreens.updateAdvs:
+        argument as UpdateAdvArgs;
+        return FadeBuilderRoute(
           page: MultiBlocProvider(
             providers: [
+              BlocProvider(
+                create: (context) => di.sl<UpdateAdvertisementCubit>(),
+              ),
               BlocProvider(
                 create: (context) => di.sl<MyitemCubit>(),
               ),
               BlocProvider(
-                create: (context) => di.sl<MyitemUnderReviewCubit>(),
+                create: (context) =>
+                    di.sl<GetCitiesCubit>()..getCities(context: context),
               ),
             ],
-          page:
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(  create: (context) => di.sl<MyitemCubit>(),),
-              BlocProvider(  create: (context) => di.sl<DeleteAdvertisementCubit>(),)
-            ],
-
-            child: const MyItemsScreen(),
-          ),
-        );
-      case RouteNamedScreens.updateAdvs:
-        argument as UpdateAdvArgs;
-        return FadeBuilderRoute(
-          page:
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(  create: (context) => di.sl<UpdateAdvertisementCubit>(),),
-              BlocProvider(  create: (context) => di.sl<MyitemCubit>(),),
-              BlocProvider(  create: (context) => di.sl<GetCitiesCubit>()..getCities(context: context),),
-            ],
-            child:  UpdateAdvScreen(args: argument,),
+            child: UpdateAdvScreen(
+              args: argument,
+            ),
           ),
         );
 
@@ -403,7 +416,7 @@ abstract class AppRouter {
       case RouteNamedScreens.mainBottomAppBar:
         return FadeBuilderRoute(
             page: MultiBlocProvider(
-          providers: [
+          providers: <SingleChildWidget>[
             BlocProvider(
               create: (context) => di.sl<BannersCubit>(),
             ),

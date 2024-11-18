@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/more/data/remote/more_remote.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_request_entity.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_review_request_entiity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_under_review_request_entiity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/verfiy_username_request_entity.dart';
@@ -81,6 +82,18 @@ class MoreRepositoryImplements implements MoreRepository {
     return Connector<MyItemResponseEntity>().connect(
       remote: () async {
         final result = await remote.myitemunderreview(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, MyItemResponseEntity>> myitemreview({
+    required MyItemReviewRequestEntity entity,
+  }) async {
+    return Connector<MyItemResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.myitemreview(entity: entity);
         return Right(result);
       },
     );

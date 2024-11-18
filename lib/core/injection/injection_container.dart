@@ -71,11 +71,13 @@ import 'package:mzad_damascus/feature/more/data/remote/more_remote.dart';
 import 'package:mzad_damascus/feature/more/data/repository/more_repository_implements.dart';
 import 'package:mzad_damascus/feature/more/domain/repository/more_repository.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/edit_password_usecase.dart';
+import 'package:mzad_damascus/feature/more/domain/usecase/my_reviewd_irem.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/myitem_under_review_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/myitem_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/update_username_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/verfiyusername_usecase.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_under_review/myitem_under_review_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
@@ -200,6 +202,8 @@ Future<void> init() async {
   sl.registerFactory(() => MyitemCubit(usecase: sl()));
   sl.registerLazySingleton(() => MyitemUnderReviewUsecase(repository: sl()));
   sl.registerFactory(() => MyitemUnderReviewCubit(usecase: sl()));
+  sl.registerLazySingleton(() => MyReviewdIrem(repository: sl()));
+  sl.registerFactory(() => MyitemReviewCubit(usecase: sl()));
   sl.registerFactory(() => VerfiyUsernameCubit(usecase: sl()));
   sl.registerFactory(() => ProfileByUsernameCubit(usecase: sl()));
   sl.registerFactory(() => AddFollowCubit(usecase: sl()));
@@ -231,15 +235,14 @@ Future<void> init() async {
   sl.registerFactory(() => RemoveFavoriteUscase(repository: sl()));
 
   sl.registerLazySingleton<FavoriteRepository>(
-          () => FavoriteRepositoryImpl(remote: sl()));
+      () => FavoriteRepositoryImpl(remote: sl()));
   sl.registerLazySingleton<FavoriteRemote>(() => FavoriteRemoteImplement());
 
   sl.registerLazySingleton<LikesRepository>(
-          () => LikesRepositoryImpl(remote: sl()));
+      () => LikesRepositoryImpl(remote: sl()));
   sl.registerLazySingleton<LikesRemote>(() => LikesRemoteImplement());
 
   sl.registerLazySingleton<CommentsRepository>(
-          () => CommentsRepositoryImpl(remote: sl()));
+      () => CommentsRepositoryImpl(remote: sl()));
   sl.registerLazySingleton<CommentRemote>(() => CommentRemoteImplement());
-
 }

@@ -30,6 +30,7 @@ class ApiPostUrl {
   static String getItemsById = "api/item/getItemsById";
   static String myitem = "api/item/MyItems";
   static String myitemunderreview = "api/item/MyItemsUnderReview";
+  static String myitemreview = "api/item/MyReviewedItems";
 
   static String myfollower = "api/following/myFollowers";
   static String myfolloweing = "api/following/myFollowing";
