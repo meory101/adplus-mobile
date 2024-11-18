@@ -51,6 +51,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
 
   @override
   void initState() {
+    entity.itemId  =widget.args.data.itemId;
     entity.name = widget.args.data.name;
     entity.description = widget.args.data.description;
     entity.startingPrice = widget.args.data.startingPrice;

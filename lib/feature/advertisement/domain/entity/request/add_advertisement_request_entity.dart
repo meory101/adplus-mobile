@@ -25,8 +25,10 @@ class AddAdvertisementRequestEntity {
       String? description,
     String? keywords,
       String? bidingStartTime,
+      num? itemId,
     List<AttributeFormValue>? attributes,}){
     _categoryId = categoryId;
+    _itemId = itemId;
     _cityId = cityId;
     _name = name;
     _startingPrice = startingPrice;
@@ -39,6 +41,7 @@ class AddAdvertisementRequestEntity {
 
   AddAdvertisementRequestEntity.fromJson(dynamic json) {
     _categoryId = json['category_id'];
+    _itemId  = json['item_id'];
     _cityId = json['city_id'];
     _name = json['name'];
     _startingPrice = json['starting_price'];
@@ -51,6 +54,7 @@ class AddAdvertisementRequestEntity {
   num? _categoryId;
   num? _cityId;
   String? _name;
+  num? _itemId;
   num? _startingPrice;
   num? _minIncreasePrice;
   String? _description;
@@ -63,11 +67,13 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   num? startingPrice,
   num? minIncreasePrice,
   String? description,
+  num? itemId,
   String? keywords,
   String? bidingStartTime,
   dynamic attributes,
 }) => AddAdvertisementRequestEntity(  categoryId: categoryId ?? _categoryId,
   cityId: cityId ?? _cityId,
+  itemId: itemId?? _itemId,
   name: name ?? _name,
   startingPrice: startingPrice ?? _startingPrice,
   minIncreasePrice: minIncreasePrice ?? _minIncreasePrice,
@@ -77,6 +83,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   attributes: attributes ?? _attributes,
 );
   num? get categoryId => _categoryId;
+  num? get itemId => _itemId;
   num? get cityId => _cityId;
   String? get name => _name;
   num? get startingPrice => _startingPrice;
@@ -89,6 +96,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['category_id'] = _categoryId;
+    map['item_id'] = _itemId;
     map['city_id'] = _cityId;
     map['name'] = _name;
     map['starting_price'] = _startingPrice;
@@ -104,6 +112,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
     _attributes = value;
   }
 
+
   set bidingStartTime(String? value) {
     _bidingStartTime = value;
   }
@@ -111,7 +120,9 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   set keywords(String? value) {
     _keywords = value;
   }
-
+  set itemId(num? value) {
+    _itemId = value;
+  }
   set description(String? value) {
     _description = value;
   }
