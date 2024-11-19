@@ -6,6 +6,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_requ
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/search_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
@@ -13,6 +14,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/check_like_res
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/search_user_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/myitems_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
@@ -140,6 +142,16 @@ class HomeRepositoryImplements implements HomeRepository {
     return Connector<bool>().connect(
       remote: () async {
         final result = await remote.removeLike(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure,SearchUserResponseEntity>> searchUser({required SearchUserRequestEntity entity})async {
+    return Connector<SearchUserResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.searchUser(entity: entity);
         return Right(result);
       },
     );

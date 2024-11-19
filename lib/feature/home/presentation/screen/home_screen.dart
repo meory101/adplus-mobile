@@ -160,18 +160,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      SvgPicture.asset(
-                        AppIconManager.notification,
-                        colorFilter: const ColorFilter.mode(
-                            AppColorManager.mainColor, BlendMode.srcIn),
-                      ),
+                      // SvgPicture.asset(
+                      //   AppIconManager.notification,
+                      //   colorFilter: const ColorFilter.mode(
+                      //       AppColorManager.mainColor, BlendMode.srcIn),
+                      // ),
                       SizedBox(
                         width: AppWidthManager.w3Point8,
                       ),
-                      SvgPicture.asset(
-                        AppIconManager.search,
-                        colorFilter: const ColorFilter.mode(
-                            AppColorManager.mainColor, BlendMode.srcIn),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(RouteNamedScreens.searchUser);
+                        },
+                        child: SvgPicture.asset(
+                          AppIconManager.search,
+                          colorFilter: const ColorFilter.mode(
+                              AppColorManager.mainColor, BlendMode.srcIn),
+                        ),
                       ),
                     ],
                   ),

@@ -10,6 +10,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/category_insid
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/search_user_response_entity.dart';
 
 import '../../../../../core/api/api_error/api_exception.dart';
 import '../../../../../core/api/api_error/api_status_code.dart';
@@ -21,10 +22,12 @@ import '../../../domain/entity/request/advs_by_attribute_request_entity.dart';
 import '../../../domain/entity/request/category_inside_page_request_entity.dart';
 import '../../../domain/entity/request/check_like_request_entity.dart';
 import '../../../domain/entity/request/get_advs_by_user_request_entity.dart';
+import '../../../domain/entity/request/search_user_request_entity.dart';
 import '../../../domain/entity/response/check_like_response_entity.dart';
 
 abstract class HomeRemote {
   Future<GetCategoriesResponseEntity> getCategories();
+  Future<SearchUserResponseEntity> searchUser({required SearchUserRequestEntity entity});
   Future<CheckLikeResponseEntity> checkLike({required CheckLikeRequestEntity entity});
   Future<bool> removeLike({required CheckLikeRequestEntity entity});
   Future<MyItemResponseEntity> getAdvByUser({required GetAdvsByUserRequestEntity entity});
@@ -188,6 +191,20 @@ class HomeRemoteImplement extends HomeRemote {
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<SearchUserResponseEntity> searchUser({required SearchUserRequestEntity entity}) async{
+    final response =
+    await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.searchUser);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return searchUserResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

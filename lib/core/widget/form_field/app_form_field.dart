@@ -104,7 +104,7 @@ class AppTextFormField extends StatelessWidget {
         prefixIcon: prefixIcon,
         hintStyle: hintStyle ??TextStyle(
             color: AppColorManager.grey,
-            fontSize: FontSizeManager.fs14
+            fontSize: FontSizeManager.fs15
         ),
         prefixIconColor: Colors.grey,
         suffixIconColor: Colors.grey,

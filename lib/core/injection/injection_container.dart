@@ -51,6 +51,7 @@ import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase
 import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_comments_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/remove_like_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/search_user_usecase.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
@@ -62,6 +63,7 @@ import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_c
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/remove_like/remove_like_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/search_user/search_user_cubit.dart';
 import 'package:mzad_damascus/feature/likes/data/datasource/remote/likes_remote.dart';
 import 'package:mzad_damascus/feature/likes/data/repository/likes_repository_impl.dart';
 import 'package:mzad_damascus/feature/likes/domain/repository/likes_repository.dart';
@@ -117,11 +119,13 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => SearchUserCubit(usecase: sl()));
   sl.registerFactory(() => DeleteAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => UpdateAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => CheckFollowCubit(usecase: sl()));
   sl.registerFactory(() => RemoveFollowCubit(usecase: sl()));
   sl.registerFactory(() => CheckFollowUscase(repository: sl()));
+  sl.registerFactory(() => SearchUserUsecase(repository: sl()));
   sl.registerFactory(() => CheckLikeCubit(usecase: sl()));
   sl.registerFactory(() => LikesCubit(usecase: sl()));
   sl.registerFactory(() => LikesUsecase(repository: sl()));
@@ -159,7 +163,6 @@ Future<void> init() async {
       () => MoreRepositoryImplements(remote: sl()));
 
   sl.registerLazySingleton<MoreRemote>(() => MoreRemoteImplement());
-  // تسجيلات خدمات الإعلان
   sl.registerFactory(() => GetCategoryAttributesCubit(usecase: sl()));
   sl.registerFactory(() => AddAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => GetCitiesCubit(usecase: sl()));
