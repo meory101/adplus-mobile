@@ -117,8 +117,8 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                         Row(
                           children: [
                             Container(
-                              height: AppWidthManager.w20,
-                              width: AppWidthManager.w20,
+                              height: AppWidthManager.w15,
+                              width: AppWidthManager.w15,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration:
                                   const BoxDecoration(shape: BoxShape.circle),
@@ -158,7 +158,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                               vertical: AppHeightManager.h05),
                           color: AppColorManager.mainColor,
                           child: AppTextWidget(
-                              text: "profie".tr(),
+                              text: "userProfile".tr(),
                               fontWeight: FontWeight.w600,
                               color: AppColorManager.white,
                               fontSize: FontSizeManager.fs16),
