@@ -8,14 +8,17 @@ AdvsByAttributeRequestEntity advsByAttributeRequestEntityFromJson(String str) =>
 String advsByAttributeRequestEntityToJson(AdvsByAttributeRequestEntity data) => json.encode(data.toJson());
 class AdvsByAttributeRequestEntity {
   AdvsByAttributeRequestEntity({
-      num? page, 
+      num? page,
+    num? cityId,
       List<Attributes>? attributes,}){
     _page = page;
+    _cityId = cityId;
     _attributes = attributes;
 }
 
   AdvsByAttributeRequestEntity.fromJson(dynamic json) {
     _page = json['page'];
+    _cityId = json ['city_id'];
     if (json['attributes'] != null) {
       _attributes = [];
       json['attributes'].forEach((v) {
@@ -24,6 +27,7 @@ class AdvsByAttributeRequestEntity {
     }
   }
   num? _page;
+  num? _cityId;
   List<Attributes>? _attributes;
 AdvsByAttributeRequestEntity copyWith({  num? page,
   List<Attributes>? attributes,
@@ -31,12 +35,15 @@ AdvsByAttributeRequestEntity copyWith({  num? page,
   attributes: attributes ?? _attributes,
 );
   num? get page => _page;
+  num? get cityId => _cityId;
   List<Attributes>? get attributes => _attributes;
 
   set page(num? value) {
     _page = value;
   }
-
+  set cityId(num? value) {
+    _cityId = value;
+  }
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['page'] = _page;

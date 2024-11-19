@@ -129,7 +129,6 @@ class AdvertisementRemoteImplement extends AdvertisementRemote {
     data.forEach((key, value) {
       multiPartRequest.fields[key.toString()] = value.toString();
     });
-
     if (data['attributes'] != null && data['attributes'] is List) {
       for (var attr in data['attributes']) {
         multiPartRequest

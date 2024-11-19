@@ -25,8 +25,13 @@ import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/widget/drop_down/drop_down_form_field.dart';
+import '../../../../core/widget/drop_down/title_drop_down_form_field.dart';
 import '../../../../core/widget/loading/shimmer/advs_by_attribute_shimmer.dart';
 import '../../../../core/widget/loading/shimmer/attribute_list_view_shimmer.dart';
+import '../../../advertisement/domain/entity/response/get_cities_response_entity.dart';
+import '../../../advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
+import '../../../advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_state.dart';
+import '../../../advertisement/presentation/screen/category_attribute_form_screen.dart';
 import '../../domain/entity/response/advs_by_attribute_response_entity.dart';
 import '../../domain/entity/response/get_adv_details_response_entity.dart';
 import '../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
@@ -92,267 +97,315 @@ class _InsidePageCategoryAdvsScreenState
                     state.entity.data?.attributes ?? [];
                 return SizedBox(
                     height: AppHeightManager.h7,
-                    child: ListView.builder(
-                      itemCount: filterItems.length,
+                    child:
+                    ListView(
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        List<NameAndId> optionsList = [];
-                        optionsList.add(NameAndId(name: "all", id: "all"));
-                        filterItems[index].attributeTypeList?.forEach(
-                              (element) {
-                            optionsList.add(
-                                NameAndId(
-                                    name: LanguageHelper.checkIfLTR(
-                                        context: context) ? element.optionEn ??
-                                        "" : element.option ?? "",
-                                    id: LanguageHelper.checkIfLTR(
-                                        context: context) ? element.optionEn ??
-                                        "" : element.option ?? "")
+                      children: [
+                        BlocConsumer<GetCitiesCubit, GetCitiesState>(
+                          listener: (context, state) {
+                            if (state.status == CubitStatus.error) {
+                              NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state.status == CubitStatus.loading) {
+                              return ShimmerContainer(width: AppWidthManager.w45, height: AppHeightManager.h6);
+                            }
+                            List<NameAndId> citiesOptions = [];
+                            List<City> cities = state.entity.data ?? [];
+                            cities.forEach((city) {
+                              citiesOptions.add(NameAndId(
+                                name: LanguageHelper.checkIfLTR(context: context) ? city.enName ?? "" : city.arName ?? "",
+                                id: city.cityId.toString(),
+                              ));
+                            });
+                            return Container(
+                              width: AppWidthManager.w45,
+                              child: DropDownFormFieldWidget(
+                                validator: (city) {
+                                  if ((city?.name ?? "").isEmpty) {
+                                    return "required".tr(); // Localized text
+                                  }
+                                },
+                                onChanged: (selectedCity) {
+                                  entity.cityId = num.parse(selectedCity?.id??"0");
+                                  context
+                                      .read<AdvsByAttributeCubit>()
+                                      .getAdvsByAttribute(
+                                      context: context, entity: entity);
+                                },
+                                hint: 'city'.tr(), // Localized text
+                                options: citiesOptions,
+                              ),
                             );
                           },
-                        );
-                        return InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return StatefulBuilder(
-                                    builder: (context, setState) {
-                                      return Visibility(
-                                        visible: optionsList.isNotEmpty,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColorManager.white,
-                                              borderRadius: BorderRadius
-                                                  .circular(
-                                                  AppRadiusManager.r10)),
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: AppWidthManager
-                                                .w3Point8,
-                                          ),
-                                          height: AppHeightManager.h40,
-                                          width: AppWidthManager.w100,
-                                          child: ListView.builder(
-                                            itemCount: optionsList.length,
-                                            itemBuilder: (context, i) {
-                                              Attributes attribute = Attributes();
-                                              attribute.attributeId =
-                                                  filterItems[index]
-                                                      .attributeId;
-                                              attribute.value =
-                                                  optionsList[i].name ?? "";
-                                              return InkWell(
-                                                onTap: () {
-                                                  if (attribute.value ==
-                                                      "all") {
-                                                    if (allAttribute[
-                                                    filterItems[index]] ==
-                                                        true) {
-                                                      viewCondition['all${index}'] =
-                                                      false;
-                                                      for (var optionListElement
-                                                      in optionsList) {
-                                                        viewCondition[
-                                                        optionListElement
-                                                            .name] = false;
-                                                        attributeMap[
-                                                        optionListElement
-                                                            .name] = null;
-                                                      }
-                                                      allAttribute[
-                                                      filterItems[index]] =
-                                                      false;
-                                                    } else {
-                                                      allAttribute[
-                                                      filterItems[index]] =
-                                                      true;
-                                                      for (var optionListElement
-                                                      in optionsList) {
-                                                        if (optionListElement
-                                                            .name ==
-                                                            "all") {
-                                                          viewCondition[
-                                                          'all${index}'] = true;
-                                                          continue;
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: filterItems.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+
+                            List<NameAndId> optionsList = [];
+                            optionsList.add(const NameAndId(name: "all", id: "all"));
+                            filterItems[index].attributeTypeList?.forEach(
+                                  (element) {
+                                optionsList.add(
+                                    NameAndId(
+                                        name: LanguageHelper.checkIfLTR(
+                                            context: context) ? element.optionEn ??
+                                            "" : element.option ?? "",
+                                        id: LanguageHelper.checkIfLTR(
+                                            context: context) ? element.optionEn ??
+                                            "" : element.option ?? "")
+                                );
+                              },
+                            );
+                            return InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return StatefulBuilder(
+                                        builder: (context, setState) {
+                                          return Visibility(
+                                            visible: optionsList.isNotEmpty,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: AppColorManager.white,
+                                                  borderRadius: BorderRadius
+                                                      .circular(
+                                                      AppRadiusManager.r10)),
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: AppWidthManager
+                                                    .w3Point8,
+                                              ),
+                                              height: AppHeightManager.h40,
+                                              width: AppWidthManager.w100,
+                                              child: ListView.builder(
+                                                itemCount: optionsList.length,
+                                                itemBuilder: (context, i) {
+                                                  Attributes attribute = Attributes();
+                                                  attribute.attributeId =
+                                                      filterItems[index]
+                                                          .attributeId;
+                                                  attribute.value =
+                                                      optionsList[i].name ?? "";
+                                                  return InkWell(
+                                                    onTap: () {
+                                                      if (attribute.value ==
+                                                          "all") {
+                                                        if (allAttribute[
+                                                        filterItems[index]] ==
+                                                            true) {
+                                                          viewCondition['all${index}'] =
+                                                          false;
+                                                          for (var optionListElement
+                                                          in optionsList) {
+                                                            viewCondition[
+                                                            optionListElement
+                                                                .name] = false;
+                                                            attributeMap[
+                                                            optionListElement
+                                                                .name] = null;
+                                                          }
+                                                          allAttribute[
+                                                          filterItems[index]] =
+                                                          false;
+                                                        } else {
+                                                          allAttribute[
+                                                          filterItems[index]] =
+                                                          true;
+                                                          for (var optionListElement
+                                                          in optionsList) {
+                                                            if (optionListElement
+                                                                .name ==
+                                                                "all") {
+                                                              viewCondition[
+                                                              'all${index}'] = true;
+                                                              continue;
+                                                            }
+                                                            viewCondition[
+                                                            optionListElement
+                                                                .name] = true;
+                                                            attributeMap[
+                                                            optionListElement
+                                                                .name] = Attributes(
+                                                                attributeId:
+                                                                filterItems[index]
+                                                                    .attributeId,
+                                                                value: optionListElement
+                                                                    .name);
+                                                          }
                                                         }
-                                                        viewCondition[
-                                                        optionListElement
-                                                            .name] = true;
-                                                        attributeMap[
-                                                        optionListElement
-                                                            .name] = Attributes(
-                                                            attributeId:
-                                                            filterItems[index]
-                                                                .attributeId,
-                                                            value: optionListElement
-                                                                .name);
+                                                        setState(() {});
+                                                        return;
                                                       }
-                                                    }
-                                                    setState(() {});
-                                                    return;
-                                                  }
-                                                  if (attributeMap[
-                                                  attribute.value] !=
-                                                      null) {
-                                                    viewCondition['all${index}'] =
-                                                    false;
-                                                    viewCondition[attribute
-                                                        .value] =
-                                                    false;
-                                                    attributeMap
-                                                        .remove(
-                                                        attribute.value);
-                                                  } else {
-                                                    viewCondition[attribute
-                                                        .value] =
-                                                    true;
-                                                    attributeMap[attribute
-                                                        .value] =
-                                                        attribute;
-                                                  }
-                                                  setState(() {});
-                                                },
-                                                child: Container(
-                                                    margin: EdgeInsets.only(
-                                                        top: AppHeightManager
-                                                            .h1point8),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppRadiusManager.r15),
-                                                      color: attribute.value ==
-                                                          "all"
-                                                          ? viewCondition[
-                                                      'all$index'] ??
-                                                          false
-                                                          ? AppColorManager
-                                                          .lightGreyOpacity6
-                                                          : viewCondition[attribute
-                                                          .value] ??
-                                                          false
-                                                          ? AppColorManager
-                                                          .lightGreyOpacity6
-                                                          : AppColorManager
-                                                          .white
-                                                          : viewCondition[attribute
-                                                          .value] ??
-                                                          false
-                                                          ? AppColorManager
-                                                          .lightGreyOpacity6
-                                                          : AppColorManager
-                                                          .white,
-                                                    ),
-                                                    padding: EdgeInsets.only(
-                                                        left: LanguageHelper
-                                                            .checkIfLTR(
-                                                            context:
-                                                            context)
-                                                            ? AppWidthManager.w3
-                                                            : AppWidthManager
-                                                            .w1Point2,
-                                                        right: LanguageHelper
-                                                            .checkIfLTR(
-                                                            context:
-                                                            context)
-                                                            ? AppWidthManager
-                                                            .w1Point2
-                                                            : AppWidthManager
-                                                            .w3,
-                                                        top: AppHeightManager
-                                                            .h1,
-                                                        bottom:
-                                                        AppHeightManager.h05),
-                                                    height: AppHeightManager.h7,
-                                                    width: double.infinity,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                      children: [
-                                                        AppTextWidget(
-                                                            text:
-                                                            attribute.value ==
-                                                                "all" ?
-                                                            "all".tr()
-                                                                :
-                                                            optionsList[i]
-                                                                .name ??
-                                                                ""),
-                                                        Radio(
-                                                          onChanged: (value) {},
-                                                          groupValue: true,
-                                                          value: attribute
-                                                              .value ==
+                                                      if (attributeMap[
+                                                      attribute.value] !=
+                                                          null) {
+                                                        viewCondition['all${index}'] =
+                                                        false;
+                                                        viewCondition[attribute
+                                                            .value] =
+                                                        false;
+                                                        attributeMap
+                                                            .remove(
+                                                            attribute.value);
+                                                      } else {
+                                                        viewCondition[attribute
+                                                            .value] =
+                                                        true;
+                                                        attributeMap[attribute
+                                                            .value] =
+                                                            attribute;
+                                                      }
+                                                      setState(() {});
+                                                    },
+                                                    child: Container(
+                                                        margin: EdgeInsets.only(
+                                                            top: AppHeightManager
+                                                                .h1point8),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                              AppRadiusManager.r15),
+                                                          color: attribute.value ==
                                                               "all"
                                                               ? viewCondition[
-                                                          'all$index']
-                                                              : viewCondition[
-                                                          attribute
+                                                          'all$index'] ??
+                                                              false
+                                                              ? AppColorManager
+                                                              .lightGreyOpacity6
+                                                              : viewCondition[attribute
                                                               .value] ??
-                                                              false,
-                                                          activeColor:
-                                                          AppColorManager
-                                                              .textAppColor,
-                                                          visualDensity: const VisualDensity(
-                                                              horizontal:
-                                                              VisualDensity
-                                                                  .minimumDensity,
-                                                              vertical: VisualDensity
-                                                                  .minimumDensity),
-                                                        )
-                                                      ],
-                                                    )),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    });
+                                                              false
+                                                              ? AppColorManager
+                                                              .lightGreyOpacity6
+                                                              : AppColorManager
+                                                              .white
+                                                              : viewCondition[attribute
+                                                              .value] ??
+                                                              false
+                                                              ? AppColorManager
+                                                              .lightGreyOpacity6
+                                                              : AppColorManager
+                                                              .white,
+                                                        ),
+                                                        padding: EdgeInsets.only(
+                                                            left: LanguageHelper
+                                                                .checkIfLTR(
+                                                                context:
+                                                                context)
+                                                                ? AppWidthManager.w3
+                                                                : AppWidthManager
+                                                                .w1Point2,
+                                                            right: LanguageHelper
+                                                                .checkIfLTR(
+                                                                context:
+                                                                context)
+                                                                ? AppWidthManager
+                                                                .w1Point2
+                                                                : AppWidthManager
+                                                                .w3,
+                                                            top: AppHeightManager
+                                                                .h1,
+                                                            bottom:
+                                                            AppHeightManager.h05),
+                                                        height: AppHeightManager.h7,
+                                                        width: double.infinity,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                          children: [
+                                                            AppTextWidget(
+                                                                text:
+                                                                attribute.value ==
+                                                                    "all" ?
+                                                                "all".tr()
+                                                                    :
+                                                                optionsList[i]
+                                                                    .name ??
+                                                                    ""),
+                                                            Radio(
+                                                              onChanged: (value) {},
+                                                              groupValue: true,
+                                                              value: attribute
+                                                                  .value ==
+                                                                  "all"
+                                                                  ? viewCondition[
+                                                              'all$index']
+                                                                  : viewCondition[
+                                                              attribute
+                                                                  .value] ??
+                                                                  false,
+                                                              activeColor:
+                                                              AppColorManager
+                                                                  .textAppColor,
+                                                              visualDensity: const VisualDensity(
+                                                                  horizontal:
+                                                                  VisualDensity
+                                                                      .minimumDensity,
+                                                                  vertical: VisualDensity
+                                                                      .minimumDensity),
+                                                            )
+                                                          ],
+                                                        )),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                ).then((value) {
+                                  for (var element in attributeMap.values) {
+                                    if (element == null) continue;
+                                    entity.attributes?.add(element);
+                                  }
+                                  context
+                                      .read<AdvsByAttributeCubit>()
+                                      .getAdvsByAttribute(
+                                      context: context, entity: entity);
+                                });
                               },
-                            ).then((value) {
-                              for (var element in attributeMap.values) {
-                                if (element == null) continue;
-                                entity.attributes?.add(element);
-                              }
-                              context
-                                  .read<AdvsByAttributeCubit>()
-                                  .getAdvsByAttribute(
-                                  context: context, entity: entity);
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColorManager.white,
-                              border: Border.all(
-                                  color: AppColorManager.lightGreyOpacity6),
-                              borderRadius:
-                              BorderRadius.circular(AppRadiusManager.r10),
-                            ),
-                            height: AppHeightManager.h7,
-                            width: AppWidthManager.w45,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: AppWidthManager.w3Point8),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  AppTextWidget(
-                                      text: LanguageHelper.checkIfLTR(
-                                          context: context) ?
-                                      filterItems[index]
-                                          .attributeNameEn ??
-                                          ""
-                                          :filterItems[index]
-                                          .attributeName ??
-                                          ""),
-                                  SvgPicture.asset(AppIconManager.arrowMenuDown)
-                                ],
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColorManager.white,
+                                  border: Border.all(
+                                      color: AppColorManager.lightGreyOpacity6),
+                                  borderRadius:
+                                  BorderRadius.circular(AppRadiusManager.r10),
+                                ),
+                                height: AppHeightManager.h7,
+                                width: AppWidthManager.w45,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: AppWidthManager.w3Point8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      AppTextWidget(
+                                          text: LanguageHelper.checkIfLTR(
+                                              context: context) ?
+                                          filterItems[index]
+                                              .attributeNameEn ??
+                                              ""
+                                              :filterItems[index]
+                                              .attributeName ??
+                                              ""),
+                                      SvgPicture.asset(AppIconManager.arrowMenuDown)
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
+                            );
+                          },
+                        ),
+                      ],
                     ));
               })
             ],

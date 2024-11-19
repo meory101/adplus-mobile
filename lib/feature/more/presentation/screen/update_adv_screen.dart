@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/add_advertisement_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_state.dart';
@@ -104,6 +105,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
               });
         },
       ),
+      appBar: MainAppBar(title: ""),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -115,9 +117,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  SizedBox(
-                    height: AppHeightManager.h6,
-                  ),
+
                   CarouselSlider(
                     options: CarouselOptions(
                       onPageChanged: (index, reason) {

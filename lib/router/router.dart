@@ -129,6 +129,9 @@ abstract class AppRouter {
               create: (context) => di.sl<AdvsByAttributeCubit>(),
             ),
             BlocProvider(
+              create: (context) => di.sl<GetCitiesCubit>()..getCities(context: context),
+            ),
+            BlocProvider(
               create: (context) => di.sl<GetCategoryAttributesCubit>()
                 ..getCategoryAttributes(
                     context: context,
