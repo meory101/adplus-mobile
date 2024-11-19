@@ -6,10 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/drop_down/NameAndId.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
@@ -97,25 +99,30 @@ class _InsidePageCategoryAdvsScreenState
                     state.entity.data?.attributes ?? [];
                 return SizedBox(
                     height: AppHeightManager.h7,
-                    child:
-                    ListView(
+                    child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
                         BlocConsumer<GetCitiesCubit, GetCitiesState>(
                           listener: (context, state) {
                             if (state.status == CubitStatus.error) {
-                              NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                              NoteMessage.showErrorSnackBar(
+                                  context: context, text: state.error);
                             }
                           },
                           builder: (context, state) {
                             if (state.status == CubitStatus.loading) {
-                              return ShimmerContainer(width: AppWidthManager.w45, height: AppHeightManager.h6);
+                              return ShimmerContainer(
+                                  width: AppWidthManager.w45,
+                                  height: AppHeightManager.h6);
                             }
                             List<NameAndId> citiesOptions = [];
                             List<City> cities = state.entity.data ?? [];
                             cities.forEach((city) {
                               citiesOptions.add(NameAndId(
-                                name: LanguageHelper.checkIfLTR(context: context) ? city.enName ?? "" : city.arName ?? "",
+                                name:
+                                    LanguageHelper.checkIfLTR(context: context)
+                                        ? city.enName ?? ""
+                                        : city.arName ?? "",
                                 id: city.cityId.toString(),
                               ));
                             });
@@ -128,11 +135,12 @@ class _InsidePageCategoryAdvsScreenState
                                   }
                                 },
                                 onChanged: (selectedCity) {
-                                  entity.cityId = num.parse(selectedCity?.id??"0");
+                                  entity.cityId =
+                                      num.parse(selectedCity?.id ?? "0");
                                   context
                                       .read<AdvsByAttributeCubit>()
                                       .getAdvsByAttribute(
-                                      context: context, entity: entity);
+                                          context: context, entity: entity);
                                 },
                                 hint: 'city'.tr(), // Localized text
                                 options: citiesOptions,
@@ -146,20 +154,20 @@ class _InsidePageCategoryAdvsScreenState
                           itemCount: filterItems.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-
                             List<NameAndId> optionsList = [];
-                            optionsList.add(const NameAndId(name: "all", id: "all"));
+                            optionsList
+                                .add(const NameAndId(name: "all", id: "all"));
                             filterItems[index].attributeTypeList?.forEach(
-                                  (element) {
-                                optionsList.add(
-                                    NameAndId(
-                                        name: LanguageHelper.checkIfLTR(
-                                            context: context) ? element.optionEn ??
-                                            "" : element.option ?? "",
-                                        id: LanguageHelper.checkIfLTR(
-                                            context: context) ? element.optionEn ??
-                                            "" : element.option ?? "")
-                                );
+                              (element) {
+                                optionsList.add(NameAndId(
+                                    name: LanguageHelper.checkIfLTR(
+                                            context: context)
+                                        ? element.optionEn ?? ""
+                                        : element.option ?? "",
+                                    id: LanguageHelper.checkIfLTR(
+                                            context: context)
+                                        ? element.optionEn ?? ""
+                                        : element.option ?? ""));
                               },
                             );
                             return InkWell(
@@ -169,196 +177,196 @@ class _InsidePageCategoryAdvsScreenState
                                   builder: (context) {
                                     return StatefulBuilder(
                                         builder: (context, setState) {
-                                          return Visibility(
-                                            visible: optionsList.isNotEmpty,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: AppColorManager.white,
-                                                  borderRadius: BorderRadius
-                                                      .circular(
+                                      return Visibility(
+                                        visible: optionsList.isNotEmpty,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: AppColorManager.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(
                                                       AppRadiusManager.r10)),
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: AppWidthManager
-                                                    .w3Point8,
-                                              ),
-                                              height: AppHeightManager.h40,
-                                              width: AppWidthManager.w100,
-                                              child: ListView.builder(
-                                                itemCount: optionsList.length,
-                                                itemBuilder: (context, i) {
-                                                  Attributes attribute = Attributes();
-                                                  attribute.attributeId =
-                                                      filterItems[index]
-                                                          .attributeId;
-                                                  attribute.value =
-                                                      optionsList[i].name ?? "";
-                                                  return InkWell(
-                                                    onTap: () {
-                                                      if (attribute.value ==
-                                                          "all") {
-                                                        if (allAttribute[
-                                                        filterItems[index]] ==
-                                                            true) {
-                                                          viewCondition['all${index}'] =
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                AppWidthManager.w3Point8,
+                                          ),
+                                          height: AppHeightManager.h40,
+                                          width: AppWidthManager.w100,
+                                          child: ListView.builder(
+                                            itemCount: optionsList.length,
+                                            itemBuilder: (context, i) {
+                                              Attributes attribute =
+                                                  Attributes();
+                                              attribute.attributeId =
+                                                  filterItems[index]
+                                                      .attributeId;
+                                              attribute.value =
+                                                  optionsList[i].name ?? "";
+                                              return InkWell(
+                                                onTap: () {
+                                                  if (attribute.value ==
+                                                      "all") {
+                                                    if (allAttribute[
+                                                            filterItems[
+                                                                index]] ==
+                                                        true) {
+                                                      viewCondition[
+                                                              'all${index}'] =
                                                           false;
-                                                          for (var optionListElement
+                                                      for (var optionListElement
                                                           in optionsList) {
-                                                            viewCondition[
+                                                        viewCondition[
                                                             optionListElement
                                                                 .name] = false;
-                                                            attributeMap[
+                                                        attributeMap[
                                                             optionListElement
                                                                 .name] = null;
-                                                          }
-                                                          allAttribute[
-                                                          filterItems[index]] =
-                                                          false;
-                                                        } else {
-                                                          allAttribute[
-                                                          filterItems[index]] =
-                                                          true;
-                                                          for (var optionListElement
+                                                      }
+                                                      allAttribute[filterItems[
+                                                          index]] = false;
+                                                    } else {
+                                                      allAttribute[filterItems[
+                                                          index]] = true;
+                                                      for (var optionListElement
                                                           in optionsList) {
-                                                            if (optionListElement
+                                                        if (optionListElement
                                                                 .name ==
-                                                                "all") {
-                                                              viewCondition[
-                                                              'all${index}'] = true;
-                                                              continue;
-                                                            }
-                                                            viewCondition[
+                                                            "all") {
+                                                          viewCondition[
+                                                                  'all${index}'] =
+                                                              true;
+                                                          continue;
+                                                        }
+                                                        viewCondition[
                                                             optionListElement
                                                                 .name] = true;
-                                                            attributeMap[
+                                                        attributeMap[
                                                             optionListElement
                                                                 .name] = Attributes(
-                                                                attributeId:
-                                                                filterItems[index]
+                                                            attributeId:
+                                                                filterItems[
+                                                                        index]
                                                                     .attributeId,
-                                                                value: optionListElement
+                                                            value:
+                                                                optionListElement
                                                                     .name);
-                                                          }
-                                                        }
-                                                        setState(() {});
-                                                        return;
                                                       }
-                                                      if (attributeMap[
-                                                      attribute.value] !=
-                                                          null) {
-                                                        viewCondition['all${index}'] =
-                                                        false;
-                                                        viewCondition[attribute
-                                                            .value] =
-                                                        false;
-                                                        attributeMap
-                                                            .remove(
-                                                            attribute.value);
-                                                      } else {
-                                                        viewCondition[attribute
-                                                            .value] =
-                                                        true;
-                                                        attributeMap[attribute
-                                                            .value] =
-                                                            attribute;
-                                                      }
-                                                      setState(() {});
-                                                    },
-                                                    child: Container(
-                                                        margin: EdgeInsets.only(
-                                                            top: AppHeightManager
-                                                                .h1point8),
-                                                        decoration: BoxDecoration(
-                                                          borderRadius:
+                                                    }
+                                                    setState(() {});
+                                                    return;
+                                                  }
+                                                  if (attributeMap[
+                                                          attribute.value] !=
+                                                      null) {
+                                                    viewCondition[
+                                                        'all${index}'] = false;
+                                                    viewCondition[attribute
+                                                        .value] = false;
+                                                    attributeMap.remove(
+                                                        attribute.value);
+                                                  } else {
+                                                    viewCondition[
+                                                        attribute.value] = true;
+                                                    attributeMap[attribute
+                                                        .value] = attribute;
+                                                  }
+                                                  setState(() {});
+                                                },
+                                                child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: AppHeightManager
+                                                            .h1point8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
                                                           BorderRadius.circular(
-                                                              AppRadiusManager.r15),
-                                                          color: attribute.value ==
+                                                              AppRadiusManager
+                                                                  .r15),
+                                                      color: attribute.value ==
                                                               "all"
-                                                              ? viewCondition[
-                                                          'all$index'] ??
-                                                              false
+                                                          ? viewCondition[
+                                                                      'all$index'] ??
+                                                                  false
                                                               ? AppColorManager
-                                                              .lightGreyOpacity6
+                                                                  .lightGreyOpacity6
                                                               : viewCondition[attribute
-                                                              .value] ??
-                                                              false
+                                                                          .value] ??
+                                                                      false
+                                                                  ? AppColorManager
+                                                                      .lightGreyOpacity6
+                                                                  : AppColorManager
+                                                                      .white
+                                                          : viewCondition[attribute
+                                                                      .value] ??
+                                                                  false
                                                               ? AppColorManager
-                                                              .lightGreyOpacity6
+                                                                  .lightGreyOpacity6
                                                               : AppColorManager
-                                                              .white
-                                                              : viewCondition[attribute
-                                                              .value] ??
-                                                              false
-                                                              ? AppColorManager
-                                                              .lightGreyOpacity6
-                                                              : AppColorManager
-                                                              .white,
-                                                        ),
-                                                        padding: EdgeInsets.only(
-                                                            left: LanguageHelper
+                                                                  .white,
+                                                    ),
+                                                    padding: EdgeInsets.only(
+                                                        left: LanguageHelper
                                                                 .checkIfLTR(
-                                                                context:
-                                                                context)
-                                                                ? AppWidthManager.w3
-                                                                : AppWidthManager
+                                                                    context:
+                                                                        context)
+                                                            ? AppWidthManager.w3
+                                                            : AppWidthManager
                                                                 .w1Point2,
-                                                            right: LanguageHelper
+                                                        right: LanguageHelper
                                                                 .checkIfLTR(
-                                                                context:
-                                                                context)
-                                                                ? AppWidthManager
+                                                                    context:
+                                                                        context)
+                                                            ? AppWidthManager
                                                                 .w1Point2
-                                                                : AppWidthManager
+                                                            : AppWidthManager
                                                                 .w3,
-                                                            top: AppHeightManager
-                                                                .h1,
-                                                            bottom:
-                                                            AppHeightManager.h05),
-                                                        height: AppHeightManager.h7,
-                                                        width: double.infinity,
-                                                        child: Row(
-                                                          mainAxisAlignment:
+                                                        top:
+                                                            AppHeightManager.h1,
+                                                        bottom: AppHeightManager.h05),
+                                                    height: AppHeightManager.h7,
+                                                    width: double.infinity,
+                                                    child: Row(
+                                                      mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceBetween,
-                                                          children: [
-                                                            AppTextWidget(
-                                                                text:
-                                                                attribute.value ==
-                                                                    "all" ?
-                                                                "all".tr()
-                                                                    :
-                                                                optionsList[i]
-                                                                    .name ??
+                                                      children: [
+                                                        AppTextWidget(
+                                                            text: attribute
+                                                                        .value ==
+                                                                    "all"
+                                                                ? "all".tr()
+                                                                : optionsList[i]
+                                                                        .name ??
                                                                     ""),
-                                                            Radio(
-                                                              onChanged: (value) {},
-                                                              groupValue: true,
-                                                              value: attribute
-                                                                  .value ==
+                                                        Radio(
+                                                          onChanged: (value) {},
+                                                          groupValue: true,
+                                                          value: attribute
+                                                                      .value ==
                                                                   "all"
-                                                                  ? viewCondition[
-                                                              'all$index']
-                                                                  : viewCondition[
-                                                              attribute
-                                                                  .value] ??
+                                                              ? viewCondition[
+                                                                  'all$index']
+                                                              : viewCondition[
+                                                                      attribute
+                                                                          .value] ??
                                                                   false,
-                                                              activeColor:
+                                                          activeColor:
                                                               AppColorManager
                                                                   .textAppColor,
-                                                              visualDensity: const VisualDensity(
-                                                                  horizontal:
+                                                          visualDensity: const VisualDensity(
+                                                              horizontal:
                                                                   VisualDensity
                                                                       .minimumDensity,
-                                                                  vertical: VisualDensity
+                                                              vertical:
+                                                                  VisualDensity
                                                                       .minimumDensity),
-                                                            )
-                                                          ],
-                                                        )),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        });
+                                                        )
+                                                      ],
+                                                    )),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    });
                                   },
                                 ).then((value) {
                                   for (var element in attributeMap.values) {
@@ -368,7 +376,7 @@ class _InsidePageCategoryAdvsScreenState
                                   context
                                       .read<AdvsByAttributeCubit>()
                                       .getAdvsByAttribute(
-                                      context: context, entity: entity);
+                                          context: context, entity: entity);
                                 });
                               },
                               child: Container(
@@ -376,8 +384,8 @@ class _InsidePageCategoryAdvsScreenState
                                   color: AppColorManager.white,
                                   border: Border.all(
                                       color: AppColorManager.lightGreyOpacity6),
-                                  borderRadius:
-                                  BorderRadius.circular(AppRadiusManager.r10),
+                                  borderRadius: BorderRadius.circular(
+                                      AppRadiusManager.r10),
                                 ),
                                 height: AppHeightManager.h7,
                                 width: AppWidthManager.w45,
@@ -386,18 +394,19 @@ class _InsidePageCategoryAdvsScreenState
                                       horizontal: AppWidthManager.w3Point8),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       AppTextWidget(
                                           text: LanguageHelper.checkIfLTR(
-                                              context: context) ?
-                                          filterItems[index]
-                                              .attributeNameEn ??
-                                              ""
-                                              :filterItems[index]
-                                              .attributeName ??
-                                              ""),
-                                      SvgPicture.asset(AppIconManager.arrowMenuDown)
+                                                  context: context)
+                                              ? filterItems[index]
+                                                      .attributeNameEn ??
+                                                  ""
+                                              : filterItems[index]
+                                                      .attributeName ??
+                                                  ""),
+                                      SvgPicture.asset(
+                                          AppIconManager.arrowMenuDown)
                                     ],
                                   ),
                                 ),
@@ -418,8 +427,8 @@ class _InsidePageCategoryAdvsScreenState
           builder: (context, state) {
             if (state.status == CubitStatus.loading) {
               return Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: AppWidthManager.w3Point8),
+                padding:
+                    EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
                 child: Column(
                   children: [
                     SizedBox(
@@ -454,49 +463,75 @@ class _InsidePageCategoryAdvsScreenState
                               arguments: AdvertisementDetailsArgs(
                                   advertisement: advs[index]));
                         },
-                        child: Column(
+                        child: Stack(
                           children: [
-                            Container(
-                                height: AppHeightManager.h30,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                decoration: BoxDecoration(
-                                  color: AppColorManager.lightGreyOpacity6,
-                                  borderRadius: BorderRadius.circular(
-                                      AppRadiusManager.r15),
-                                ),
-                                child: MainImageWidget(
-                                  imageUrl: AppConstantManager.imageBaseUrl +
-                                      (advertisement?.photos?.first.photo ??
-                                          ""),
-                                  borderRadius: BorderRadius.circular(
-                                      AppRadiusManager.r15),
-                                )),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: AppHeightManager.h08,
-                                ),
-                                AppTextWidget(
-                                  text: advertisement?.name.toString() ?? "",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  fontSize: FontSizeManager.fs15,
+                                Container(
+                                    height: AppHeightManager.h30,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    decoration: BoxDecoration(
+                                      color: AppColorManager.lightGreyOpacity6,
+                                      borderRadius: BorderRadius.circular(
+                                          AppRadiusManager.r15),
+                                    ),
+                                    child: MainImageWidget(
+                                      fit: BoxFit.cover,
+                                      height: AppHeightManager.h30,
+                                      imageUrl: AppConstantManager
+                                              .imageBaseUrl +
+                                          (advertisement?.photos?.first.photo ??
+                                              ""),
+                                      borderRadius: BorderRadius.circular(
+                                          AppRadiusManager.r15),
+                                    )),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: AppHeightManager.h08,
+                                    ),
+                                    AppTextWidget(
+                                      text:
+                                          advertisement?.name.toString() ?? "",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      fontSize: FontSizeManager.fs15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    AppTextWidget(
+                                      text: advertisement?.startingPrice
+                                              .toString() ??
+                                          "",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      fontSize: FontSizeManager.fs14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    SizedBox(
+                                      height: AppHeightManager.h1point8,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Visibility(
+                              visible: state.entity.data?.adData?[index].star ==
+                                  EnumManager.star,
+                              child: MainAppButton(
+                                borderRadius:
+                                    BorderRadius.circular(AppRadiusManager.r10),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppWidthManager.w3Point8,
+                                    vertical: AppHeightManager.h04),
+                                color: AppColorManager.gold,
+                                child: AppTextWidget(
+                                  text: 'featured'.tr(),
+                                  color: AppColorManager.white,
+                                  fontSize: FontSizeManager.fs16,
                                   fontWeight: FontWeight.w600,
                                 ),
-                                AppTextWidget(
-                                  text:
-                                  advertisement?.startingPrice.toString() ??
-                                      "",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  fontSize: FontSizeManager.fs14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                SizedBox(
-                                  height: AppHeightManager.h1point8,
-                                ),
-                              ],
+                              ),
                             )
                           ],
                         ),

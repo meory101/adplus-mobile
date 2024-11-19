@@ -108,7 +108,10 @@
   "unFollow" : "عدم المتابعة",
   "rejected" : "مرفوضة",
   "active" : "نشطة",
-  "inReview" : "قيد المراجعة"
+  "inReview" : "قيد المراجعة",
+  "featured" : "مميز",
+  "available" : "متاح",
+  "unAvailable" : "مباع"
 }
 
 

@@ -257,9 +257,16 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
               backgroundColor: AppColorManager.mainColor.withOpacity(0.8),
               child: IconButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(
-                        RouteNamedScreens.updateAdvs,
-                        arguments: UpdateAdvArgs(data: item));
+                    Navigator.of(context)
+                        .pushNamed(RouteNamedScreens.updateAdvs,
+                            arguments: UpdateAdvArgs(data: item))
+                        .then(
+                      (value) {
+                        context.read<MyitemCubit>().myitem(
+                            context: context,
+                            entity: MyItemRequestEntity(page: 1));
+                      },
+                    );
                   },
                   icon: const Icon(
                     Icons.edit,

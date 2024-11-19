@@ -26,7 +26,7 @@ class AddAdvertisementRequestEntity {
       num? minIncreasePrice, 
       String? description,
     String? keywords,
-      bool? biddingStatus,
+      num? biddingStatus,
       num? itemId,
     List<Attributes>? attributes,}){
     _categoryId = categoryId;
@@ -61,7 +61,7 @@ class AddAdvertisementRequestEntity {
   num? _minIncreasePrice;
   String? _description;
   String? _keywords;
-  bool? _bidingStartTime;
+  num? _bidingStartTime;
   List<Attributes>? _attributes;
 AddAdvertisementRequestEntity copyWith({  num? categoryId,
   num? cityId,
@@ -71,7 +71,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   String? description,
   num? itemId,
   String? keywords,
-  bool? biddingStatus,
+  num? biddingStatus,
   dynamic attributes,
 }) => AddAdvertisementRequestEntity(  categoryId: categoryId ?? _categoryId,
   cityId: cityId ?? _cityId,
@@ -92,7 +92,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   num? get minIncreasePrice => _minIncreasePrice;
   String? get description => _description;
   String? get keywords => _keywords;
-  bool? get biddingStatus => _bidingStartTime;
+  num? get biddingStatus => _bidingStartTime;
   List<Attributes>? get attributes => _attributes;
 
   Map<String, dynamic> toJson() {
@@ -115,7 +115,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   }
 
 
-  set biddingStatus(bool? value) {
+  set biddingStatus(num? value) {
     _bidingStartTime = value;
   }
 

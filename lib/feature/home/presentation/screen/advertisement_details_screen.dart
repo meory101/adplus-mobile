@@ -60,8 +60,6 @@ class _AdvertisementDetailsScreenState
         return const AdvDetailsScreenShimmer();
       }
       advDetails = state.entity.data;
-      print(advDetails?.likeCount);
-      print('hereeeeeeeeeeeeeeeeeee');
       return Scaffold(
         appBar: AppBar(
           surfaceTintColor: AppColorManager.white,
@@ -92,7 +90,36 @@ class _AdvertisementDetailsScreenState
               ),
             ],
           ),
-          actions: [],
+          actions: [
+            Row(
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  width: AppWidthManager.w2,
+                  height: AppWidthManager.w2,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: EnumManager.biddingStatusColor[
+                              state.entity.data?.biddingStatus ?? 0] ??
+                          AppColorManager.textAppColor),
+                ),
+                AppTextWidget(
+                  text: EnumManager.biddingStatus[
+                          state.entity.data?.biddingStatus ?? 0] ??
+                      "",
+                  fontSize: FontSizeManager.fs17,
+                    color: EnumManager.biddingStatusColor[
+                    state.entity.data?.biddingStatus ?? 0] ??
+                        AppColorManager.textAppColor,
+                  fontWeight: FontWeight.w600,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: AppWidthManager.w3Point8,
+            )
+          ],
           elevation: 0,
         ),
         body: SafeArea(
@@ -134,16 +161,16 @@ class _AdvertisementDetailsScreenState
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-
                                   Row(
                                     children: [
                                       CircleAvatar(
-                                        backgroundColor:
-                                        AppColorManager.grey.withOpacity(0.3),
+                                        backgroundColor: AppColorManager.grey
+                                            .withOpacity(0.3),
                                         child: BlocConsumer<RemoveFavoriteCubit,
                                             RemoveFavoriteState>(
                                           listener: (context, state) {
-                                            if (state.status == CubitStatus.error) {
+                                            if (state.status ==
+                                                CubitStatus.error) {
                                               NoteMessage.showErrorSnackBar(
                                                   context: context,
                                                   text: state.error);
@@ -153,13 +180,13 @@ class _AdvertisementDetailsScreenState
                                               context
                                                   .read<CheckFavoriteCubit>()
                                                   .checkFavorite(
-                                                  context: context,
-                                                  entity:
-                                                  FavoriteRequestEntity(
-                                                      itemId: widget
-                                                          .args
-                                                          .advertisement
-                                                          ?.itemId));
+                                                      context: context,
+                                                      entity:
+                                                          FavoriteRequestEntity(
+                                                              itemId: widget
+                                                                  .args
+                                                                  .advertisement
+                                                                  ?.itemId));
                                             }
                                           },
                                           builder: (context, state) {
@@ -167,7 +194,8 @@ class _AdvertisementDetailsScreenState
                                                 CubitStatus.loading) {
                                               return const AppCircularProgressWidget();
                                             }
-                                            return BlocConsumer<AddFavoriteCubit,
+                                            return BlocConsumer<
+                                                AddFavoriteCubit,
                                                 AddFavoriteState>(
                                               listener: (context, state) {
                                                 if (state.status ==
@@ -178,17 +206,16 @@ class _AdvertisementDetailsScreenState
                                                 }
                                                 if (state.status ==
                                                     CubitStatus.success) {
-
                                                   context
-                                                      .read<CheckFavoriteCubit>()
+                                                      .read<
+                                                          CheckFavoriteCubit>()
                                                       .checkFavorite(
-                                                      context: context,
-                                                      entity:
-                                                      FavoriteRequestEntity(
-                                                          itemId: widget
-                                                              .args
-                                                              .advertisement
-                                                              ?.itemId));
+                                                          context: context,
+                                                          entity: FavoriteRequestEntity(
+                                                              itemId: widget
+                                                                  .args
+                                                                  .advertisement
+                                                                  ?.itemId));
                                                 }
                                               },
                                               builder: (context, state) {
@@ -196,14 +223,17 @@ class _AdvertisementDetailsScreenState
                                                     CubitStatus.loading) {
                                                   return const AppCircularProgressWidget();
                                                 }
-                                                return BlocConsumer<CheckFavoriteCubit,
+                                                return BlocConsumer<
+                                                    CheckFavoriteCubit,
                                                     CheckFavoriteState>(
                                                   listener: (context, state) {
                                                     if (state.status ==
                                                         CubitStatus.error) {
-                                                      NoteMessage.showErrorSnackBar(
-                                                          context: context,
-                                                          text: state.error);
+                                                      NoteMessage
+                                                          .showErrorSnackBar(
+                                                              context: context,
+                                                              text:
+                                                                  state.error);
                                                     }
                                                   },
                                                   builder: (context, state) {
@@ -211,49 +241,53 @@ class _AdvertisementDetailsScreenState
                                                         CubitStatus.loading) {
                                                       return const AppCircularProgressWidget();
                                                     }
-                                                    bool like = (state
-                                                        .entity.data?.exists ??
+                                                    bool like = (state.entity
+                                                            .data?.exists ??
                                                         false);
 
                                                     return IconButton(
                                                         onPressed: () {
                                                           if (AppSharedPreferences
-                                                              .getToken()
+                                                                  .getToken()
                                                               .isEmpty) {
                                                             showLoginBottomSheet(
-                                                                context: context);
+                                                                context:
+                                                                    context);
                                                             return;
                                                           }
                                                           if (like == true) {
                                                             context
                                                                 .read<
-                                                                RemoveFavoriteCubit>()
+                                                                    RemoveFavoriteCubit>()
                                                                 .removeFavorite(
-                                                                context:
-                                                                context,
-                                                                entity:
-                                                                FavoriteRequestEntity(
-                                                                  itemId:
-                                                                  advDetails
-                                                                      ?.itemId,
-                                                                ));
+                                                                    context:
+                                                                        context,
+                                                                    entity:
+                                                                        FavoriteRequestEntity(
+                                                                      itemId: advDetails
+                                                                          ?.itemId,
+                                                                    ));
                                                           } else {
-                                                            context.read<AddFavoriteCubit>().addFavorite(
-                                                                context: context,
-                                                                entity: FavoriteRequestEntity(
-                                                                    itemId:
-                                                                    advDetails
-                                                                        ?.itemId,));
+                                                            context
+                                                                .read<
+                                                                    AddFavoriteCubit>()
+                                                                .addFavorite(
+                                                                    context:
+                                                                        context,
+                                                                    entity:
+                                                                        FavoriteRequestEntity(
+                                                                      itemId: advDetails
+                                                                          ?.itemId,
+                                                                    ));
                                                           }
                                                         },
                                                         icon: Icon(
-                                                          Icons
-                                                              .favorite,
+                                                          Icons.favorite,
                                                           color: like == true
                                                               ? AppColorManager
-                                                              .red
+                                                                  .red
                                                               : AppColorManager
-                                                              .white,
+                                                                  .white,
                                                         ));
                                                   },
                                                 );
@@ -262,24 +296,29 @@ class _AdvertisementDetailsScreenState
                                           },
                                         ),
                                       ),
-                                      SizedBox(width: AppWidthManager.w2,),
+                                      SizedBox(
+                                        width: AppWidthManager.w2,
+                                      ),
                                       Row(
                                         children: [
                                           AppTextWidget(
                                               fontWeight: FontWeight.w600,
                                               fontSize: FontSizeManager.fs16,
-                                              text: (advDetails?.likeCount ?? "")
-                                                  .toString()),
+                                              text:
+                                                  (advDetails?.likeCount ?? "")
+                                                      .toString()),
                                           SizedBox(
                                             width: AppWidthManager.w2,
                                           ),
                                           CircleAvatar(
-                                            backgroundColor:
-                                                AppColorManager.grey.withOpacity(0.3),
+                                            backgroundColor: AppColorManager
+                                                .grey
+                                                .withOpacity(0.3),
                                             child: BlocConsumer<RemoveLikeCubit,
                                                 RemoveLikeState>(
                                               listener: (context, state) {
-                                                if (state.status == CubitStatus.error) {
+                                                if (state.status ==
+                                                    CubitStatus.error) {
                                                   NoteMessage.showErrorSnackBar(
                                                       context: context,
                                                       text: state.error);
@@ -289,23 +328,21 @@ class _AdvertisementDetailsScreenState
                                                   context
                                                       .read<AdvDetailsCubit>()
                                                       .getAdvDetails(
-                                                      context: context,
-                                                      entity:
-                                                      GetAdvDetailsRequestEntity(
-                                                          itemId: widget
-                                                              .args
-                                                              .advertisement
-                                                              ?.itemId));
+                                                          context: context,
+                                                          entity: GetAdvDetailsRequestEntity(
+                                                              itemId: widget
+                                                                  .args
+                                                                  .advertisement
+                                                                  ?.itemId));
                                                   context
                                                       .read<CheckLikeCubit>()
                                                       .checkLike(
-                                                      context: context,
-                                                      entity:
-                                                      CheckLikeRequestEntity(
-                                                          itemId: widget
-                                                              .args
-                                                              .advertisement
-                                                              ?.itemId));
+                                                          context: context,
+                                                          entity: CheckLikeRequestEntity(
+                                                              itemId: widget
+                                                                  .args
+                                                                  .advertisement
+                                                                  ?.itemId));
                                                 }
                                               },
                                               builder: (context, state) {
@@ -313,37 +350,40 @@ class _AdvertisementDetailsScreenState
                                                     CubitStatus.loading) {
                                                   return const AppCircularProgressWidget();
                                                 }
-                                                return BlocConsumer<AddReactionCubit,
+                                                return BlocConsumer<
+                                                    AddReactionCubit,
                                                     AddReactionState>(
                                                   listener: (context, state) {
                                                     if (state.status ==
                                                         CubitStatus.error) {
-                                                      NoteMessage.showErrorSnackBar(
-                                                          context: context,
-                                                          text: state.error);
+                                                      NoteMessage
+                                                          .showErrorSnackBar(
+                                                              context: context,
+                                                              text:
+                                                                  state.error);
                                                     }
                                                     if (state.status ==
                                                         CubitStatus.success) {
                                                       context
-                                                          .read<AdvDetailsCubit>()
+                                                          .read<
+                                                              AdvDetailsCubit>()
                                                           .getAdvDetails(
-                                                          context: context,
-                                                          entity:
-                                                          GetAdvDetailsRequestEntity(
-                                                              itemId: widget
-                                                                  .args
-                                                                  .advertisement
-                                                                  ?.itemId));
+                                                              context: context,
+                                                              entity: GetAdvDetailsRequestEntity(
+                                                                  itemId: widget
+                                                                      .args
+                                                                      .advertisement
+                                                                      ?.itemId));
                                                       context
-                                                          .read<CheckLikeCubit>()
+                                                          .read<
+                                                              CheckLikeCubit>()
                                                           .checkLike(
                                                               context: context,
-                                                              entity:
-                                                                  CheckLikeRequestEntity(
-                                                                      itemId: widget
-                                                                          .args
-                                                                          .advertisement
-                                                                          ?.itemId));
+                                                              entity: CheckLikeRequestEntity(
+                                                                  itemId: widget
+                                                                      .args
+                                                                      .advertisement
+                                                                      ?.itemId));
                                                     }
                                                   },
                                                   builder: (context, state) {
@@ -351,23 +391,32 @@ class _AdvertisementDetailsScreenState
                                                         CubitStatus.loading) {
                                                       return const AppCircularProgressWidget();
                                                     }
-                                                    return BlocConsumer<CheckLikeCubit,
+                                                    return BlocConsumer<
+                                                        CheckLikeCubit,
                                                         CheckLikeState>(
-                                                      listener: (context, state) {
+                                                      listener:
+                                                          (context, state) {
                                                         if (state.status ==
                                                             CubitStatus.error) {
-                                                          NoteMessage.showErrorSnackBar(
-                                                              context: context,
-                                                              text: state.error);
+                                                          NoteMessage
+                                                              .showErrorSnackBar(
+                                                                  context:
+                                                                      context,
+                                                                  text: state
+                                                                      .error);
                                                         }
                                                       },
-                                                      builder: (context, state) {
+                                                      builder:
+                                                          (context, state) {
                                                         if (state.status ==
-                                                            CubitStatus.loading) {
+                                                            CubitStatus
+                                                                .loading) {
                                                           return const AppCircularProgressWidget();
                                                         }
                                                         bool like = (state
-                                                                .entity.data?.exists ??
+                                                                .entity
+                                                                .data
+                                                                ?.exists ??
                                                             false);
 
                                                         return IconButton(
@@ -376,10 +425,12 @@ class _AdvertisementDetailsScreenState
                                                                       .getToken()
                                                                   .isEmpty) {
                                                                 showLoginBottomSheet(
-                                                                    context: context);
+                                                                    context:
+                                                                        context);
                                                                 return;
                                                               }
-                                                              if (like == true) {
+                                                              if (like ==
+                                                                  true) {
                                                                 context
                                                                     .read<
                                                                         RemoveLikeCubit>()
@@ -389,25 +440,24 @@ class _AdvertisementDetailsScreenState
                                                                         entity:
                                                                             CheckLikeRequestEntity(
                                                                           itemId:
-                                                                              advDetails
-                                                                                  ?.itemId,
+                                                                              advDetails?.itemId,
                                                                         ));
                                                               } else {
                                                                 context.read<AddReactionCubit>().addReaction(
-                                                                    context: context,
+                                                                    context:
+                                                                        context,
                                                                     entity: AddReactionRequestEntity(
-                                                                        itemId:
-                                                                            advDetails
-                                                                                ?.itemId,
+                                                                        itemId: advDetails
+                                                                            ?.itemId,
                                                                         reactionType:
-                                                                            EnumManager
-                                                                                .likeReaction));
+                                                                            EnumManager.likeReaction));
                                                               }
                                                             },
                                                             icon: Icon(
                                                               Icons
                                                                   .thumb_up_alt_rounded,
-                                                              color: like == true
+                                                              color: like ==
+                                                                      true
                                                                   ? AppColorManager
                                                                       .mainColor
                                                                   : AppColorManager
@@ -424,7 +474,6 @@ class _AdvertisementDetailsScreenState
                                       ),
                                     ],
                                   ),
-
                                 ],
                               ),
                             ],

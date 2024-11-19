@@ -106,6 +106,9 @@
   "unFollow" : "UnFollow",
   "rejected" : "Rejected",
   "active" : "Active",
-  "inReview" : "In Review"
+  "inReview" : "In Review",
+  "featured" : "Featured",
+  "available" : "Available",
+  "unAvailable" : "Un Available"
 }
 

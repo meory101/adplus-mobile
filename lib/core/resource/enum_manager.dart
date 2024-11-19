@@ -16,6 +16,17 @@ abstract class EnumManager {
     1: underReview
   };
 
+  static num star = 1;
+
+  static Map<num,String> biddingStatus={
+    1 : 'available'.tr(),
+    0 : 'unAvailable'.tr(),
+};
+  static Map<num,Color> biddingStatusColor={
+    1 : AppColorManager.orange,
+    0 : AppColorManager.grey,
+  };
+
   static Map<num, Color> advsStateColor = {
     -1: AppColorManager.red,
     0: AppColorManager.green,

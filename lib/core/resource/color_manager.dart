@@ -11,6 +11,7 @@ abstract class AppColorManager {
   static const Color dotGrey = Color(0xffE5E5EA);
   static const Color textGrey = Color(0xffAEAFB2);
   static const Color grey = Color(0xff8e8e93);
+  static const Color gold = Color(0xffB59410);
   static const Color textAppColor = Color(0xff171717);
   static const Color background = Color(0xfffcfcfc);
   static const Color shimmerHighlightColor = Color(0xffd9d9d9);
@@ -21,10 +22,11 @@ abstract class AppColorManager {
   static Color lightGreyOpacity6 = const Color(0xffe5e5ea).withOpacity(0.6);
   static const Color green = Color(0xff34c759);
   static const Color pinkAccent = Colors.pinkAccent;
-  static const Color orange = Colors.orange;
   static const Color lightBlue = Colors.lightBlue;
   static const Color purple = Colors.purple;
   static const Color deepPurpleAccent = Colors.deepPurpleAccent;
   static const Color amber = Colors.amber;
   static const Color darkRed = Color.fromARGB(100, 255, 10, 20);
+  static const Color orange = Color(0xffff9500);
+
 }

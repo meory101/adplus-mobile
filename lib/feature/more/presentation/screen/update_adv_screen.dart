@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/add_advertisement_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
@@ -59,6 +60,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
     entity.name = widget.args.data.name;
     entity.description = widget.args.data.description;
     entity.startingPrice = widget.args.data.startingPrice;
+    entity.biddingStatus = widget.args.data.biddingStatus;
     entity.cityId = widget.args.data.cityId;
     super.initState();
   }
@@ -73,9 +75,6 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
             NoteMessage.showErrorSnackBar(context: context, text: state.error);
           }
           if (state.status == CubitStatus.success) {
-            context
-                .read<MyitemCubit>()
-                .myitem(context: context, entity: MyItemRequestEntity(page: 1));
             Navigator.of(context).pop();
           }
         },
@@ -86,11 +85,6 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
           return AdvertisementNextButton(
               buttonText: "save".tr(), // Localized text
               onTap: () async {
-                print(entity.cityId);
-                print(entity.name);
-                print(entity.categoryId);
-                print(entity.biddingStatus);
-                entity.biddingStatus = bool.parse("${entity.biddingStatus}");
                 // if (formKey.currentState!.validate() && advFiles.isNotEmpty) {
                 context.read<UpdateAdvertisementCubit>().updateAdvertisement(
                       context: context,
@@ -319,15 +313,15 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                   SizedBox(height: AppHeightManager.h1point8),
                   TitleDropDownFormFieldWidget(
                     options: [
-                      NameAndId(name: "available".tr(), id:"0" ),
-                      NameAndId(name: "unAvailable".tr(), id:"1" ),
+                      NameAndId(name:EnumManager.biddingStatus[1]??"", id:"1" ),
+                      NameAndId(name: EnumManager.biddingStatus[0]??"", id:"0" ),
                     ],
                     hint: (entity.biddingStatus !=null)
-                        ? entity.biddingStatus.toString()
+                        ? EnumManager.biddingStatus[entity.biddingStatus]??""
                         : "status".tr(),
                     title: "status".tr(),
                     onChanged: (value) {
-                      entity.biddingStatus = value?.id == "0" ? true:false;
+                      entity.biddingStatus = num.parse(value?.id ??"");
                       return null;
                     },
                     validator: (value) {
