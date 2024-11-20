@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:mzad_damascus/core/model/user.dart';
+
+import 'package:mzad_damascus/feature/home/domain/entity/response/user.dart';
 
 import '../../../../../core/model/pagination.dart';
 /// success : true

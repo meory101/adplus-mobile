@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/following_usecase.dart';
 
 import '../../../../../core/api/api_error/api_error.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
@@ -13,7 +14,7 @@ import 'following_state.dart';
 /// Eng.Nour Othman(meory)*
 
 class FollowingCubit extends Cubit<FollowingState> {
-  final FollowersUsecase usecase;
+  final FollowingUsecase usecase;
 
   FollowingCubit({
     required this.usecase,
