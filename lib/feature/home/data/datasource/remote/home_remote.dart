@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_reaction_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/followers_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
@@ -24,9 +25,12 @@ import '../../../domain/entity/request/check_like_request_entity.dart';
 import '../../../domain/entity/request/get_advs_by_user_request_entity.dart';
 import '../../../domain/entity/request/search_user_request_entity.dart';
 import '../../../domain/entity/response/check_like_response_entity.dart';
+import '../../../domain/entity/response/followers_response_entity.dart';
 
 abstract class HomeRemote {
   Future<GetCategoriesResponseEntity> getCategories();
+  Future<FollowersResponseEntity> getFollowers({required FollowersRequestEntity entity});
+  Future<FollowersResponseEntity> getFollowings({required FollowersRequestEntity entity});
   Future<SearchUserResponseEntity> searchUser({required SearchUserRequestEntity entity});
   Future<CheckLikeResponseEntity> checkLike({required CheckLikeRequestEntity entity});
   Future<bool> removeLike({required CheckLikeRequestEntity entity});
@@ -205,6 +209,34 @@ class HomeRemoteImplement extends HomeRemote {
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return searchUserResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<FollowersResponseEntity> getFollowers({required FollowersRequestEntity entity})async {
+    final response =
+    await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.getFollowersByUsername);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return followersResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<FollowersResponseEntity> getFollowings({required FollowersRequestEntity entity}) async{
+    final response =
+    await ApiMethods().post(
+        body: entity.toJson(),
+        url: ApiPostUrl.getFollowingByUsername);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return followersResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

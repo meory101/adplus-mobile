@@ -8,6 +8,7 @@ import '../../../more/domain/entity/response/myitems_response_entity.dart';
 import '../entity/request/add_comment_request_entity.dart';
 import '../entity/request/advs_by_attribute_request_entity.dart';
 import '../entity/request/check_like_request_entity.dart';
+import '../entity/request/followers_request_entity.dart';
 import '../entity/request/get_adv_details_request_entity.dart';
 import '../entity/request/get_advs_by_user_request_entity.dart';
 import '../entity/request/get_comments_request_entity.dart';
@@ -15,6 +16,7 @@ import '../entity/request/search_user_request_entity.dart';
 import '../entity/response/advs_by_attribute_response_entity.dart';
 import '../entity/response/banners_response_entity.dart';
 import '../entity/response/check_like_response_entity.dart';
+import '../entity/response/followers_response_entity.dart';
 import '../entity/response/get_adv_details_response_entity.dart';
 import '../entity/response/get_comments_response_entity.dart';
 import '../entity/response/search_user_response_entity.dart';
@@ -34,5 +36,8 @@ abstract class HomeRepository {
   Future<Either<ApiFailure, bool>> addReaction({required AddReactionRequestEntity entity});
   Future<Either< ApiFailure,GetCommentsResponseEntity>> getComments({required GetCommentsRequestEntity entity});
   Future<Either< ApiFailure,MyItemResponseEntity>> getAdvByUser({required GetAdvsByUserRequestEntity entity});
+  Future<Either< ApiFailure,FollowersResponseEntity>> getFollowings({required FollowersRequestEntity entity}) ;
+  Future<Either< ApiFailure,FollowersResponseEntity>> getFollowers({required FollowersRequestEntity entity});
 
-}
+
+  }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/injection/injection_container.dart' as di;
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/other_user_followers_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cubit/myfollowing_state.dart';
@@ -15,8 +16,10 @@ import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../../router/router.dart';
 import '../../../home/presentation/screen/auhter_profile_screen.dart';
 
-class MyFollowingScreen extends StatelessWidget {
-  const MyFollowingScreen({super.key});
+class OtherUserFollowingScreen extends StatelessWidget {
+
+  final OtherUserFollowingDataArgs args;
+  const OtherUserFollowingScreen({super.key,required this.args});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +73,7 @@ class MyFollowingScreen extends StatelessWidget {
                       backgroundColor: AppColorManager.lightGreyOpacity6,
                       backgroundImage: follower?.photo != null
                           ? NetworkImage(
-                              '${AppConstantManager.imageBaseUrl}${follower?.photo}')
+                          '${AppConstantManager.imageBaseUrl}${follower?.photo}')
                           : null,
                       child: follower?.photo == null
                           ? const Icon(Icons.person)
@@ -88,16 +91,16 @@ class MyFollowingScreen extends StatelessWidget {
                     ),
                     trailing: follower?.phone != null
                         ? IconButton(
-                            splashColor: AppColorManager.transparent,
-                            highlightColor: AppColorManager.transparent,
-                            onPressed: () {
-                              UrlLauncherHelper.makeCall(
-                                  phoneNumber: follower?.phone);
-                            },
-                            icon: Icon(
-                              Icons.call,
-                              color: AppColorManager.green,
-                            ))
+                        splashColor: AppColorManager.transparent,
+                        highlightColor: AppColorManager.transparent,
+                        onPressed: () {
+                          UrlLauncherHelper.makeCall(
+                              phoneNumber: follower?.phone);
+                        },
+                        icon: Icon(
+                          Icons.call,
+                          color: AppColorManager.green,
+                        ))
                         : null,
                   ),
                 );

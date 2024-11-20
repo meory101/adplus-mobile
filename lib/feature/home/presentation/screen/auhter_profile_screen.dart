@@ -130,23 +130,28 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/remove_follow_c
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          children: [
-                                            AppTextWidget(
-                                              text: 'followers'.tr(),
-                                              fontSize: FontSizeManager.fs16,
-                                              color: AppColorManager.textAppColor,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            AppTextWidget(
-                                              text: (profileInfo?.followersCount ??
-                                                      "0")
-                                                  .toString(),
-                                              fontSize: FontSizeManager.fs16,
-                                              color: AppColorManager.textAppColor,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ],
+                                        InkWell(
+                                          onTap: () {
+
+                                          },
+                                          child: Column(
+                                            children: [
+                                              AppTextWidget(
+                                                text: 'followers'.tr(),
+                                                fontSize: FontSizeManager.fs16,
+                                                color: AppColorManager.textAppColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              AppTextWidget(
+                                                text: (profileInfo?.followersCount ??
+                                                        "0")
+                                                    .toString(),
+                                                fontSize: FontSizeManager.fs16,
+                                                color: AppColorManager.textAppColor,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         SizedBox(
                                           width: AppWidthManager.w3Point8,

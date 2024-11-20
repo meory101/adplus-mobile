@@ -12,12 +12,14 @@ import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_state.dart';
 import 'package:mzad_damascus/router/router.dart';
+import '../../../../core/model/user.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 
-class MyFollowersScreen extends StatelessWidget {
-  const MyFollowersScreen({super.key});
+class OtherUserFollowersScreen extends StatelessWidget {
+  final OtherUserFollowingDataArgs args;
+  const OtherUserFollowersScreen({super.key,required this.args});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class MyFollowersScreen extends StatelessWidget {
                 return InkWell(
                   onTap: () {
                     Navigator.of(context).pushNamed(RouteNamedScreens.authorProfile,
-                    arguments: AuthorProfileArgs(userName: following?.username??"")
+                        arguments: AuthorProfileArgs(userName: following?.username??"")
                     );
                   },
                   child: ListTile(
@@ -89,7 +91,7 @@ class MyFollowersScreen extends StatelessWidget {
                         highlightColor: AppColorManager.transparent,
                         onPressed: (){
                           UrlLauncherHelper.makeCall(phoneNumber: following?.phone);
-                    }, icon: const Icon(
+                        }, icon: const Icon(
                       Icons. call,
                       color: AppColorManager.green,
                     ))
@@ -103,4 +105,10 @@ class MyFollowersScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+
+class OtherUserFollowingDataArgs{
+  User user;
+  OtherUserFollowingDataArgs({required this.user});
 }

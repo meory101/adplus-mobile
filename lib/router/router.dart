@@ -29,6 +29,7 @@ import 'package:mzad_damascus/feature/favorite/presentation/cubit/add_favorite_c
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/remove_favorite_cubit/remove_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/followers_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
@@ -38,6 +39,8 @@ import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/followers_cubit/followers_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/following_cubit/following_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/search_user/search_user_cubit.dart';
@@ -45,6 +48,8 @@ import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_det
 import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/other_user_followers_screen.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/other_user_following_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/search_user.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
@@ -115,6 +120,8 @@ abstract class RouteNamedScreens {
   static const String favorites = '/favorites';
   static const String updateAdvs = '/update-Advs';
   static const String searchUser = '/search-user';
+  static const String followers = '/followers';
+  static const String following = '/following';
 }
 
 abstract class AppRouter {
@@ -139,6 +146,42 @@ abstract class AppRouter {
               ),
             ],
             child: const SearchUserScreen(),
+          ),
+        );
+      case RouteNamedScreens.followers:
+        argument as OtherUserFollowingDataArgs;
+        return FadeBuilderRoute(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => di.sl<FollowersCubit>()
+                  ..getFollowers(
+                      context: context,
+                      entity: FollowersRequestEntity(
+                          page: 1, username: argument.user.username ?? "")),
+              ),
+            ],
+            child: OtherUserFollowersScreen(
+              args: argument,
+            ),
+          ),
+        );
+      case RouteNamedScreens.following:
+        argument as OtherUserFollowingDataArgs;
+        return FadeBuilderRoute(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => di.sl<FollowingCubit>()
+                  ..getFollowings(
+                      context: context,
+                      entity: FollowersRequestEntity(
+                          page: 1, username: argument.user.username ?? "")),
+              ),
+            ],
+            child: OtherUserFollowingScreen(
+              args: argument,
+            ),
           ),
         );
 

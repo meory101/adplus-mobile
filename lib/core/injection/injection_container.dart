@@ -46,6 +46,8 @@ import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.da
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/add_comment_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/followers_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/following_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_advs_by_attribute_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
@@ -59,6 +61,8 @@ import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/check_like_cubit/check_like_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/followers_cubit/followers_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/following_cubit/following_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
@@ -119,12 +123,16 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => FollowersCubit(usecase: sl()));
+  sl.registerFactory(() => FollowingCubit(usecase: sl()));
   sl.registerFactory(() => SearchUserCubit(usecase: sl()));
   sl.registerFactory(() => DeleteAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => UpdateAdvertisementCubit(usecase: sl()));
   sl.registerFactory(() => CheckFollowCubit(usecase: sl()));
   sl.registerFactory(() => RemoveFollowCubit(usecase: sl()));
   sl.registerFactory(() => CheckFollowUscase(repository: sl()));
+  sl.registerFactory(() => FollowersUsecase(repository: sl()));
+  sl.registerFactory(() => FollowingUsecase(repository: sl()));
   sl.registerFactory(() => SearchUserUsecase(repository: sl()));
   sl.registerFactory(() => CheckLikeCubit(usecase: sl()));
   sl.registerFactory(() => LikesCubit(usecase: sl()));
