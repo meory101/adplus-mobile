@@ -13,6 +13,7 @@ import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.d
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_review_request_entiity.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
@@ -70,7 +71,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
           );
     } else {
       // all items tab
-      context.read<MyitemCubit>().myitem(
+      context.read<MyItemCubit>().getMyItems(
             context: context,
             entity: MyItemRequestEntity(
               page: 1,
@@ -83,7 +84,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MainAppBar(title: "myAds".tr()),
-      body: BlocConsumer<MyitemCubit, MyitemState>(
+      body: BlocConsumer<MyItemCubit, MyitemState>(
         listener: (context, state) {
           if (state.status == CubitStatus.error && state.error.isNotEmpty) {
             NoteMessage.showErrorSnackBar(context: context, text: state.error);
@@ -203,7 +204,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   }
 
   Widget _buildItemsList() {
-    return BlocConsumer<MyitemCubit, MyitemState>(
+    return BlocConsumer<MyItemCubit, MyitemState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error) {
           NoteMessage.showErrorSnackBar(context: context, text: state.error);
@@ -224,9 +225,9 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
         return NotificationListener<ScrollNotification>(
           onNotification: (ScrollNotification scrollInfo) {
             if (state.status != CubitStatus.loading &&
-                scrollInfo.metrics.pixels ==
+                scrollInfo.metrics.pixels >=
                     scrollInfo.metrics.maxScrollExtent) {
-              context.read<MyitemCubit>().myitem(
+              context.read<MyItemCubit>().getMyItems(
                   context: context,
                   entity: MyItemRequestEntity());
             }
@@ -273,7 +274,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                             arguments: UpdateAdvArgs(data: item))
                         .then(
                       (value) {
-                        context.read<MyitemCubit>().myitem(
+                        context.read<MyItemCubit>().getMyItems(
                             context: context,
                             entity: MyItemRequestEntity(page: 1));
                       },
@@ -294,7 +295,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                         context: context,
                         item: item,
                         onSuccess: () {
-                          context.read<MyitemCubit>().myitem(
+                          context.read<MyItemCubit>().getMyItems(
                               context: context,
                               entity: MyItemRequestEntity(page: 1));
                         });

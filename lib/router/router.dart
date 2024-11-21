@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
-import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
-import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete_adv_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
-import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
@@ -23,15 +20,12 @@ import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_p
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
 import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
-import 'package:mzad_damascus/feature/favorite/domain/usecase/add_favorite_uscase.dart';
-import 'package:mzad_damascus/feature/favorite/domain/usecase/check_favorite_usecase.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/add_favorite_cubit/add_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/remove_favorite_cubit/remove_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/followers_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
-import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
@@ -230,7 +224,7 @@ abstract class AppRouter {
             page: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => di.sl<MyitemCubit>(),
+              create: (context) => di.sl<MyItemCubit>(),
             ),
             BlocProvider(
               create: (context) => di.sl<MyitemUnderReviewCubit>(),
@@ -250,7 +244,7 @@ abstract class AppRouter {
                 create: (context) => di.sl<UpdateAdvertisementCubit>(),
               ),
               BlocProvider(
-                create: (context) => di.sl<MyitemCubit>(),
+                create: (context) => di.sl<MyItemCubit>(),
               ),
               BlocProvider(
                 create: (context) =>
@@ -518,7 +512,7 @@ abstract class AppRouter {
               child: const LoginScreen(),
             ),
             BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
-            BlocProvider(create: (context) => di.sl<MyitemCubit>()),
+            BlocProvider(create: (context) => di.sl<MyItemCubit>()),
           ],
           child: const MainBottomAppBar(),
         ));

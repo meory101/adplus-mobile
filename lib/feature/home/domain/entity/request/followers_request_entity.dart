@@ -26,6 +26,10 @@ FollowersRequestEntity copyWith({  num? page,
   num? get page => _page;
   String? get username => _username;
 
+  set page(num? value) {
+    _page = value;
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['page'] = _page;

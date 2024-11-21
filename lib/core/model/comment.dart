@@ -6,7 +6,7 @@ import 'package:mzad_damascus/core/model/user.dart';
 import '../../feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 
 Comment commentFromJson(String str) => Comment.fromJson(json.decode(str));
-String commentToJson(Data data) => json.encode(data.toJson());
+String commentToJson(AdvsByAttributeData data) => json.encode(data.toJson());
 class Comment {
   Comment({
     num? commentId,

@@ -6,7 +6,6 @@ import 'package:mzad_damascus/core/model/comment.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
-import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/comment_section_shimmer.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_comment_request_entity.dart';
@@ -231,9 +230,6 @@ class _CommentsSectionState extends State<CommentsSection> {
                             ),
                           ),
                           Visibility(
-                            // visible: scrollController?.position.pixels ==
-                            //     scrollController?.position.maxScrollExtent,
-                            // visible: state.status == CubitStatus.loadMore,
                             child: Center(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -255,13 +251,13 @@ class _CommentsSectionState extends State<CommentsSection> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // AppTextWidget(
-                //     fontWeight: FontWeight.w700,
-                //     color: AppColorManager.mainColor,
-                //     decorationColor: AppColorManager.mainColor,
-                //     textDecoration: TextDecoration.underline,
-                //     fontSize: FontSizeManager.fs15,
-                //     text: "more comments"),
+                AppTextWidget(
+                    fontWeight: FontWeight.w700,
+                    color: AppColorManager.mainColor,
+                    decorationColor: AppColorManager.mainColor,
+                    textDecoration: TextDecoration.underline,
+                    fontSize: FontSizeManager.fs15,
+                    text: "more comments"),
               ],
             ),
           ),

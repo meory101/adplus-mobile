@@ -51,6 +51,7 @@ class AuthorProfileScreen extends StatefulWidget {
 
 class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
   AdData? advertisement;
+  CheckFollowRequestEntity entity = CheckFollowRequestEntity();
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,10 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                       entity: GetAdvsByUserRequestEntity(
                           clientId: state.entity.data?.user?.clientId,
                           page: 1));
+                  entity.clientId = state.entity.data?.user?.clientId;
+                  context
+                      .read<CheckFollowCubit>()
+                      .checkFollow(context: context, entity: entity);
                 }
               },
               builder: (context, state) {
@@ -135,12 +140,14 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                       InkWell(
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
-                                              RouteNamedScreens.followers,
-                                              arguments:
-                                                  OtherUserFollowingDataArgs(
-                                                      user: User(
-                                                          username: widget
-                                                              .arg.userName)));
+                                            RouteNamedScreens.followers,
+                                            arguments:
+                                                OtherUserFollowingDataArgs(
+                                              user: User(
+                                                username: widget.arg.userName,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         child: Column(
                                           children: [
@@ -170,12 +177,14 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                       InkWell(
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
-                                              RouteNamedScreens.following,
-                                              arguments:
-                                                  OtherUserFollowingDataArgs(
-                                                      user: User(
-                                                          username: widget
-                                                              .arg.userName)));
+                                            RouteNamedScreens.following,
+                                            arguments:
+                                                OtherUserFollowingDataArgs(
+                                              user: User(
+                                                username: widget.arg.userName,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         child: Column(
                                           children: [
@@ -250,11 +259,15 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                       SizedBox(height: AppHeightManager.h1point8),
                       Row(
                         children: [
-                          BlocConsumer<AddFollowCubit, AddFollowState>(
+                          BlocConsumer<RemoveFollowCubit, RemoveFollowState>(
                             listener: (context, state) {
                               if (state.status == CubitStatus.error) {
                                 NoteMessage.showErrorSnackBar(
                                     context: context, text: state.error);
+                              }
+                              if (state.status == CubitStatus.success) {
+                                context.read<CheckFollowCubit>().checkFollow(
+                                    context: context, entity: entity);
                               }
                             },
                             builder: (context, state) {
@@ -264,31 +277,98 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                   width: AppWidthManager.w20,
                                 );
                               }
-                              return MainAppButton(
-                                onTap: () {
-                                  if (AppSharedPreferences.getToken().isEmpty) {
-                                    showLoginBottomSheet(context: context);
-                                    return;
+                              return BlocConsumer<AddFollowCubit,
+                                  AddFollowState>(
+                                listener: (context, state) {
+                                  if (state.status == CubitStatus.error) {
+                                    NoteMessage.showErrorSnackBar(
+                                        context: context, text: state.error);
                                   }
-                                  context.read<AddFollowCubit>().addFollow(
-                                      context: context,
-                                      entity: AddFollowRequestEntity(
-                                          followingId:
-                                              profileInfo?.user?.clientId));
+                                  if (state.status == CubitStatus.success) {
+                                    context
+                                        .read<CheckFollowCubit>()
+                                        .checkFollow(
+                                            context: context, entity: entity);
+                                  }
                                 },
-                                alignment: Alignment.center,
-                                borderRadius:
-                                    BorderRadius.circular(AppRadiusManager.r5),
-                                height: AppHeightManager.h4,
-                                color: AppColorManager.mainColor,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: AppWidthManager.w6),
-                                child: AppTextWidget(
-                                  text: "follow".tr(),
-                                  color: AppColorManager.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: FontSizeManager.fs15,
-                                ),
+                                builder: (context, state) {
+                                  if (state.status == CubitStatus.loading) {
+                                    return ShimmerContainer(
+                                      height: AppHeightManager.h4,
+                                      width: AppWidthManager.w20,
+                                    );
+                                  }
+                                  return BlocConsumer<CheckFollowCubit,
+                                      CheckFollowState>(
+                                    listener: (context, state) {
+                                      if (state.status == CubitStatus.error) {
+                                        NoteMessage.showErrorSnackBar(
+                                            context: context,
+                                            text: state.error);
+                                      }
+                                    },
+                                    builder: (context, state) {
+                                      if (state.status == CubitStatus.loading) {
+                                        return ShimmerContainer(
+                                          height: AppHeightManager.h4,
+                                          width: AppWidthManager.w20,
+                                        );
+                                      }
+                                      bool follow =
+                                          state.entity.data?.exists ?? false;
+                                      return MainAppButton(
+                                        onTap: () {
+                                          if (AppSharedPreferences.getToken()
+                                              .isEmpty) {
+                                            showLoginBottomSheet(
+                                                context: context);
+                                            return;
+                                          }
+                                          if (follow == true) {
+                                            context
+                                                .read<RemoveFollowCubit>()
+                                                .removeFollow(
+                                                    context: context,
+                                                    entity:
+                                                        RemoveFollowRequestEntity(
+                                                            followingId:
+                                                                profileInfo
+                                                                    ?.user
+                                                                    ?.clientId));
+                                          } else {
+                                            context
+                                                .read<AddFollowCubit>()
+                                                .addFollow(
+                                                    context: context,
+                                                    entity:
+                                                        AddFollowRequestEntity(
+                                                            followingId:
+                                                                profileInfo
+                                                                    ?.user
+                                                                    ?.clientId));
+                                          }
+                                        },
+                                        alignment: Alignment.center,
+                                        borderRadius: BorderRadius.circular(
+                                            AppRadiusManager.r5),
+                                        height: AppHeightManager.h4,
+                                        color: follow == true
+                                            ? AppColorManager.textGrey
+                                            : AppColorManager.mainColor,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: AppWidthManager.w6),
+                                        child: AppTextWidget(
+                                          text: follow == true
+                                              ? "unFollow".tr()
+                                              : "follow".tr(),
+                                          color: AppColorManager.white,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSizeManager.fs15,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
                           ),

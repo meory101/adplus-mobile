@@ -11,17 +11,17 @@ import '../../../../../../core/resource/cubit_status_manager.dart';
 
 /// Eng.Hussaen Baghdadi
 
-class MyitemCubit extends Cubit<MyitemState> {
+class MyItemCubit extends Cubit<MyitemState> {
   final MyitemUsecase usecase;
 
-  MyitemCubit({
+  MyItemCubit({
     required this.usecase,
   }) : super(MyitemState.initial());
 
   bool hasMoreItems = true;
   int currentPage = 1;
 
-  Future<void> myitem({
+  Future<void> getMyItems({
     required BuildContext context,
     required MyItemRequestEntity entity,
   }) async {
@@ -41,7 +41,7 @@ class MyitemCubit extends Cubit<MyitemState> {
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
-      (data) {
+          (data) {
         if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
           hasMoreItems = false;
         } else {
@@ -55,7 +55,7 @@ class MyitemCubit extends Cubit<MyitemState> {
         emit(state.copyWith(
             status: CubitStatus.success,
             entity:
-                MyItemResponseEntity(data: MyAdvsData(data: updatedItems))));
+            MyItemResponseEntity(data: MyAdvsData(data: updatedItems))));
       },
     );
   }

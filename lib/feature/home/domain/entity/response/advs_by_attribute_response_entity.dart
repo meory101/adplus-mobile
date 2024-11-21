@@ -21,7 +21,7 @@ class AdvsByAttributeResponseEntity {
   AdvsByAttributeResponseEntity({
     bool? success,
     String? message,
-    Data? data,
+    AdvsByAttributeData? data,
   }) {
     _success = success;
     _message = message;
@@ -31,15 +31,15 @@ class AdvsByAttributeResponseEntity {
   AdvsByAttributeResponseEntity.fromJson(dynamic json) {
     _success = json['success'];
     _message = json['message'];
-    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    _data = json['data'] != null ? AdvsByAttributeData.fromJson(json['data']) : null;
   }
   bool? _success;
   String? _message;
-  Data? _data;
+  AdvsByAttributeData? _data;
   AdvsByAttributeResponseEntity copyWith({
     bool? success,
     String? message,
-    Data? data,
+    AdvsByAttributeData? data,
   }) =>
       AdvsByAttributeResponseEntity(
         success: success ?? _success,
@@ -48,7 +48,7 @@ class AdvsByAttributeResponseEntity {
       );
   bool? get success => _success;
   String? get message => _message;
-  Data? get data => _data;
+  AdvsByAttributeData? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -64,11 +64,11 @@ class AdvsByAttributeResponseEntity {
 /// adData : [{"category_id":1,"city_id":1,"name":"Electronics","bidding_status":1,"photos":[{"image_id":1,"photo":"photo.jpg"}],"comments":[{"comment_id":101,"client_id":101,"item_id":45,"comment":"This is a great item!","created_at":"2024-09-16T12:00:00Z"}],"reactions":[{"reaction_id":501,"reaction_type":"like","item_id":45,"client_id":45,"created_at":"2024-09-16T12:00:00Z"}],"author":[{"client_id":501,"name":"string","email":"string","phone":"963999999999","address":"string","photo":"photo.jpg"}],"description":"Category description","keywords":"electronics, gadgets","starting_price":50000,"min_increase_price":10000,"bidding_start_time":"2024-10-01T12:00:00Z","attributes":[{"attribute_id":1,"value":"Black"}]}]
 /// pagination : {"total_items":100,"total_pages":10,"current_page":1,"per_page":10}
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-String dataToJson(Data data) => json.encode(data.toJson());
+AdvsByAttributeData dataFromJson(String str) => AdvsByAttributeData.fromJson(json.decode(str));
+String dataToJson(AdvsByAttributeData data) => json.encode(data.toJson());
 
-class Data {
-  Data({
+class AdvsByAttributeData {
+  AdvsByAttributeData({
     List<AdData>? adData,
     Pagination? pagination,
   }) {
@@ -76,7 +76,7 @@ class Data {
     _pagination = pagination;
   }
 
-  Data.fromJson(dynamic json) {
+  AdvsByAttributeData.fromJson(dynamic json) {
     if (json['data'] != null) {
       _adData = [];
       json['data'].forEach((v) {
@@ -91,11 +91,11 @@ class Data {
   List<AdData>? _adData;
   Pagination? _pagination;
 
-  Data copyWith({
+  AdvsByAttributeData copyWith({
     List<AdData>? adData,
     Pagination? pagination,
   }) =>
-      Data(
+      AdvsByAttributeData(
         adData: adData ?? _adData,
         pagination: pagination ?? _pagination,
       );

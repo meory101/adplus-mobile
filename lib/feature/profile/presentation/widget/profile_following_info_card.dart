@@ -50,8 +50,8 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
             ),
         ),
         BlocProvider(
-          create: (context) => di.sl<MyitemCubit>()
-            ..myitem(
+          create: (context) => di.sl<MyItemCubit>()
+            ..getMyItems(
               context: context,
               entity: MyItemRequestEntity(page: 1),
             ),
@@ -132,7 +132,7 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
   Widget _buildPostedAdsSection() {
     return Column(
       children: [
-        BlocBuilder<MyitemCubit, MyitemState>(
+        BlocBuilder<MyItemCubit, MyitemState>(
           builder: (context, state) {
             final totalItems =
                 state.entity.data?.pagination?.totalItems?.toString() ?? '0';

@@ -17,7 +17,7 @@ abstract class EnumManager {
   };
 
   static num star = 1;
-  static num paginationLength = 1;
+  static num paginationLength = 10;
 
   static Map<num,String> biddingStatus={
     1 : 'available'.tr(),

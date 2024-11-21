@@ -210,7 +210,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateUsernameUsecase(repository: sl()));
 
   sl.registerLazySingleton(() => MyitemUsecase(repository: sl()));
-  sl.registerFactory(() => MyitemCubit(usecase: sl()));
+  sl.registerFactory(() => MyItemCubit(usecase: sl()));
   sl.registerLazySingleton(() => MyitemUnderReviewUsecase(repository: sl()));
   sl.registerFactory(() => MyitemUnderReviewCubit(usecase: sl()));
   sl.registerLazySingleton(() => MyReviewdIrem(repository: sl()));
