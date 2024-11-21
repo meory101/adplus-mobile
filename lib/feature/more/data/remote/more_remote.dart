@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_request_entity.dart';
@@ -76,6 +78,8 @@ class MoreRemoteImplement extends MoreRemote {
       {required MyItemRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.myitem, body: entity.toJson());
+    print(jsonDecode(response.body)['data']['data'].length);
+    print('------------------------------------------');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myItemResponseEntityFromJson(response.body);
     } else {

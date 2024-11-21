@@ -149,8 +149,6 @@ class AdvertisementRemoteImplement extends AdvertisementRemote {
 
   @override
   Future<bool> deleteAdvertisement({required DeleteAdvRequestEntity entity})async {
-    print(entity.itemId);
-    print('dddddddddddd');
     final response = await ApiMethods().post(url: ApiPostUrl.deleteAdv,body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;

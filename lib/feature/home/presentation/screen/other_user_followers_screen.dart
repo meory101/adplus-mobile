@@ -5,7 +5,9 @@ import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/injection/injection_container.dart' as di;
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/followers_cubit/followers_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
@@ -45,11 +47,17 @@ class OtherUserFollowersScreen extends StatelessWidget {
           }
 
           return ListView.builder(
-            itemCount: followersList.length,
+
+            itemCount: followersList.length+1,
             itemBuilder: (context, index) {
+              if(index ==followersList.length ){
+                if(followersList.length <EnumManager.paginationLength){
+                  return const SizedBox();
+                }
+                return const AppCircularProgressWidget();
+              }
               final followerItem = followersList[index];
               final following = followerItem.following;
-
               return InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed(RouteNamedScreens.authorProfile,

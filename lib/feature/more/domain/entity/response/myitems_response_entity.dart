@@ -11,7 +11,7 @@ class MyItemResponseEntity {
   MyItemResponseEntity({
     bool? success,
     String? message,
-    Data? data,
+    MyAdvsData? data,
   }) {
     _success = success;
     _message = message;
@@ -20,16 +20,16 @@ class MyItemResponseEntity {
 
   bool? _success;
   String? _message;
-  Data? _data;
+  MyAdvsData? _data;
 
   bool? get success => _success;
   String? get message => _message;
-  Data? get data => _data;
+  MyAdvsData? get data => _data;
 
   MyItemResponseEntity.fromJson(Map<String, dynamic> json) {
     _success = json['success'];
     _message = json['message'];
-    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    _data = json['data'] != null ? MyAdvsData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -43,8 +43,8 @@ class MyItemResponseEntity {
   }
 }
 
-class Data {
-  Data({
+class MyAdvsData {
+  MyAdvsData({
     List<AdData>? data,
     Pagination? pagination,
   }) {
@@ -58,7 +58,7 @@ class Data {
   List<AdData>? get data => _data;
   Pagination? get pagination => _pagination;
 
-  Data.fromJson(Map<String, dynamic> json) {
+  MyAdvsData.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {

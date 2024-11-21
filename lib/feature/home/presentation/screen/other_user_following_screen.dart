@@ -56,8 +56,7 @@ class OtherUserFollowingScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final followingItem = followingList[index];
               final follower = followingItem.following;
-              print(follower?.username);
-              print('ccccccccccccccccccccccc');
+
 
               return InkWell(
                 onTap: () {

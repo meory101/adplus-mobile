@@ -164,8 +164,7 @@ class AdData {
   }
 
   AdData.fromJson(dynamic json) {
-    print(json['star']);
-    print('ssssssssssssssssssssssss');
+
     _categoryId = json['category_id'];
     _star = json['star'];
     _cityId = json['city_id'];

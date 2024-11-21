@@ -92,8 +92,6 @@ class HomeRemoteImplement extends HomeRemote {
         body: entity.toJson(),
         url: ApiPostUrl.getItemsById);
 
-    print(response.body);
-
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getAdvDetailsResponseEntityFromJson(response.body);
     } else {
@@ -234,8 +232,6 @@ class HomeRemoteImplement extends HomeRemote {
     await ApiMethods().post(
         body: entity.toJson(),
         url: ApiPostUrl.getFollowingByUsername);
-    print(response.body);
-    print('dddddddddddddd');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return followersResponseEntityFromJson(response.body);
     } else {

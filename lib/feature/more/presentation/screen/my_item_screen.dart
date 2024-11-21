@@ -2,22 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
-import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
-import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete_adv_request_entity.dart';
-import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_review_request_entiity.dart';
@@ -27,16 +21,12 @@ import 'package:mzad_damascus/feature/more/presentation/screen/update_adv_screen
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
-import '../../../../core/storage/shared/shared_pref.dart';
-import '../../../advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_state.dart';
 import '../../domain/entity/request/myitem_under_review_request_entiity.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
 import '../cubit/myitem_cubit/myitem_state.dart';
 import '../cubit/myitem_under_review/myitem_under_review_cubit.dart';
 import '../cubit/myitem_under_review/myitem_under_review_state.dart';
 import '../../domain/entity/request/myitem_request_entity.dart';
-import '../../domain/entity/response/myitems_response_entity.dart';
-import '../../../../core/injection/injection_container.dart' as di;
 import '../widget/dialog/delete_ad_dialog.dart';
 
 class MyItemsScreen extends StatefulWidget {
@@ -215,12 +205,13 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   Widget _buildItemsList() {
     return BlocConsumer<MyitemCubit, MyitemState>(
       listener: (context, state) {
-        if (state.status == CubitStatus.error && state.error.isNotEmpty) {
+        if (state.status == CubitStatus.error) {
           NoteMessage.showErrorSnackBar(context: context, text: state.error);
         }
       },
       builder: (context, state) {
-        if (state.status == CubitStatus.loading) {
+        if (state.status == CubitStatus.loading &&
+            state.entity.data?.data == null) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -230,10 +221,30 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
           return const Center(child: AppTextWidget(text: "no advertisements"));
         }
 
-        return ListView.builder(
-          padding: EdgeInsets.all(AppWidthManager.w3Point8),
-          itemCount: items.length,
-          itemBuilder: (context, index) => _buildItemCard(items[index]),
+        return NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification scrollInfo) {
+            if (state.status != CubitStatus.loading &&
+                scrollInfo.metrics.pixels ==
+                    scrollInfo.metrics.maxScrollExtent) {
+              context.read<MyitemCubit>().myitem(
+                  context: context,
+                  entity: MyItemRequestEntity());
+            }
+            return true;
+          },
+          child: ListView.builder(
+            padding: EdgeInsets.all(AppWidthManager.w3Point8),
+            itemCount:
+                items.length + (state.status == CubitStatus.loading ? 1 : 0),
+
+            itemBuilder: (context, index) {
+              if (index < items.length) {
+                return _buildItemCard(items[index]);
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         );
       },
     );
