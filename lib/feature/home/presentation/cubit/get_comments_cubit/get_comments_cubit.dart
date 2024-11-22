@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mzad_damascus/core/model/comment.dart';
+import 'package:mzad_damascus/feature/comment/domain/entity/response/comments_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_comments_usecase.dart';
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
+import '../../../../../core/resource/enum_manager.dart';
 import '../../../domain/entity/request/get_comments_request_entity.dart';
 import '../../../domain/entity/response/get_comments_response_entity.dart';
 
@@ -14,8 +16,8 @@ part 'get_comments_state.dart';
 
 class GetCommentsCubit extends Cubit<GetCommentsState> {
   final GetCommentsUsecase usecase;
+  bool hasMoreItems = true;
   int currentPage = 1;
-  List<Comment> comments = [];
 
   GetCommentsCubit({
     required this.usecase,
@@ -24,6 +26,11 @@ class GetCommentsCubit extends Cubit<GetCommentsState> {
   void getComments(
       {required BuildContext context,
       required GetCommentsRequestEntity entity}) async {
+    if (!hasMoreItems) {
+      emit(state.copyWith(
+          status: CubitStatus.success,isReachMax:true));
+      return;
+    }
     emit(state.copyWith(status: CubitStatus.loading));
 
     entity.page = currentPage;
@@ -32,33 +39,32 @@ class GetCommentsCubit extends Cubit<GetCommentsState> {
     if (isClosed) return;
     result.fold(
       (failure) async {
-        final ErrorEntity errorEntity =
-                        await ApiErrorHandler.mapFailure(failure: failure,buildContext: context);
-;
+        final ErrorEntity errorEntity = await ApiErrorHandler.mapFailure(
+            failure: failure, buildContext: context);
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
       (data) {
-        comments.addAll(data.data?.data ?? []);
-        emit(
-          state.copyWith(
-            status: CubitStatus.success,
-            entity:
-                GetCommentsResponseEntity(data: CommentsResult(data: comments)),
-          ),
-        );
 
-        if (currentPage < (data.data?.pagination?.totalPages ?? 0)) {
+        if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
+          hasMoreItems = false;
+        } else {
           currentPage++;
         }
-        state.copyWith(
-          status: CubitStatus.success,
-          isReachMax: true,
-          entity:
-              GetCommentsResponseEntity(data: CommentsResult(data: comments)),
-        );
+        List<Comment>? existingItems = state.entity.data?.data ?? [];
+        List<Comment>? updatedItems = List.from(existingItems)
+          ..addAll((data.data?.data ?? []).where((newItem) =>
+              !existingItems.any((existingItem) =>
+                  existingItem.commentId == newItem.commentId)));
+        emit(state.copyWith(
+            status: CubitStatus.success,
+            entity: GetCommentsResponseEntity(
+                data: CommentsResult(data: updatedItems))));
       },
     );
   }
 
+  void resetPage(){
+    currentPage =1;
+  }
 }

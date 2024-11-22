@@ -8,6 +8,7 @@ import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/comment_section_shimmer.dart';
+import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_comment_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
@@ -17,6 +18,7 @@ import 'package:mzad_damascus/router/router.dart';
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/constant_manager.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
+import '../../../../../core/resource/enum_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/widget/button/main_app_button.dart';
@@ -24,6 +26,7 @@ import '../../../../../core/widget/form_field/title_app_form_filed.dart';
 import '../../../../../core/widget/image/main_image_widget.dart';
 import '../../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
+import '../../../../../core/injection/injection_container.dart' as di;
 
 class CommentsSection extends StatefulWidget {
   final num? itemId;
@@ -64,10 +67,10 @@ class _CommentsSectionState extends State<CommentsSection> {
   Widget build(BuildContext context) {
     return BlocConsumer<GetCommentsCubit, GetCommentsState>(
         listener: (context, state) {
-          if (state.status == CubitStatus.error) {
-            NoteMessage.showErrorSnackBar(context: context, text: state.error);
-          }
-        }, builder: (context, state) {
+      if (state.status == CubitStatus.error) {
+        NoteMessage.showErrorSnackBar(context: context, text: state.error);
+      }
+    }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
         return const CommentSectionShimmer();
       }
@@ -76,10 +79,12 @@ class _CommentsSectionState extends State<CommentsSection> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: AppHeightManager.h1,
+          ),
           AppTextWidget(
               fontWeight: FontWeight.w700,
               fontSize: FontSizeManager.fs16,
-
               text: "comments".tr()),
           SizedBox(
             height: AppHeightManager.h1point5,
@@ -90,7 +95,7 @@ class _CommentsSectionState extends State<CommentsSection> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: (comments?.length ?? 0) > 6 ? 6 : comments?.length,
+                itemCount:(comments?.length??0) >6?6:comments?.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
@@ -108,7 +113,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                               width: AppWidthManager.w11,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration:
-                              const BoxDecoration(shape: BoxShape.circle),
+                                  const BoxDecoration(shape: BoxShape.circle),
                               child: MainImageWidget(
                                 imageUrl: AppConstantManager.imageBaseUrl +
                                     (comments?[index].client?.photo ?? ""),
@@ -152,98 +157,150 @@ class _CommentsSectionState extends State<CommentsSection> {
               showModalBottomSheet(
                 isScrollControlled: true,
                 context: context,
+                backgroundColor: AppColorManager.white,
+                showDragHandle: true,
                 builder: (context) {
-                  return DecoratedContainer(
-                    color: AppColorManager.white,
-                    height: AppHeightManager.h50,
-                    width: AppWidthManager.w100,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppWidthManager.w3Point8),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: AppHeightManager.h05,
-                          ),
-                          AppTextWidget(
-                              maxLines: 2,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSizeManager.fs15,
-                              text: "comments"),
-                          Expanded(
-                            child: ListView.builder(
-                              controller: scrollController,
-                              itemCount: (comments?.length ?? 0),
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          height: AppWidthManager.w11,
-                                          width: AppWidthManager.w11,
-                                          clipBehavior:
-                                          Clip.antiAliasWithSaveLayer,
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle),
-                                          child: MainImageWidget(
-                                            imageUrl: AppConstantManager
-                                                .imageBaseUrl +
-                                                (comments?[index]
-                                                    .client
-                                                    ?.photo ??
-                                                    ""),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: AppWidthManager.w2,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                  return BlocProvider(
+                    create: (context) => di.sl<GetCommentsCubit>()
+                      ..getComments(
+                          context: context,
+                          entity: GetCommentsRequestEntity(
+                              page: 1, itemId: widget.itemId)),
+                    child: BlocConsumer<GetCommentsCubit, GetCommentsState>(
+                        listener: (context, state) {
+                      if (state.status == CubitStatus.error) {
+                        NoteMessage.showErrorSnackBar(
+                            context: context, text: state.error);
+                      }
+                    }, builder: (context, state) {
+                      if (state.status == CubitStatus.loading) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: AppWidthManager.w3Point8,
+                              vertical: AppHeightManager.h1point8),
+                          child: const CommentSectionShimmer(),
+                        );
+                      }
+
+                      List<Comment>? comments = state.entity.data?.data ?? [];
+                      return NotificationListener<ScrollNotification>(
+                          onNotification: (ScrollNotification scrollInfo) {
+                            if (state.status != CubitStatus.loading &&
+                                scrollInfo.metrics.pixels >=
+                                    scrollInfo.metrics.maxScrollExtent) {
+                              context.read<GetCommentsCubit>().getComments(
+                                  context: context,
+                                  entity: GetCommentsRequestEntity(
+                                      itemId: widget.itemId));
+                            }
+                            return true;
+                          },
+                          child: DecoratedContainer(
+                            color: AppColorManager.white,
+                            height: AppHeightManager.h50,
+                            width: AppWidthManager.w100,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: AppWidthManager.w3Point8),
+                            child: Column(
+                              children: [
+                                AppTextWidget(
+                                    maxLines: 2,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: FontSizeManager.fs16,
+                                    text: "comments".tr()),
+                                Expanded(
+                                  child: ListView.builder(
+                                    controller: scrollController,
+                                    itemCount: (comments?.length ?? 0) + 1,
+                                    itemBuilder: (context, index) {
+                                      if (index == comments.length) {
+                                        if (comments.length <
+                                            EnumManager.paginationLength) {
+                                          return const SizedBox();
+                                        }
+
+                                        return Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            AppTextWidget(
-                                                maxLines: 2,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: FontSizeManager.fs15,
-                                                text: comments?[index]
-                                                    .client
-                                                    ?.name ??
-                                                    ""),
-                                            AppTextWidget(
-                                                maxLines: 2,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: FontSizeManager.fs15,
-                                                text:
-                                                comments?[index].comment ??
-                                                    ""),
+                                            Center(
+                                              child: SizedBox(
+                                                  height: AppHeightManager.h5,
+                                                  width: AppHeightManager.h5,
+                                                  child:
+                                                      const AppCircularProgressWidget()),
+                                            ),
                                           ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: AppHeightManager.h1point8,
-                                    )
-                                  ],
-                                );
-                              },
+                                        );
+                                      }
+                                      return SizedBox(
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: AppWidthManager.w11,
+                                                  width: AppWidthManager.w11,
+                                                  clipBehavior: Clip
+                                                      .antiAliasWithSaveLayer,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle),
+                                                  child: MainImageWidget(
+                                                    imageUrl: AppConstantManager
+                                                            .imageBaseUrl +
+                                                        (comments?[index]
+                                                                .client
+                                                                ?.photo ??
+                                                            ""),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: AppWidthManager.w2,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    AppTextWidget(
+                                                        maxLines: 2,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize:
+                                                            FontSizeManager
+                                                                .fs15,
+                                                        text: comments?[index]
+                                                                .client
+                                                                ?.name ??
+                                                            ""),
+                                                    AppTextWidget(
+                                                        maxLines: 2,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize:
+                                                            FontSizeManager
+                                                                .fs15,
+                                                        text: comments?[index]
+                                                                .comment ??
+                                                            ""),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: AppHeightManager.h1point8,
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Visibility(
-                            child: Center(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: AppHeightManager.h1),
-                                child: SizedBox(
-                                    width: AppWidthManager.w5,
-                                    height: AppWidthManager.w5,
-                                    child: const AppCircularProgressWidget()),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          ));
+                    }),
                   );
                 },
               );
@@ -257,7 +314,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                     decorationColor: AppColorManager.mainColor,
                     textDecoration: TextDecoration.underline,
                     fontSize: FontSizeManager.fs15,
-                    text: "more comments"),
+                    text: "moreComments".tr()),
               ],
             ),
           ),
@@ -266,7 +323,7 @@ class _CommentsSectionState extends State<CommentsSection> {
           ),
           TitleAppFormFiled(
             hint: "yourComment".tr(),
-            title:  "yourComment".tr(),
+            title: "yourComment".tr(),
             onChanged: (value) {
               entity.comment = value;
               return null;
@@ -285,6 +342,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                     context: context, text: state.error);
               }
               if (state.status == CubitStatus.success) {
+                context.read<GetCommentsCubit>().resetPage();
                 context.read<GetCommentsCubit>().getComments(
                     context: context,
                     entity: GetCommentsRequestEntity(
@@ -302,15 +360,11 @@ class _CommentsSectionState extends State<CommentsSection> {
               }
               return MainAppButton(
                 onTap: () {
-                  if ((entity.comment ?? "").isEmpty) {
-                    return;
-                  }
-                  if (AppSharedPreferences
-                      .getToken()
-                      .isEmpty) {
+                  if (AppSharedPreferences.getToken().isEmpty) {
                     showLoginBottomSheet(context: context);
                     return;
                   }
+
                   context
                       .read<AddCommentCubit>()
                       .addComment(context: context, entity: entity);

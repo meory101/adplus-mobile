@@ -118,6 +118,7 @@ class HomeRemoteImplement extends HomeRemote {
     await ApiMethods().post(
         body: entity.toJson(),
         url: ApiPostUrl.getComments);
+    print(jsonDecode(response.body)['data']['data']);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getCommentsResponseEntityFromJson(response.body);
     } else {

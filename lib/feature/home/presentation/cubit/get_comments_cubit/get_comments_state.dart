@@ -7,7 +7,7 @@ class GetCommentsState extends Equatable {
   final String error;
   final CubitStatus status;
   final GetCommentsResponseEntity entity;
-  final bool? isReachMax;
+   final bool? isReachMax;
 
 
   const GetCommentsState(
