@@ -30,4 +30,7 @@ abstract class MoreRepository {
       {required MyItemUnderReviewRequestEntity entity});
   Future<Either<ApiFailure, MyItemResponseEntity>> myitemreview(
       {required MyItemReviewRequestEntity entity});
-}
+
+  Future<Either<ApiFailure, MyItemResponseEntity>>myRejectedAds({required MyItemRequestEntity entity}) ;
+
+  }

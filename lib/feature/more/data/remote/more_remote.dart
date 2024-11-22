@@ -35,6 +35,9 @@ abstract class MoreRemote {
    Future<MyItemResponseEntity> myitemreview({
     required MyItemReviewRequestEntity entity,
   });
+  Future<MyItemResponseEntity> myRejectedAds({
+    required MyItemRequestEntity entity,
+  });
 }
 
 class MoreRemoteImplement extends MoreRemote {
@@ -78,6 +81,9 @@ class MoreRemoteImplement extends MoreRemote {
       {required MyItemRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.myitem, body: entity.toJson());
+    print(entity.page);
+    print(response.body);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myItemResponseEntityFromJson(response.body);
     } else {
@@ -100,6 +106,19 @@ class MoreRemoteImplement extends MoreRemote {
       {required MyItemReviewRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.myitemreview, body: entity.toJson());
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return myItemResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<MyItemResponseEntity> myRejectedAds({required MyItemRequestEntity entity}) async{
+    final response = await ApiMethods()
+        .post(url: ApiPostUrl.myRefusedItems, body: entity.toJson());
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myItemResponseEntityFromJson(response.body);
     } else {

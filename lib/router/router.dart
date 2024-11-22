@@ -49,6 +49,7 @@ import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_b
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/rejected_ads_cubit/rejected_ads_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
@@ -232,6 +233,8 @@ abstract class AppRouter {
             BlocProvider(
               create: (context) => di.sl<MyitemReviewCubit>(),
             ),
+            BlocProvider(create: (context) => di.sl<RejectedAdsCubit>()),
+
           ],
           child: const MyItemsScreen(),
         ));
@@ -513,6 +516,7 @@ abstract class AppRouter {
             ),
             BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
             BlocProvider(create: (context) => di.sl<MyItemCubit>()),
+            BlocProvider(create: (context) => di.sl<RejectedAdsCubit>()),
           ],
           child: const MainBottomAppBar(),
         ));

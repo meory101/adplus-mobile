@@ -8,11 +8,13 @@ class MyitemUnderReviewState extends Equatable {
   final String error;
   final CubitStatus status;
   final MyItemResponseEntity entity;
+  final bool isReachedMax;
 
   const MyitemUnderReviewState(
-      {required this.error, required this.status, required this.entity});
+      {required this.error, required this.status, required this.entity,required this.isReachedMax});
        factory MyitemUnderReviewState.initial() {
     return MyitemUnderReviewState(
+      isReachedMax: false,
         entity: MyItemResponseEntity(),
         error: '',
         status: CubitStatus.initial);
@@ -22,8 +24,10 @@ class MyitemUnderReviewState extends Equatable {
     String? error,
     CubitStatus? status,
     MyItemResponseEntity? entity,
+    bool? isReachedMax,
   }) {
     return MyitemUnderReviewState(
+      isReachedMax: isReachedMax??this.isReachedMax,
         error: error ?? this.error,
         status: status ?? this.status,
         entity: entity ?? this.entity);

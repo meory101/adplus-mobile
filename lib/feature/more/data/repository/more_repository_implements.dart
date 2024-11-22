@@ -98,4 +98,14 @@ class MoreRepositoryImplements implements MoreRepository {
       },
     );
   }
+
+  @override
+  Future<Either<ApiFailure, MyItemResponseEntity>> myRejectedAds({required MyItemRequestEntity entity})async {
+    return Connector<MyItemResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.myRejectedAds(entity: entity);
+        return Right(result);
+      },
+    );
+  }
 }

@@ -11,6 +11,9 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myite
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_under_review/myitem_under_review_state.dart';
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
+import '../../../../../../core/resource/enum_manager.dart';
+import '../../../../../home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import '../../../../domain/entity/response/myitems_response_entity.dart';
 
 /// Eng.Hussaen Baghdadi
 
@@ -20,15 +23,18 @@ class MyitemReviewCubit extends Cubit<MyitemReviewState> {
   MyitemReviewCubit({
     required this.usecase,
   }) : super(MyitemReviewState.initial());
-
+  bool hasMoreItems = true;
+  int currentPage = 1;
   Future<void> myitemreview({
     required BuildContext context,
     required MyItemReviewRequestEntity entity,
-    bool loadMore = false,
+
   }) async {
-    if (!loadMore) {
-      emit(state.copyWith(status: CubitStatus.loading));
-    }
+
+
+    if (!hasMoreItems || state.status == CubitStatus.loading || state.status == CubitStatus.loadMore) return;
+    emit(state.copyWith(status: currentPage == 1 ? CubitStatus.loading : CubitStatus.loadMore));
+    entity.page = currentPage;
     final result = await usecase(entity: entity);
 
     if (isClosed) return;
@@ -40,7 +46,22 @@ class MyitemReviewCubit extends Cubit<MyitemReviewState> {
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
       (data) {
-        emit(state.copyWith(status: CubitStatus.success, entity: data));
+        if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
+          hasMoreItems = false;
+        } else {
+          currentPage++;
+        }
+
+        List<AdData>? existingItems = state.entity.data?.data ?? [];
+        List<AdData>? updatedItems = List.from(existingItems)
+          ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
+              .any((existingItem) => existingItem.itemId == newItem.itemId)));
+        emit(state.copyWith(
+
+            status: CubitStatus.success,
+
+            entity:
+            MyItemResponseEntity(data: MyAdvsData(data: updatedItems)),isReachedMax: !hasMoreItems));
       },
     );
   }

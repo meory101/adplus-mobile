@@ -80,12 +80,14 @@ import 'package:mzad_damascus/feature/more/domain/usecase/edit_password_usecase.
 import 'package:mzad_damascus/feature/more/domain/usecase/my_reviewd_irem.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/myitem_under_review_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/myitem_usecase.dart';
+import 'package:mzad_damascus/feature/more/domain/usecase/rejected_ads_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/update_username_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/verfiyusername_usecase.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_under_review/myitem_under_review_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/rejected_ads_cubit/rejected_ads_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
@@ -123,6 +125,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => RejectedAdsCubit(usecase: sl()));
   sl.registerFactory(() => FollowersCubit(usecase: sl()));
   sl.registerFactory(() => FollowingCubit(usecase: sl()));
   sl.registerFactory(() => SearchUserCubit(usecase: sl()));
@@ -152,6 +155,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateAdvUsecase(repository: sl()));
   sl.registerLazySingleton(() => RemoveFollowUsecase(repository: sl()));
   sl.registerLazySingleton(() => RemoveLikeUsecase(repository: sl()));
+  sl.registerLazySingleton(() => RejectedAdsUsecase(repository: sl()));
   sl.registerLazySingleton(() => CheckLikeUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvByUserUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddReactionUsecase(repository: sl()));

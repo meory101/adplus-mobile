@@ -11,9 +11,9 @@ abstract class EnumManager {
   // static int listCode = 5;
 
   static Map<num, String> advsStateCode = {
-    -1: rejected,
-    0: active,
-    1: underReview
+    0: rejected,
+    -1: underReview,
+    1: active
   };
 
   static num star = 1;
@@ -29,9 +29,9 @@ abstract class EnumManager {
   };
 
   static Map<num, Color> advsStateColor = {
-    -1: AppColorManager.red,
-    0: AppColorManager.green,
-    1: AppColorManager.mainColor
+    -1: AppColorManager.mainColor,
+    0: AppColorManager.red,
+    1: AppColorManager.green
   };
 
   static String rejected = "rejected";

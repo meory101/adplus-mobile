@@ -127,6 +127,7 @@ class ApiMethods {
               .getLink(),
           headers: headers);
     } else {
+      print(ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),);
       return await http.post(
           ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),
           body: jsonEncode(body),

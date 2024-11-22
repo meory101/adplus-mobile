@@ -25,19 +25,17 @@ class MyItemCubit extends Cubit<MyitemState> {
     required BuildContext context,
     required MyItemRequestEntity entity,
   }) async {
-    if (!hasMoreItems) return;
-
+    if (!hasMoreItems || state.status == CubitStatus.loading || state.status == CubitStatus.loadMore) return;
     emit(state.copyWith(status: CubitStatus.loading));
+    entity.page = currentPage;
 
-    final result =
-        await usecase(entity: MyItemRequestEntity(page: currentPage));
+    final result = await usecase(entity: entity);
 
     if (isClosed) return;
-
     result.fold(
-      (failure) async {
-        final ErrorEntity errorEntity = await ApiErrorHandler.mapFailure(
-            failure: failure, buildContext: context);
+          (failure) async {
+        final ErrorEntity errorEntity =
+        await ApiErrorHandler.mapFailure(failure: failure,buildContext: context);
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
@@ -55,7 +53,7 @@ class MyItemCubit extends Cubit<MyitemState> {
         emit(state.copyWith(
             status: CubitStatus.success,
             entity:
-            MyItemResponseEntity(data: MyAdvsData(data: updatedItems))));
+            MyItemResponseEntity(data: MyAdvsData(data: updatedItems)),isReachedMax: !hasMoreItems));
       },
     );
   }

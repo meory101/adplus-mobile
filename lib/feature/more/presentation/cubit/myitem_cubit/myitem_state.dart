@@ -8,12 +8,14 @@ class MyitemState extends Equatable {
   final String error;
   final CubitStatus status;
   final MyItemResponseEntity entity;
+  final bool isReachedMax;
 
   const MyitemState(
-      {required this.error, required this.status, required this.entity});
+      {required this.error, required this.status, required this.entity,required this.isReachedMax});
        factory MyitemState.initial() {
     return MyitemState(
         entity: MyItemResponseEntity(),
+        isReachedMax: false,
         error: '',
         status: CubitStatus.initial);
   }
@@ -22,15 +24,17 @@ class MyitemState extends Equatable {
     String? error,
     CubitStatus? status,
     MyItemResponseEntity? entity,
+    bool? isReachedMax,
   }) {
     return MyitemState(
+      isReachedMax: isReachedMax??this.isReachedMax,
         error: error ?? this.error,
         status: status ?? this.status,
         entity: entity ?? this.entity);
   }
 
   @override
-  List<Object> get props => [error, status, entity];
+  List<Object> get props => [error, status, entity,];
 }
 
 
