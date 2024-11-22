@@ -2,12 +2,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/user.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/following_usecase.dart';
-
 import '../../../../../core/api/api_error/api_error.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
+import '../../../../../core/resource/enum_manager.dart';
 import '../../../domain/entity/request/followers_request_entity.dart';
-import '../../../domain/usecase/followers_usecase.dart';
+import '../../../domain/entity/response/followers_response_entity.dart';
 import 'following_state.dart';
 
 
@@ -19,11 +20,14 @@ class FollowingCubit extends Cubit<FollowingState> {
   FollowingCubit({
     required this.usecase,
   }) : super(FollowingState.initial());
+  bool hasMoreItems = true;
+  int currentPage = 1;
 
   void getFollowings(
       {required BuildContext context,
       required FollowersRequestEntity entity}) async {
     emit(state.copyWith(status: CubitStatus.loading));
+    entity.page =currentPage;
     final result = await usecase(entity: entity);
 
     if (isClosed) return;
@@ -36,7 +40,20 @@ class FollowingCubit extends Cubit<FollowingState> {
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
       (data) {
-        emit(state.copyWith(status: CubitStatus.success, entity: data));
+        if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
+          hasMoreItems = false;
+        } else {
+          currentPage++;
+        }
+
+        List<User>? existingItems = state.entity.data?.data ?? [];
+        List<User>? updatedItems = List.from(existingItems)
+          ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
+              .any((existingItem) => existingItem.followingId == newItem.followingId)));
+        emit(state.copyWith(
+            status: CubitStatus.success,
+            entity:
+            FollowersResponseEntity(data: FollowersData(data: updatedItems))));
       },
     );
   }

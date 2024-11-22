@@ -45,6 +45,7 @@ class FollowersCubit extends Cubit<FollowersState> {
         currentPage++;
       }
 
+
       List<User>? existingItems = state.entity.data?.data ?? [];
       List<User>? updatedItems = List.from(existingItems)
         ..addAll((data.data?.data ?? []).where((newItem) => !existingItems

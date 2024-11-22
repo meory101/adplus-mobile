@@ -6,6 +6,7 @@ import 'package:mzad_damascus/core/injection/injection_container.dart' as di;
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
+import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/followers_cubit/followers_cubit.dart';
@@ -64,11 +65,7 @@ class OtherUserFollowersScreen extends StatelessWidget {
                 itemCount: followersList.length + 1,
                 itemBuilder: (context, index) {
                   if (index == followersList.length) {
-                    print(followersList.length );
-                    print(followersList.length < EnumManager.paginationLength);
-                    print('ffffffffffffff');
                     if (followersList.length < EnumManager.paginationLength) {
-                      print('-----------------------');
                       return const SizedBox();
                     }
                     return const AppCircularProgressWidget();
