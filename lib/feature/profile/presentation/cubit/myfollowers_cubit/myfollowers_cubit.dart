@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
+import 'package:mzad_damascus/feature/profile/domain/entity/response/myfollower_response_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/usecase/myfollowers_usecase.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_state.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_state.dart';
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
+import '../../../../../core/resource/enum_manager.dart';
+import '../../../../home/domain/entity/response/user.dart';
 
 /// Eng.Nour Othman(meory)*
 
@@ -16,7 +17,8 @@ class MyFollowersCubit extends Cubit<MyFollowersState> {
   MyFollowersCubit({
     required this.usecase,
   }) : super(MyFollowersState.initial());
-
+  bool hasMoreItems = true;
+  int currentPage = 1;
   void getMyFollowers({
     required BuildContext context,
     required MyFollowersRequestEntity entity,
@@ -35,10 +37,19 @@ class MyFollowersCubit extends Cubit<MyFollowersState> {
         ));
       },
       (data) {
+        if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
+          hasMoreItems = false;
+        } else {
+          currentPage++;
+        }
+        List<User>? existingItems = state.entity.data?.data ?? [];
+        List<User>? updatedItems = List.from(existingItems)
+          ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
+              .any((existingItem) => existingItem.followingId == newItem.followingId)));
         emit(state.copyWith(
-          status: CubitStatus.success,
-          entity: data,
-        ));
+            status: CubitStatus.success,
+            entity:
+            MyFollowersResponseEntity(data: MyFollowersData(data: updatedItems))));
       },
     );
   }

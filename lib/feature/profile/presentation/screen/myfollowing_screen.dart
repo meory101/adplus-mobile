@@ -10,10 +10,13 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowing_cub
 import '../../../../core/helper/lanucher_helper.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/constant_manager.dart';
+import '../../../../core/resource/enum_manager.dart';
 import '../../../../core/resource/font_manager.dart';
+import '../../../../core/widget/loading/app_circular_progress_widget.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../../router/router.dart';
 import '../../../home/presentation/screen/auhter_profile_screen.dart';
+import '../cubit/myfollowers_cubit/myfollowers_cubit.dart';
 
 class MyFollowingScreen extends StatelessWidget {
   const MyFollowingScreen({super.key});
@@ -51,12 +54,28 @@ class MyFollowingScreen extends StatelessWidget {
                 child: Text('noFollowingYet'.tr()),
               );
             }
-
-            return ListView.builder(
-              itemCount: followingList.length,
+           return NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (state.status != CubitStatus.loading &&
+                    scrollInfo.metrics.pixels >=
+                        scrollInfo.metrics.maxScrollExtent) {
+                  context.read<MyFollowingCubit>().getMyFollowing(
+                      context: context, entity: MyFollowingRequestEntity());
+                }
+                return true;
+              },
+              child:
+             ListView.builder(
+              itemCount: followingList.length+1,
               itemBuilder: (context, index) {
+                if (index == followingList.length) {
+                  if (followingList.length < EnumManager.paginationLength) {
+                    return const SizedBox();
+                  }
+                  return const AppCircularProgressWidget();
+                }
                 final followingItem = followingList[index];
-                final follower = followingItem.follower;
+                final follower = followingItem.following;
 
                 return InkWell(
                   onTap: () {
@@ -102,7 +121,7 @@ class MyFollowingScreen extends StatelessWidget {
                   ),
                 );
               },
-            );
+             ) );
           },
         ),
       ),

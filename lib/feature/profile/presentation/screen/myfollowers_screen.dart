@@ -13,7 +13,9 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cub
 import 'package:mzad_damascus/feature/profile/presentation/cubit/myfollowers_cubit/myfollowers_state.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/enum_manager.dart';
 import '../../../../core/resource/font_manager.dart';
+import '../../../../core/widget/loading/app_circular_progress_widget.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 
 class MyFollowersScreen extends StatelessWidget {
@@ -51,9 +53,28 @@ class MyFollowersScreen extends StatelessWidget {
               );
             }
 
-            return ListView.builder(
-              itemCount: followersList.length,
-              itemBuilder: (context, index) {
+            return
+              NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+              if (state.status != CubitStatus.loading &&
+                  scrollInfo.metrics.pixels >=
+                      scrollInfo.metrics.maxScrollExtent) {
+                context.read<MyFollowersCubit>().getMyFollowers(
+                    context: context, entity: MyFollowersRequestEntity(
+                ));
+              }
+              return true;
+            },
+            child:
+              ListView.builder(
+              itemCount: followersList.length+1,
+              itemBuilder: (context, index) {if (index == followersList.length) {
+                if (followersList.length < EnumManager.paginationLength) {
+                  return const SizedBox();
+                }
+                return const AppCircularProgressWidget();
+              }
+
                 final followerItem = followersList[index];
                 final following = followerItem.following;
 
@@ -97,7 +118,7 @@ class MyFollowersScreen extends StatelessWidget {
                   ),
                 );
               },
-            );
+              ) );
           },
         ),
       ),
