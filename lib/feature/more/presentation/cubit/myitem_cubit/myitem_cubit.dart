@@ -57,4 +57,7 @@ class MyItemCubit extends Cubit<MyitemState> {
       },
     );
   }
+  void resetData()async{
+    currentPage=1;
+  }
 }

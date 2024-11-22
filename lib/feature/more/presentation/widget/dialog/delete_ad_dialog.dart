@@ -16,38 +16,43 @@ import '../../../../advertisement/presentation/cubit/delete_adv_cubit/delete_adv
 import '../../../../home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import '../../../../../core/injection/injection_container.dart' as di;
 
-void showDeleteAdDialog({required BuildContext context, required AdData item,required Function() onSuccess}) {
+void showDeleteAdDialog(
+    {required BuildContext context,
+    required AdData item,
+    required Function() onSuccess}) {
   showDialog(
     context: context,
     builder: (context) {
-      return
-        BlocProvider(
+      return BlocProvider(
           create: (context) => di.sl<DeleteAdvertisementCubit>(),
-          child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(
-                          AppRadiusManager.r10))),
-              contentPadding: EdgeInsets.only(
+          child: Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(AppRadiusManager.r10))),
+            insetPadding: EdgeInsets.symmetric(
+              horizontal: AppWidthManager.w4,
+            ),
+            elevation: 0,
+            backgroundColor: AppColorManager.white,
+            child: Padding(
+
+              padding: EdgeInsets.only(
                   left: AppWidthManager.w4,
                   right: AppWidthManager.w4,
-                  top: AppHeightManager.h05,
+                  top: AppHeightManager.h3,
                   bottom: AppHeightManager.h3),
-              insetPadding: EdgeInsets.symmetric(
-                horizontal: AppWidthManager.w4,
-              ),
-              elevation: 0,
-              backgroundColor: AppColorManager.white,
-              title: AppTextWidget(
-                text: "delete".tr(),
-                fontWeight: FontWeight.w600,
-                fontSize: FontSizeManager.fs18,
-                overflow: TextOverflow.visible,
-                color: AppColorManager.textAppColor,
-                textAlign: TextAlign.center,
-              ),
-              content: StatefulBuilder(
-                  builder: (context, setState) {
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppTextWidget(
+                    text: "delete".tr(),
+                    fontWeight: FontWeight.w600,
+                    fontSize: FontSizeManager.fs18,
+                    overflow: TextOverflow.visible,
+                    color: AppColorManager.textAppColor,
+                    textAlign: TextAlign.center,
+                  ),
+                  StatefulBuilder(builder: (context, setState) {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -65,30 +70,31 @@ void showDeleteAdDialog({required BuildContext context, required AdData item,req
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            BlocConsumer<DeleteAdvertisementCubit, DeleteAdvertisementState>(
+                            BlocConsumer<DeleteAdvertisementCubit,
+                                DeleteAdvertisementState>(
                               listener: (context, state) {
-                                if(state.status == CubitStatus.error){
-                                  NoteMessage.showErrorSnackBar(context: context, text: state.error);
+                                if (state.status == CubitStatus.error) {
+                                  NoteMessage.showErrorSnackBar(
+                                      context: context, text: state.error);
                                 }
-                                if(state.status == CubitStatus.success){
+                                if (state.status == CubitStatus.success) {
                                   Navigator.of(context).pop();
                                   onSuccess();
                                 }
                               },
                               builder: (context, state) {
-                                if(state.status == CubitStatus.loading){
+                                if (state.status == CubitStatus.loading) {
                                   return const AppCircularProgressWidget(
                                     color: AppColorManager.red,
                                   );
                                 }
                                 return MainAppButton(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                      AppWidthManager.w10),
+                                      horizontal: AppWidthManager.w10),
                                   borderRadius:
-                                  BorderRadius.circular(
-                                      AppRadiusManager.r10),
+                                      BorderRadius.circular(AppRadiusManager.r10),
                                   height: AppHeightManager.h5,
+                                  width: AppWidthManager.w35,
                                   color: AppColorManager.red.withOpacity(0.9),
                                   alignment: Alignment.center,
                                   child: AppTextWidget(
@@ -98,25 +104,20 @@ void showDeleteAdDialog({required BuildContext context, required AdData item,req
                                   ),
                                   onTap: () {
                                     context
-                                        .read<
-                                        DeleteAdvertisementCubit>()
+                                        .read<DeleteAdvertisementCubit>()
                                         .deleteAdvertisement(
-                                        context: context,
-                                        entity:
-                                        DeleteAdvRequestEntity(
-                                            itemId: item
-                                                .itemId));
+                                            context: context,
+                                            entity: DeleteAdvRequestEntity(
+                                                itemId: item.itemId));
                                   },
                                 );
                               },
                             ),
                             MainAppButton(
                               padding: EdgeInsets.symmetric(
-                                  horizontal:
-                                  AppWidthManager.w10),
+                                  horizontal: AppWidthManager.w10),
                               borderRadius:
-                              BorderRadius.circular(
-                                  AppRadiusManager.r10),
+                                  BorderRadius.circular(AppRadiusManager.r10),
                               height: AppHeightManager.h5,
                               color: AppColorManager.white,
                               alignment: Alignment.center,
@@ -124,7 +125,6 @@ void showDeleteAdDialog({required BuildContext context, required AdData item,req
                                 text: "cancel".tr(),
                                 fontSize: FontSizeManager.fs16,
                                 color: AppColorManager.black,
-
                               ),
                               onTap: () {
                                 Navigator.of(context).pop();
@@ -134,8 +134,11 @@ void showDeleteAdDialog({required BuildContext context, required AdData item,req
                         )
                       ],
                     );
-                  })),
-        );
+                  })
+                ],
+              ),
+            ),
+          ));
     },
   );
 }

@@ -65,4 +65,7 @@ class MyitemReviewCubit extends Cubit<MyitemReviewState> {
       },
     );
   }
+  void resetData()async{
+    currentPage=1;
+  }
 }

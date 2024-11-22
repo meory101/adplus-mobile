@@ -59,4 +59,7 @@ class RejectedAdsCubit extends Cubit<RejectedAdsState> {
       },
     );
   }
+  void resetData()async{
+    currentPage=1;
+  }
 }

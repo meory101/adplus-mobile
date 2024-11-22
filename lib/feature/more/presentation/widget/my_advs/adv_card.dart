@@ -11,21 +11,22 @@ import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/enum_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
+import '../../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
 import '../../../../../router/router.dart';
 import '../../../../home/presentation/screen/advertisement_details_screen.dart';
-import '../../../domain/entity/request/myitem_request_entity.dart';
-import '../../cubit/myitem_cubit/myitem_cubit.dart';
+
 import '../../screen/update_adv_screen.dart';
 import '../dialog/delete_ad_dialog.dart';
 
 class AdvCard extends StatelessWidget {
   final AdData item;
-  const AdvCard({super.key,required this.item});
+
+  const AdvCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
-    return   InkWell(
+    return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(RouteNamedScreens.advertisementDetails,
             arguments: AdvertisementDetailsArgs(advertisement: item));
@@ -44,15 +45,14 @@ class AdvCard extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed(RouteNamedScreens.updateAdvs,
-                        arguments: UpdateAdvArgs(data: item))
-                        .then(
-                          (value) {
-                        print('ddddddddddddd9999999988888888888888d');
-                        context.read<MyItemCubit>().getMyItems(
-                            context: context,
-                            entity: MyItemRequestEntity(page: 1));
-                      },
-                    );
+                            arguments: UpdateAdvArgs(data: item))
+
+                        .then((value) {
+                      NoteMessage.showSuccessSnackBar(context: context, text: "successfullyDone".tr());
+
+                      Navigator.of(context)
+                          .pushReplacementNamed(RouteNamedScreens.myitem,);
+                    });
                   },
                   icon: const Icon(
                     Icons.edit,
@@ -69,9 +69,10 @@ class AdvCard extends StatelessWidget {
                         context: context,
                         item: item,
                         onSuccess: () {
-                          context.read<MyItemCubit>().getMyItems(
-                              context: context,
-                              entity: MyItemRequestEntity(page: 1));
+                          NoteMessage.showSuccessSnackBar(context: context, text: "successfullyDone".tr());
+
+                          Navigator.of(context)
+                              .pushReplacementNamed(RouteNamedScreens.myitem,);
                         });
                   },
                   icon: const Icon(
@@ -93,19 +94,19 @@ class AdvCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               Container(
-                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                 ),
-                 child: MainImageWidget(
-                   borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                   height: AppHeightManager.h12,
-                   width: AppHeightManager.h12,
-                   imageUrl: AppConstantManager.imageBaseUrl + (item.photos?.first.photo??""),
-
-                 ),
-               ),
+                Container(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                  ),
+                  child: MainImageWidget(
+                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                    height: AppHeightManager.h12,
+                    width: AppHeightManager.h12,
+                    imageUrl: AppConstantManager.imageBaseUrl +
+                        (item.photos?.first.photo ?? ""),
+                  ),
+                ),
                 SizedBox(width: AppRadiusManager.r10),
                 Expanded(
                   child: Column(

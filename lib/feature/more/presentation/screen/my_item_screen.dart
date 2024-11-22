@@ -1,39 +1,25 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
-import 'package:mzad_damascus/core/resource/constant_manager.dart';
-import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
-import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
-import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
-import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
-import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
-import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_review_request_entiity.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
-import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_state.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/rejected_ads_cubit/rejected_ads_cubit.dart';
-import 'package:mzad_damascus/feature/more/presentation/screen/update_adv_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/widget/my_advs/active_adv_list_view.dart';
 import 'package:mzad_damascus/feature/more/presentation/widget/my_advs/my_adv_list_view.dart';
 import 'package:mzad_damascus/feature/more/presentation/widget/my_advs/rejected_adv_list_view.dart';
 import 'package:mzad_damascus/feature/more/presentation/widget/my_advs/under_review_list_view.dart';
-import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../../domain/entity/request/myitem_under_review_request_entiity.dart';
 import '../cubit/myitem_cubit/myitem_cubit.dart';
 import '../cubit/myitem_cubit/myitem_state.dart';
 import '../cubit/myitem_under_review/myitem_under_review_cubit.dart';
-import '../cubit/myitem_under_review/myitem_under_review_state.dart';
 import '../../domain/entity/request/myitem_request_entity.dart';
-import '../widget/dialog/delete_ad_dialog.dart';
 
 class MyItemsScreen extends StatefulWidget {
   const MyItemsScreen({Key? key}) : super(key: key);
@@ -54,10 +40,10 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   @override
   void initState() {
     super.initState();
-    _loadItems();
+    loadItems();
   }
 
-  void _loadItems() {
+  void loadItems() {
     print(selectedFilterIndex);
     if (selectedFilterIndex == 2) {
       context.read<MyitemUnderReviewCubit>().myitemunderreview(
@@ -144,7 +130,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
                 setState(() {
                   selectedFilterIndex = index;
                 });
-                _loadItems();
+                loadItems();
               },
               backgroundColor: AppColorManager.lightGreyOpacity6,
               selectedColor: AppColorManager.black,
