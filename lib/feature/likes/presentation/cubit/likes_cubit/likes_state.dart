@@ -7,12 +7,14 @@ class LikesState extends Equatable {
   final String error;
   final CubitStatus status;
   final LikesResponseEntity entity;
+  final bool isReachedMax;
 
   const LikesState(
-      {required this.error, required this.status, required this.entity});
+      {required this.error, required this.status, required this.entity,required this.isReachedMax});
 
   factory LikesState.initial() {
     return LikesState(
+      isReachedMax: false,
         entity: LikesResponseEntity(),
         error: '',
         status: CubitStatus.initial);
@@ -22,10 +24,13 @@ class LikesState extends Equatable {
     String? error,
     CubitStatus? status,
     LikesResponseEntity? entity,
+    bool? isReachedMax
   }) {
     return LikesState(
         error: error ?? this.error,
         status: status ?? this.status,
+        isReachedMax: isReachedMax?? this.isReachedMax,
+
         entity: entity ?? this.entity);
   }
 

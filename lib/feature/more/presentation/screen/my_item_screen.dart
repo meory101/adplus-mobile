@@ -44,7 +44,6 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   }
 
   void loadItems() {
-    print(selectedFilterIndex);
     if (selectedFilterIndex == 2) {
       context.read<MyitemUnderReviewCubit>().myitemunderreview(
             context: context,

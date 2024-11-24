@@ -81,8 +81,6 @@ class MoreRemoteImplement extends MoreRemote {
       {required MyItemRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.myitem, body: entity.toJson());
-    print(entity.page);
-    print(response.body);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myItemResponseEntityFromJson(response.body);

@@ -22,7 +22,6 @@ class CommentCubit extends Cubit<CommentState> {
   CommentCubit({
     required this.usecase,
   }) : super(CommentState.initial());
-
   void getComments(
       {required BuildContext context}) async {
     emit(state.copyWith(status: CubitStatus.loading));

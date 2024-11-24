@@ -139,9 +139,6 @@ class ProfileRemoteImplement extends ProfileRemote {
       url: ApiPostUrl.addfollow,
       body: entity.toJson(),
     );
-    print(response.body);
-    print(response.statusCode);
-    print('ddddddddddddddddddddddd');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return addFollowResponseEntityFromJson(response.body);
     } else {
@@ -173,9 +170,7 @@ class ProfileRemoteImplement extends ProfileRemote {
       body: entity.toJson(),
     );
 
-    print(response.body);
-    print(response.statusCode);
-    print('dddddddddddddddddddddddddd');
+
 
 
     if (ApiStatusCode.success().contains(response.statusCode)) {

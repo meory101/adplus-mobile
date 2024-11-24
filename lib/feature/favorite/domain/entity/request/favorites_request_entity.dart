@@ -18,6 +18,10 @@ MyFavoritesRequestEntity copyWith({  num? page,
 );
   num? get page => _page;
 
+  set page(num? value) {
+    _page = value;
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['page'] = _page;

@@ -79,10 +79,7 @@ class _InsidePageCategoryAdvsScreenState
   void onScroll() {
     if (scrollController.position.pixels >=
         scrollController.position.maxScrollExtent - 200) {
-      print('20000000000000000000000000000000000000');
 
-      print(entity.attributes?.length);
-      print('20000000000000000000000000000000000000');
       context.read<AdvsByAttributeCubit>().getAdvsByAttribute(
             context: context,
             entity: entity,

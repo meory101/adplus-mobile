@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';

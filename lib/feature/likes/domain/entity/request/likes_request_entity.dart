@@ -9,6 +9,10 @@ class LikesRequestEntity {
     _page = page;
 }
 
+  set page(num? value) {
+    _page = value;
+  }
+
   LikesRequestEntity.fromJson(dynamic json) {
     _page = json['page'];
   }

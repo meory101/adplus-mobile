@@ -29,7 +29,9 @@ class AdvCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(RouteNamedScreens.advertisementDetails,
-            arguments: AdvertisementDetailsArgs(advertisement: item));
+            arguments: AdvertisementDetailsArgs(advertisement: item)).then((value) {
+          Navigator.of(context).pushReplacementNamed(RouteNamedScreens.myitem );
+          },);
       },
       child: Slidable(
         endActionPane: ActionPane(
@@ -46,10 +48,7 @@ class AdvCard extends StatelessWidget {
                     Navigator.of(context)
                         .pushNamed(RouteNamedScreens.updateAdvs,
                             arguments: UpdateAdvArgs(data: item))
-
                         .then((value) {
-                      NoteMessage.showSuccessSnackBar(context: context, text: "successfullyDone".tr());
-
                       Navigator.of(context)
                           .pushReplacementNamed(RouteNamedScreens.myitem,);
                     });

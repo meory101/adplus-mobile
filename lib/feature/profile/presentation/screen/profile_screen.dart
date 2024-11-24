@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
+import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorites_request_entity.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/activity_card.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/comments_list_view.dart';
@@ -22,8 +25,22 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
+    initScroll();
+    getData();
     initProfileScreen();
     super.initState();
+  }
+
+  initScroll() {
+    scrollController.addListener(
+      () {
+        if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent) {
+          context.read<FavoritesCubit>().getMyFavorites(
+              context: context, entity: MyFavoritesRequestEntity());
+        }
+      },
+    );
   }
 
   initProfileScreen() {
@@ -31,6 +48,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   int selectedIndex = 0;
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+  getData(){
+    if(selectedIndex == 0){
+      context.read<FavoritesCubit>().resetData();
+      context.read<FavoritesCubit>()
+          .getMyFavorites(context: context, entity: MyFavoritesRequestEntity());
+    }else{
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -65,6 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onActivityTapChanged: (index) {
                 setState(() {
                   selectedIndex = index;
+                  getData();
                 });
               },
             ),
@@ -75,11 +110,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ? const FavoriteListView()
                 : selectedIndex == 1
                     ? const CommentsListView()
-                    : selectedIndex ==2?
-         const LikesListView():
-            SizedBox(
-              height: AppHeightManager.h3,
-            )
+                    : selectedIndex == 2
+                        ? const LikesListView()
+                        : SizedBox(
+                            height: AppHeightManager.h3,
+                          )
           ],
         ),
       ),
