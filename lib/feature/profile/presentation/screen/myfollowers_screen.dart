@@ -27,12 +27,17 @@ class MyFollowersScreen extends StatefulWidget {
 
 
 class _MyFollowersScreenState extends State<MyFollowersScreen> {
-
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
   @override
   void initState() {
    initScroll();
     super.initState();
   }
+
   initScroll(){
 
     scrollController.addListener(() {
@@ -45,6 +50,8 @@ class _MyFollowersScreenState extends State<MyFollowersScreen> {
       }
     },);
   }
+
+
  ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {

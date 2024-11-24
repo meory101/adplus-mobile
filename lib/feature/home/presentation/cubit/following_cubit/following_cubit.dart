@@ -26,8 +26,9 @@ class FollowingCubit extends Cubit<FollowingState> {
   void getFollowings(
       {required BuildContext context,
       required FollowersRequestEntity entity}) async {
-    emit(state.copyWith(status: CubitStatus.loading));
-    entity.page =currentPage;
+    if (!hasMoreItems || state.status == CubitStatus.loading || state.status == CubitStatus.loadMore) return;
+    emit(state.copyWith(status:currentPage==1? CubitStatus.loading : CubitStatus.loadMore));
+    entity.page = currentPage;
     final result = await usecase(entity: entity);
 
     if (isClosed) return;
@@ -39,7 +40,7 @@ class FollowingCubit extends Cubit<FollowingState> {
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
-      (data) {
+          (data) {
         if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
           hasMoreItems = false;
         } else {
@@ -50,10 +51,11 @@ class FollowingCubit extends Cubit<FollowingState> {
         List<User>? updatedItems = List.from(existingItems)
           ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
               .any((existingItem) => existingItem.followingId == newItem.followingId)));
+
         emit(state.copyWith(
             status: CubitStatus.success,
             entity:
-            FollowersResponseEntity(data: FollowersData(data: updatedItems))));
+            FollowersResponseEntity(data: FollowersData(data: updatedItems)),isReachedMax: !hasMoreItems));
       },
     );
   }

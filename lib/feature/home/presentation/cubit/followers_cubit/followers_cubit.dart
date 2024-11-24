@@ -25,9 +25,9 @@ class FollowersCubit extends Cubit<FollowersState> {
   void getFollowers(
       {required BuildContext context,
       required FollowersRequestEntity entity}) async {
-    if (!hasMoreItems) return;
-    emit(state.copyWith(status: CubitStatus.loading));
-    entity.page =currentPage;
+    if (!hasMoreItems || state.status == CubitStatus.loading || state.status == CubitStatus.loadMore) return;
+    emit(state.copyWith(status:currentPage==1? CubitStatus.loading : CubitStatus.loadMore));
+    entity.page = currentPage;
     final result = await usecase(entity: entity);
 
     if (isClosed) return;
@@ -38,23 +38,24 @@ class FollowersCubit extends Cubit<FollowersState> {
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
-      (data) {
-      if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
-        hasMoreItems = false;
-      } else {
-        currentPage++;
-      }
+          (data) {
+        if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
+          hasMoreItems = false;
+        } else {
+          currentPage++;
+        }
 
+        List<User>? existingItems = state.entity.data?.data ?? [];
+        List<User>? updatedItems = List.from(existingItems)
+          ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
+              .any((existingItem) => existingItem.followingId == newItem.followingId)));
 
-      List<User>? existingItems = state.entity.data?.data ?? [];
-      List<User>? updatedItems = List.from(existingItems)
-        ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
-            .any((existingItem) => existingItem.followingId == newItem.followingId)));
-      emit(state.copyWith(
-          status: CubitStatus.success,
-          entity:
-          FollowersResponseEntity(data: FollowersData(data: updatedItems))));
-    },
+        emit(state.copyWith(
+            status: CubitStatus.success,
+            entity:
+            FollowersResponseEntity(data: FollowersData(data: updatedItems)),isReachedMax: !hasMoreItems));
+      },
+
     );
 
 

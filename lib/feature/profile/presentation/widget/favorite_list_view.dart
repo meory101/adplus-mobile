@@ -41,7 +41,9 @@ class FavoriteListView extends StatelessWidget {
           itemCount: favorites.length + (state.isReachedMax == true ? 0 : 1),
           itemBuilder: (context, index) {
             if (index == favorites.length) {
-              return const Center(child: CircularProgressIndicator());
+              return  Center(child:state.status == CubitStatus.error?
+                  const SizedBox()
+                  : const CircularProgressIndicator());
             } else {
               return InkWell(
                 onTap: () {

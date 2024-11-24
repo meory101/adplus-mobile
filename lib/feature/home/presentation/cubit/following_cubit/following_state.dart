@@ -11,12 +11,15 @@ class FollowingState extends Equatable {
   final String error;
   final CubitStatus status;
   final FollowersResponseEntity entity;
+ final bool isReachedMax;
+
 
   const FollowingState(
-      {required this.error, required this.status, required this.entity});
+      {required this.error, required this.status, required this.entity,required this.isReachedMax});
 
   factory FollowingState.initial() {
     return FollowingState(
+      isReachedMax: false,
         entity: FollowersResponseEntity(),
         error:'',
         status: CubitStatus.initial);
@@ -26,8 +29,10 @@ class FollowingState extends Equatable {
     String? error,
     CubitStatus? status,
     FollowersResponseEntity? entity,
+    bool? isReachedMax
   }) {
     return FollowingState(
+      isReachedMax: isReachedMax ?? this.isReachedMax,
         error: error ?? this.error,
         status: status ?? this.status,
         entity: entity ?? this.entity);

@@ -3,16 +3,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/model/user.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
+import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
-import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/other_user_followers_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/add_follow_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/check_follow_request_entity.dart';
@@ -21,7 +20,6 @@ import 'package:mzad_damascus/feature/profile/presentation/cubit/add_follow_cubi
 import 'package:mzad_damascus/feature/profile/presentation/cubit/check_follow_cubit/check_follow_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/profile_by_username_cubit/profile_by_username_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/remove_follow_cubit/remove_follow_cubit.dart';
-
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
@@ -35,7 +33,6 @@ import '../../../../core/widget/loading/shimmer/profile_info_card_shimmer.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../../router/router.dart';
-import '../../../more/domain/entity/response/myitems_response_entity.dart';
 import '../../../profile/domain/entity/response/profile_by_username_response_entity.dart';
 import '../cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'advertisement_details_screen.dart';
@@ -54,12 +51,41 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
   CheckFollowRequestEntity entity = CheckFollowRequestEntity();
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    initScroll();
+    super.initState();
+  }
+
+  initScroll() {
+    scrollController.addListener(
+      () {
+        if (scrollController.position.pixels >=
+            (scrollController.position.maxScrollExtent)) {
+          context
+              .read<GetAdvByUserCubit>()
+              .getAdvsByUser(context: context, entity: adByUserEntity);
+        }
+      },
+    );
+  }
+
+  ScrollController scrollController = ScrollController();
+  GetAdvsByUserRequestEntity adByUserEntity = GetAdvsByUserRequestEntity();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainAppBar(
         title: "",
       ),
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -70,12 +96,13 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                       context: context, text: state.error);
                 }
                 if (state.status == CubitStatus.success) {
-                  context.read<GetAdvByUserCubit>().getAdvsByUser(
-                      context: context,
-                      entity: GetAdvsByUserRequestEntity(
-                          clientId: state.entity.data?.user?.clientId,
-                          page: 1));
+                  adByUserEntity.page = 1;
                   entity.clientId = state.entity.data?.user?.clientId;
+                  adByUserEntity.clientId = state.entity.data?.user?.clientId;
+
+                  context
+                      .read<GetAdvByUserCubit>()
+                      .getAdvsByUser(context: context, entity: adByUserEntity);
                   context
                       .read<CheckFollowCubit>()
                       .checkFollow(context: context, entity: entity);
@@ -423,69 +450,81 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                 List<AdData>? advs = state.entity.data?.data ?? [];
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
-                  child: DynamicHeightGridView(
-                    crossAxisSpacing: AppWidthManager.w2,
-                    crossAxisCount: 2,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: advs.length,
-                    builder: (context, index) {
-                      advertisement = advs[index];
-                      return InkWell(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                              RouteNamedScreens.advertisementDetails,
-                              arguments: AdvertisementDetailsArgs(
-                                  advertisement: advs[index]));
+                  child: Column(
+                    children: [
+                      DynamicHeightGridView(
+                        crossAxisSpacing: AppWidthManager.w2,
+                        crossAxisCount: 2,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount:
+                            advs.length + (state.isReachedMax == true ? 0 : 1),
+                        builder: (context, index) {
+                          if (index == advs.length) {
+                            return Center();
+                          } else {
+                            advertisement = advs[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                    RouteNamedScreens.advertisementDetails,
+                                    arguments: AdvertisementDetailsArgs(
+                                        advertisement: advs[index]));
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                      height: AppHeightManager.h30,
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      decoration: BoxDecoration(
+                                        color: AppColorManager.lightGreyOpacity6,
+                                        borderRadius: BorderRadius.circular(
+                                            AppRadiusManager.r15),
+                                      ),
+                                      child: MainImageWidget(
+                                        imageUrl: AppConstantManager.imageBaseUrl +
+                                            (advertisement?.photos?.first.photo ??
+                                                ""),
+                                        borderRadius: BorderRadius.circular(
+                                            AppRadiusManager.r15),
+                                      )),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: AppHeightManager.h08,
+                                      ),
+                                      AppTextWidget(
+                                        text: advertisement?.name.toString() ?? "",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        fontSize: FontSizeManager.fs15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      AppTextWidget(
+                                        text: advertisement?.startingPrice
+                                                .toString() ??
+                                            "",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        fontSize: FontSizeManager.fs14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      SizedBox(
+                                        height: AppHeightManager.h1point8,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          }
                         },
-                        child: Column(
-                          children: [
-                            Container(
-                                height: AppHeightManager.h30,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                decoration: BoxDecoration(
-                                  color: AppColorManager.lightGreyOpacity6,
-                                  borderRadius: BorderRadius.circular(
-                                      AppRadiusManager.r15),
-                                ),
-                                child: MainImageWidget(
-                                  imageUrl: AppConstantManager.imageBaseUrl +
-                                      (advertisement?.photos?.first.photo ??
-                                          ""),
-                                  borderRadius: BorderRadius.circular(
-                                      AppRadiusManager.r15),
-                                )),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: AppHeightManager.h08,
-                                ),
-                                AppTextWidget(
-                                  text: advertisement?.name.toString() ?? "",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  fontSize: FontSizeManager.fs15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                AppTextWidget(
-                                  text:
-                                      advertisement?.startingPrice.toString() ??
-                                          "",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  fontSize: FontSizeManager.fs14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                SizedBox(
-                                  height: AppHeightManager.h1point8,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      );
-                    },
+                      ),
+                      Visibility(
+                          visible: state.isReachedMax == false,
+                          child: const AppCircularProgressWidget())
+                    ],
                   ),
                 );
               },

@@ -2,11 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
-import 'package:mzad_damascus/core/injection/injection_container.dart' as di;
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
-import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/followers_cubit/followers_cubit.dart';
@@ -18,11 +16,42 @@ import '../../../../core/resource/font_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/request/followers_request_entity.dart';
 
-class OtherUserFollowersScreen extends StatelessWidget {
+class OtherUserFollowersScreen extends StatefulWidget {
   final OtherUserFollowingDataArgs args;
 
   const OtherUserFollowersScreen({super.key, required this.args});
 
+  @override
+  State<OtherUserFollowersScreen> createState() => _OtherUserFollowersScreenState();
+}
+
+class _OtherUserFollowersScreenState extends State<OtherUserFollowersScreen> {
+
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+  @override
+  void initState() {
+    initScroll();
+    super.initState();
+  }
+  initScroll(){
+
+    scrollController.addListener(() {
+      if(scrollController.position.pixels>= scrollController.position.maxScrollExtent){
+        context.read<FollowersCubit>().getFollowers(
+          context: context,
+          entity: FollowersRequestEntity(),
+        );
+      }
+    },);
+  }
+
+
+  ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,74 +78,64 @@ class OtherUserFollowersScreen extends StatelessWidget {
             );
           }
 
-          return NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (state.status != CubitStatus.loading &&
-                    scrollInfo.metrics.pixels >=
-                        scrollInfo.metrics.maxScrollExtent) {
-                  context.read<FollowersCubit>().getFollowers(
-                      context: context, entity: FollowersRequestEntity(
-                    username: args.user.username??""
-                  ));
-                }
-                return true;
-              },
-              child: ListView.builder(
-                itemCount: followersList.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == followersList.length) {
-                    if (followersList.length < EnumManager.paginationLength) {
-                      return const SizedBox();
-                    }
-                    return const AppCircularProgressWidget();
-                  }
-                  final followerItem = followersList[index];
-                  final following = followerItem.following;
-                  return InkWell(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(
-                          RouteNamedScreens.authorProfile,
-                          arguments: AuthorProfileArgs(
-                              userName: following?.username ?? ""));
-                    },
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: AppColorManager.lightGreyOpacity6,
-                        backgroundImage: following?.photo != null
-                            ? NetworkImage(
-                                '${AppConstantManager.imageBaseUrl}${following?.photo}')
-                            : null,
-                        child: following?.photo == null
-                            ? const Icon(Icons.person)
-                            : null,
-                      ),
-                      title: AppTextWidget(
-                        text: following?.name ?? '',
-                        fontSize: FontSizeManager.fs16,
-                        color: AppColorManager.textAppColor,
-                      ),
-                      subtitle: AppTextWidget(
-                        text: following?.username ?? '',
-                        fontSize: FontSizeManager.fs14,
-                        color: AppColorManager.textGrey,
-                      ),
-                      trailing: following?.phone != null
-                          ? IconButton(
-                              splashColor: AppColorManager.transparent,
-                              highlightColor: AppColorManager.transparent,
-                              onPressed: () {
-                                UrlLauncherHelper.makeCall(
-                                    phoneNumber: following?.phone ?? "");
-                              },
-                              icon: const Icon(
-                                Icons.call,
-                                color: AppColorManager.green,
-                              ))
+          return ListView.builder(
+            controller: scrollController,
+            itemCount: followersList.length +
+                (state.isReachedMax == true ? 0 : 1),
+            itemBuilder: (context, index) {
+
+              if (index == followersList.length) {
+                return const Center(
+                    child: CircularProgressIndicator());
+              } else {
+                final followerItem = followersList[index];
+                final following = followerItem.following;
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                        RouteNamedScreens.authorProfile,
+                        arguments: AuthorProfileArgs(
+                            userName: following?.username ?? ""));
+                  },
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: AppColorManager.lightGreyOpacity6,
+                      backgroundImage: following?.photo != null
+                          ? NetworkImage(
+                          '${AppConstantManager.imageBaseUrl}${following
+                              ?.photo}')
+                          : null,
+                      child: following?.photo == null
+                          ? const Icon(Icons.person)
                           : null,
                     ),
-                  );
-                },
-              ));
+                    title: AppTextWidget(
+                      text: following?.name ?? '',
+                      fontSize: FontSizeManager.fs16,
+                      color: AppColorManager.textAppColor,
+                    ),
+                    subtitle: AppTextWidget(
+                      text: following?.username ?? '',
+                      fontSize: FontSizeManager.fs14,
+                      color: AppColorManager.textGrey,
+                    ),
+                    trailing: following?.phone != null
+                        ? IconButton(
+                        splashColor: AppColorManager.transparent,
+                        highlightColor: AppColorManager.transparent,
+                        onPressed: () {
+                          UrlLauncherHelper.makeCall(
+                              phoneNumber: following?.phone ?? "");
+                        },
+                        icon: const Icon(
+                          Icons.call,
+                          color: AppColorManager.green,
+                        ))
+                        : null,
+                  ),
+                );
+              }  },
+          );
         },
       ),
     );

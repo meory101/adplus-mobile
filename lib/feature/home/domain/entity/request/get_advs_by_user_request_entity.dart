@@ -23,6 +23,15 @@ GetAdvsByUserRequestEntity copyWith({  num? clientId,
 }) => GetAdvsByUserRequestEntity(  clientId: clientId ?? _clientId,
   page: page ?? _page,
 );
+
+  set page(num? value) {
+    _page = value;
+  }
+
+  set clientId(num? value) {
+    _clientId = value;
+  }
+
   num? get clientId => _clientId;
   num? get page => _page;
 
