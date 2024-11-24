@@ -8,7 +8,6 @@ import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/comment_section_shimmer.dart';
-import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_comment_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
@@ -95,7 +94,7 @@ class _CommentsSectionState extends State<CommentsSection> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount:(comments?.length??0) >6?6:comments?.length,
+                itemCount: (comments?.length ?? 0) > 6 ? 6 : comments?.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
@@ -214,23 +213,23 @@ class _CommentsSectionState extends State<CommentsSection> {
                                     itemCount: (comments?.length ?? 0) + 1,
                                     itemBuilder: (context, index) {
                                       if (index == comments.length) {
-                                        if (comments.length <
-                                            EnumManager.paginationLength) {
-                                          return const SizedBox();
-                                        }
-
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Center(
-                                              child: SizedBox(
-                                                  height: AppHeightManager.h5,
-                                                  width: AppHeightManager.h5,
-                                                  child:
-                                                      const AppCircularProgressWidget()),
-                                            ),
-                                          ],
+                                        return Visibility(
+                                          visible: state.isReachedMax ==
+                                                  false &&
+                                              state.status != CubitStatus.error,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Center(
+                                                child: SizedBox(
+                                                    height: AppHeightManager.h5,
+                                                    width: AppHeightManager.h5,
+                                                    child:
+                                                        const AppCircularProgressWidget()),
+                                              ),
+                                            ],
+                                          ),
                                         );
                                       }
                                       return SizedBox(
@@ -342,7 +341,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                     context: context, text: state.error);
               }
               if (state.status == CubitStatus.success) {
-                context.read<GetCommentsCubit>().resetPage();
+                context.read<GetCommentsCubit>().resetData();
                 context.read<GetCommentsCubit>().getComments(
                     context: context,
                     entity: GetCommentsRequestEntity(

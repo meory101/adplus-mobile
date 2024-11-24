@@ -69,23 +69,23 @@ class MoreScreen extends StatelessWidget {
               Navigator.pushNamed(context, RouteNamedScreens.myitem);
             },
           ),
-          MoreListTile(
-            icon: Icons.star_border,
-            label: 'favourite'.tr(),
-            color: AppColorManager.orange,
-            onTap: () {
-              if(AppSharedPreferences.getToken().isEmpty){
-                showLoginBottomSheet(context: context);
-                return;
-              }
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const FavoritesScreen()),
-              );
-            },
-
-          ),
+          // MoreListTile(
+          //   icon: Icons.star_border,
+          //   label: 'favourite'.tr(),
+          //   color: AppColorManager.orange,
+          //   onTap: () {
+          //     if(AppSharedPreferences.getToken().isEmpty){
+          //       showLoginBottomSheet(context: context);
+          //       return;
+          //     }
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => const FavoritesScreen()),
+          //     );
+          //   },
+          //
+          // ),
           MoreListTile(
             icon: Icons.password,
             label: 'changePassword'.tr(),

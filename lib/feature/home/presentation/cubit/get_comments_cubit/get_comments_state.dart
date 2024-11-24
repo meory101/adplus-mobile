@@ -7,15 +7,15 @@ class GetCommentsState extends Equatable {
   final String error;
   final CubitStatus status;
   final GetCommentsResponseEntity entity;
-   final bool? isReachMax;
+   final bool? isReachedMax;
 
 
   const GetCommentsState(
-      {required this.error, required this.status, required this.entity,required this.isReachMax});
+      {required this.error, required this.status, required this.entity,required this.isReachedMax});
 
   factory GetCommentsState.initial() {
     return GetCommentsState(
-      isReachMax: false,
+        isReachedMax: false,
         entity: GetCommentsResponseEntity(),
         error: '',
         status: CubitStatus.initial);
@@ -25,11 +25,11 @@ class GetCommentsState extends Equatable {
     String? error,
     CubitStatus? status,
     GetCommentsResponseEntity? entity,
-    bool? isReachMax,
+    bool? isReachedMax,
 
   }) {
     return GetCommentsState(
-       isReachMax: isReachMax ?? this.isReachMax,
+        isReachedMax: isReachedMax ?? this.isReachedMax,
         error: error ?? this.error,
         status: status ?? this.status,
         entity: entity ?? this.entity);

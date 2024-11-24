@@ -119,6 +119,7 @@ void showDeleteAdDialog(
                               borderRadius:
                                   BorderRadius.circular(AppRadiusManager.r10),
                               height: AppHeightManager.h5,
+                              width: AppWidthManager.w35,
                               color: AppColorManager.white,
                               alignment: Alignment.center,
                               child: AppTextWidget(

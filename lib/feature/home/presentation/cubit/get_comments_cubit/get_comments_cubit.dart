@@ -26,13 +26,10 @@ class GetCommentsCubit extends Cubit<GetCommentsState> {
   void getComments(
       {required BuildContext context,
       required GetCommentsRequestEntity entity}) async {
-    if (!hasMoreItems) {
-      emit(state.copyWith(
-          status: CubitStatus.success,isReachMax:true));
-      return;
-    }
-    emit(state.copyWith(status: CubitStatus.loading));
-
+    if (!hasMoreItems ||
+        state.status == CubitStatus.loading ||
+        state.status == CubitStatus.loadMore) return;
+    emit(state.copyWith(status:currentPage==1? CubitStatus.loading : CubitStatus.loadMore));
     entity.page = currentPage;
     final result = await usecase(entity: entity);
 
@@ -44,8 +41,7 @@ class GetCommentsCubit extends Cubit<GetCommentsState> {
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
-      (data) {
-
+          (data) {
         if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
           hasMoreItems = false;
         } else {
@@ -53,18 +49,23 @@ class GetCommentsCubit extends Cubit<GetCommentsState> {
         }
         List<Comment>? existingItems = state.entity.data?.data ?? [];
         List<Comment>? updatedItems = List.from(existingItems)
-          ..addAll((data.data?.data ?? []).where((newItem) =>
-              !existingItems.any((existingItem) =>
-                  existingItem.commentId == newItem.commentId)));
+          ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
+              .any((existingItem) => existingItem.commentId == newItem.commentId)));
         emit(state.copyWith(
             status: CubitStatus.success,
-            entity: GetCommentsResponseEntity(
-                data: CommentsResult(data: updatedItems))));
+            entity:
+            GetCommentsResponseEntity(data: CommentsResult(data: updatedItems)),
+            isReachedMax: !hasMoreItems));
       },
     );
   }
 
-  void resetPage(){
-    currentPage =1;
+  void resetData() {
+    currentPage = 1;
+    hasMoreItems = true;
+    emit(state.copyWith(
+        status: CubitStatus.success,
+        entity: GetCommentsResponseEntity(data: CommentsResult(data: [])),
+        isReachedMax: false));
   }
 }
