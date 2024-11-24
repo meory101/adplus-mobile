@@ -9,15 +9,18 @@ class MyFollowersState extends Equatable {
   final String error;
   final CubitStatus status;
   final MyFollowersResponseEntity entity;
+  final bool? isReachedMax;
 
   const MyFollowersState({
     required this.error,
     required this.status,
     required this.entity,
+  required  this.isReachedMax
   });
 
   factory MyFollowersState.initial() {
     return MyFollowersState(
+      isReachedMax: false,
       entity: MyFollowersResponseEntity(),
       error: '',
       status: CubitStatus.initial,
@@ -28,10 +31,12 @@ class MyFollowersState extends Equatable {
     String? error,
     CubitStatus? status,
     MyFollowersResponseEntity? entity,
+    bool? isReachedMax
   }) {
     return MyFollowersState(
       error: error ?? this.error,
       status: status ?? this.status,
+      isReachedMax: isReachedMax ?? isReachedMax,
       entity: entity ?? this.entity,
     );
   }

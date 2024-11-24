@@ -18,62 +18,70 @@ import '../../../../router/router.dart';
 import '../../../home/presentation/screen/auhter_profile_screen.dart';
 import '../cubit/myfollowers_cubit/myfollowers_cubit.dart';
 
-class MyFollowingScreen extends StatelessWidget {
+class MyFollowingScreen extends StatefulWidget {
   const MyFollowingScreen({super.key});
 
   @override
+  State<MyFollowingScreen> createState() => _MyFollowingScreenState();
+}
+
+class _MyFollowingScreenState extends State<MyFollowingScreen> {
+  @override
+  void initState() {
+    initScroll();
+    super.initState();
+  }
+
+  initScroll() {
+    scrollController.addListener(
+      () {
+        if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent) {
+          context.read<MyFollowingCubit>().getMyFollowing(
+                context: context,
+                entity: MyFollowingRequestEntity(),
+              );
+        }
+      },
+    );
+  }
+
+  ScrollController scrollController = ScrollController();
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di.sl<MyFollowingCubit>()
-        ..getMyFollowing(
-          context: context,
-          entity: MyFollowingRequestEntity(page: 1),
-        ),
-      child: Scaffold(
-        appBar: MainAppBar(
-          title: ('following'.tr()),
-        ),
-        body: BlocBuilder<MyFollowingCubit, MyFollowingState>(
-          builder: (context, state) {
-            if (state.status == CubitStatus.loading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+    return Scaffold(
+      appBar: MainAppBar(
+        title: ('following'.tr()),
+      ),
+      body: BlocBuilder<MyFollowingCubit, MyFollowingState>(
+        builder: (context, state) {
+          if (state.status == CubitStatus.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-            if (state.status == CubitStatus.error) {
-              return Center(
-                child: Text(state.error),
-              );
-            }
+          if (state.status == CubitStatus.error) {
+            return Center(
+              child: Text(state.error),
+            );
+          }
 
-            final followingList = state.entity.data?.data;
+          final followingList = state.entity.data?.data;
 
-            if (followingList == null || followingList.isEmpty) {
-              return Center(
-                child: Text('noFollowingYet'.tr()),
-              );
-            }
-           return NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (state.status != CubitStatus.loading &&
-                    scrollInfo.metrics.pixels >=
-                        scrollInfo.metrics.maxScrollExtent) {
-                  context.read<MyFollowingCubit>().getMyFollowing(
-                      context: context, entity: MyFollowingRequestEntity());
-                }
-                return true;
-              },
-              child:
-             ListView.builder(
-              itemCount: followingList.length+1,
-              itemBuilder: (context, index) {
-                if (index == followingList.length) {
-                  if (followingList.length < EnumManager.paginationLength) {
-                    return const SizedBox();
-                  }
-                  return const AppCircularProgressWidget();
-                }
+          if (followingList == null || followingList.isEmpty) {
+            return Center(
+              child: Text('noFollowingYet'.tr()),
+            );
+          }
+          return ListView.builder(
+            itemCount:
+                followingList.length + (state.isReachedMax == true ? 0 : 1),
+            itemBuilder: (context, index) {
+              if (index == followingList.length) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
                 final followingItem = followingList[index];
                 final follower = followingItem.following;
 
@@ -120,10 +128,10 @@ class MyFollowingScreen extends StatelessWidget {
                         : null,
                   ),
                 );
-              },
-             ) );
-          },
-        ),
+              }
+            },
+          );
+        },
       ),
     );
   }

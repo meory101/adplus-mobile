@@ -23,7 +23,10 @@ class MyFollowersCubit extends Cubit<MyFollowersState> {
     required BuildContext context,
     required MyFollowersRequestEntity entity,
   }) async {
+    if (!hasMoreItems || state.status == CubitStatus.loading || state.status == CubitStatus.loadMore) return;
     emit(state.copyWith(status: CubitStatus.loading));
+    entity.page = currentPage;
+
     final result = await usecase(entity: entity);
 
     if (isClosed) return;
@@ -36,20 +39,22 @@ class MyFollowersCubit extends Cubit<MyFollowersState> {
           status: CubitStatus.error,
         ));
       },
-      (data) {
+          (data) {
         if ((data.data?.data ?? []).length < EnumManager.paginationLength) {
           hasMoreItems = false;
         } else {
           currentPage++;
         }
+
         List<User>? existingItems = state.entity.data?.data ?? [];
         List<User>? updatedItems = List.from(existingItems)
           ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
               .any((existingItem) => existingItem.followingId == newItem.followingId)));
-        emit(state.copyWith(
+
+      emit(state.copyWith(
             status: CubitStatus.success,
             entity:
-            MyFollowersResponseEntity(data: MyFollowersData(data: updatedItems))));
+            MyFollowersResponseEntity(data: MyFollowersData(data: updatedItems)),isReachedMax: !hasMoreItems));
       },
     );
   }
