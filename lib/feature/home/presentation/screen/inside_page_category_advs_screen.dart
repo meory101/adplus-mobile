@@ -16,7 +16,6 @@ import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/drop_down/NameAndId.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
-import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
@@ -26,14 +25,12 @@ import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_det
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
-import '../../../../core/widget/drop_down/drop_down_form_field.dart';
-import '../../../../core/widget/drop_down/title_drop_down_form_field.dart';
 import '../../../../core/widget/loading/shimmer/advs_by_attribute_shimmer.dart';
 import '../../../../core/widget/loading/shimmer/attribute_list_view_shimmer.dart';
+import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../advertisement/domain/entity/response/get_cities_response_entity.dart';
 import '../../../advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import '../../../advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_state.dart';
-import '../../../advertisement/presentation/screen/category_attribute_form_screen.dart';
 import '../../domain/entity/response/advs_by_attribute_response_entity.dart';
 import '../../domain/entity/response/get_adv_details_response_entity.dart';
 import '../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
@@ -55,12 +52,11 @@ class _InsidePageCategoryAdvsScreenState
   @override
   void initState() {
     getAdvs(widget.args.entity);
-    entity  =widget.args.entity;
+    entity = widget.args.entity;
     scrollController.addListener(onScroll);
 
     super.initState();
   }
-
 
   getAdvs(AdvsByAttributeRequestEntity entity) {
     context
@@ -78,8 +74,7 @@ class _InsidePageCategoryAdvsScreenState
 
   void onScroll() {
     if (scrollController.position.pixels >=
-        scrollController.position.maxScrollExtent - 200) {
-
+        scrollController.position.maxScrollExtent - AppHeightManager.h20) {
       context.read<AdvsByAttributeCubit>().getAdvsByAttribute(
             context: context,
             entity: entity,
@@ -92,14 +87,26 @@ class _InsidePageCategoryAdvsScreenState
   Map attributeMap = {};
   Map allAttribute = {};
   bool foundAttribute = false;
+  getData()async{
+    for (var element in attributeMap.values) {
+      if (element == null) continue;
+      entity.attributes?.add(element);
+    }
+    context
+        .read<AdvsByAttributeCubit>()
+        .resetData();
+    context
+        .read<AdvsByAttributeCubit>()
+        .getAdvsByAttribute(
+        context: context, entity: entity);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const MainAppBar(title: ""),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
-        floatingActionButton:
-        SizedBox(
+        floatingActionButton: SizedBox(
           height: AppHeightManager.h20,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
@@ -159,6 +166,9 @@ class _InsidePageCategoryAdvsScreenState
                                         num.parse(selectedCity?.id ?? "0");
                                     context
                                         .read<AdvsByAttributeCubit>()
+                                        .resetData();
+                                    context
+                                        .read<AdvsByAttributeCubit>()
                                         .getAdvsByAttribute(
                                             context: context, entity: entity);
                                   },
@@ -212,8 +222,33 @@ class _InsidePageCategoryAdvsScreenState
                                             height: AppHeightManager.h40,
                                             width: AppWidthManager.w100,
                                             child: ListView.builder(
-                                              itemCount: optionsList.length,
+                                              itemCount: optionsList.length + 1,
                                               itemBuilder: (context, i) {
+                                                if (i == optionsList.length) {
+                                                  return MainAppButton(
+                                                    onTap: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                    alignment: Alignment.center,
+                                                    margin: EdgeInsets.only(
+                                                        bottom: AppHeightManager
+                                                            .h1point8,
+                                                        top: AppHeightManager
+                                                            .h1point8),
+                                                    height: AppHeightManager.h6,
+                                                    color: AppColorManager
+                                                        .mainColor,
+                                                    child: AppTextWidget(
+                                                      text: "done".tr(),
+                                                      color:
+                                                          AppColorManager.white,
+                                                      fontSize:
+                                                          FontSizeManager.fs16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  );
+                                                }
                                                 Attributes attribute =
                                                     Attributes();
                                                 attribute.attributeId =
@@ -395,14 +430,7 @@ class _InsidePageCategoryAdvsScreenState
                                       });
                                     },
                                   ).then((value) {
-                                    for (var element in attributeMap.values) {
-                                      if (element == null) continue;
-                                      entity.attributes?.add(element);
-                                    }
-                                    context
-                                        .read<AdvsByAttributeCubit>()
-                                        .getAdvsByAttribute(
-                                            context: context, entity: entity);
+                                   getData();
                                   });
                                 },
                                 child: Container(
@@ -453,9 +481,7 @@ class _InsidePageCategoryAdvsScreenState
           child: BlocConsumer<AdvsByAttributeCubit, AdvsByAttributeState>(
             listener: (context, state) {},
             builder: (context, state) {
-              if (state.status == CubitStatus.loading &&
-                  state.entity.data == null) {
-                // Initial loading state
+              if (state.status == CubitStatus.loading) {
                 return Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: AppWidthManager.w3Point8),
@@ -481,15 +507,8 @@ class _InsidePageCategoryAdvsScreenState
                       crossAxisCount: 2,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: advs.length +
-                          (state.status == CubitStatus.loading ? 1 : 0),
+                      itemCount: advs.length,
                       builder: (context, index) {
-                        if (index == advs.length) {
-                          // Show a loading indicator for pagination
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-
                         AdData? advertisement = advs[index];
                         return InkWell(
                           onTap: () {
@@ -577,6 +596,10 @@ class _InsidePageCategoryAdvsScreenState
                       },
                     ),
                   ),
+                  Visibility(
+                      visible: state.isReachedMax == false &&
+                          state.status != CubitStatus.error,
+                      child: const AppCircularProgressWidget())
                 ],
               );
             },

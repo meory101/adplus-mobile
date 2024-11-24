@@ -26,8 +26,8 @@ class AdvsByAttributeCubit extends Cubit<AdvsByAttributeState> {
   void getAdvsByAttribute(
       {required BuildContext context,
       required AdvsByAttributeRequestEntity entity}) async {
-    if (!hasMoreItems) return;
-    emit(state.copyWith(status: CubitStatus.loading));
+    if (!hasMoreItems || state.status == CubitStatus.loading || state.status == CubitStatus.loadMore) return;
+    emit(state.copyWith(status:currentPage==1? CubitStatus.loading: CubitStatus.loadMore));
     entity.page = currentPage;
     final result = await usecase(entity: entity);
     if (isClosed) return;
@@ -52,6 +52,7 @@ class AdvsByAttributeCubit extends Cubit<AdvsByAttributeState> {
         emit(
           state.copyWith(
             status: CubitStatus.success,
+            isReachedMax: !hasMoreItems,
             entity: AdvsByAttributeResponseEntity(
               data: AdvsByAttributeData(adData: updatedItems),
             ),
@@ -59,5 +60,14 @@ class AdvsByAttributeCubit extends Cubit<AdvsByAttributeState> {
         );
       },
     );
+  }
+
+  void resetData() {
+    currentPage = 1;
+    hasMoreItems = true;
+    emit(state.copyWith(
+        status: CubitStatus.success,
+        entity: AdvsByAttributeResponseEntity(data: AdvsByAttributeData(adData: [],)),
+        isReachedMax: false));
   }
 }
