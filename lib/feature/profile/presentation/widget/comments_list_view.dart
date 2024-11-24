@@ -44,7 +44,10 @@ class CommentsListView extends StatelessWidget {
                     arguments: AdvertisementDetailsArgs(advertisement: AdData(
                         itemId: state.entity.data?.comments?[index].item?.itemId
                     ))
-                );
+                ).then((value) {
+                  context.read<CommentCubit>()
+                      .getComments(context: context,);
+                },);
               },
               child: DecoratedContainer(
                 height: AppHeightManager.h17,

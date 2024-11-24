@@ -67,5 +67,11 @@ class MyitemReviewCubit extends Cubit<MyitemReviewState> {
   }
   void resetData()async{
     currentPage=1;
+    hasMoreItems = true;
+    emit(state.copyWith(
+        status: CubitStatus.success,
+        entity: MyItemResponseEntity(data: MyAdvsData(data: [])),
+        isReachedMax: false));
+
   }
 }

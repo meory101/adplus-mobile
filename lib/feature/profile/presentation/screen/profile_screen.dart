@@ -4,9 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorites_request_entity.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
+import 'package:mzad_damascus/feature/likes/presentation/cubit/likes_cubit/likes_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/widget/my_advs/active_adv_list_view.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/activity_card.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/comments_list_view.dart';
@@ -14,6 +18,9 @@ import 'package:mzad_damascus/feature/profile/presentation/widget/favorite_list_
 import 'package:mzad_damascus/feature/profile/presentation/widget/likes_list_view.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/profile_info_card.dart';
 import '../../../../core/resource/size_manager.dart';
+import '../../../likes/domain/entity/request/likes_request_entity.dart';
+import '../../../more/domain/entity/request/myitem_review_request_entiity.dart';
+import '../widget/active_list_view.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -36,8 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       () {
         if (scrollController.position.pixels >=
             scrollController.position.maxScrollExtent) {
-          context.read<FavoritesCubit>().getMyFavorites(
-              context: context, entity: MyFavoritesRequestEntity());
+          loadMoreData();
         }
       },
     );
@@ -60,8 +66,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context.read<FavoritesCubit>().resetData();
       context.read<FavoritesCubit>()
           .getMyFavorites(context: context, entity: MyFavoritesRequestEntity());
-    }else{
+    }
+  else  if(selectedIndex == 1){
+      context.read<CommentCubit>()
+          .getComments(context: context);
+    }
+    else if(selectedIndex == 2){
+      context.read<LikesCubit>().resetData();
+      context.read<LikesCubit>()
+          .getLikes(context: context, entity: LikesRequestEntity());
+    }
+    else if (selectedIndex ==3){
+      context.read<MyitemReviewCubit>().resetData();
+      context.read<MyitemReviewCubit>()
+          .myitemreview(context: context, entity: MyItemReviewRequestEntity());
+    }
 
+
+  }
+  loadMoreData(){
+    if(selectedIndex == 0){
+      context.read<FavoritesCubit>()
+          .getMyFavorites(context: context, entity: MyFavoritesRequestEntity());
+    }
+    // else  if(selectedIndex == 1){
+    //   context.read<CommentCubit>()
+    //       .getComments(context: context);
+    // }
+    else if(selectedIndex == 2){
+      context.read<LikesCubit>()
+          .getLikes(context: context, entity: LikesRequestEntity());
+    }
+    else if(selectedIndex == 3){
+      context.read<MyitemReviewCubit>()
+          .myitemreview(context: context, entity: MyItemReviewRequestEntity());
     }
   }
 
@@ -112,9 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ? const CommentsListView()
                     : selectedIndex == 2
                         ? const LikesListView()
-                        : SizedBox(
-                            height: AppHeightManager.h3,
-                          )
+                        : const ActiveListView()
           ],
         ),
       ),

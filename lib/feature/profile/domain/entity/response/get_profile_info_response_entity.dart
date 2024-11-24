@@ -26,6 +26,7 @@ class GetProfileInfoResponseEntity {
   }
 
   GetProfileInfoResponseEntity.fromJson(dynamic json) {
+
     _success = json['success'];
     _message = json['message'];
     _data = json['data'] != null ? ProfileInfo.fromJson(json['data']) : null;
@@ -84,6 +85,7 @@ class   ProfileInfo {
   }
 
   ProfileInfo.fromJson(dynamic json) {
+
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
     _items = json['items'];
     _followersCount = json['followers'];
@@ -109,6 +111,9 @@ class   ProfileInfo {
       );
 
   User? get user => _user;
+  num? get followersCount => _followersCount;
+  num? get followingCount => _followingCount;
+  num? get items => _items;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

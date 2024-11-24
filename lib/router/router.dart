@@ -127,7 +127,12 @@ abstract class AppRouter {
       case RouteNamedScreens.splash:
         return FadeBuilderRoute(page: const SplashScreen());
       case RouteNamedScreens.profile:
-        return FadeBuilderRoute(page: const ProfileScreen());
+        return FadeBuilderRoute(
+          page: BlocProvider(
+            create: (context) => di.sl<MyitemReviewCubit>(),
+            child: const ProfileScreen(),
+          ),
+        );
 
       case RouteNamedScreens.searchUser:
         return FadeBuilderRoute(
@@ -234,7 +239,6 @@ abstract class AppRouter {
               create: (context) => di.sl<MyitemReviewCubit>(),
             ),
             BlocProvider(create: (context) => di.sl<RejectedAdsCubit>()),
-
           ],
           child: const MyItemsScreen(),
         ));
@@ -482,6 +486,9 @@ abstract class AppRouter {
           providers: <SingleChildWidget>[
             BlocProvider(
               create: (context) => di.sl<BannersCubit>(),
+            ),
+            BlocProvider(
+              create: (context) => di.sl<MyitemReviewCubit>(),
             ),
             BlocProvider(
               create: (context) => di.sl<CommentCubit>(),

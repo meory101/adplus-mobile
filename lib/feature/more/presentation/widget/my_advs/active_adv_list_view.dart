@@ -17,7 +17,8 @@ class ActiveAdvListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MyitemReviewCubit, MyitemReviewState>(
+    return
+      BlocConsumer<MyitemReviewCubit, MyitemReviewState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error && state.error.isNotEmpty) {
           NoteMessage.showErrorSnackBar(context: context, text: state.error);
@@ -47,6 +48,7 @@ class ActiveAdvListView extends StatelessWidget {
               return true;
             },
             child: ListView.builder(
+
               padding: EdgeInsets.all(AppWidthManager.w3Point8),
               itemCount:     items.length + (state.isReachedMax==true ? 0 : 1),
               itemBuilder: (context, index) {

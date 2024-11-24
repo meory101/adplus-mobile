@@ -48,9 +48,7 @@ class _ActivityCardState extends State<ActivityCard> {
                   setState(() {
                     selectedIndex =0;
                     widget.onActivityTapChanged(selectedIndex);
-                    context.read<FavoritesCubit>().getMyFavorites(context: context, entity: MyFavoritesRequestEntity(
-                      page: 1
-                    ));
+
                   });
                 },
                 child: Column(
@@ -74,7 +72,6 @@ class _ActivityCardState extends State<ActivityCard> {
                   setState(() {
                     selectedIndex =1;
                     widget.onActivityTapChanged(selectedIndex);
-                    context.read<CommentCubit>().getComments(context: context,);
 
                   });
                 },
@@ -99,12 +96,6 @@ class _ActivityCardState extends State<ActivityCard> {
                   setState(() {
                     selectedIndex =2;
                     widget.onActivityTapChanged(selectedIndex);
-                    context.read<LikesCubit>().getLikes(context: context,entity:
-                    LikesRequestEntity(
-                      page: 1
-                    )
-                    );
-
 
                   });
                 },
