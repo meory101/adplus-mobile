@@ -14,6 +14,7 @@ import '../../../../core/resource/size_manager.dart';
 import '../../../../core/storage/shared/shared_pref.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../authentication/presentation/screen/login_screen.dart';
+import '../../../bidding/bidding_screen.dart';
 import '../../../profile/presentation/screen/profile_screen.dart';
 
 class MainBottomAppBar extends StatefulWidget {
@@ -32,7 +33,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
   void initState() {
     bottomBarScreens = [
       const HomeScreen(),
-      const HomeScreen(),
+      const BiddingScreen(),
       AppSharedPreferences.getToken().isEmpty
           ? const LoginScreen()
           : const ProfileScreen(),

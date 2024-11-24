@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/router/router.dart';
 
@@ -74,7 +75,8 @@ abstract class ApiErrorHandler {
         errorEntity.errorCode = errorResponseEntity.errorCode;
         if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
             'Unauthenticated.') {
-          AppSharedPreferences.clear();
+          AppSharedPreferences.cashToken(token: "");
+          showLoginBottomSheet(context: buildContext);
         }
       } catch (e) {
         errorEntity.errorMessage =
@@ -82,7 +84,8 @@ abstract class ApiErrorHandler {
 
         if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
             'Unauthenticated.') {
-          AppSharedPreferences.clear();
+          AppSharedPreferences.cashToken(token: "");
+          showLoginBottomSheet(context: buildContext);
 
         }
       }

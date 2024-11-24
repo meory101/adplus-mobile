@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/comment/domain/entity/comments_request_entity.dart';
 import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorites_request_entity.dart';
@@ -68,8 +69,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .getMyFavorites(context: context, entity: MyFavoritesRequestEntity());
     }
   else  if(selectedIndex == 1){
+      context.read<CommentCubit>().resetData();
       context.read<CommentCubit>()
-          .getComments(context: context);
+          .getComments(context: context,entity: CommentsRequestEntity());
     }
     else if(selectedIndex == 2){
       context.read<LikesCubit>().resetData();
@@ -89,10 +91,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context.read<FavoritesCubit>()
           .getMyFavorites(context: context, entity: MyFavoritesRequestEntity());
     }
-    // else  if(selectedIndex == 1){
-    //   context.read<CommentCubit>()
-    //       .getComments(context: context);
-    // }
+    else  if(selectedIndex == 1){
+      context.read<CommentCubit>()
+          .getComments(context: context,entity: CommentsRequestEntity());
+    }
     else if(selectedIndex == 2){
       context.read<LikesCubit>()
           .getLikes(context: context, entity: LikesRequestEntity());

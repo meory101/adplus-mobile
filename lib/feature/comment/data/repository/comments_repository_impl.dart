@@ -7,6 +7,7 @@ import 'package:mzad_damascus/feature/likes/domain/entity/request/likes_request_
 import 'package:mzad_damascus/feature/likes/domain/entity/response/likes_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
+import '../../domain/entity/comments_request_entity.dart';
 import '../../domain/repository/comments_repository.dart';
 
 /// Eng.Nour Othman(meory)*
@@ -20,10 +21,10 @@ class CommentsRepositoryImpl implements CommentsRepository {
 
 
   @override
-  Future<Either<ApiFailure, CommentsResponseEntity>> getMyComments() {
+  Future<Either<ApiFailure, CommentsResponseEntity>> getMyComments({required CommentsRequestEntity entity}){
     return Connector<CommentsResponseEntity>().connect(
       remote: () async {
-        final result = await remote.getMyComments();
+        final result = await remote.getMyComments(entity: entity);
         return Right(result);
       },
     );

@@ -457,72 +457,70 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                         crossAxisCount: 2,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount:
-                            advs.length + (state.isReachedMax == true ? 0 : 1),
+                        itemCount: advs.length,
                         builder: (context, index) {
-                          if (index == advs.length) {
-                            return Center();
-                          } else {
-                            advertisement = advs[index];
-                            return InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                    RouteNamedScreens.advertisementDetails,
-                                    arguments: AdvertisementDetailsArgs(
-                                        advertisement: advs[index]));
-                              },
-                              child: Column(
-                                children: [
-                                  Container(
-                                      height: AppHeightManager.h30,
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      decoration: BoxDecoration(
-                                        color: AppColorManager.lightGreyOpacity6,
-                                        borderRadius: BorderRadius.circular(
-                                            AppRadiusManager.r15),
-                                      ),
-                                      child: MainImageWidget(
-                                        imageUrl: AppConstantManager.imageBaseUrl +
-                                            (advertisement?.photos?.first.photo ??
-                                                ""),
-                                        borderRadius: BorderRadius.circular(
-                                            AppRadiusManager.r15),
-                                      )),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: AppHeightManager.h08,
-                                      ),
-                                      AppTextWidget(
-                                        text: advertisement?.name.toString() ?? "",
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        fontSize: FontSizeManager.fs15,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      AppTextWidget(
-                                        text: advertisement?.startingPrice
-                                                .toString() ??
-                                            "",
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        fontSize: FontSizeManager.fs14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      SizedBox(
-                                        height: AppHeightManager.h1point8,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          }
+                          advertisement = advs[index];
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  RouteNamedScreens.advertisementDetails,
+                                  arguments: AdvertisementDetailsArgs(
+                                      advertisement: advs[index]));
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                    height: AppHeightManager.h30,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    decoration: BoxDecoration(
+                                      color: AppColorManager.lightGreyOpacity6,
+                                      borderRadius: BorderRadius.circular(
+                                          AppRadiusManager.r15),
+                                    ),
+                                    child: MainImageWidget(
+                                      imageUrl: AppConstantManager
+                                              .imageBaseUrl +
+                                          (advertisement?.photos?.first.photo ??
+                                              ""),
+                                      borderRadius: BorderRadius.circular(
+                                          AppRadiusManager.r15),
+                                    )),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: AppHeightManager.h08,
+                                    ),
+                                    AppTextWidget(
+                                      text:
+                                          advertisement?.name.toString() ?? "",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      fontSize: FontSizeManager.fs15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    AppTextWidget(
+                                      text: advertisement?.startingPrice
+                                              .toString() ??
+                                          "",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      fontSize: FontSizeManager.fs14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    SizedBox(
+                                      height: AppHeightManager.h1point8,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
                         },
                       ),
                       Visibility(
-                          visible: state.isReachedMax == false,
+                          visible: state.isReachedMax == false &&
+                              state.status != CubitStatus.error,
                           child: const AppCircularProgressWidget())
                     ],
                   ),
