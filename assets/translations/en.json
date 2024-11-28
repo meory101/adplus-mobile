@@ -118,9 +118,13 @@
   "successfullyDone": "Successfully Done",
   "delete": "Delete",
   "deleteAdvertisement": "Delete Advertisement",
-  "done" : "Done",
-  "save" : "Save",
-  "likes" : "Likes",
-  "addedToFavorite" : "Added To Favorite",
-  "companies" : "Companies"
+  "done": "Done",
+  "save": "Save",
+  "likes": "Likes",
+  "addedToFavorite": "Added To Favorite",
+  "companies": "Companies",
+  "businessAccount": "Business Account",
+  "uploadedSuccessfully": "Uploaded Successfully",
+  "mustBePdfFile": "Must Be Pdf File",
+  "chooseFile&Upload": "Choose File & Upload"
 }
