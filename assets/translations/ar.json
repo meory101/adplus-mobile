@@ -122,8 +122,11 @@
   "save" : "حفظ",
   "likes" : "الاعجابات",
   "addedToFavorite" : "تمت الاضافة للمفضلة",
-  "companies" : "الشركات"
-
+  "companies" : "الشركات",
+  "businessAccount": "حساب تجاري",
+  "uploadedSuccessfully": "تم التحميل بنجاح",
+  "mustBePdfFile": "يجب أن يكون ملف PDF",
+  "chooseFile&Upload": "اختر ملف & ارفع"
 
 
 }
