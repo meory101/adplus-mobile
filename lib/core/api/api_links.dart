@@ -7,6 +7,7 @@ class ApiGetUrl {
 
 class ApiPostUrl {
   static String getCategoryAttributes = "api/category/category-info";
+  static String businessClientByCategory = "api/category/BusinessClientByCategory";
   static String myRefusedItems = "api/item/MyRefusedItems";
   static String getFollowersByUsername = "api/following/getFollowersByUsername";
   static String getFollowingByUsername = "api/following/getFollowingByUsername";

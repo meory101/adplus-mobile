@@ -56,7 +56,9 @@ void showLoginBottomSheet({required BuildContext context}) {
                       onTap: () {
 
                         Navigator.of(context).pushNamed(
-                            RouteNamedScreens.login);
+                            RouteNamedScreens.login).then((value) {
+                              Navigator.of(context).pop();
+                            },);
                       },
                       color: AppColorManager.mainColor,
                       alignment: Alignment.center,

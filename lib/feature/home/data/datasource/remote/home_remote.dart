@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_reaction_request_entity.dart';
@@ -23,34 +22,58 @@ import '../../../domain/entity/request/advs_by_attribute_request_entity.dart';
 import '../../../domain/entity/request/category_inside_page_request_entity.dart';
 import '../../../domain/entity/request/check_like_request_entity.dart';
 import '../../../domain/entity/request/get_advs_by_user_request_entity.dart';
+import '../../../domain/entity/request/get_company_account_request_entity.dart';
 import '../../../domain/entity/request/search_user_request_entity.dart';
 import '../../../domain/entity/response/check_like_response_entity.dart';
 import '../../../domain/entity/response/followers_response_entity.dart';
+import '../../../domain/entity/response/get_company_accounts_response_entity.dart';
 
 abstract class HomeRemote {
   Future<GetCategoriesResponseEntity> getCategories();
-  Future<FollowersResponseEntity> getFollowers({required FollowersRequestEntity entity});
-  Future<FollowersResponseEntity> getFollowings({required FollowersRequestEntity entity});
-  Future<SearchUserResponseEntity> searchUser({required SearchUserRequestEntity entity});
-  Future<CheckLikeResponseEntity> checkLike({required CheckLikeRequestEntity entity});
-  Future<bool> removeLike({required CheckLikeRequestEntity entity});
-  Future<MyItemResponseEntity> getAdvByUser({required GetAdvsByUserRequestEntity entity});
-  Future<CategoryInsidePageResponseEntity> getCategoryInsidePage({required CategoryInsidePageRequestEntity entity});
-  Future<AdvsByAttributeResponseEntity> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity});
-  Future<GetAdvDetailsResponseEntity> getAdvDetails({required GetAdvDetailsRequestEntity entity});
-  Future<bool> addComment({required AddCommentRequestEntity entity});
-  Future<bool> addReaction({required AddReactionRequestEntity entity});
-  Future<BannersResponseEntity> getBanners({required int source});
-  Future<GetCommentsResponseEntity> getComments({required GetCommentsRequestEntity entity});
 
+  Future<FollowersResponseEntity> getFollowers(
+      {required FollowersRequestEntity entity});
+
+  Future<FollowersResponseEntity> getFollowings(
+      {required FollowersRequestEntity entity});
+
+  Future<SearchUserResponseEntity> searchUser(
+      {required SearchUserRequestEntity entity});
+
+  Future<CheckLikeResponseEntity> checkLike(
+      {required CheckLikeRequestEntity entity});
+
+  Future<bool> removeLike({required CheckLikeRequestEntity entity});
+
+  Future<MyItemResponseEntity> getAdvByUser(
+      {required GetAdvsByUserRequestEntity entity});
+
+  Future<CategoryInsidePageResponseEntity> getCategoryInsidePage(
+      {required CategoryInsidePageRequestEntity entity});
+
+  Future<AdvsByAttributeResponseEntity> getAdvsByAttribute(
+      {required AdvsByAttributeRequestEntity entity});
+
+  Future<GetAdvDetailsResponseEntity> getAdvDetails(
+      {required GetAdvDetailsRequestEntity entity});
+
+  Future<bool> addComment({required AddCommentRequestEntity entity});
+
+  Future<bool> addReaction({required AddReactionRequestEntity entity});
+
+  Future<BannersResponseEntity> getBanners({required int source});
+
+  Future<GetCommentsResponseEntity> getComments(
+      {required GetCommentsRequestEntity entity});
+
+  Future<GetCompanyAccountsResponseEntity> getCompanyAccounts(
+      {required GetCompanyAccountRequestEntity entity});
 }
 
 class HomeRemoteImplement extends HomeRemote {
   @override
   Future<GetCategoriesResponseEntity> getCategories() async {
-    final response =
-    await ApiMethods().get(
-        url: ApiGetUrl.getCategories);
+    final response = await ApiMethods().get(url: ApiGetUrl.getCategories);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getCategoriesResponseEntityFromJson(response.body);
     } else {
@@ -59,11 +82,10 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<CategoryInsidePageResponseEntity> getCategoryInsidePage({required CategoryInsidePageRequestEntity entity}) async{
-    final response =
-        await ApiMethods().post(
-          body: entity.toJson(),
-        url: ApiPostUrl.getCategoryInsidePage);
+  Future<CategoryInsidePageResponseEntity> getCategoryInsidePage(
+      {required CategoryInsidePageRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.getCategoryInsidePage);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return categoryInsidePageResponseEntityFromJson(response.body);
     } else {
@@ -72,11 +94,10 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<AdvsByAttributeResponseEntity> getAdvsByAttribute({required AdvsByAttributeRequestEntity entity}) async{
-    final response =
-        await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.getItemsByAttribute);
+  Future<AdvsByAttributeResponseEntity> getAdvsByAttribute(
+      {required AdvsByAttributeRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.getItemsByAttribute);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return advsByAttributeResponseEntityFromJson(response.body);
     } else {
@@ -85,11 +106,10 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<GetAdvDetailsResponseEntity> getAdvDetails({required GetAdvDetailsRequestEntity entity})async {
-    final response =
-        await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.getItemsById);
+  Future<GetAdvDetailsResponseEntity> getAdvDetails(
+      {required GetAdvDetailsRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.getItemsById);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getAdvDetailsResponseEntityFromJson(response.body);
@@ -99,11 +119,9 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<bool> addComment({required AddCommentRequestEntity entity})async {
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.addComment);
+  Future<bool> addComment({required AddCommentRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.addComment);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
@@ -113,11 +131,10 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<GetCommentsResponseEntity> getComments({required GetCommentsRequestEntity entity}) async{
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.getComments);
+  Future<GetCommentsResponseEntity> getComments(
+      {required GetCommentsRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.getComments);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getCommentsResponseEntityFromJson(response.body);
     } else {
@@ -126,14 +143,15 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<BannersResponseEntity> getBanners({required int source} ) async{
+  Future<BannersResponseEntity> getBanners({required int source}) async {
     // source =0 => home;
     // source =1 => insidepage;
 
-    final response =
-        await ApiMethods().post(
+    final response = await ApiMethods().post(
         body: {},
-        url:source==0? ApiPostUrl.getBanners :ApiPostUrl.getInsidePageBanners);
+        url: source == 0
+            ? ApiPostUrl.getBanners
+            : ApiPostUrl.getInsidePageBanners);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return bannersResponseEntityFromJson(response.body);
@@ -143,11 +161,9 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<bool> addReaction({required AddReactionRequestEntity entity}) async{
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.addReaction);
+  Future<bool> addReaction({required AddReactionRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.addReaction);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {
@@ -155,13 +171,11 @@ class HomeRemoteImplement extends HomeRemote {
     }
   }
 
-
   @override
-  Future<MyItemResponseEntity> getAdvByUser({required GetAdvsByUserRequestEntity entity})async {
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.itemsByClient);
+  Future<MyItemResponseEntity> getAdvByUser(
+      {required GetAdvsByUserRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.itemsByClient);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myItemResponseEntityFromJson(response.body);
@@ -171,11 +185,10 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<CheckLikeResponseEntity> checkLike({required CheckLikeRequestEntity entity})async {
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.checkLike);
+  Future<CheckLikeResponseEntity> checkLike(
+      {required CheckLikeRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.checkLike);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return checkLikeResponseEntityFromJson(response.body);
     } else {
@@ -184,11 +197,9 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<bool> removeLike({required CheckLikeRequestEntity entity})async {
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.removeLike);
+  Future<bool> removeLike({required CheckLikeRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.removeLike);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
@@ -198,11 +209,10 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<SearchUserResponseEntity> searchUser({required SearchUserRequestEntity entity}) async{
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.searchUser);
+  Future<SearchUserResponseEntity> searchUser(
+      {required SearchUserRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.searchUser);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return searchUserResponseEntityFromJson(response.body);
@@ -212,11 +222,10 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<FollowersResponseEntity> getFollowers({required FollowersRequestEntity entity})async {
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.getFollowersByUsername);
+  Future<FollowersResponseEntity> getFollowers(
+      {required FollowersRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.getFollowersByUsername);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return followersResponseEntityFromJson(response.body);
     } else {
@@ -225,13 +234,23 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<FollowersResponseEntity> getFollowings({required FollowersRequestEntity entity}) async{
-    final response =
-    await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.getFollowingByUsername);
+  Future<FollowersResponseEntity> getFollowings(
+      {required FollowersRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.getFollowingByUsername);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return followersResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<GetCompanyAccountsResponseEntity> getCompanyAccounts({required GetCompanyAccountRequestEntity entity}) async{
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.businessClientByCategory);
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return getCompanyAccountsResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

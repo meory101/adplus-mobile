@@ -27,12 +27,14 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_requ
 import 'package:mzad_damascus/feature/home/domain/entity/request/followers_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_company_account_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/company_accounts_cubit/get_company_accounts_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/followers_cubit/followers_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/following_cubit/following_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
@@ -93,6 +95,7 @@ import '../feature/profile/presentation/cubit/remove_follow_cubit/remove_follow_
 
 /// Eng.Nour Othman(meory)*
 String? myRoute;
+Object? currentArgument;
 
 abstract class RouteNamedScreens {
   static String init = splash;
@@ -129,6 +132,7 @@ abstract class RouteNamedScreens {
 abstract class AppRouter {
   static Route? onGenerateRoute(RouteSettings settings) {
     final argument = settings.arguments;
+    currentArgument = settings.arguments;
 
     switch (settings.name) {
       case RouteNamedScreens.splash:
@@ -234,7 +238,7 @@ abstract class AppRouter {
               ),
               BlocProvider(
                 create: (context) =>
-                di.sl<GetCitiesCubit>()..getCities(context: context),
+                    di.sl<GetCitiesCubit>()..getCities(context: context),
               ),
               BlocProvider(
                 create: (context) => di.sl<GetCategoryAttributesCubit>()
@@ -301,7 +305,7 @@ abstract class AppRouter {
               ),
               BlocProvider(
                 create: (context) =>
-                di.sl<GetCitiesCubit>()..getCities(context: context),
+                    di.sl<GetCitiesCubit>()..getCities(context: context),
               ),
             ],
             child: UpdateAdvScreen(
@@ -431,7 +435,6 @@ abstract class AppRouter {
       case RouteNamedScreens.advertisementDetails:
         myRoute = RouteNamedScreens.advertisementDetails;
         argument as AdvertisementDetailsArgs;
-
         return SlidUpBuilderRoute(
           page: MultiBlocProvider(
             providers: [
@@ -441,15 +444,7 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) => di.sl<RemoveLikeCubit>(),
               ),
-              BlocProvider(
-                create: (context) => di.sl<CheckLikeCubit>()
-                  ..checkLike(
-                    context: context,
-                    entity: CheckLikeRequestEntity(
-                      itemId: argument.advertisement?.itemId,
-                    ),
-                  ),
-              ),
+              BlocProvider(create: (context) => di.sl<CheckLikeCubit>()),
               BlocProvider(
                 create: (context) => di.sl<AdvDetailsCubit>()
                   ..getAdvDetails(
@@ -464,22 +459,15 @@ abstract class AppRouter {
                   ..getComments(
                     context: context,
                     entity: GetCommentsRequestEntity(
-                      page: 1, itemId: argument.advertisement?.itemId,
+                      page: 1,
+                      itemId: argument.advertisement?.itemId,
                     ),
                   ),
               ),
               BlocProvider(
                 create: (context) => di.sl<AddCommentCubit>(),
               ),
-              BlocProvider(
-                create: (context) => di.sl<CheckFavoriteCubit>()
-                  ..checkFavorite(
-                    context: context,
-                    entity: FavoriteRequestEntity(
-                      itemId: argument.advertisement?.itemId,
-                    ),
-                  ),
-              ),
+              BlocProvider(create: (context) => di.sl<CheckFavoriteCubit>()),
               BlocProvider(
                 create: (context) => di.sl<AddFavoriteCubit>(),
               ),
@@ -498,7 +486,7 @@ abstract class AppRouter {
         return SlidLeftBuilderRoute(
           page: BlocProvider(
             create: (context) =>
-            di.sl<GetCategoriesCubit>()..getCategories(context: context),
+                di.sl<GetCategoriesCubit>()..getCategories(context: context),
             child: const AdvertisementCategoryScreen(),
           ),
         );
@@ -518,6 +506,13 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) => di.sl<AdvsByAttributeCubit>(),
               ),
+              BlocProvider(
+                create: (context) => di.sl<GetCompanyAccountsCubit>()
+                  ..getCompanyAccounts(
+                      context: context,
+                      entity: GetCompanyAccountRequestEntity(
+                          categoryId: argument.subCategory.categoryId)),
+              ),
             ],
             child: CategoryInsidePageScreen(args: argument),
           ),
@@ -530,7 +525,7 @@ abstract class AppRouter {
             providers: [
               BlocProvider(
                 create: (context) =>
-                di.sl<GetCitiesCubit>()..getCities(context: context),
+                    di.sl<GetCitiesCubit>()..getCities(context: context),
               ),
               BlocProvider(
                 create: (context) => di.sl<AddAdvertisementCubit>(),
@@ -602,8 +597,8 @@ abstract class AppRouter {
                   ),
               ),
               BlocProvider(
-                create: (context) =>
-                di.sl<GetCategoriesCubit>()..getCategories(context: context),
+                create: (context) => di.sl<GetCategoriesCubit>()
+                  ..getCategories(context: context),
               ),
               BlocProvider(create: (context) => di.sl<LogoutCubit>()),
               BlocProvider(
@@ -612,8 +607,8 @@ abstract class AppRouter {
               ),
               BlocProvider(create: (context) => di.sl<GetProfileInfoCubit>()),
               BlocProvider(
-                create: (context) =>
-                di.sl<GetCategoriesCubit>()..getCategories(context: context),
+                create: (context) => di.sl<GetCategoriesCubit>()
+                  ..getCategories(context: context),
               ),
               BlocProvider(create: (context) => di.sl<LogoutCubit>()),
               BlocProvider(

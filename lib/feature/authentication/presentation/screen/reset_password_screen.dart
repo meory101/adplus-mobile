@@ -160,7 +160,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 BlocConsumer<ResetCubit, ResetPasswordState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
-                      Navigator.of(context).pushNamed(RouteNamedScreens.login);
+                      Navigator.of(context).pushReplacementNamed(RouteNamedScreens.login);
                       NoteMessage.showSuccessSnackBar(
                         context: context,
                         text: "passwordResetSuccess".tr(),

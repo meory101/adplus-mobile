@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +31,7 @@ class UnderReviewListView extends StatelessWidget {
         final items = state.entity.data?.data ?? [];
 
         if (items.isEmpty) {
-          return const Center(child: AppTextWidget(text: "noAdvertisements"));
+          return  Center(child: AppTextWidget(text: "noAdvertisements".tr()));
         }
 
         return NotificationListener<ScrollNotification>(

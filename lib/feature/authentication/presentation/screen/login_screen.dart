@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
 
                     bool isEmail = RegExp(
-                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
                         .hasMatch(value);
                     bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
 
@@ -145,8 +145,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 BlocConsumer<LoginCubit, LoginState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
-                      Navigator.of(context)
-                          .pushNamedAndRemoveUntil(RouteNamedScreens.mainBottomAppBar, (route) => false);
+                      if (myRoute == RouteNamedScreens.mainBottomAppBar) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          RouteNamedScreens.mainBottomAppBar,
+                          (route) => false,
+                        );
+                        return;
+                      }
+
+                      Navigator.of(context).pop();
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
@@ -190,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed(RouteNamedScreens.register);
+                            .pushReplacementNamed(RouteNamedScreens.register);
                       },
                       child: AppTextWidget(
                         text: "createAccount".tr(),

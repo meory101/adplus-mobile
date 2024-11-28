@@ -7,6 +7,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/followers_reque
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_company_account_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/search_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
@@ -16,6 +17,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/followers_resp
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/get_company_accounts_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/search_user_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/myitems_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
@@ -174,6 +176,16 @@ class HomeRepositoryImplements implements HomeRepository {
     return Connector<FollowersResponseEntity>().connect(
       remote: () async {
         final result = await remote.getFollowings(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, GetCompanyAccountsResponseEntity>> getCompanyAccounts({required GetCompanyAccountRequestEntity entity})async {
+    return Connector<GetCompanyAccountsResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getCompanyAccounts(entity: entity);
         return Right(result);
       },
     );

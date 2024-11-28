@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/add_favorite_cubit/add_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/check_favorite_cubit/check_favorite_cubit.dart';
+import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/remove_favorite_cubit/remove_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/add_reaction_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
@@ -47,6 +49,30 @@ class AdvertisementDetailsScreen extends StatefulWidget {
 class _AdvertisementDetailsScreenState
     extends State<AdvertisementDetailsScreen> {
   AdvDetails? advDetails;
+
+  @override
+  void initState() {
+    initScreen();
+    super.initState();
+  }
+
+  initScreen() {
+    if(AppSharedPreferences.getToken().isEmpty){
+      return;
+    }
+    context.read<CheckLikeCubit>().checkLike(
+          context: context,
+          entity: CheckLikeRequestEntity(
+            itemId: widget.args.advertisement?.itemId,
+          ),
+        );
+    context.read<CheckFavoriteCubit>().checkFavorite(
+          context: context,
+          entity: FavoriteRequestEntity(
+            itemId: widget.args.advertisement?.itemId,
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +134,9 @@ class _AdvertisementDetailsScreenState
                           state.entity.data?.biddingStatus ?? 0] ??
                       "",
                   fontSize: FontSizeManager.fs17,
-                    color: EnumManager.biddingStatusColor[
-                    state.entity.data?.biddingStatus ?? 0] ??
-                        AppColorManager.textAppColor,
+                  color: EnumManager.biddingStatusColor[
+                          state.entity.data?.biddingStatus ?? 0] ??
+                      AppColorManager.textAppColor,
                   fontWeight: FontWeight.w600,
                   textAlign: TextAlign.center,
                 ),
@@ -206,6 +232,12 @@ class _AdvertisementDetailsScreenState
                                                 }
                                                 if (state.status ==
                                                     CubitStatus.success) {
+                                                  NoteMessage
+                                                      .showSuccessSnackBar(
+                                                          context: context,
+                                                          text:
+                                                              "addedToFavorite"
+                                                                  .tr());
                                                   context
                                                       .read<
                                                           CheckFavoriteCubit>()

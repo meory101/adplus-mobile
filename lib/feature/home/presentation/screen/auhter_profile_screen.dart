@@ -103,6 +103,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                   context
                       .read<GetAdvByUserCubit>()
                       .getAdvsByUser(context: context, entity: adByUserEntity);
+                 if(AppSharedPreferences.getToken().isEmpty)return;
                   context
                       .read<CheckFollowCubit>()
                       .checkFollow(context: context, entity: entity);

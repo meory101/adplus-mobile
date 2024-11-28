@@ -16,7 +16,7 @@ import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../authentication/presentation/screen/login_screen.dart';
 import '../../../bidding/bidding_screen.dart';
 import '../../../profile/presentation/screen/profile_screen.dart';
-
+int selectedIndex = 0;
 class MainBottomAppBar extends StatefulWidget {
   const MainBottomAppBar({super.key});
 
@@ -27,7 +27,7 @@ class MainBottomAppBar extends StatefulWidget {
 class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
   late final List<Widget> bottomBarScreens;
 
-  int selectedIndex = 0;
+
 
   @override
   void initState() {

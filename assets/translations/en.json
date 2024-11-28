@@ -117,5 +117,9 @@
   "noAdvertisements": "No Advertisements",
   "successfullyDone": "Successfully Done",
   "delete": "Delete",
-  "deleteAdvertisement": "Delete Advertisement"
+  "deleteAdvertisement": "Delete Advertisement",
+  "done" : "Done",
+  "save" : "Save",
+  "likes" : "Likes",
+  "addedToFavorite" : "Added To Favorite"
 }

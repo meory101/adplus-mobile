@@ -117,5 +117,11 @@
   "noAdvertisements": "لا توجد إعلانات",
   "successfullyDone": "تم بنجاح",
   "delete": "حذف",
-  "deleteAdvertisement": "حذف الإعلان"
+  "deleteAdvertisement": "حذف الإعلان",
+  "done" : "متابعة",
+  "save" : "حفظ",
+  "likes" : "الاعجابات",
+  "addedToFavorite" : "تمت الاضافة للمفضلة"
+
+
 }

@@ -19,6 +19,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
+import 'package:mzad_damascus/feature/home/presentation/widget/category_inside_page/companies_accounts_list_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/home/home_banners.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
@@ -78,6 +79,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
               padding:
               EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HomeBanners(
                     source: EnumManager.insidePageBannerSource,
@@ -102,8 +104,8 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                 insidePageData[index].attributeNameEn ??
                                     "" : insidePageData[index]
                                     .attributeName ?? "",
-                            fontSize: FontSizeManager.fs16,
-                              fontWeight: FontWeight.w600,
+                            fontSize: FontSizeManager.fs17,
+                              fontWeight: FontWeight.w700,
                             ),
                             SizedBox(
                               height: AppHeightManager.h1point8,
@@ -134,6 +136,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                             entity: entity));
                                   },
                                   child: DecoratedContainer(
+                                    alignment: Alignment.bottomCenter,
                                       margin: EdgeInsets.only(
                                         bottom: AppHeightManager.h1point8,
                                         right: LanguageHelper.checkIfLTR(
@@ -178,7 +181,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                             ),
                                           ),
                                           Align(
-                                            alignment: Alignment.center,
+                                            alignment: Alignment.bottomCenter,
                                             child: AppTextWidget(
                                               maxLines: 2,
                                               textAlign: TextAlign.center,
@@ -204,10 +207,17 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                             SizedBox(
                               height: AppHeightManager.h2point5,
                             ),
+
+
                           ],
                         ),
                       );
                     },
+                  ),
+
+                  CompaniesAccountsListView(),
+                  SizedBox(
+                    height: AppHeightManager.h2point5,
                   ),
                 ],
               ),

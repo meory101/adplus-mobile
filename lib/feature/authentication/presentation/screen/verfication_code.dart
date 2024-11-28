@@ -68,8 +68,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
             BlocConsumer<VerficationCubit, VerficationState>(
               listener: (context, state) {
                 if (state.status == CubitStatus.success) {
-                  Navigator.of(context)
-                      .pushNamed(RouteNamedScreens.mainBottomAppBar);
+                  if (myRoute == RouteNamedScreens.mainBottomAppBar) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      RouteNamedScreens.mainBottomAppBar,
+                          (route) => false,
+                    );
+                    return;
+                  }
+
+                  Navigator.of(context).pop();
                 }
                 if (state.status == CubitStatus.error) {
                   NoteMessage.showErrorSnackBar(

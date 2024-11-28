@@ -237,22 +237,36 @@ class _CommentsSectionState extends State<CommentsSection> {
                                           children: [
                                             Row(
                                               children: [
-                                                Container(
-                                                  height: AppWidthManager.w11,
-                                                  width: AppWidthManager.w11,
-                                                  clipBehavior: Clip
-                                                      .antiAliasWithSaveLayer,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle),
-                                                  child: MainImageWidget(
-                                                    imageUrl: AppConstantManager
-                                                            .imageBaseUrl +
-                                                        (comments?[index]
-                                                                .client
-                                                                ?.photo ??
-                                                            ""),
+                                                InkWell(
+                                                  onTap: () {
+                                                    Navigator.of(context).pushNamed(
+                                                        RouteNamedScreens
+                                                            .authorProfile,
+                                                        arguments:
+                                                            AuthorProfileArgs(
+                                                                userName: comments[
+                                                                        index]
+                                                                    .client
+                                                                    ?.username));
+                                                  },
+                                                  child: Container(
+                                                    height: AppWidthManager.w11,
+                                                    width: AppWidthManager.w11,
+                                                    clipBehavior: Clip
+                                                        .antiAliasWithSaveLayer,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            shape: BoxShape
+                                                                .circle),
+                                                    child: MainImageWidget(
+                                                      imageUrl:
+                                                          AppConstantManager
+                                                                  .imageBaseUrl +
+                                                              (comments[index]
+                                                                      .client
+                                                                      ?.photo ??
+                                                                  ""),
+                                                    ),
                                                   ),
                                                 ),
                                                 SizedBox(
