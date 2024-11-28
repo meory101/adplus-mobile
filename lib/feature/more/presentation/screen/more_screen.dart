@@ -13,9 +13,12 @@ import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_state.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/convert_business_account_cubit/convert_business_account_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/convert_business_account_cubit/convert_business_account_state.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/favorites_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/widget/dialog/convet_business_account_dialog.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../widget/dialog/language_dialog.dart';
 import '../widget/more_list_tile.dart';
@@ -48,7 +51,7 @@ class MoreScreen extends StatelessWidget {
             label: 'addAdvertisement'.tr(),
             color: AppColorManager.pinkAccent,
             onTap: () {
-              if(AppSharedPreferences.getToken().isEmpty){
+              if (AppSharedPreferences.getToken().isEmpty) {
                 showLoginBottomSheet(context: context);
                 return;
               }
@@ -62,7 +65,7 @@ class MoreScreen extends StatelessWidget {
             label: 'myAds'.tr(),
             color: AppColorManager.green,
             onTap: () {
-              if(AppSharedPreferences.getToken().isEmpty){
+              if (AppSharedPreferences.getToken().isEmpty) {
                 showLoginBottomSheet(context: context);
                 return;
               }
@@ -91,7 +94,7 @@ class MoreScreen extends StatelessWidget {
             label: 'changePassword'.tr(),
             color: AppColorManager.lightBlue,
             onTap: () {
-              if(AppSharedPreferences.getToken().isEmpty){
+              if (AppSharedPreferences.getToken().isEmpty) {
                 showLoginBottomSheet(context: context);
                 return;
               }
@@ -107,7 +110,7 @@ class MoreScreen extends StatelessWidget {
             label: 'changeUserName'.tr(),
             color: AppColorManager.lightBlue,
             onTap: () {
-              if(AppSharedPreferences.getToken().isEmpty){
+              if (AppSharedPreferences.getToken().isEmpty) {
                 showLoginBottomSheet(context: context);
                 return;
               }
@@ -119,16 +122,23 @@ class MoreScreen extends StatelessWidget {
             },
           ),
           const Divider(color: AppColorManager.borderGrey),
-          MoreListTile(
-            icon: Icons.wallet_travel,
-            label: 'convertToBusinessAccount'.tr(),
-            color: AppColorManager.purple,
-            onTap: () {
-              if(AppSharedPreferences.getToken().isEmpty){
-                showLoginBottomSheet(context: context);
-                return;
-              }
-            },
+          Visibility(
+            visible: AppSharedPreferences.getAccountType()=="0",
+            child: MoreListTile(
+              icon: Icons.wallet_travel,
+              label: 'convertToBusinessAccount'.tr(),
+              color: AppColorManager.purple,
+              onTap: () {
+                if (AppSharedPreferences.getToken().isEmpty) {
+                  showLoginBottomSheet(context: context);
+                  return;
+                }
+                showBusinessAccountDialog(
+                  context: context,
+                  onSuccess: () {},
+                );
+              },
+            ),
           ),
           MoreListTile(
             icon: Icons.card_giftcard,
@@ -173,7 +183,6 @@ class MoreScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
                   child: ElevatedButton(
                     onPressed: () {
-
                       context.read<LogoutCubit>().logout(context: context);
                     },
                     style: ElevatedButton.styleFrom(

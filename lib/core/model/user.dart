@@ -17,24 +17,24 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
-  User({
-    num? clientId,
-    String? name,
-    String? username,
-    String? email,
-    String? phone,
-    String? whatsapp,
-    String? decription,
-    dynamic address,
-    String? photo,
-    num? tokenExpires,
-    num? isVerified,
-    num? followersCount,
-    num? followingCount,
-    num? errorLogin,
-  }) {
-
+  User(
+      {num? clientId,
+      String? name,
+      String? username,
+      String? email,
+      String? phone,
+      String? whatsapp,
+      String? decription,
+      dynamic address,
+      String? photo,
+      num? tokenExpires,
+      num? isVerified,
+      num? followersCount,
+      num? followingCount,
+      num? errorLogin,
+      num? isCompany}) {
     _clientId = clientId;
+    _isCompany = isCompany;
     _name = name;
     _username = username;
     _email = email;
@@ -49,10 +49,11 @@ class User {
   }
 
   User.fromJson(dynamic json) {
+    _isCompany = json['is_company'];
     _description = json['description'];
     _clientId = json['client_id'];
     _followersCount = json['follower_count'] ?? json['followers'];
-    _followingCount = json['following_count']  ?? json['following'];
+    _followingCount = json['following_count'] ?? json['following'];
     _name = json['name'];
     _username = json['username'];
     _email = json['email'];
@@ -66,6 +67,7 @@ class User {
   }
 
   num? _clientId;
+  num? _isCompany;
   String? _name;
   String? _username;
   String? _email;
@@ -86,18 +88,19 @@ class User {
     String? username,
     String? email,
     String? description,
+    num? isCompany,
     String? phone,
     String? whatsapp,
     dynamic address,
     String? photo,
     num? followingCount,
     num? followersCount,
-
     num? tokenExpires,
     num? isVerified,
     num? errorLogin,
   }) =>
       User(
+        isCompany: isCompany ?? _isCompany,
         decription: description ?? _description,
         clientId: clientId ?? _clientId,
         name: name ?? _name,
@@ -107,20 +110,23 @@ class User {
         whatsapp: whatsapp ?? _whatsapp,
         address: address ?? _address,
         photo: photo ?? _photo,
-        followersCount: followersCount??_followersCount,
-        followingCount: followingCount??_followingCount,
+        followersCount: followersCount ?? _followersCount,
+        followingCount: followingCount ?? _followingCount,
         tokenExpires: tokenExpires ?? _tokenExpires,
         isVerified: isVerified ?? _isVerified,
         errorLogin: errorLogin ?? _errorLogin,
       );
 
   num? get clientId => _clientId;
+
   String? get description => _description;
 
   String? get name => _name;
 
   String? get username => _username;
+
   num? get followersCount => _followersCount;
+
   num? get followingCount => _followingCount;
 
   String? get email => _email;
@@ -128,6 +134,8 @@ class User {
   String? get phone => _phone;
 
   String? get whatsapp => _whatsapp;
+
+  num? get isCompany => _isCompany;
 
   dynamic get address => _address;
 

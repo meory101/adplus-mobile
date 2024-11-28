@@ -1,18 +1,18 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/company_accounts_cubit/get_company_accounts_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
-
-import '../../../../../core/helper/language_helper.dart';
 import '../../../../../core/model/user.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
@@ -32,17 +32,77 @@ class CompaniesAccountsListView extends StatelessWidget {
       },
       builder: (context, state) {
         if (state.status == CubitStatus.loading) {
-          return const AppCircularProgressWidget();
+          return Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DecoratedContainer(  width: AppWidthManager.w42,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(AppWidthManager.w3Point8),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: AppWidthManager.w20,
+                            height: AppWidthManager.w20,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            decoration:
+                            const BoxDecoration(shape: BoxShape.circle),
+                            child: MainImageWidget(
+                              imageUrl:"",
+                          ),),
+                          SizedBox(
+                            height: AppHeightManager.h1point8,
+                          ),
+                          ShimmerContainer(width: AppWidthManager.w20, height: AppHeightManager.h2),
+                          SizedBox(
+                            height: AppHeightManager.h1point8,
+                          ),
+                          ShimmerContainer(width: AppWidthManager.w20, height: AppHeightManager.h2),
+                        ],
+                      )),
+                  SizedBox(
+                    width: AppWidthManager.w3Point8,
+                  ),
+                  DecoratedContainer(
+                      width: AppWidthManager.w42,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(AppWidthManager.w3Point8),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: AppWidthManager.w20,
+                            height: AppWidthManager.w20,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            decoration:
+                            const BoxDecoration(shape: BoxShape.circle),
+                            child: MainImageWidget(
+                              imageUrl:"",
+                            ),),
+                          SizedBox(
+                            height: AppHeightManager.h1point8,
+                          ),
+                          ShimmerContainer(width: AppWidthManager.w20, height: AppHeightManager.h2),
+                          SizedBox(
+                            height: AppHeightManager.h1point8,
+                          ),
+                          ShimmerContainer(width: AppWidthManager.w20, height: AppHeightManager.h2),
+                        ],
+                      )),
+                ],
+              )
+            ],
+          );
         }
         List<User> companies = state.entity.data ?? [];
-        if (companies.length == 0) {
+        if (companies.isEmpty) {
           return SizedBox();
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppTextWidget(
-              text: "companies",
+              text: "companies".tr(),
               fontSize: FontSizeManager.fs17,
               fontWeight: FontWeight.w700,
             ),
@@ -72,14 +132,16 @@ class CompaniesAccountsListView extends StatelessWidget {
                             width: AppWidthManager.w20,
                             height: AppWidthManager.w20,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle
-                            ),
+                            decoration:
+                                const BoxDecoration(shape: BoxShape.circle),
                             child: MainImageWidget(
-                              imageUrl: AppConstantManager.imageBaseUrl + (companies[index].photo ?? ""),
+                              imageUrl: AppConstantManager.imageBaseUrl +
+                                  (companies[index].photo ?? ""),
                             ),
                           ),
-                          SizedBox(height: AppHeightManager.h1point8,),
+                          SizedBox(
+                            height: AppHeightManager.h1point8,
+                          ),
                           AppTextWidget(text: companies[index].name ?? ""),
                           AppTextWidget(
                               text: companies[index].description ?? "--"),

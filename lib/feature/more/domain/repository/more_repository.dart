@@ -20,17 +20,26 @@ import '../../../../core/api/api_error/api_failures.dart';
 abstract class MoreRepository {
   Future<Either<ApiFailure, UpdateUsernameResponseEntity>> updateUsername(
       {required UpdateUsernameRequestEntity entity});
+
   Future<Either<ApiFailure, VerifyUsernameResponseEntity>> verfiyusername(
       {required VerifyUsernameRequestEntity entity});
+
   Future<Either<ApiFailure, EditPasswordResponseEntity>> editpassword(
       {required EditPasswordRequestEntity entity});
+
   Future<Either<ApiFailure, MyItemResponseEntity>> myitem(
       {required MyItemRequestEntity entity});
+
   Future<Either<ApiFailure, MyItemResponseEntity>> myitemunderreview(
       {required MyItemUnderReviewRequestEntity entity});
+
   Future<Either<ApiFailure, MyItemResponseEntity>> myitemreview(
       {required MyItemReviewRequestEntity entity});
 
-  Future<Either<ApiFailure, MyItemResponseEntity>>myRejectedAds({required MyItemRequestEntity entity}) ;
+  Future<Either<ApiFailure, MyItemResponseEntity>> myRejectedAds(
+      {required MyItemRequestEntity entity});
+
+  Future<Either<ApiFailure, bool>> convertToBusinessAccount(
+      {required File? file}) ;
 
   }

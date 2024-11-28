@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
+import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
@@ -16,7 +17,9 @@ import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../authentication/presentation/screen/login_screen.dart';
 import '../../../bidding/bidding_screen.dart';
 import '../../../profile/presentation/screen/profile_screen.dart';
+
 int selectedIndex = 0;
+
 class MainBottomAppBar extends StatefulWidget {
   const MainBottomAppBar({super.key});
 
@@ -27,10 +30,11 @@ class MainBottomAppBar extends StatefulWidget {
 class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
   late final List<Widget> bottomBarScreens;
 
-
-
   @override
   void initState() {
+    if (AppSharedPreferences.getToken().isNotEmpty) {
+      context.read<GetProfileInfoCubit>().getProfileInfo(context: context);
+    }
     bottomBarScreens = [
       const HomeScreen(),
       const BiddingScreen(),

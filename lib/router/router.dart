@@ -48,6 +48,7 @@ import 'package:mzad_damascus/feature/home/presentation/screen/other_user_follow
 import 'package:mzad_damascus/feature/home/presentation/screen/other_user_following_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/search_user.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/convert_business_account_cubit/convert_business_account_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
@@ -56,6 +57,7 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cu
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
+import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
@@ -127,6 +129,7 @@ abstract class RouteNamedScreens {
   static const String following = '/following';
   static const String myFollowers = '/my-followers';
   static const String myFollowing = '/my-following';
+  static const String more = '/more';
 }
 
 abstract class AppRouter {
@@ -360,6 +363,14 @@ abstract class AppRouter {
           ),
         );
 
+      case RouteNamedScreens.more:
+
+        return FadeBuilderRoute(
+          page: BlocProvider(
+            create: (context) => di.sl<ConvertBusinessAccountCubit>(),
+            child:  MoreScreen(),
+          ),
+        );
       case RouteNamedScreens.editusername:
         myRoute = RouteNamedScreens.editusername;
         return FadeBuilderRoute(

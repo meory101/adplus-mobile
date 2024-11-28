@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
@@ -20,23 +21,33 @@ abstract class MoreRemote {
   Future<UpdateUsernameResponseEntity> updateusername({
     required UpdateUsernameRequestEntity entity,
   });
+
   Future<VerifyUsernameResponseEntity> verfiyusername({
     required VerifyUsernameRequestEntity entity,
   });
+
   Future<EditPasswordResponseEntity> editpassword({
     required EditPasswordRequestEntity entity,
   });
-   Future<MyItemResponseEntity> myitem({
+
+  Future<MyItemResponseEntity> myitem({
     required MyItemRequestEntity entity,
   });
+
   Future<MyItemResponseEntity> myitemunderreview({
     required MyItemUnderReviewRequestEntity entity,
   });
-   Future<MyItemResponseEntity> myitemreview({
+
+  Future<MyItemResponseEntity> myitemreview({
     required MyItemReviewRequestEntity entity,
   });
+
   Future<MyItemResponseEntity> myRejectedAds({
     required MyItemRequestEntity entity,
+  });
+
+  Future<bool> convertToBusinessAccount({
+    required File? file,
   });
 }
 
@@ -76,7 +87,8 @@ class MoreRemoteImplement extends MoreRemote {
       throw ApiServerException(response: response);
     }
   }
-   @override
+
+  @override
   Future<MyItemResponseEntity> myitem(
       {required MyItemRequestEntity entity}) async {
     final response = await ApiMethods()
@@ -88,7 +100,8 @@ class MoreRemoteImplement extends MoreRemote {
       throw ApiServerException(response: response);
     }
   }
-   @override
+
+  @override
   Future<MyItemResponseEntity> myitemunderreview(
       {required MyItemUnderReviewRequestEntity entity}) async {
     final response = await ApiMethods()
@@ -99,7 +112,8 @@ class MoreRemoteImplement extends MoreRemote {
       throw ApiServerException(response: response);
     }
   }
-   @override
+
+  @override
   Future<MyItemResponseEntity> myitemreview(
       {required MyItemReviewRequestEntity entity}) async {
     final response = await ApiMethods()
@@ -113,12 +127,26 @@ class MoreRemoteImplement extends MoreRemote {
   }
 
   @override
-  Future<MyItemResponseEntity> myRejectedAds({required MyItemRequestEntity entity}) async{
+  Future<MyItemResponseEntity> myRejectedAds(
+      {required MyItemRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.myRefusedItems, body: entity.toJson());
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return myItemResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<bool> convertToBusinessAccount({required File? file}) async {
+    final response = await ApiMethods()
+        .postWithMultiFile(
+        data: {}, files: [file!], url: ApiPostUrl.uploadfile, imageKey: 'file');
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return true;
     } else {
       throw ApiServerException(response: response);
     }

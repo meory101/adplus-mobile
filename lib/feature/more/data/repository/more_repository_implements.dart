@@ -13,11 +13,6 @@ import 'package:mzad_damascus/feature/more/domain/entity/response/myitems_respon
 import 'package:mzad_damascus/feature/more/domain/entity/response/update_profile_username_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/verfiy_username_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/repository/more_repository.dart';
-import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/response/update_profile_response_entity.dart';
-import 'package:mzad_damascus/feature/profile/domain/repository/profile_repository.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
 
@@ -104,6 +99,16 @@ class MoreRepositoryImplements implements MoreRepository {
     return Connector<MyItemResponseEntity>().connect(
       remote: () async {
         final result = await remote.myRejectedAds(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, bool>> convertToBusinessAccount({required File? file}) async{
+    return Connector<bool>().connect(
+      remote: () async {
+        final result = await remote.convertToBusinessAccount(file: file);
         return Right(result);
       },
     );

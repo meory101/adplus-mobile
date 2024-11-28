@@ -78,6 +78,7 @@ import 'package:mzad_damascus/feature/likes/presentation/cubit/likes_cubit/likes
 import 'package:mzad_damascus/feature/more/data/remote/more_remote.dart';
 import 'package:mzad_damascus/feature/more/data/repository/more_repository_implements.dart';
 import 'package:mzad_damascus/feature/more/domain/repository/more_repository.dart';
+import 'package:mzad_damascus/feature/more/domain/usecase/convert_business_account_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/edit_password_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/my_reviewd_irem.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/myitem_under_review_usecase.dart';
@@ -85,6 +86,7 @@ import 'package:mzad_damascus/feature/more/domain/usecase/myitem_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/rejected_ads_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/update_username_usecase.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/verfiyusername_usecase.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/convert_business_account_cubit/convert_business_account_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/edit_password_cubit/edit_password_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
@@ -127,6 +129,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => ConvertBusinessAccountCubit(usecase: sl()));
   sl.registerFactory(() => GetCompanyAccountsCubit(usecase: sl()));
   sl.registerFactory(() => RejectedAdsCubit(usecase: sl()));
   sl.registerFactory(() => FollowersCubit(usecase: sl()));
@@ -162,6 +165,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CheckLikeUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvByUserUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddReactionUsecase(repository: sl()));
+  sl.registerLazySingleton(() => ConvertBusinessAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => BannersUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddCommentUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetCommentsUsecase(repository: sl()));
