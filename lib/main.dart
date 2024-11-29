@@ -20,7 +20,7 @@ void main() async {
   });
 
   // await FirebaseHelper.init();
-  // await FlutterLocalNotificationHelper.init();
+  // await FlutterLocalNotificationHelper.init()
 
   SharedPreferences shPref = await SharedPreferences.getInstance();
   AppSharedPreferences.init(shPref);

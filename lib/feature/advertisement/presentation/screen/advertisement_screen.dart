@@ -1,3 +1,6 @@
+
+
+
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,6 +56,8 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
             NoteMessage.showErrorSnackBar(context: context, text: state.error);
           }
           if (state.status == CubitStatus.success) {
+
+            NoteMessage.showSuccessSnackBar(context: context, text: "yourAdUnderReview".tr());
             Navigator.of(context).pushNamedAndRemoveUntil(
               RouteNamedScreens.mainBottomAppBar,
                   (route) => false,

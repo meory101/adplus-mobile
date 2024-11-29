@@ -126,5 +126,9 @@
   "businessAccount": "Business Account",
   "uploadedSuccessfully": "Uploaded Successfully",
   "mustBePdfFile": "Must Be Pdf File",
-  "chooseFile&Upload": "Choose File & Upload"
+  "chooseFile&Upload": "Choose File & Upload",
+  "yourAdUnderReview" : "your Advertisement Under Review",
+  "noResults" : "No Results",
+  "couldNotFindAnyResult" : "Could Not Find Any Result"
+
 }

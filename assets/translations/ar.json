@@ -126,7 +126,9 @@
   "businessAccount": "حساب تجاري",
   "uploadedSuccessfully": "تم التحميل بنجاح",
   "mustBePdfFile": "يجب أن يكون ملف PDF",
-  "chooseFile&Upload": "اختر ملف & ارفع"
-
+  "chooseFile&Upload": "اختر ملف & ارفع",
+  "yourAdUnderReview" : "اعلانك قيد المراجعة",
+  "noResults" : "لا يوجد نتائح",
+  "couldNotFindAnyResult" : "لم يتم الحصول على اي نتائج"
 
 }
