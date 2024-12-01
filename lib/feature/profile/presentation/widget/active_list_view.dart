@@ -1,12 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
+import '../../../../core/widget/button/main_app_button.dart';
 import '../../../../core/widget/container/decorated_container.dart';
 import '../../../../core/widget/image/main_image_widget.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
@@ -17,6 +20,8 @@ import '../../../home/presentation/screen/advertisement_details_screen.dart';
 import '../../../more/domain/entity/request/myitem_review_request_entiity.dart';
 import '../../../more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
 import '../../../more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_state.dart';
+import '../../../more/presentation/screen/update_adv_screen.dart';
+import '../../../more/presentation/widget/dialog/delete_ad_dialog.dart';
 import '../../../more/presentation/widget/my_advs/adv_card.dart';
 
 class ActiveListView extends StatelessWidget {
@@ -106,9 +111,88 @@ class ActiveListView extends StatelessWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.w500),
+
+                            Visibility(
+                              visible: (items[index].note ?? "").isNotEmpty,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: AppColorManager.subColor
+                                    )
+                                ),
+                                child: AppTextWidget(
+                                  text: '${items[index].note ?? ""}',
+                                  color: Colors.pink,
+                                  fontSize: FontSizeManager.fs16,
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ),
                             SizedBox(
                               height: AppHeightManager.h2,
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                MainAppButton(
+                                    color: AppColorManager.mainColor,
+                                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: AppWidthManager.w5,
+                                        vertical: AppHeightManager.h1),
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(RouteNamedScreens.updateAdvs,
+                                          arguments: UpdateAdvArgs(data: items[index]))
+                                          .then((value) {
+                                            selectedIndex=2;
+                                        Navigator.of(context).pushReplacementNamed(
+                                          RouteNamedScreens.mainBottomAppBar,
+                                        );
+                                      });
+                                    },
+                                    child: AppTextWidget(
+                                      text: "edit".tr(),
+                                      color: AppColorManager.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: FontSizeManager.fs15,
+                                    )),
+                                SizedBox(
+                                  width: AppWidthManager.w3Point8,
+                                ),
+                                MainAppButton(
+                                    color: Colors.red.withOpacity(0.8),
+                                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: AppWidthManager.w5,
+                                        vertical: AppHeightManager.h1),
+                                    onTap: () {
+                                      showDeleteAdDialog(
+                                          context: context,
+                                          item: items[index],
+                                          onSuccess: () {
+                                            NoteMessage.showSuccessSnackBar(
+                                                context: context,
+                                                text: "successfullyDone".tr());
+
+                                            selectedIndex=2;
+                                            Navigator.of(context).pushReplacementNamed(
+                                              RouteNamedScreens.mainBottomAppBar,
+
+                                            );
+                                          });
+                                    },
+                                    child: AppTextWidget(
+                                      text: "delete".tr(),
+                                      color: AppColorManager.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: FontSizeManager.fs15,
+                                    )),
+
+                              ],
+                            )
                           ],
                         ),
                       )

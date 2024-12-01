@@ -108,7 +108,7 @@ class MoreScreen extends StatelessWidget {
           MoreListTile(
             icon: Icons.edit,
             label: 'changeUserName'.tr(),
-            color: AppColorManager.lightBlue,
+            color: AppColorManager.darkRed,
             onTap: () {
               if (AppSharedPreferences.getToken().isEmpty) {
                 showLoginBottomSheet(context: context);
@@ -119,6 +119,25 @@ class MoreScreen extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => const EditUsernameScreen()),
               );
+            },
+          ),
+          const Divider(color: AppColorManager.borderGrey),
+          MoreListTile(
+            icon: Icons.insert_drive_file_outlined,
+            label: 'aboutUs'.tr(),
+            color: AppColorManager.orange,
+            onTap: () {
+              Navigator.of(context).pushNamed(RouteNamedScreens.aboutUs);
+
+            },
+          ),
+          MoreListTile(
+            icon: Icons.shield_outlined,
+            label: 'privacyPolicy'.tr(),
+            color: Colors.pink,
+            onTap: () {
+              Navigator.of(context).pushNamed(RouteNamedScreens.privacyPolicy);
+
             },
           ),
           const Divider(color: AppColorManager.borderGrey),

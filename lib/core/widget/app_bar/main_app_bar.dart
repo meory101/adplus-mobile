@@ -32,14 +32,16 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ? AppIconManager.arrowLeft
                   : AppIconManager.arrowRight,
               colorFilter:
-                  const ColorFilter.mode(AppColorManager.mainColor, BlendMode.srcIn),
+              const ColorFilter.mode(
+                  AppColorManager.mainColor, BlendMode.srcIn),
             ),
           ),
           SizedBox(
             width: AppWidthManager.w2,
           ),
           AppTextWidget(
-            text: title,
+            text: title.isNotEmpty ? title : LanguageHelper.checkIfLTR(
+                context: context) ? 'Mzad Damascus': 'مزاد دمشق',
             fontSize: FontSizeManager.fs18,
             color: AppColorManager.mainColor,
             fontWeight: FontWeight.w600,

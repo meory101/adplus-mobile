@@ -129,6 +129,11 @@
   "chooseFile&Upload": "Choose File & Upload",
   "yourAdUnderReview" : "your Advertisement Under Review",
   "noResults" : "No Results",
-  "couldNotFindAnyResult" : "Could Not Find Any Result"
+  "couldNotFindAnyResult" : "Could Not Find Any Result",
+  "adminNote:" : "Admin Note : ",
+  "biddingComingSoon" :  "Bidding Coming Soon",
+  "favorites" : "Favorites",
+  "aboutUs"  : "About Us",
+  "privacyPolicy" : "Privacy Policy"
 
 }

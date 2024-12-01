@@ -90,7 +90,9 @@ import '../feature/home/presentation/cubit/remove_like/remove_like_cubit.dart';
 import '../feature/intro/presentation/screen/splash_screen.dart';
 import '../feature/likes/presentation/cubit/likes_cubit/likes_cubit.dart';
 import '../feature/more/presentation/cubit/myitem_under_review/myitem_under_review_cubit.dart';
+import '../feature/more/presentation/screen/about_us_screen.dart';
 import '../feature/more/presentation/screen/favorites_screen.dart';
+import '../feature/more/presentation/screen/privacy_policy_screen.dart';
 import '../feature/more/presentation/screen/update_adv_screen.dart';
 import '../feature/profile/presentation/cubit/check_follow_cubit/check_follow_cubit.dart';
 import '../feature/profile/presentation/cubit/remove_follow_cubit/remove_follow_cubit.dart';
@@ -130,6 +132,8 @@ abstract class RouteNamedScreens {
   static const String myFollowers = '/my-followers';
   static const String myFollowing = '/my-following';
   static const String more = '/more';
+  static const String aboutUs = '/about-Us';
+  static const String privacyPolicy = '/privacy-Policy';
 }
 
 abstract class AppRouter {
@@ -382,6 +386,8 @@ abstract class AppRouter {
 
       case RouteNamedScreens.resetpassword:
         myRoute = RouteNamedScreens.resetpassword;
+
+        myRoute = RouteNamedScreens.resetpassword;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<ResetCubit>(),
@@ -391,6 +397,8 @@ abstract class AppRouter {
 
       case RouteNamedScreens.forgetpassword:
         myRoute = RouteNamedScreens.forgetpassword;
+
+        myRoute = RouteNamedScreens.forgetpassword;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<ForgetPasswordCubit>(),
@@ -399,13 +407,29 @@ abstract class AppRouter {
         );
 
       case RouteNamedScreens.register:
+        myRoute = RouteNamedScreens.register;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<RegisterCubit>(),
             child: const RegisterScreen(),
           ),
         );
-
+      case RouteNamedScreens.aboutUs:
+        myRoute = RouteNamedScreens.register;
+        return FadeBuilderRoute(
+          page: BlocProvider(
+            create: (context) => di.sl<RegisterCubit>(),
+            child: const AboutUsScreen(),
+          ),
+        );
+      case RouteNamedScreens.privacyPolicy:
+        myRoute = RouteNamedScreens.register;
+        return FadeBuilderRoute(
+          page: BlocProvider(
+            create: (context) => di.sl<RegisterCubit>(),
+            child: const PrivacyPolicyScreen(),
+          ),
+        );
       case RouteNamedScreens.editpassword:
         myRoute = RouteNamedScreens.editpassword;
         return FadeBuilderRoute(

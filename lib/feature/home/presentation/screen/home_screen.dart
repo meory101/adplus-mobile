@@ -99,29 +99,29 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         i % 3 == 0
             ? cards.add(
-                BigCard(
-                  index: i,
-                  onTap: () {
-                    onCategoryTaped(subcategories[i]);
-                  },
-                  title: LanguageHelper.checkIfLTR(context: context)
-                      ? subcategories[i].enName ?? ""
-                      : subcategories[i].name ?? "",
-                  imagePath: subcategories[i].photo1 ?? "",
-                ),
-              )
+          BigCard(
+            index: i,
+            onTap: () {
+              onCategoryTaped(subcategories[i]);
+            },
+            title: LanguageHelper.checkIfLTR(context: context)
+                ? subcategories[i].enName ?? ""
+                : subcategories[i].name ?? "",
+            imagePath: subcategories[i].photo1 ?? "",
+          ),
+        )
             : cards.add(
-                StandardCard(
-                  index: i,
-                  onTap: () {
-                    onCategoryTaped(subcategories[i]);
-                  },
-                  title: LanguageHelper.checkIfLTR(context: context)
-                      ? subcategories[i].enName ?? ""
-                      : subcategories[i].name ?? "",
-                  imagePath: subcategories[i].photo1 ?? "",
-                ),
-              );
+          StandardCard(
+            index: i,
+            onTap: () {
+              onCategoryTaped(subcategories[i]);
+            },
+            title: LanguageHelper.checkIfLTR(context: context)
+                ? subcategories[i].enName ?? ""
+                : subcategories[i].name ?? "",
+            imagePath: subcategories[i].photo1 ?? "",
+          ),
+        );
       }
     }
 
@@ -150,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 SizedBox(
                   height: AppHeightManager.h3,
                 ),
@@ -158,19 +159,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     horizontal: AppWidthManager.w3Point8,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // SvgPicture.asset(
-                      //   AppIconManager.notification,
-                      //   colorFilter: const ColorFilter.mode(
-                      //       AppColorManager.mainColor, BlendMode.srcIn),
-                      // ),
+                      AppTextWidget(
+                        text: LanguageHelper.checkIfLTR(context: context)
+                            ? "Mzad Damascus" : "مزاد دمشق",
+                        fontSize: FontSizeManager.fs18,
+                        fontWeight: FontWeight.w700,
+                        color: AppColorManager.mainColor,
+                      ),
                       SizedBox(
                         width: AppWidthManager.w3Point8,
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed(RouteNamedScreens.searchUser);
+                          Navigator.of(context).pushNamed(RouteNamedScreens
+                              .searchUser);
                         },
                         child: SvgPicture.asset(
                           AppIconManager.search,
@@ -208,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: List.generate(
                             categories.length,
-                            (index) {
+                                (index) {
                               List<SubCategory> subCategories =
                                   categories[index].children ?? [];
                               List<Widget> cards = generateCards(subCategories);
@@ -219,11 +223,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       bottom: AppHeightManager.h1),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       AppTextWidget(
                                           text: LanguageHelper.checkIfLTR(
-                                                  context: context)
+                                              context: context)
                                               ? categories[index].enName ?? ""
                                               : categories[index].name ?? "",
                                           fontSize: FontSizeManager.fs17,

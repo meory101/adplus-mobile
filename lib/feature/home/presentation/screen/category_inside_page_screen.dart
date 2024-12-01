@@ -115,16 +115,16 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                               crossAxisCount: 3,
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              builder: (context, index) {
+                              builder: (context, i) {
                                 return InkWell(
                                   onTap: () {
                                     entity.page = 1;
+
                                     List<Attributes> attributes = [];
                                     attributes.add(Attributes(
-                                        attributeId: currentInsidePageData
-                                            ?.attributeId,
+                                        attributeId: insidePageData[index].attributeId,
                                         value:
-                                        attributeTypeList[index].option));
+                                        attributeTypeList[i].option));
                                     entity.attributes = attributes;
                                     Navigator.of(context).pushNamed(
                                         RouteNamedScreens
@@ -151,7 +151,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal:
                                           AppWidthManager.w3Point8,
-                                          vertical: (attributeTypeList[index]
+                                          vertical: (attributeTypeList[i]
                                               .photo ??
                                               "")
                                               .isNotEmpty
@@ -160,7 +160,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                       child: Stack(
                                         children: [
                                           Visibility(
-                                            visible: (attributeTypeList[index]
+                                            visible: (attributeTypeList[i]
                                                 .photo ??
                                                 "")
                                                 .isNotEmpty,
@@ -174,7 +174,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                 width: AppWidthManager.w15,
                                                 imageUrl: AppConstantManager
                                                     .imageBaseUrl +
-                                                    attributeTypeList[index]
+                                                    attributeTypeList[i]
                                                         .photo
                                                         .toString(),
                                               ),
@@ -189,9 +189,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                   .checkIfLTR(
                                                   context: context) ?
 
-                                              '${attributeTypeList[index]
+                                              '${attributeTypeList[i]
                                                   .optionEn ?? ""}\n' :
-                                              '${attributeTypeList[index]
+                                              '${attributeTypeList[i]
                                                   .option ?? ""}\n'
                                               ,
                                               fontSize: FontSizeManager.fs15,
@@ -207,15 +207,12 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                             SizedBox(
                               height: AppHeightManager.h2point5,
                             ),
-
-
                           ],
                         ),
                       );
                     },
                   ),
-
-                  CompaniesAccountsListView(),
+                  const CompaniesAccountsListView(),
                   SizedBox(
                     height: AppHeightManager.h2point5,
                   ),

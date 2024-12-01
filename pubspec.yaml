@@ -48,7 +48,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons:
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/splash.png"
 
   flutter_lints: ^4.0.0
 

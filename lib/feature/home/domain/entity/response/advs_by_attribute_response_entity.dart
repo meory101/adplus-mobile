@@ -140,12 +140,14 @@ class AdData {
     String? biddingStartTime,
     List<Attributes>? attributes,
     num? star,
+    String? note
 
   }) {
     _categoryId = categoryId;
     _star = star;
     _cityId = cityId;
     _name = name;
+    _note = note;
     _biddingStatus = biddingStatus;
     _photos = photos;
     _itemId = itemId;
@@ -166,6 +168,7 @@ class AdData {
   AdData.fromJson(dynamic json) {
 
     _categoryId = json['category_id'];
+    _note = json['note'];
     _star = json['star'];
     _cityId = json['city_id'];
     _name = json['name'];
@@ -220,6 +223,7 @@ class AdData {
   List<Comment>? _comments;
   List<Reactions>? _reactions;
   User? _author;
+  String? _note;
   String? _description;
   String? _keywords;
   num? _startingPrice;
@@ -246,8 +250,10 @@ class AdData {
     num? minIncreasePrice,
     String? biddingStartTime,
     List<Attributes>? attributes,
+    String? note
   }) =>
       AdData(
+        note: note?? _note,
         star: star ?? _star,
         categoryId: categoryId ?? _categoryId,
         cityId: cityId ?? _cityId,
@@ -287,6 +293,7 @@ class AdData {
   List<Attributes>? get attributes => _attributes;
   num? get itemId => _itemId;
   num? get star => _star;
+  String? get note => _note;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

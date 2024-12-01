@@ -247,10 +247,12 @@ class CategoryAttributes {
       String? attributeName, 
       String? attributeNameEn,
       num? ord,
+    num? star,
       AttributeType? attributeType, 
       List<AttributeTypeList>? attributeTypeList,}){
     _attributeId = attributeId;
     _categoryId = categoryId;
+    _star = star;
     _attributeName = attributeName;
     _ord = ord;
     _attributeType = attributeType;
@@ -260,6 +262,7 @@ class CategoryAttributes {
 
   CategoryAttributes.fromJson(dynamic json) {
     _attributeId = json['attribute_id'];
+    _star  = json['star'];
     _attributeNameEn = json['attribute_en_name'];
     _categoryId = json['category_id'];
     _attributeName = json['attribute_name'];
@@ -273,6 +276,7 @@ class CategoryAttributes {
     }
   }
   num? _attributeId;
+  num? _star;
   String? _attributeNameEn;
   num? _categoryId;
   String? _attributeName;
@@ -286,6 +290,7 @@ CategoryAttributes copyWith({  num? attributeId,
   num? ord,
   AttributeType? attributeType,
   List<AttributeTypeList>? attributeTypeList,
+  num?star
 }) => CategoryAttributes(  attributeId: attributeId ?? _attributeId,
   categoryId: categoryId ?? _categoryId,
   attributeName: attributeName ?? _attributeName,
@@ -293,8 +298,10 @@ CategoryAttributes copyWith({  num? attributeId,
   attributeNameEn: attributeNameEn ?? _attributeNameEn,
   attributeType: attributeType ?? _attributeType,
   attributeTypeList: attributeTypeList ?? _attributeTypeList,
+   star: star ??_star
 );
   num? get attributeId => _attributeId;
+  num? get star => _star;
   num? get categoryId => _categoryId;
   String? get attributeName => _attributeName;
   String? get attributeNameEn => _attributeNameEn;

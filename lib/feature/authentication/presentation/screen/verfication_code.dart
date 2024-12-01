@@ -54,7 +54,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               padding: const EdgeInsets.all(15.0),
               child: PinCodeTextField(
                 pinBoxBorderWidth: 1,
-                pinBoxWidth: AppWidthManager.w12,
+                pinBoxWidth: AppWidthManager.w9,
                 pinBoxHeight: AppHeightManager.h6,
                 maxLength: 6,
                 controller: codeController,
@@ -76,6 +76,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     return;
                   }
 
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 }
                 if (state.status == CubitStatus.error) {

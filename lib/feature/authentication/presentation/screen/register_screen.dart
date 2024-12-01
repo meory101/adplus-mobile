@@ -83,7 +83,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
                         .hasMatch(value);
                     bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
+                    if(isPhone==true){
+                      String? newValue =value;
+                      if(value[0]=="0"){
+                       newValue=   value.substring(1);
+                      }
 
+                      entity.username ='+963${newValue}';
+                      print(entity.username);
+                    }
                     if (!isEmail && !isPhone) {
                       return "usernameInvalid".tr();
                     }
@@ -97,6 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.whatsapp = value;
+
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {

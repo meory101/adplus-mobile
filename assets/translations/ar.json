@@ -129,6 +129,12 @@
   "chooseFile&Upload": "اختر ملف & ارفع",
   "yourAdUnderReview" : "اعلانك قيد المراجعة",
   "noResults" : "لا يوجد نتائح",
-  "couldNotFindAnyResult" : "لم يتم الحصول على اي نتائج"
+  "couldNotFindAnyResult" : "لم يتم الحصول على اي نتائج",
+  "adminNote:" : "ملاحظة الادمن : ",
+  "biddingComingSoon" :  "المزايدة قريبا",
+  "favorites" : "المفضلة",
+  "aboutUs"  : "حول التطبيق",
+  "privacyPolicy" : "سياسة الخصوصية"
+
 
 }
