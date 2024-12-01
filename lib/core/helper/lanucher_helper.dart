@@ -37,4 +37,8 @@ abstract class UrlLauncherHelper {
     Uri uri = Uri.parse("https://$pageName");
     await launchUrl(uri);
   }
+  static Future<void> openFullyUrl({required String pageName}) async {
+    Uri uri = Uri.parse("$pageName");
+    await launchUrl(uri);
+  }
 }

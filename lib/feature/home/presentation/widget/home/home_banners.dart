@@ -89,7 +89,7 @@ class _HomeBannersState extends State<HomeBanners> {
                   (index) {
                         return InkWell(
                           onTap: () {
-                            UrlLauncherHelper.openUrl(pageName: banners?[index].geyUrl??"");
+                            UrlLauncherHelper.openFullyUrl(pageName: banners?[index].geyUrl??"");
                           },
                           child: Container(
                           width: AppWidthManager.w92,
