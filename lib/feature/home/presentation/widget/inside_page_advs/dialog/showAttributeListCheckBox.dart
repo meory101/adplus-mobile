@@ -22,8 +22,6 @@ void showAttributeListCheckBox(
     builder: (context) {
       // selectedAttributeMap[currentFilterItemId ?? 0] = [];
       List<String> optionNames = [];
-      print(selectedAttributeMap);
-      print('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
       return StatefulBuilder(builder: (context, setState) {
         return Visibility(
           visible: options.isNotEmpty,
@@ -52,7 +50,6 @@ void showAttributeListCheckBox(
                           selectedAttributeMap[currentFilterItemId]?.length ==
                               options.length - 1;
                     } else {
-                      print(selectedAttributeMap[currentFilterItemId]);
                       isSelected =
                           selectedAttributeMap[currentFilterItemId]?.firstWhere(
                                 orElse: () => '',
@@ -149,8 +146,6 @@ void showAttributeListCheckBox(
   ).then((value) {
     List<FilterAttribute> attributes = [];
     selectedAttributeMap.forEach((key, value) {
-      print(key);
-      print(value);
       if(value.isNotEmpty){
         attributes.add(FilterAttribute(
             value: value,

@@ -196,7 +196,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(width: AppWidthManager.w1),
                     GestureDetector(
                       onTap: () {
-                        print('ggggggggggggggggg');
                         Navigator.of(context)
                             .pushReplacementNamed(RouteNamedScreens.register);
                       },

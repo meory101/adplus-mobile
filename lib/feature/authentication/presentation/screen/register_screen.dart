@@ -90,7 +90,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
 
                       entity.username ='+963${newValue}';
-                      print(entity.username);
                     }
                     if (!isEmail && !isPhone) {
                       return "usernameInvalid".tr();

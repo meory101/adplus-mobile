@@ -216,7 +216,6 @@ class _InsidePageCategoryAdvsScreenState
                                   selectedAttributeMap[
                                       starItemAttributeId ?? 0] = [name ?? ""];
 
-                                  print(selectedAttributeMap);
                                   List<FilterAttribute> attributes = [];
                                   selectedAttributeMap.forEach(
                                     (key, value) {

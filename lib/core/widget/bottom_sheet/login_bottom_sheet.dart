@@ -61,7 +61,6 @@ void showLoginBottomSheet({required BuildContext context}) {
                               myRoute != RouteNamedScreens.resetpassword &&
                               myRoute != RouteNamedScreens.forgetpassword)
                           {
-                            print('llllllllllllllllll');
                           Navigator.of(context).pop();
                           } },);
                       },

@@ -46,7 +46,7 @@ class _BiddingScreenState extends State<BiddingScreen> {
                MainImageWidget(
                  height: AppHeightManager.h15,
                  width: AppHeightManager.h15,
-                 imagePath: GifManager.rocketAnimation,
+                 imagePath: GifManager.rocket,
                ),
              ],
            ),

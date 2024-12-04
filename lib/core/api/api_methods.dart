@@ -28,7 +28,6 @@ class ApiMethods {
       if (AppSharedPreferences.getToken().isNotEmpty) {
         headers['Authorization'] = 'Bearer ${AppSharedPreferences.getToken()}';
       }
-      print(AppSharedPreferences.getToken());
     } else {
       headers = header;
     }
@@ -127,7 +126,6 @@ class ApiMethods {
               .getLink(),
           headers: headers);
     } else {
-      print(ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),);
       return await http.post(
           ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink(),
           body: jsonEncode(body),
