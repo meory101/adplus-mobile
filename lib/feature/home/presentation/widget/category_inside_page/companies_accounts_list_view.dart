@@ -37,7 +37,8 @@ class CompaniesAccountsListView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  DecoratedContainer(  width: AppWidthManager.w42,
+                  DecoratedContainer(
+                      width: AppWidthManager.w42,
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(AppWidthManager.w3Point8),
                       child: Column(
@@ -47,18 +48,23 @@ class CompaniesAccountsListView extends StatelessWidget {
                             height: AppWidthManager.w20,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             decoration:
-                            const BoxDecoration(shape: BoxShape.circle),
+                                const BoxDecoration(shape: BoxShape.circle),
                             child: MainImageWidget(
-                              imageUrl:"",
-                          ),),
+                              imageUrl: "",
+                            ),
+                          ),
                           SizedBox(
                             height: AppHeightManager.h1point8,
                           ),
-                          ShimmerContainer(width: AppWidthManager.w20, height: AppHeightManager.h2),
+                          ShimmerContainer(
+                              width: AppWidthManager.w20,
+                              height: AppHeightManager.h2),
                           SizedBox(
                             height: AppHeightManager.h1point8,
                           ),
-                          ShimmerContainer(width: AppWidthManager.w20, height: AppHeightManager.h2),
+                          ShimmerContainer(
+                              width: AppWidthManager.w20,
+                              height: AppHeightManager.h2),
                         ],
                       )),
                   SizedBox(
@@ -75,18 +81,23 @@ class CompaniesAccountsListView extends StatelessWidget {
                             height: AppWidthManager.w20,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             decoration:
-                            const BoxDecoration(shape: BoxShape.circle),
+                                const BoxDecoration(shape: BoxShape.circle),
                             child: MainImageWidget(
-                              imageUrl:"",
-                            ),),
+                              imageUrl: "",
+                            ),
+                          ),
                           SizedBox(
                             height: AppHeightManager.h1point8,
                           ),
-                          ShimmerContainer(width: AppWidthManager.w20, height: AppHeightManager.h2),
+                          ShimmerContainer(
+                              width: AppWidthManager.w20,
+                              height: AppHeightManager.h2),
                           SizedBox(
                             height: AppHeightManager.h1point8,
                           ),
-                          ShimmerContainer(width: AppWidthManager.w20, height: AppHeightManager.h2),
+                          ShimmerContainer(
+                              width: AppWidthManager.w20,
+                              height: AppHeightManager.h2),
                         ],
                       )),
                 ],
@@ -142,8 +153,17 @@ class CompaniesAccountsListView extends StatelessWidget {
                           SizedBox(
                             height: AppHeightManager.h1point8,
                           ),
-                          AppTextWidget(text: companies[index].name ?? ""),
                           AppTextWidget(
+                            text: companies[index].name ?? "",
+                            fontSize: FontSizeManager.fs16,
+                            maxLines: 2,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          AppTextWidget(
+                              color: AppColorManager.grey,
+                              fontSize: FontSizeManager.fs15,
+                              maxLines: 2,
+                              fontWeight: FontWeight.w600,
                               text: companies[index].description ?? "--"),
                         ],
                       )),

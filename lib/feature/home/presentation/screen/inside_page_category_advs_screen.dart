@@ -1,8 +1,10 @@
 import 'package:dartz/dartz_unsafe.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
@@ -63,19 +65,19 @@ class _InsidePageCategoryAdvsScreenState
     if (scrollController.position.pixels >=
         scrollController.position.maxScrollExtent - AppHeightManager.h20) {
       context.read<AdvsByAttributeCubit>().getAdvsByAttribute(
-        context: context,
-        entity: FilterRequest.entity,
-      );
+            context: context,
+            entity: FilterRequest.entity,
+          );
     }
   }
 
   getData() async {
     FilterRequest.entity.attributes?.forEach(
-          (element) {
-            print(element.value);
-            print(element.attributeId);
-            print('finaaaaaaaaaaaaaaaaaaaaaaaaal result');
-          },
+      (element) {
+        print(element.value);
+        print(element.attributeId);
+        print('finaaaaaaaaaaaaaaaaaaaaaaaaal result');
+      },
     );
     context.read<AdvsByAttributeCubit>().resetData();
     getAdvertisements();
@@ -99,7 +101,7 @@ class _InsidePageCategoryAdvsScreenState
             top: AppHeightManager.h20,
           ),
           height: AppHeightManager.h16,
-          color: AppColorManager.white,
+          color: AppColorManager.background,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
             child: Column(
@@ -119,7 +121,7 @@ class _InsidePageCategoryAdvsScreenState
                   List<CategoryAttributes>? staredItems = [];
                   if ((state.entity.data?.attributes ?? []).isNotEmpty) {
                     state.entity.data?.attributes?.forEach(
-                          (attribute) {
+                      (attribute) {
                         if (attribute.star == 0) {
                           filterItems.add(attribute);
                         } else {
@@ -128,40 +130,46 @@ class _InsidePageCategoryAdvsScreenState
                       },
                     );
                   }
-                  if(staredItems.isNotEmpty){
+                  if (staredItems.isNotEmpty) {
                     starItemsLength =
                         (staredItems.first.attributeTypeList ?? []).length;
                     starItemAttributeId = staredItems.first.attributeId;
                   }
 
-                  if(starItemsLength > 0){
+                  if (starItemsLength > 0) {
                     if (selectedStarIndex == -1) {
                       if (widget.args.entity.attributes?.first.attributeId ==
                           starItemAttributeId) {
                         for (int newIndex = 0;
-                        newIndex <
-                            (staredItems.first.attributeTypeList ?? [])
-                                .length;
-                        newIndex++) {
-                          String? name = LanguageHelper.checkIfLTR(
-                              context: context)
-                              ?
-                          (staredItems.first.attributeTypeList?[newIndex]
-                              .optionEn ?? "")
-                              : staredItems.first
-                              .attributeTypeList?[newIndex]
-                              .option??"";
+                            newIndex <
+                                (staredItems.first.attributeTypeList ?? [])
+                                    .length;
+                            newIndex++) {
+                          String? name =
+                              LanguageHelper.checkIfLTR(context: context)
+                                  ? (staredItems
+                                          .first
+                                          .attributeTypeList?[newIndex]
+                                          .optionEn ??
+                                      "")
+                                  : staredItems
+                                          .first
+                                          .attributeTypeList?[newIndex]
+                                          .option ??
+                                      "";
 
-                          if (name == widget.args.entity.attributes?.first.value?.first ){
+                          if (name ==
+                              widget
+                                  .args.entity.attributes?.first.value?.first) {
                             selectedStarIndex = newIndex;
                           }
-
                         }
                       }
                     }
                   }
 
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                           height: AppHeightManager.h7,
@@ -182,7 +190,12 @@ class _InsidePageCategoryAdvsScreenState
                       ),
                       Visibility(
                         visible: starItemsLength > 0,
-                        replacement: AppTextWidget(text: "whatAreYouSearchingFor?"),
+                        replacement: AppTextWidget(
+                          text: "whatAreYouSearchingFor".tr(),
+                          color: AppColorManager.black,
+                          fontSize: FontSizeManager.fs16,
+                          fontWeight: FontWeight.w600,
+                        ),
                         child: SizedBox(
                           height: AppHeightManager.h5,
                           child: ListView.builder(
@@ -192,21 +205,21 @@ class _InsidePageCategoryAdvsScreenState
                               return InkWell(
                                 onTap: () {
                                   String? name = LanguageHelper.checkIfLTR(
-                                      context: context)
+                                          context: context)
                                       ? (staredItems.first
-                                      .attributeTypeList?[index].optionEn)
+                                          .attributeTypeList?[index].optionEn)
                                       : (staredItems.first
-                                      .attributeTypeList?[index].option);
+                                          .attributeTypeList?[index].option);
                                   selectedStarIndex = index;
                                   selectedAttributeMap[
-                                  starItemAttributeId ?? 0] = [];
-                                  selectedAttributeMap[starItemAttributeId ??
-                                      0] = [name ?? ""];
+                                      starItemAttributeId ?? 0] = [];
+                                  selectedAttributeMap[
+                                      starItemAttributeId ?? 0] = [name ?? ""];
 
                                   print(selectedAttributeMap);
                                   List<FilterAttribute> attributes = [];
                                   selectedAttributeMap.forEach(
-                                        (key, value) {
+                                    (key, value) {
                                       print(key);
                                       print(value);
                                       if (value.isNotEmpty) {
@@ -215,8 +228,7 @@ class _InsidePageCategoryAdvsScreenState
                                       }
                                     },
                                   );
-                                  FilterRequest.entity.attributes =
-                                      attributes;
+                                  FilterRequest.entity.attributes = attributes;
                                   getData();
                                   setState(() {});
                                 },
@@ -238,17 +250,17 @@ class _InsidePageCategoryAdvsScreenState
                                           ? AppColorManager.white
                                           : AppColorManager.textAppColor,
                                       text: LanguageHelper.checkIfLTR(
-                                          context: context)
+                                              context: context)
                                           ? (staredItems
-                                          .first
-                                          .attributeTypeList?[index]
-                                          .optionEn ??
-                                          "")
+                                                  .first
+                                                  .attributeTypeList?[index]
+                                                  .optionEn ??
+                                              "")
                                           : staredItems
-                                          .first
-                                          .attributeTypeList?[index]
-                                          .option ??
-                                          ""),
+                                                  .first
+                                                  .attributeTypeList?[index]
+                                                  .option ??
+                                              ""),
                                 ),
                               );
                             },
