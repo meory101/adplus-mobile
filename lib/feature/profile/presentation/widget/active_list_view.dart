@@ -115,6 +115,8 @@ class ActiveListView extends StatelessWidget {
                             Visibility(
                               visible: (items[index].note ?? "").isNotEmpty,
                               child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w1),
+
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         color: AppColorManager.subColor
@@ -190,7 +192,9 @@ class ActiveListView extends StatelessWidget {
                                       fontWeight: FontWeight.w500,
                                       fontSize: FontSizeManager.fs15,
                                     )),
-
+                                SizedBox(
+                                  width: AppWidthManager.w1Point2,
+                                ),
                               ],
                             )
                           ],

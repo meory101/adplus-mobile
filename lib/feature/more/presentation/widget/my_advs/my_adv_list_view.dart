@@ -53,7 +53,7 @@ class MyAdvListView extends StatelessWidget {
                 items.length + (state.isReachedMax==true ? 0 : 1),
             itemBuilder: (context, index) {
               if (index == items.length) {
-                return const Center(child: CircularProgressIndicator());
+                return  Center(child: CircularProgressIndicator());
               } else {
                 return AdvCard(item: items[index]);
               }

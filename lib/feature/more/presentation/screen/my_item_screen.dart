@@ -108,17 +108,17 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   Widget _buildFilterButtons() {
     return Container(
       height: AppHeightManager.h5,
-      margin: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: filters.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.only(
-                right: LanguageHelper.checkIfLTR(context: context)
+                left: LanguageHelper.checkIfLTR(context: context)
                     ? AppWidthManager.w2
                     : 0,
-                left: !LanguageHelper.checkIfLTR(context: context)
+                right: !LanguageHelper.checkIfLTR(context: context)
                     ? AppWidthManager.w2
                     : 0),
             child: FilterChip(

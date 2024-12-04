@@ -7,10 +7,12 @@ import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/resource/image_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
+import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 
 import '../../core/helper/language_helper.dart';
+import '../../core/resource/gif_manager.dart';
 
 class BiddingScreen extends StatefulWidget {
   const BiddingScreen({super.key});
@@ -29,19 +31,28 @@ class _BiddingScreenState extends State<BiddingScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: AppHeightManager.h2,
-            ),
-            SizedBox(
+            MainImageWidget(
               height: AppHeightManager.h20,
               width: AppHeightManager.h20,
-              child: MainImageWidget(
-                fit: BoxFit.fill,
-                imagePath: AppImageManager.rocket,
-              ),
+              imagePath: AppImageManager.lan,
             ),
+           Stack(
+             children: [
+               ShimmerContainer(
+                 boxShape:BoxShape.circle,
+                 height: AppHeightManager.h15,
+                 width: AppHeightManager.h15,
+               ),
+               MainImageWidget(
+                 height: AppHeightManager.h15,
+                 width: AppHeightManager.h15,
+                 imagePath: GifManager.rocketAnimation,
+               ),
+             ],
+           ),
+
             SizedBox(
-              height: AppHeightManager.h6,
+              height: AppHeightManager.h4,
             ),
             Container(
               margin: const EdgeInsets.only(top: 10, bottom: 5),

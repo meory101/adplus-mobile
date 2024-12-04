@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
@@ -88,6 +86,7 @@ class AdvCard extends StatelessWidget {
                         Visibility(
                           visible: (item.note ?? "").isNotEmpty,
                           child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w1),
                             decoration: BoxDecoration(
                               border: Border.all(
                                  color: AppColorManager.subColor
@@ -201,7 +200,9 @@ class AdvCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     fontSize: FontSizeManager.fs15,
                   )),
-
+              SizedBox(
+                width: AppWidthManager.w1Point2,
+              ),
             ],
           )
         ],
