@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/resource/gif_manager.dart';
+import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
+import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/more/presentation/widget/my_advs/adv_card.dart';
 
 import '../../../../../core/resource/cubit_status_manager.dart';
@@ -32,7 +35,7 @@ class MyAdvListView extends StatelessWidget {
         final items = state.entity.data?.data ?? [];
 
         if (items.isEmpty) {
-          return  Center(child: AppTextWidget(text: "noAdvertisements".tr()));
+          return Center(child: AppTextWidget(text: "noAdvertisements".tr()));
         }
 
         return NotificationListener<ScrollNotification>(
@@ -49,11 +52,10 @@ class MyAdvListView extends StatelessWidget {
           },
           child: ListView.builder(
             padding: EdgeInsets.all(AppWidthManager.w3Point8),
-            itemCount:
-                items.length + (state.isReachedMax==true ? 0 : 1),
+            itemCount: items.length + (state.isReachedMax == true ? 0 : 1),
             itemBuilder: (context, index) {
               if (index == items.length) {
-                return  Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 return AdvCard(item: items[index]);
               }

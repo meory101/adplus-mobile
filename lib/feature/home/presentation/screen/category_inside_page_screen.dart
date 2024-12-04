@@ -53,7 +53,6 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
   AdvsByAttributeRequestEntity entity = AdvsByAttributeRequestEntity();
   CategoryAttributes? currentInsidePageData;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +76,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding:
-              EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+                  EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -99,12 +98,10 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AppTextWidget(
-                                text:
-                                LanguageHelper.checkIfLTR(context: context) ?
-                                insidePageData[index].attributeNameEn ??
-                                    "" : insidePageData[index]
-                                    .attributeName ?? "",
-                            fontSize: FontSizeManager.fs17,
+                              text: LanguageHelper.checkIfLTR(context: context)
+                                  ? insidePageData[index].attributeNameEn ?? ""
+                                  : insidePageData[index].attributeName ?? "",
+                              fontSize: FontSizeManager.fs17,
                               fontWeight: FontWeight.w700,
                             ),
                             SizedBox(
@@ -121,58 +118,66 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                     entity.page = 1;
                                     List<FilterAttribute> attributes = [];
                                     attributes.add(FilterAttribute(
-                                        attributeId: insidePageData[index].attributeId,
-                                        value:
-                                       [ attributeTypeList[i].option ??""]));
+                                        attributeId:
+                                            insidePageData[index].attributeId,
+                                        value: [
+                                          LanguageHelper.checkIfLTR(
+                                                  context: context)
+                                              ? (attributeTypeList[i]
+                                                      .optionEn ??
+                                                  "")
+                                              : attributeTypeList[i].option ??
+                                                  ""
+                                        ]));
                                     entity.attributes = attributes;
                                     Navigator.of(context).pushNamed(
                                         RouteNamedScreens
                                             .insidePageCategoryAdvs,
                                         arguments: InsidePageCategoryAdvArgs(
-                                            categoryId: widget.args
-                                                .subCategory.categoryId ??
+                                            categoryId: widget.args.subCategory
+                                                    .categoryId ??
                                                 -1,
                                             entity: entity));
                                   },
                                   child: DecoratedContainer(
-                                    alignment: Alignment.bottomCenter,
+                                      alignment: Alignment.bottomCenter,
                                       margin: EdgeInsets.only(
                                         bottom: AppHeightManager.h1point8,
                                         right: LanguageHelper.checkIfLTR(
-                                            context: context)
+                                                context: context)
                                             ? AppWidthManager.w3Point8
                                             : 0,
                                         left: !LanguageHelper.checkIfLTR(
-                                            context: context)
+                                                context: context)
                                             ? AppWidthManager.w3Point8
                                             : 0,
                                       ),
                                       padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                          AppWidthManager.w3Point8,
-                                          vertical: (attributeTypeList[i]
-                                              .photo ??
-                                              "")
-                                              .isNotEmpty
-                                              ? AppHeightManager.h2
-                                              : AppHeightManager.h1point8),
+                                          horizontal: AppWidthManager.w3Point8,
+                                          vertical:
+                                              (attributeTypeList[i].photo ?? "")
+                                                      .isNotEmpty
+                                                  ? AppHeightManager.h2
+                                                  : AppHeightManager.h1point8),
                                       child: Stack(
                                         children: [
                                           Visibility(
-                                            visible: (attributeTypeList[i]
-                                                .photo ??
-                                                "")
-                                                .isNotEmpty,
+                                            visible:
+                                                (attributeTypeList[i].photo ??
+                                                        "")
+                                                    .isNotEmpty,
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   top: AppHeightManager
                                                       .h2point5),
                                               child: MainImageWidget(
-                                                borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        AppRadiusManager.r10),
                                                 height: AppWidthManager.w15,
                                                 width: AppWidthManager.w15,
                                                 imageUrl: AppConstantManager
-                                                    .imageBaseUrl +
+                                                        .imageBaseUrl +
                                                     attributeTypeList[i]
                                                         .photo
                                                         .toString(),
@@ -184,20 +189,14 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                             child: AppTextWidget(
                                               maxLines: 2,
                                               textAlign: TextAlign.center,
-                                              text: LanguageHelper
-                                                  .checkIfLTR(
-                                                  context: context) ?
-
-                                              '${attributeTypeList[i]
-                                                  .optionEn ?? ""}\n' :
-                                              '${attributeTypeList[i]
-                                                  .option ?? ""}\n'
-                                              ,
+                                              text: LanguageHelper.checkIfLTR(
+                                                      context: context)
+                                                  ? '${attributeTypeList[i].optionEn ?? ""}\n'
+                                                  : '${attributeTypeList[i].option ?? ""}\n',
                                               fontSize: FontSizeManager.fs15,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
-
                                         ],
                                       )),
                                 );

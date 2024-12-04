@@ -40,24 +40,20 @@ void showAttributeListCheckBox(
                 child: ListView.builder(
                   itemCount: options.length,
                   itemBuilder: (context, i) {
+                    bool isSelected = false;
                     if (optionNames.length != options.length - 1 &&
                         options[i].name != 'all') {
                       optionNames.add(options[i].name);
                     }
-                    bool isSelected = false;
+
                     if (options[i].name == 'all') {
                       isSelected =
                           selectedAttributeMap[currentFilterItemId]?.length ==
                               options.length - 1;
                     } else {
                       isSelected =
-                          selectedAttributeMap[currentFilterItemId]?.firstWhere(
-                                orElse: () => '',
-                                (element) {
-                                  return element == options[i].name;
-                                },
-                              ) !=
-                              '';
+                          selectedAttributeMap[currentFilterItemId]?.contains(options[i].name)??false;
+                      print(isSelected);
                     }
 
                     return InkWell(

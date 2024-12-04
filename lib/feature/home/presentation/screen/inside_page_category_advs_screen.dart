@@ -157,7 +157,6 @@ class _InsidePageCategoryAdvsScreenState
                                           .attributeTypeList?[newIndex]
                                           .option ??
                                       "";
-
                           if (name ==
                               widget
                                   .args.entity.attributes?.first.value?.first) {

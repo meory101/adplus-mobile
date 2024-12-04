@@ -103,7 +103,7 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                   context
                       .read<GetAdvByUserCubit>()
                       .getAdvsByUser(context: context, entity: adByUserEntity);
-                 if(AppSharedPreferences.getToken().isEmpty)return;
+                  if (AppSharedPreferences.getToken().isEmpty) return;
                   context
                       .read<CheckFollowCubit>()
                       .checkFollow(context: context, entity: entity);
@@ -296,6 +296,10 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                               if (state.status == CubitStatus.success) {
                                 context.read<CheckFollowCubit>().checkFollow(
                                     context: context, entity: entity);
+                                Navigator.of(context).pushReplacementNamed(
+                                    RouteNamedScreens.authorProfile,
+                                    arguments: AuthorProfileArgs(
+                                        userName: widget.arg.userName));
                               }
                             },
                             builder: (context, state) {
@@ -317,6 +321,10 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                         .read<CheckFollowCubit>()
                                         .checkFollow(
                                             context: context, entity: entity);
+                                    Navigator.of(context).pushReplacementNamed(
+                                        RouteNamedScreens.authorProfile,
+                                        arguments: AuthorProfileArgs(
+                                            userName: widget.arg.userName));
                                   }
                                 },
                                 builder: (context, state) {
