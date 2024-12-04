@@ -119,12 +119,11 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                 return InkWell(
                                   onTap: () {
                                     entity.page = 1;
-
-                                    List<Attributes> attributes = [];
-                                    attributes.add(Attributes(
+                                    List<FilterAttribute> attributes = [];
+                                    attributes.add(FilterAttribute(
                                         attributeId: insidePageData[index].attributeId,
                                         value:
-                                        attributeTypeList[i].option));
+                                       [ attributeTypeList[i].option ??""]));
                                     entity.attributes = attributes;
                                     Navigator.of(context).pushNamed(
                                         RouteNamedScreens
