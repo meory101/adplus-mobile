@@ -110,8 +110,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (value == null || value.isEmpty) {
                       return "phoneNumberRequired".tr();
                     }
-                    bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
-                    if (!isPhone) {
+
+                    if (!value.isPhoneNumber()) {
                       return "invalidPhoneNumber".tr();
                     }
                     return null;
@@ -131,8 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (value == null || value.isEmpty) {
                       return "whatsAppRequired".tr();
                     }
-                    bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
-                    if (!isPhone) {
+                    if (!value.isPhoneNumber()) {
                       return "invalidPhoneNumber".tr();
                     }
                     return null;

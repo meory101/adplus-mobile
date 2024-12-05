@@ -38,25 +38,26 @@ class _VerificationScreenState extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  MainAppBar(
-        title: 'verificationCode'.tr(), // Localized title
+        title: 'verificationCode'.tr(),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:  EdgeInsets.all(AppWidthManager.w3Point8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'enterVerificationCode'.tr(), // Localized message
-              style: const TextStyle(color: Colors.blue, fontSize: 15),
+              'enterVerificationCode'.tr(),
+              style:  TextStyle(color: Colors.blue, fontSize: FontSizeManager.fs15),
             ),
-            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding:  EdgeInsets.all(AppWidthManager.w3Point8),
               child: PinCodeTextField(
                 pinBoxBorderWidth: 1,
                 pinBoxWidth: AppWidthManager.w9,
                 pinBoxHeight: AppHeightManager.h6,
                 maxLength: 6,
+                pinBoxRadius: AppRadiusManager.r10,
+                defaultBorderColor: AppColorManager.grey,
                 controller: codeController,
                 keyboardType: TextInputType.number,
                 onDone: (value) {
@@ -64,7 +65,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 20),
+             SizedBox(height: AppHeightManager.h2),
             BlocConsumer<VerficationCubit, VerficationState>(
               listener: (context, state) {
                 if (state.status == CubitStatus.success) {
