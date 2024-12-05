@@ -27,7 +27,7 @@ abstract class AppSharedPreferences {
 
 
   static String getLanguage() {
-    return _sharedPreferences.getString(AppKeyManager.language) ?? "en";
+    return _sharedPreferences.getString(AppKeyManager.language) ?? "ar";
   }
   static String getAccountType() {
     return _sharedPreferences.getString(AppKeyManager.accountType) ?? '';

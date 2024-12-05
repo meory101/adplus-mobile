@@ -10,17 +10,20 @@ class RegisterRequestEntity {
     String? whatsapp,
     String? username,
     String? password,
+    String? phone,
     String? passwordConfirmation,
   }) {
     _name = name;
     _whatsapp = whatsapp;
     _username = username;
     _password = password;
+    _phone = phone;
     _passwordConfirmation = passwordConfirmation;
   }
 
   RegisterRequestEntity.fromJson(dynamic json) {
     _name = json['name'];
+    _phone = json['phone'];
     _whatsapp = json['whatsapp'];
     _username = json['username'];
     _password = json['password'];
@@ -32,6 +35,7 @@ class RegisterRequestEntity {
   String? _username;
   String? _password;
   String? _passwordConfirmation;
+  String? _phone;
 
   RegisterRequestEntity copyWith({
     String? name,
@@ -39,8 +43,10 @@ class RegisterRequestEntity {
     String? username,
     String? password,
     String? passwordConfirmation,
+    String? phone
   }) =>
       RegisterRequestEntity(
+        phone: phone ?? _phone,
         name: name ?? _name,
         whatsapp: whatsapp ?? _whatsapp,
         username: username ?? _username,
@@ -50,6 +56,10 @@ class RegisterRequestEntity {
 
   String? get name => _name;
   set name(String? value) => _name = value;
+
+  String? get phone => _phone;
+  set phone(String? value) => _phone = value;
+
 
   String? get whatsapp => _whatsapp;
   set whatsapp(String? value) => _whatsapp = value;

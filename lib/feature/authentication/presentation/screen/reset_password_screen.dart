@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
@@ -15,7 +16,8 @@ import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final ResetPasswordArgs? args;
+  const ResetPasswordScreen({super.key,required this.args});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -28,6 +30,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   PasswordResetRequestEntity entity = PasswordResetRequestEntity();
   GlobalKey<FormState> formKey = GlobalKey();
+
+  @override
+  void initState() {
+    entity.username = widget.args?.userName;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,38 +57,21 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   fontWeight: FontWeight.w700,
                 ),
                 SizedBox(height: AppHeightManager.h5),
-                AppTextFormField(
-                  textInputType: TextInputType.emailAddress,
-                  hintText: "emailHint".tr(),
-                  hintStyle: const TextStyle(color: AppColorManager.textGrey),
-                  onChanged: (value) {
-                    entity.username = value;
-                    return null;
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "emailRequired".tr();
-                    }
-                    bool isEmail = RegExp(
-                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
-                        .hasMatch(value);
-                    if (!isEmail) {
-                      return "invalidEmailFormat".tr();
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: AppHeightManager.h1point8),
+
                 AppTextFormField(
                   textInputType: TextInputType.emailAddress,
                   hintText: "codeHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.code = value;
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "codeRequired".tr();
+                    }
+                    if(value.length!=6){
+                      return "inValidCode".tr();
                     }
                     return null;
                   },
@@ -93,10 +84,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   onChanged: (value) {
                     entity.password = value;
                     checkPasswordsMatch();
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "newPasswordRequired".tr();
+                    }
+                    if(!value.isValidPassword()){
+                      return "invalidPassword".tr();
                     }
                     return null;
                   },
@@ -121,6 +116,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   onChanged: (value) {
                     entity.passwordConfirmation = value;
                     checkPasswordsMatch();
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -160,7 +156,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 BlocConsumer<ResetCubit, ResetPasswordState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
-                      Navigator.of(context).pushReplacementNamed(RouteNamedScreens.login);
+                      Navigator.of(context).pop();
                       NoteMessage.showSuccessSnackBar(
                         context: context,
                         text: "passwordResetSuccess".tr(),
@@ -169,7 +165,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
                         context: context,
-                        text: state.error ?? "passwordResetFailed".tr(),
+                        text: state.error,
                       );
                     }
                   },
@@ -179,7 +175,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     }
                     return MainAppButton(
                       onTap: () {
-                        if (formKey.currentState?.validate() ?? false && passwordsMatch) {
+                        if (formKey.currentState?.validate() ?? false) {
                           context
                               .read<ResetCubit>()
                               .resetPassword(entity: entity, context: context);
@@ -210,4 +206,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       passwordsMatch = entity.password == entity.passwordConfirmation;
     });
   }
+}
+
+class ResetPasswordArgs{
+  String? userName;
+  ResetPasswordArgs({required this.userName});
 }

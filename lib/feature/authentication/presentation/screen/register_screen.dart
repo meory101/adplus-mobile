@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
@@ -38,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-              top: AppHeightManager.h20,
+              top: AppHeightManager.h10,
               left: AppWidthManager.w5,
               right: AppWidthManager.w5),
           child: Form(
@@ -58,6 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.name = value;
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -73,22 +75,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.username = value;
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "usernameRequired".tr();
                     }
 
-                    bool isEmail = RegExp(
-                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
-                        .hasMatch(value);
-                    bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
+                    bool isEmail = value.isEmail();
+                    bool isPhone = value.isPhoneNumber();
                     if(isPhone==true){
                       String? newValue =value;
                       if(value[0]=="0"){
                        newValue=   value.substring(1);
                       }
-
                       entity.username ='+963${newValue}';
                     }
                     if (!isEmail && !isPhone) {
@@ -103,8 +103,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintText: "phoneNumberHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
-                    entity.whatsapp = value;
-
+                    entity.phone = value;
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -117,6 +117,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                 ),
+
+                SizedBox(height: AppHeightManager.h1point8),
+                AppTextFormField(
+                  textInputType: TextInputType.number,
+                  hintText: "whatsapp".tr(),
+                  hintStyle: const TextStyle(color: AppColorManager.textGrey),
+                  onChanged: (value) {
+                    entity.phone = value;
+                    return null;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "whatsAppRequired".tr();
+                    }
+                    bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
+                    if (!isPhone) {
+                      return "invalidPhoneNumber".tr();
+                    }
+                    return null;
+                  },
+                ),
+
                 SizedBox(height: AppHeightManager.h1point8),
                 AppTextFormField(
                   maxLines: 1,
@@ -125,10 +147,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onChanged: (value) {
                     entity.password = value;
                     checkPasswordsMatch();
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "passwordRequired".tr();
+                    }
+                    if(!value.isValidPassword()){
+                      return "invalidPassword".tr();
                     }
                     return null;
                   },
@@ -153,6 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onChanged: (value) {
                     entity.passwordConfirmation = value;
                     checkPasswordsMatch();
+                    return null;
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -211,7 +238,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     return MainAppButton(
                       onTap: () {
-                        if (formKey.currentState?.validate() ?? false && passwordsMatch) {
+                        if (formKey.currentState?.validate() ?? false) {
                           context
                               .read<RegisterCubit>()
                               .register(entity: entity, context: context);

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
@@ -13,6 +14,7 @@ import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/forget_password_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_state.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
@@ -48,17 +50,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 ),
                 SizedBox(height: AppHeightManager.h3),
                 AppTextFormField(
-                  textInputType: TextInputType.emailAddress,
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppWidthManager.w3Point8),
-                    child: SvgPicture.asset(
-                      AppIconManager.person,
-                      colorFilter: const ColorFilter.mode(
-                          AppColorManager.textGrey, BlendMode.srcIn),
-                    ),
-                  ),
-                  hintText: "enterYourEmail".tr(),
+                  textInputType: TextInputType.text,
+                  hintText: "usernameHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {
                     entity.username = value;
@@ -66,13 +59,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "emailRequired".tr();
+                      return "usernameRequired".tr();
                     }
-                    bool isEmail = RegExp(
-                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
-                        .hasMatch(value);
-                    if (!isEmail) {
-                      return "invalidEmail".tr();
+
+                    bool isEmail = value.isEmail();
+                    bool isPhone = value.isPhoneNumber();
+                    if(isPhone==true){
+                      String? newValue =value;
+                      if(value[0]=="0"){
+                        newValue=   value.substring(1);
+                      }
+                      entity.username ='+963${newValue}';
+                    }
+                    if (!isEmail && !isPhone) {
+                      return "usernameInvalid".tr();
                     }
                     return null;
                   },
@@ -81,7 +81,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
                   listener: (context, state) {
                     if (state.status == CubitStatus.success) {
-                      Navigator.of(context).pushNamed(
+                      Navigator.of(context).pushReplacementNamed(
+                        arguments: ResetPasswordArgs(userName: entity.username),
                         RouteNamedScreens.resetpassword,
                       );
                     }

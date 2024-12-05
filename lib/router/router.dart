@@ -19,11 +19,9 @@ import 'package:mzad_damascus/feature/authentication/presentation/screen/forget_
 import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/screen/verfication_code.dart';
 import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
-import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorite_request_entity.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/add_favorite_cubit/add_favorite_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/remove_favorite_cubit/remove_favorite_cubit.dart';
-import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/followers_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
@@ -100,6 +98,7 @@ import '../feature/profile/presentation/cubit/remove_follow_cubit/remove_follow_
 /// Eng.Nour Othman(meory)*
 String? myRoute;
 Object? currentArgument;
+bool? isRegisterOrVerification = false;
 
 abstract class RouteNamedScreens {
   static String init = splash;
@@ -385,20 +384,18 @@ abstract class AppRouter {
         );
 
       case RouteNamedScreens.resetpassword:
-        myRoute = RouteNamedScreens.resetpassword;
-
-        myRoute = RouteNamedScreens.resetpassword;
+        argument as ResetPasswordArgs;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<ResetCubit>(),
-            child: const ResetPasswordScreen(),
+            child:  ResetPasswordScreen(
+              args: argument,
+            ),
           ),
         );
 
       case RouteNamedScreens.forgetpassword:
-        myRoute = RouteNamedScreens.forgetpassword;
 
-        myRoute = RouteNamedScreens.forgetpassword;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<ForgetPasswordCubit>(),
@@ -407,7 +404,7 @@ abstract class AppRouter {
         );
 
       case RouteNamedScreens.register:
-        myRoute = RouteNamedScreens.register;
+        isRegisterOrVerification = true;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<RegisterCubit>(),
@@ -415,7 +412,7 @@ abstract class AppRouter {
           ),
         );
       case RouteNamedScreens.aboutUs:
-        myRoute = RouteNamedScreens.register;
+        myRoute = RouteNamedScreens.aboutUs;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<RegisterCubit>(),
@@ -423,7 +420,7 @@ abstract class AppRouter {
           ),
         );
       case RouteNamedScreens.privacyPolicy:
-        myRoute = RouteNamedScreens.register;
+        myRoute = RouteNamedScreens.privacyPolicy;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<RegisterCubit>(),
@@ -457,7 +454,7 @@ abstract class AppRouter {
         return SlidUpBuilderRoute(page: const AdvertisementLanguageScreen());
 
       case RouteNamedScreens.verfication:
-        myRoute = RouteNamedScreens.verfication;
+        isRegisterOrVerification = true;
         argument as VerificationCodeArgs;
         return FadeBuilderRoute(
           page: BlocProvider(

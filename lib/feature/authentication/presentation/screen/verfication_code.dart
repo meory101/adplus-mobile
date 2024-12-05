@@ -78,6 +78,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 }
                 if (state.status == CubitStatus.error) {
                   NoteMessage.showErrorSnackBar(

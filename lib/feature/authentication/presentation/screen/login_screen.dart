@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: FontSizeManager.fs15,
                     ),
                     SizedBox(width: AppWidthManager.w1),
-                    GestureDetector(
+                    InkWell(
                       onTap: () {
                         Navigator.of(context)
                             .pushReplacementNamed(RouteNamedScreens.register);

@@ -135,7 +135,10 @@
   "favorites" : "المفضلة",
   "aboutUs"  : "حول التطبيق",
   "privacyPolicy" : "سياسة الخصوصية",
-  "whatAreYouSearchingFor" : "ما الذي تبحث عنه؟"
+  "whatAreYouSearchingFor" : "ما الذي تبحث عنه؟",
+  "whatsAppRequired": "يرجى إدخال رقم الواتساب الخاص بك",
+  "invalidPassword": "كلمة المرور غير صحيحة(8 احرف مطلوبة)"
+
 
 
 }

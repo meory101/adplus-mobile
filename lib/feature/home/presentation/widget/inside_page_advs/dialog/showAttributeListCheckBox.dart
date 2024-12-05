@@ -53,7 +53,6 @@ void showAttributeListCheckBox(
                     } else {
                       isSelected =
                           selectedAttributeMap[currentFilterItemId]?.contains(options[i].name)??false;
-                      print(isSelected);
                     }
 
                     return InkWell(

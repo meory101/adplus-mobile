@@ -50,19 +50,24 @@ void showLoginBottomSheet({required BuildContext context}) {
                   children: [
                     MainAppButton(
                       padding:
-                      EdgeInsets.symmetric(horizontal: AppWidthManager.w10),
+                          EdgeInsets.symmetric(horizontal: AppWidthManager.w10),
                       borderRadius: BorderRadius.circular(AppRadiusManager.r10),
                       height: AppHeightManager.h5,
                       onTap: () {
-                        Navigator.of(context).pushNamed(
-                            RouteNamedScreens.login).then((value) {
-
-                          if (myRoute != RouteNamedScreens.register &&
-                              myRoute != RouteNamedScreens.resetpassword &&
-                              myRoute != RouteNamedScreens.forgetpassword)
-                          {
+                        Navigator.of(context)
+                            .pushNamed(RouteNamedScreens.login)
+                            .then((value) {
+                          if (isRegisterOrVerification == true) {
+                            return;
+                          }
+                          if (myRoute == RouteNamedScreens.mainBottomAppBar) {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              RouteNamedScreens.mainBottomAppBar,
+                              (route) => false,
+                            );
+                          }
                           Navigator.of(context).pop();
-                          } },);
+                        });
                       },
                       color: AppColorManager.mainColor,
                       alignment: Alignment.center,

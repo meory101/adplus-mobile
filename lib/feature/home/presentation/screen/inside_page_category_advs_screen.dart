@@ -74,9 +74,6 @@ class _InsidePageCategoryAdvsScreenState
   getData() async {
     FilterRequest.entity.attributes?.forEach(
       (element) {
-        print(element.value);
-        print(element.attributeId);
-        print('finaaaaaaaaaaaaaaaaaaaaaaaaal result');
       },
     );
     context.read<AdvsByAttributeCubit>().resetData();
@@ -218,8 +215,6 @@ class _InsidePageCategoryAdvsScreenState
                                   List<FilterAttribute> attributes = [];
                                   selectedAttributeMap.forEach(
                                     (key, value) {
-                                      print(key);
-                                      print(value);
                                       if (value.isNotEmpty) {
                                         attributes.add(FilterAttribute(
                                             value: value, attributeId: key));

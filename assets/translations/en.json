@@ -135,5 +135,7 @@
   "favorites" : "Favorites",
   "aboutUs"  : "About Us",
   "privacyPolicy" : "Privacy Policy",
-"whatAreYouSearchingFor" : "What Are You Searching For?"
+"whatAreYouSearchingFor" : "What Are You Searching For?",
+  "whatsAppRequired" : "Please enter your WhatsApp Number",
+  "invalidPassword"  : "Invalid Password (8 Characters)"
 }
