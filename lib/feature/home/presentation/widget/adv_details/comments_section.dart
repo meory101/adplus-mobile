@@ -71,7 +71,10 @@ class _CommentsSectionState extends State<CommentsSection> {
       }
     }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
-        return const CommentSectionShimmer();
+        return Padding(
+          padding:  EdgeInsets.only(top: AppHeightManager.h1point8),
+          child: CommentSectionShimmer(),
+        );
       }
 
       List<Comment>? comments = state.entity.data?.data;

@@ -73,8 +73,7 @@ class _InsidePageCategoryAdvsScreenState
 
   getData() async {
     FilterRequest.entity.attributes?.forEach(
-      (element) {
-      },
+      (element) {},
     );
     context.read<AdvsByAttributeCubit>().resetData();
     getAdvertisements();
@@ -225,12 +224,16 @@ class _InsidePageCategoryAdvsScreenState
                                   getData();
                                   setState(() {});
                                 },
-                                child: DecoratedContainer(
-                                  color: selectedStarIndex == index
-                                      ? AppColorManager.mainColor
-                                      : AppColorManager.white,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(AppRadiusManager.r8)),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: AppHeightManager.h5,
+                                  decoration: BoxDecoration(
+                                    color: selectedStarIndex == index
+                                        ? AppColorManager.mainColor
+                                        : AppColorManager.lightGreyOpacity6,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(AppRadiusManager.r8)),
+                                  ),
                                   margin: EdgeInsets.symmetric(
                                       horizontal: AppWidthManager.w2),
                                   padding: EdgeInsets.symmetric(

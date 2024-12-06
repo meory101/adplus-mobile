@@ -64,7 +64,7 @@ void showBusinessAccountDialog(
                       children: [
                         AppTextWidget(
                           color: AppColorManager.textAppColor,
-                          text: "convertToBusinessAccount".tr(),
+                          text: "businessAccountText".tr(),
                           fontWeight: FontWeight.w600,
                           fontSize: FontSizeManager.fs16,
                           overflow: TextOverflow.visible,
