@@ -86,7 +86,7 @@
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                borderSide: const BorderSide(color: AppColorManager.red),
+                borderSide:  BorderSide(color: AppColorManager.red),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppRadiusManager.r10),

@@ -176,7 +176,7 @@ class AdvCard extends StatelessWidget {
                         width: AppWidthManager.w3Point8,
                       ),
                       MainAppButton(
-                          color: Colors.red.withOpacity(0.8),
+                          color: AppColorManager.red,
                           borderRadius: BorderRadius.circular(AppRadiusManager.r10),
                           padding: EdgeInsets.symmetric(
                               horizontal: AppWidthManager.w5,

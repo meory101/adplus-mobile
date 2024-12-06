@@ -137,7 +137,11 @@
   "privacyPolicy" : "سياسة الخصوصية",
   "whatAreYouSearchingFor" : "ما الذي تبحث عنه؟",
   "whatsAppRequired": "يرجى إدخال رقم الواتساب الخاص بك",
-  "invalidPassword": "كلمة المرور غير صحيحة(8 احرف مطلوبة)"
+  "invalidPassword": "كلمة المرور غير صحيحة(8 احرف مطلوبة)",
+  "maximum10Images" : "10 صور على الاكثر",
+  "hi": "مرحبا",
+  "areYouSureYouWantToLogout" : "هل انت متاكد من تسجيل الخروج",
+  "areYouSureYouWantToDelete" : "هل تود حذف الاعلان"
 
 
 

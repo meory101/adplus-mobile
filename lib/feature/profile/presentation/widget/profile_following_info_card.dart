@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
-import 'package:mzad_damascus/feature/profile/presentation/screen/myfollowers_screen.dart';
-import 'package:mzad_damascus/feature/profile/presentation/screen/myfollowing_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
+import 'dart:ui' as ui;
 
 class ProfileFollowingInfoCard extends StatefulWidget {
   final ProfileInfo? profileInfo;
@@ -117,11 +116,15 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
   Widget _buildWhatsappSection() {
     return Column(
       children: [
-        AppTextWidget(
-          text: widget.profileInfo?.user?.whatsapp ?? '--',
-          fontSize: FontSizeManager.fs15,
-          fontWeight: FontWeight.w700,
-          color: AppColorManager.textAppColor,
+        Directionality(
+          textDirection: ui.TextDirection.ltr,
+
+          child: AppTextWidget(
+            text: widget.profileInfo?.user?.whatsapp ?? '--',
+            fontSize: FontSizeManager.fs15,
+            fontWeight: FontWeight.w700,
+            color: AppColorManager.textAppColor,
+          ),
         ),
         SizedBox(height: AppWidthManager.w2),
         AppTextWidget(

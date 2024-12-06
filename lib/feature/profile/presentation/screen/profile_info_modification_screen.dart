@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
@@ -16,18 +17,15 @@ import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
-import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_cubit/update_profile_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/update_profile_image_cubit/update_profile_image_cubit.dart';
-import 'package:mzad_damascus/router/router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../../../../core/helper/app_image_helper.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/image_manager.dart';
 import '../../../../core/resource/size_manager.dart';
-import '../../../../core/widget/form_field/app_form_field.dart';
+import 'package:mzad_damascus/core/helper/phone_number_hepler.dart';
 
 class ProfileInfoModificationScreen extends StatefulWidget {
   final ProfileInfoModificationArgs args;
@@ -45,19 +43,22 @@ class _ProfileInfoModificationScreenState
   UpdateProfileRequestEntity entity = UpdateProfileRequestEntity();
 
   GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   void initState() {
-    profileImage =null;
+    profileImage = null;
     entity.username = widget.args.profileInfo?.user?.username;
     entity.name = widget.args.profileInfo?.user?.name;
     entity.description = widget.args.profileInfo?.user?.description;
+    entity.whatsapp = widget.args.profileInfo?.user?.whatsapp;
+    entity.phone = widget.args.profileInfo?.user?.phone;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  MainAppBar(title: "editProfile".tr()),
+      appBar: MainAppBar(title: "editProfile".tr()),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppWidthManager.w3Point8),
@@ -222,6 +223,64 @@ class _ProfileInfoModificationScreenState
                 SizedBox(
                   height: AppHeightManager.h1point8,
                 ),
+                TitleAppFormFiled(
+                  textInputType: TextInputType.number,
+                  initValue:  PhoneNumberHelper.formatPhoneNumberWithoutCountyCode(
+                      widget.args.profileInfo?.user?.whatsapp ?? ""),
+                  title: "whatsapp".tr(),
+                  hint: "whatsapp".tr(),
+                  onChanged: (value) {
+                    entity.whatsapp = value ?? "";
+                    return null;
+                  },
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "required";
+                    }
+                    bool isPhone = (value ?? "").isPhoneNumber();
+                    if (isPhone == true) {
+                      entity.whatsapp =
+                          PhoneNumberHelper.formatPhoneNumberWithCountyCode(
+                              value ?? "");
+                    } else {
+                      return "invalidPhoneNumber".tr();
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: AppHeightManager.h1point8,
+                ),
+                TitleAppFormFiled(
+                  textInputType: TextInputType.number,
+                  initValue:
+                      PhoneNumberHelper.formatPhoneNumberWithoutCountyCode(
+                          widget.args.profileInfo?.user?.phone ?? ""),
+                  title: "phoneNumberHint".tr(),
+                  hint: "phoneNumberHint".tr(),
+                  onChanged: (value) {
+                    entity.phone = value ?? "";
+                    return null;
+                  },
+                  validator: (value) {
+                    if ((value ?? "").isEmpty) {
+                      return "required";
+                    }
+                    bool isPhone = (value ?? "").isPhoneNumber();
+                    if (isPhone == true) {
+                      entity.phone =
+                          PhoneNumberHelper.formatPhoneNumberWithCountyCode(
+                              value ?? "");
+                    } else {
+                      return "invalidPhoneNumber".tr();
+                    }
+
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: AppHeightManager.h1point8,
+                ),
                 SizedBox(
                   height: AppHeightManager.h4,
                 ),
@@ -236,7 +295,7 @@ class _ProfileInfoModificationScreenState
                     }
                   },
                   builder: (context, state) {
-                    if(state.status ==CubitStatus.loading){
+                    if (state.status == CubitStatus.loading) {
                       return const AppCircularProgressWidget();
                     }
                     return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
@@ -252,12 +311,9 @@ class _ProfileInfoModificationScreenState
                                 .updateProfile(
                                     context: context,
                                     profileImage: profileImage!);
-
-                          }
-                        else{
+                          } else {
                             Navigator.of(context).pop();
                           }
-
                         }
                       },
                       builder: (context, state) {

@@ -72,7 +72,7 @@ abstract class NoteMessage {
                                   shape: BoxShape.circle,
                                   color: AppColorManager.redOpacity15),
                               child: SvgPicture.asset(AppIconManager.warning,
-                                  colorFilter: const ColorFilter.mode(
+                                  colorFilter:  ColorFilter.mode(
                                       AppColorManager.red, BlendMode.srcIn)),
                             ))
 

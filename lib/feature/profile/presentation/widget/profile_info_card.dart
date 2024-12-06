@@ -2,11 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mzad_damascus/app/app.dart';
-import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
-import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
-import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/profile_info_card_shimmer.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/feature/profile/presentation/screen/profile_info_modification_screen.dart';
@@ -20,6 +16,7 @@ import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_profile_info_response_entity.dart';
 import '../cubit/get_profile_cubit/get_profile_info_cubit.dart';
+import 'dart:ui' as ui;
 
 class ProfileInfoCard extends StatefulWidget {
   const ProfileInfoCard({super.key});
@@ -103,10 +100,21 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.textGrey,
                       ),
-                      AppTextWidget(
-                        text: profileInfo?.user?.username ?? '--',
-                        fontSize: FontSizeManager.fs15,
-                        color: AppColorManager.textGrey,
+                      Directionality(
+                         textDirection: ui.TextDirection.ltr,
+                        child: AppTextWidget(
+                          text: profileInfo?.user?.phone ?? '--',
+                          fontSize: FontSizeManager.fs15,
+                          color: AppColorManager.textGrey,
+                        ),
+                      ),
+                      Directionality(
+                        textDirection: ui.TextDirection.ltr,
+                        child: AppTextWidget(
+                          text: profileInfo?.user?.whatsapp ?? '--',
+                          fontSize: FontSizeManager.fs15,
+                          color: AppColorManager.textGrey,
+                        ),
                       ),
 
                     ],

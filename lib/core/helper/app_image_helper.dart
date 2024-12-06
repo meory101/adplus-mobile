@@ -11,13 +11,35 @@ abstract class AppImageHelper {
       await ImagePicker().pickImage( source: source,
         maxHeight: 512,
         maxWidth: 512,
-        imageQuality: 75,);
+        imageQuality: 75,
+
+      );
       if (photo == null) return null;
       tempImage = File(photo.path);
       // tempImage = await _cropImage(imageFile: tempImage);
     } catch (error) {
     }
     return tempImage;
+  }
+  static Future<List<File?>?>? pickMultiImagesFrom() async {
+    List<File>? tempImages  =[];
+    try {
+    List<XFile?>? photos=
+      await ImagePicker().pickMultiImage(
+        maxHeight: 512,
+        maxWidth: 512,
+        imageQuality: 75,
+      );
+      if (photos.isEmpty) return null;
+     photos.forEach((photo) {
+       if((photo?.path??"").isNotEmpty){
+         tempImages.add(File(photo!.path));
+       }
+     },);
+
+    } catch (error) {
+    }
+    return tempImages;
   }
 
 

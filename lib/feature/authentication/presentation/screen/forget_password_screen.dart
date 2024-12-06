@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/core/helper/phone_number_hepler.dart';
 import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
-import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
@@ -65,11 +64,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     bool isEmail = value.isEmail();
                     bool isPhone = value.isPhoneNumber();
                     if(isPhone==true){
-                      String? newValue =value;
-                      if(value[0]=="0"){
-                        newValue=   value.substring(1);
-                      }
-                      entity.username ='+963${newValue}';
+                      entity.username =PhoneNumberHelper.formatPhoneNumberWithCountyCode(value);
                     }
                     if (!isEmail && !isPhone) {
                       return "usernameInvalid".tr();

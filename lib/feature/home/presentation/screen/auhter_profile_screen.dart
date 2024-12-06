@@ -36,6 +36,7 @@ import '../../../../router/router.dart';
 import '../../../profile/domain/entity/response/profile_by_username_response_entity.dart';
 import '../cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'advertisement_details_screen.dart';
+import 'dart:ui' as ui;
 
 class AuthorProfileScreen extends StatefulWidget {
   final AuthorProfileArgs arg;
@@ -274,11 +275,14 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                 color: AppColorManager.textAppColor,
                               ),
                               SizedBox(height: AppHeightManager.h02),
-                              AppTextWidget(
-                                text: profileInfo?.user?.phone ?? '--',
-                                fontSize: FontSizeManager.fs16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColorManager.textAppColor,
+                              Directionality(
+                                textDirection: ui.TextDirection.ltr,
+                                child: AppTextWidget(
+                                  text: profileInfo?.user?.phone ?? '--',
+                                  fontSize: FontSizeManager.fs16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColorManager.textAppColor,
+                                ),
                               ),
                             ],
                           ),

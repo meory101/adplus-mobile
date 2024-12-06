@@ -79,7 +79,7 @@ class _EditUsernameScreenState extends State<EditUsernameScreen> {
                         if (state.status == CubitStatus.error) {
                           NoteMessage.showErrorSnackBar(
                               context: context,
-                              text: "updateUsernameFailed".tr()); // Localized error message
+                              text: state.error); // Localized error message
                         }
                       },
                       builder: (context, state) {

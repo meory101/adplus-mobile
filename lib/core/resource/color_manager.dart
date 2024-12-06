@@ -19,7 +19,7 @@ abstract class AppColorManager {
   static const Color shimmerBaseColor = Color(0xffe0e0e0);
   static Color redOpacity15 = const Color(0xffff3b30).withOpacity(0.15);
   static Color greenOpacity15 = const Color(0xff34c759).withOpacity(0.15);
-  static const Color red = Color(0xffff3b30);
+  static  Color red = Colors.red.withOpacity(0.8);
   static Color lightGreyOpacity6 = const Color(0xffe5e5ea).withOpacity(0.6);
   static const Color green = Color(0xff34c759);
   static const Color pinkAccent = Colors.pinkAccent;

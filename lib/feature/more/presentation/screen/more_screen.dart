@@ -6,6 +6,7 @@ import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
+import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
@@ -21,6 +22,7 @@ import 'package:mzad_damascus/feature/more/presentation/screen/favorites_screen.
 import 'package:mzad_damascus/feature/more/presentation/widget/dialog/convet_business_account_dialog.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../widget/dialog/language_dialog.dart';
+import '../widget/dialog/logout_dialog.dart';
 import '../widget/more_list_tile.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -170,45 +172,15 @@ class MoreScreen extends StatelessWidget {
           const Divider(color: AppColorManager.borderGrey),
           Visibility(
             visible: AppSharedPreferences.getToken().isNotEmpty,
-            child: BlocConsumer<LogoutCubit, LogoutState>(
-              listener: (context, state) {
-                if (state.status == CubitStatus.error) {
-                  NoteMessage.showErrorSnackBar(
-                      context: context, text: state.error);
-                }
-                if (state.status == CubitStatus.success) {
-                  AppSharedPreferences.clear();
-                  NoteMessage.showSuccessSnackBar(
-                      context: context, text: "youAreVisitorNow".tr());
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    RouteNamedScreens.mainBottomAppBar,
-                    (route) => false,
-                  );
-                }
-              },
-              builder: (context, state) {
-                if (state.status == CubitStatus.loading) {
-                  return SizedBox(
-                      height: AppHeightManager.h5,
-                      width: AppHeightManager.h2,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AppCircularProgressWidget(),
-                        ],
-                      ));
-                }
-                return Padding(
+            child:  Padding(
                   padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context.read<LogoutCubit>().logout(context: context);
+                  child: MainAppButton(
+                    height: AppHeightManager.h6,
+                    alignment: Alignment.center,
+                    onTap: () {
+                      showLogoutDialog(context: context);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColorManager.red,
-                      padding:
-                          EdgeInsets.symmetric(vertical: AppHeightManager.h2),
-                    ),
+                   color: AppColorManager.red,
                     child: AppTextWidget(
                       text: "logout".tr(),
                       color: AppColorManager.white,
@@ -217,8 +189,7 @@ class MoreScreen extends StatelessWidget {
                       maxLines: 2,
                     ),
                   ),
-                );
-              },
+
             ),
           ),
         ],

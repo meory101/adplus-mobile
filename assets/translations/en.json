@@ -137,5 +137,9 @@
   "privacyPolicy" : "Privacy Policy",
 "whatAreYouSearchingFor" : "What Are You Searching For?",
   "whatsAppRequired" : "Please enter your WhatsApp Number",
-  "invalidPassword"  : "Invalid Password (8 Characters)"
+  "invalidPassword"  : "Invalid Password (8 Characters)",
+  "maximum10Images" : "Maximum 10 Images",
+  "hi" : "Hi",
+  "areYouSureYouWantToLogout" : "Are You Sure You Want To Logout",
+  "areYouSureYouWantToDelete" : "Are You Sure You Want To Delete"
 }

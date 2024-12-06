@@ -2,30 +2,27 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
-import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
+import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
-import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_state.dart';
-
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
+import '../../../../../core/storage/shared/shared_pref.dart';
 import '../../../../../core/widget/button/main_app_button.dart';
-import '../../../../../core/widget/container/shimmer_container.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
-import '../../../../advertisement/domain/entity/request/delete_adv_request_entity.dart';
-import '../../../../advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
-import '../../../../home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import '../../../../../router/router.dart';
+import '../../../../authentication/presentation/cubit/logout cubit/logout_cubit.dart';
+import '../../../../authentication/presentation/cubit/logout cubit/logout_state.dart';
 import '../../../../../core/injection/injection_container.dart' as di;
 
-void showDeleteAdDialog(
-    {required BuildContext context,
-    required AdData item,
-    required Function() onSuccess}) {
+void showLogoutDialog({
+  required BuildContext context,
+}) {
   showDialog(
     context: context,
     builder: (context) {
       return BlocProvider(
-          create: (context) => di.sl<DeleteAdvertisementCubit>(),
+          create: (context) => di.sl<LogoutCubit>(),
           child: Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius:
@@ -36,7 +33,6 @@ void showDeleteAdDialog(
             elevation: 0,
             backgroundColor: AppColorManager.white,
             child: Padding(
-
               padding: EdgeInsets.only(
                   left: AppWidthManager.w4,
                   right: AppWidthManager.w4,
@@ -46,7 +42,7 @@ void showDeleteAdDialog(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   AppTextWidget(
-                    text: "delete".tr(),
+                    text: "logout".tr(),
                     fontWeight: FontWeight.w600,
                     fontSize: FontSizeManager.fs18,
                     overflow: TextOverflow.visible,
@@ -59,13 +55,13 @@ void showDeleteAdDialog(
                       children: [
                         AppTextWidget(
                           color: AppColorManager.textAppColor,
-                          text: "areYouSureYouWantToDelete".tr(),
+                          text: "areYouSureYouWantToLogout".tr(),
                           fontWeight: FontWeight.w600,
                           fontSize: FontSizeManager.fs16,
                           overflow: TextOverflow.visible,
                           textAlign: TextAlign.center,
                           maxLines: 2,
-                        ),
+                    ),
                         SizedBox(
                           height: AppHeightManager.h1point5,
                         ),
@@ -73,16 +69,22 @@ void showDeleteAdDialog(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
-                              child: BlocConsumer<DeleteAdvertisementCubit,
-                                  DeleteAdvertisementState>(
+                              child: BlocConsumer<LogoutCubit, LogoutState>(
                                 listener: (context, state) {
                                   if (state.status == CubitStatus.error) {
                                     NoteMessage.showErrorSnackBar(
                                         context: context, text: state.error);
                                   }
                                   if (state.status == CubitStatus.success) {
-                                    Navigator.of(context).pop();
-                                    onSuccess();
+                                    AppSharedPreferences.clear();
+                                    NoteMessage.showSuccessSnackBar(
+                                        context: context,
+                                        text: "youAreVisitorNow".tr());
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                      RouteNamedScreens.mainBottomAppBar,
+                                      (route) => false,
+                                    );
                                   }
                                 },
                                 builder: (context, state) {
@@ -93,25 +95,21 @@ void showDeleteAdDialog(
                                   }
                                   return MainAppButton(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: AppWidthManager.w10),
-                                    borderRadius:
-                                        BorderRadius.circular(AppRadiusManager.r10),
+                                        horizontal: AppWidthManager.w3Point8),
+                                    borderRadius: BorderRadius.circular(
+                                        AppRadiusManager.r10),
                                     height: AppHeightManager.h5,
-                                    width: AppWidthManager.w35,
                                     color: AppColorManager.red,
                                     alignment: Alignment.center,
                                     child: AppTextWidget(
-                                      text: "delete".tr(),
+                                      text: "logout".tr(),
                                       fontSize: FontSizeManager.fs16,
                                       color: AppColorManager.white,
                                     ),
                                     onTap: () {
                                       context
-                                          .read<DeleteAdvertisementCubit>()
-                                          .deleteAdvertisement(
-                                              context: context,
-                                              entity: DeleteAdvRequestEntity(
-                                                  itemId: item.itemId));
+                                          .read<LogoutCubit>()
+                                          .logout(context: context);
                                     },
                                   );
                                 },
@@ -120,11 +118,10 @@ void showDeleteAdDialog(
                             Expanded(
                               child: MainAppButton(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: AppWidthManager.w10),
+                                    horizontal: AppWidthManager.w3Point8),
                                 borderRadius:
                                     BorderRadius.circular(AppRadiusManager.r10),
                                 height: AppHeightManager.h5,
-                                width: AppWidthManager.w35,
                                 color: AppColorManager.white,
                                 alignment: Alignment.center,
                                 child: AppTextWidget(

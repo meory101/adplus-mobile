@@ -191,8 +191,9 @@ class _AdvertisementDetailsScreenState
                                   Row(
                                     children: [
                                       CircleAvatar(
+                                        radius: AppWidthManager.w5,
                                         backgroundColor: AppColorManager.grey
-                                            .withOpacity(0.3),
+                                            .withOpacity(0.2),
                                         child: BlocConsumer<RemoveFavoriteCubit,
                                             RemoveFavoriteState>(
                                           listener: (context, state) {
@@ -321,6 +322,7 @@ class _AdvertisementDetailsScreenState
                                                                   .red
                                                               : AppColorManager
                                                                   .white,
+                                                          size: AppWidthManager.w5,
                                                         ));
                                                   },
                                                 );
@@ -344,9 +346,9 @@ class _AdvertisementDetailsScreenState
                                             width: AppWidthManager.w2,
                                           ),
                                           CircleAvatar(
-                                            backgroundColor: AppColorManager
-                                                .grey
-                                                .withOpacity(0.3),
+                                            radius: AppWidthManager.w5,
+                                            backgroundColor: AppColorManager.grey
+                                                .withOpacity(0.2),
                                             child: BlocConsumer<RemoveLikeCubit,
                                                 RemoveLikeState>(
                                               listener: (context, state) {
@@ -495,6 +497,7 @@ class _AdvertisementDetailsScreenState
                                                                       .mainColor
                                                                   : AppColorManager
                                                                       .white,
+                                                              size: AppWidthManager.w5,
                                                             ));
                                                       },
                                                     );

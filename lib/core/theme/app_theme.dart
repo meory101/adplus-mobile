@@ -98,7 +98,7 @@ ThemeData lightTheme() {
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-        borderSide: const BorderSide(
+        borderSide:  BorderSide(
           color: AppColorManager.red,
         ),
       ),
