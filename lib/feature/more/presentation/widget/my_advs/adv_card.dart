@@ -45,166 +45,173 @@ class AdvCard extends StatelessWidget {
             ),
             child: Padding(
               padding: EdgeInsets.all(AppRadiusManager.r10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child:
+              Column(
                 children: [
-                  Container(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                    ),
-                    child: MainImageWidget(
-                      borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                      height: AppHeightManager.h12,
-                      width: AppHeightManager.h12,
-                      imageUrl: AppConstantManager.imageBaseUrl +
-                          (item.photos?.first.photo ?? ""),
-                    ),
-                  ),
-                  SizedBox(width: AppRadiusManager.r10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.name ?? '',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
                         ),
-                        SizedBox(height: AppHeightManager.h08),
-
-                        AppTextWidget(
-                          text: '${item.startingPrice ?? 0}',
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                        child: MainImageWidget(
+                          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                          height: AppHeightManager.h12,
+                          width: AppHeightManager.h12,
+                          imageUrl: AppConstantManager.imageBaseUrl +
+                              (item.photos?.first.photo ?? ""),
                         ),
-                        SizedBox(height: AppHeightManager.h08),
-                        Visibility(
-                          visible: (item.note ?? "").isNotEmpty,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w1),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                 color: AppColorManager.subColor
-                              )
+                      ),
+                      SizedBox(width: AppRadiusManager.r10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.name ?? '',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            child: AppTextWidget(
-                              text: '${item.note ?? ""}',
-                              color: Colors.pink,
-                              fontSize: FontSizeManager.fs16,
-                              fontWeight: FontWeight.w700,
+                            SizedBox(height: AppHeightManager.h08),
+
+                            AppTextWidget(
+                              text: '${item.startingPrice ?? 0}',
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                             ),
-                          ),
-                        ),
-                        SizedBox(height: AppHeightManager.h08),
-                        Row(
-                          children: [
-                            IconButton(
-                                iconSize: 15,
-                                color: AppColorManager.grey,
-                                onPressed: () {},
-                                icon: Icon(Icons.thumb_up_alt_rounded)),
-                            AppTextWidget(
-                              text: '${item.likeCount ?? 0}',
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
+                            SizedBox(height: AppHeightManager.h08),
+                            Visibility(
+                              visible: (item.note ?? "").isNotEmpty,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w1),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: AppColorManager.subColor
+                                    )
+                                ),
+                                child: AppTextWidget(
+                                  text: '${item.note ?? ""}',
+                                  color: Colors.pink,
+                                  fontSize: FontSizeManager.fs16,
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
                             ),
-                            IconButton(
-                                iconSize: 15,
-                                color: AppColorManager.grey,
-                                onPressed: () {},
-                                icon: Icon(Icons.comment)),
-                            AppTextWidget(
-                              text: '${item.commentCount ?? 0}',
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            SizedBox(
-                              width: AppWidthManager.w5,
-                            ),
-                            AppTextWidget(
-                              text:
+                            SizedBox(height: AppHeightManager.h08),
+                            Row(
+                              children: [
+                                IconButton(
+                                    iconSize: 15,
+                                    color: AppColorManager.grey,
+                                    onPressed: () {},
+                                    icon: Icon(Icons.thumb_up_alt_rounded)),
+                                AppTextWidget(
+                                  text: '${item.likeCount ?? 0}',
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                IconButton(
+                                    iconSize: 15,
+                                    color: AppColorManager.grey,
+                                    onPressed: () {},
+                                    icon: Icon(Icons.comment)),
+                                AppTextWidget(
+                                  text: '${item.commentCount ?? 0}',
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                SizedBox(
+                                  width: AppWidthManager.w5,
+                                ),
+                                AppTextWidget(
+                                  text:
                                   (EnumManager.advsStateCode[item.status] ?? "")
                                       .tr(),
-                              color: EnumManager.advsStateColor[item.status] ??
-                                  AppColorManager.amber,
-                              fontSize: FontSizeManager.fs14,
-                              fontWeight: FontWeight.w700,
-                            ),
+                                  color: EnumManager.advsStateColor[item.status] ??
+                                      AppColorManager.amber,
+                                  fontSize: FontSizeManager.fs14,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ],
+                            )
                           ],
-                        )
-                      ],
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      MainAppButton(
+                          color: AppColorManager.mainColor,
+                          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: AppWidthManager.w5,
+                              vertical: AppHeightManager.h1),
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(RouteNamedScreens.updateAdvs,
+                                arguments: UpdateAdvArgs(data: item))
+                                .then((value) {
+                              Navigator.of(context).pushReplacementNamed(
+                                RouteNamedScreens.myitem,
+                              );
+                            });
+                          },
+                          child: AppTextWidget(
+                            text: "edit".tr(),
+                            color: AppColorManager.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: FontSizeManager.fs15,
+                          )),
+                      SizedBox(
+                        width: AppWidthManager.w3Point8,
+                      ),
+                      MainAppButton(
+                          color: Colors.red.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: AppWidthManager.w5,
+                              vertical: AppHeightManager.h1),
+                          onTap: () {
+                            showDeleteAdDialog(
+                                context: context,
+                                item: item,
+                                onSuccess: () {
+                                  NoteMessage.showSuccessSnackBar(
+                                      context: context,
+                                      text: "successfullyDone".tr());
+
+                                  Navigator.of(context).pushReplacementNamed(
+                                    RouteNamedScreens.myitem,
+                                  );
+                                });
+                          },
+                          child: AppTextWidget(
+                            text: "delete".tr(),
+                            color: AppColorManager.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: FontSizeManager.fs15,
+                          )),
+                      SizedBox(
+                        width: AppWidthManager.w1Point2,
+                      ),
+                    ],
+                  )
                 ],
               ),
+
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              MainAppButton(
-                  color: AppColorManager.mainColor,
-                  borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppWidthManager.w5,
-                      vertical: AppHeightManager.h1),
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(RouteNamedScreens.updateAdvs,
-                            arguments: UpdateAdvArgs(data: item))
-                        .then((value) {
-                      Navigator.of(context).pushReplacementNamed(
-                        RouteNamedScreens.myitem,
-                      );
-                    });
-                  },
-                  child: AppTextWidget(
-                    text: "edit".tr(),
-                    color: AppColorManager.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: FontSizeManager.fs15,
-                  )),
-              SizedBox(
-                width: AppWidthManager.w3Point8,
-              ),
-              MainAppButton(
-                  color: Colors.red.withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppWidthManager.w5,
-                      vertical: AppHeightManager.h1),
-                  onTap: () {
-                    showDeleteAdDialog(
-                        context: context,
-                        item: item,
-                        onSuccess: () {
-                          NoteMessage.showSuccessSnackBar(
-                              context: context,
-                              text: "successfullyDone".tr());
 
-                          Navigator.of(context).pushReplacementNamed(
-                            RouteNamedScreens.myitem,
-                          );
-                        });
-                  },
-                  child: AppTextWidget(
-                    text: "delete".tr(),
-                    color: AppColorManager.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: FontSizeManager.fs15,
-                  )),
-              SizedBox(
-                width: AppWidthManager.w1Point2,
-              ),
-            ],
-          )
         ],
       ),
     );

@@ -24,7 +24,7 @@ abstract class EnumManager {
     0 : 'unAvailable'.tr(),
 };
   static Map<num,Color> biddingStatusColor={
-    1 : AppColorManager.orange,
+    1 : AppColorManager.green,
     0 : AppColorManager.grey,
   };
 

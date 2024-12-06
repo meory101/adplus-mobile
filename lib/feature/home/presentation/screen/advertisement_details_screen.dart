@@ -129,6 +129,7 @@ class _AdvertisementDetailsScreenState
                               state.entity.data?.biddingStatus ?? 0] ??
                           AppColorManager.textAppColor),
                 ),
+                SizedBox(width: AppWidthManager.w1Point2,),
                 AppTextWidget(
                   text: EnumManager.biddingStatus[
                           state.entity.data?.biddingStatus ?? 0] ??
