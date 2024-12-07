@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +11,19 @@ import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/resource/theme_manager.dart';
 import '../../../../../core/widget/image/main_image_widget.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
+final List<Color> colors = [
+  AppColorManager.green.withOpacity(0.9),
+  AppColorManager.orange.withOpacity(0.15),
+  AppColorManager.red.withOpacity(0.15),
+  AppColorManager.mainColor.withOpacity(0.15),
+  AppColorManager.pinkAccent.withOpacity(0.15),
+  AppColorManager.purple.withOpacity(0.15),
+];
 
+Color getRandomColor() {
+  final random = Random();
+  return colors[random.nextInt(colors.length)];
+}
 class StandardCard extends StatelessWidget {
   final String title;
   final String imagePath;

@@ -1,4 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
@@ -220,19 +223,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                 visible: cards.isNotEmpty,
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                      bottom: AppHeightManager.h1),
+                                      bottom: AppHeightManager.h1point8),
                                   child: Column(
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: [
-                                      AppTextWidget(
-                                          text: LanguageHelper.checkIfLTR(
-                                              context: context)
-                                              ? categories[index].enName ?? ""
-                                              : categories[index].name ?? "",
-                                          fontSize: FontSizeManager.fs17,
-                                          color: AppColorManager.textAppColor,
-                                          fontWeight: FontWeight.w700),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppTextWidget(
+                                              text: LanguageHelper.checkIfLTR(
+                                                  context: context)
+                                                  ? categories[index].enName ?? ""
+                                                  : categories[index].name ?? "",
+                                              fontSize: FontSizeManager.fs17,
+                                              color: AppColorManager.textAppColor,
+                                              fontWeight: FontWeight.w700),
+                                          AppTextWidget(
+                                              text:'${(categories[index].itemsCount??"0").toString()} ${'advertisement'.tr()}',
+                                              fontSize: FontSizeManager.fs16,
+                                              color: AppColorManager.textGrey,
+                                              fontWeight: FontWeight.w600),
+                                        ],
+                                      ),
                                       SizedBox(
                                         height: AppHeightManager.h1point8,
                                       ),

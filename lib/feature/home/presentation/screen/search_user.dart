@@ -22,6 +22,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/search_user_re
 import 'package:mzad_damascus/feature/home/presentation/cubit/search_user/search_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/auhter_profile_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
+import 'dart:ui' as ui;
 
 import '../../../../core/resource/color_manager.dart';
 
@@ -48,8 +49,9 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
         builder: (context, state) {
           if (state.status == CubitStatus.loading) {
             return Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppWidthManager.w3Point8,
+                  ),
               child: ShimmerContainer(
                   width: AppWidthManager.w100, height: AppHeightManager.h6),
             );
@@ -138,18 +140,21 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                   fontWeight: FontWeight.w700,
                                   fontSize: FontSizeManager.fs16,
                                 ),
-                                AppTextWidget(
-                                    text: users[index].username ?? ""),
+                                Directionality(
+                                  textDirection: ui.TextDirection.ltr,
+                                  child: AppTextWidget(
+                                      text: users[index].username ?? ""),
+                                ),
                               ],
                             )
                           ],
                         ),
                         MainAppButton(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(RouteNamedScreens.authorProfile,
-                            arguments: AuthorProfileArgs(userName: users[index].username??"")
-                            );
+                            Navigator.of(context).pushNamed(
+                                RouteNamedScreens.authorProfile,
+                                arguments: AuthorProfileArgs(
+                                    userName: users[index].username ?? ""));
                           },
                           borderRadius:
                               BorderRadius.circular(AppRadiusManager.r10),

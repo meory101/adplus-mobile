@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mzad_damascus/app/app.dart';
+import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
@@ -20,7 +21,7 @@ class LanguageOptionsListView extends StatefulWidget {
 }
 
 class _LanguageOptionsListViewState extends State<LanguageOptionsListView> {
-  int selectedLanIndex = 0;
+  int selectedLanIndex = 2;
   List<String> title = ["bothLanguages".tr(), "english".tr(), "arabic".tr()];
   List<String> subTitle = [
     "advertisementInfoBothLanguages".tr(),
@@ -38,9 +39,6 @@ class _LanguageOptionsListViewState extends State<LanguageOptionsListView> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            setState(() {
-              selectedLanIndex = index;
-            });
           },
           child: Container(
             decoration: BoxDecoration(
@@ -51,7 +49,9 @@ class _LanguageOptionsListViewState extends State<LanguageOptionsListView> {
               borderRadius: BorderRadius.all(
                 Radius.circular(AppRadiusManager.r15),
               ),
-              color: AppColorManager.white,
+              color: selectedLanIndex == index
+                  ? AppColorManager.white
+                  : AppColorManager.lightGreyOpacity6,
               boxShadow: ThemeManager.cardShadow,
             ),
             padding: EdgeInsets.symmetric(
@@ -68,7 +68,7 @@ class _LanguageOptionsListViewState extends State<LanguageOptionsListView> {
                     AppTextWidget(
                         text: title[index],
                         fontSize: FontSizeManager.fs16,
-                        color: AppColorManager.textAppColor,
+                        color:selectedLanIndex ==index?  AppColorManager.textAppColor:AppColorManager.grey,
                         fontWeight: FontWeight.w600),
                     Visibility(
                       visible: selectedLanIndex == index,

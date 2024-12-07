@@ -25,7 +25,8 @@ class _BiddingScreenState extends State<BiddingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body:
+      Padding(
         padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -102,7 +102,7 @@ class MainCategory {
       num? status, 
       num? homepageAppear, 
       num? ord, 
-      num? itemsCount, 
+      num? itemsCount,
       List<SubCategory>? children,}){
     _categoryId = categoryId;
     _parentId = parentId;
@@ -123,6 +123,7 @@ class MainCategory {
 }
 
   MainCategory.fromJson(dynamic json) {
+    print(json);
     _categoryId = json['category_id'];
     _parentId = json['parent_id'];
     _name = json['name'];
@@ -137,7 +138,7 @@ class MainCategory {
     _status = json['status'];
     _homepageAppear = json['homepage_appear'];
     _ord = json['ord'];
-    _itemsCount = json['items_count'];
+    _itemsCount = json['item_count'];
     if (json['children'] != null) {
       _children = [];
       json['children'].forEach((v) {
