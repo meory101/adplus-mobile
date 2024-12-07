@@ -39,7 +39,7 @@ class _ActivityCardState extends State<ActivityCard> {
       margin: EdgeInsets.all(AppWidthManager.w3Point8),
       padding: EdgeInsets.all(AppWidthManager.w3Point8),
       child: Column(children: [
-        SizedBox(height: AppHeightManager.h4),
+        SizedBox(height: AppHeightManager.h1),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -55,18 +55,17 @@ class _ActivityCardState extends State<ActivityCard> {
                   children: [
                     SvgPicture.asset(
                         colorFilter: ColorFilter.mode(
-                            selectedIndex == 0 ? AppColorManager.mainColor : AppColorManager.textGrey,
+                            selectedIndex == 0 ?AppColorManager.mainColor : AppColorManager.textGrey,
                             BlendMode.srcIn),
-                        AppIconManager.favorites),
+                        AppIconManager.activity),
                     AppTextWidget(
-                      text: "favorites".tr(),
+                      text: "active".tr(),
                       fontSize: FontSizeManager.fs15,
                       color: selectedIndex == 0 ? AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
                 ),
               ),
-
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -81,15 +80,16 @@ class _ActivityCardState extends State<ActivityCard> {
                         colorFilter: ColorFilter.mode(
                             selectedIndex == 1 ? AppColorManager.mainColor : AppColorManager.textGrey,
                             BlendMode.srcIn),
-                        AppIconManager.comments),
+                        AppIconManager.favorites),
                     AppTextWidget(
-                      text: "comments".tr(),
+                      text: "favorites".tr(),
                       fontSize: FontSizeManager.fs15,
-                      color: selectedIndex == 1 ?AppColorManager.mainColor : AppColorManager.textGrey,
+                      color: selectedIndex == 1 ? AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
                 ),
               ),
+
 
               GestureDetector(
                 onTap: () {
@@ -105,16 +105,15 @@ class _ActivityCardState extends State<ActivityCard> {
                         colorFilter: ColorFilter.mode(
                             selectedIndex == 2 ? AppColorManager.mainColor : AppColorManager.textGrey,
                             BlendMode.srcIn),
-                        AppIconManager.likes),
+                        AppIconManager.comments),
                     AppTextWidget(
-                      text: "likes".tr(),
+                      text: "comments".tr(),
                       fontSize: FontSizeManager.fs15,
                       color: selectedIndex == 2 ?AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
                 ),
               ),
-
 
               GestureDetector(
                 onTap: () {
@@ -128,19 +127,20 @@ class _ActivityCardState extends State<ActivityCard> {
                   children: [
                     SvgPicture.asset(
                         colorFilter: ColorFilter.mode(
-                            selectedIndex == 3 ?AppColorManager.mainColor : AppColorManager.textGrey,
+                            selectedIndex == 3 ? AppColorManager.mainColor : AppColorManager.textGrey,
                             BlendMode.srcIn),
-                        AppIconManager.activity),
+                        AppIconManager.likes),
                     AppTextWidget(
-                      text: "active".tr(),
+                      text: "likes".tr(),
                       fontSize: FontSizeManager.fs15,
-                      color: selectedIndex == 3 ? AppColorManager.mainColor : AppColorManager.textGrey,
+                      color: selectedIndex == 3 ?AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
                 ),
-              )
+              ),
+
             ]),
-        SizedBox(height: AppHeightManager.h4),
+        SizedBox(height: AppHeightManager.h1),
       ]),
     );
   }

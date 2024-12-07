@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
+import 'package:mzad_damascus/feature/profile/presentation/widget/dialog/edit_delete_ad_dialog.dart';
 
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/constant_manager.dart';
@@ -11,6 +12,7 @@ import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/button/main_app_button.dart';
 import '../../../../core/widget/container/decorated_container.dart';
+import '../../../../core/widget/drop_down/NameAndId.dart';
 import '../../../../core/widget/image/main_image_widget.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
@@ -76,6 +78,7 @@ class ActiveListView extends StatelessWidget {
                       right: AppWidthManager.w3Point8,
                       bottom: AppHeightManager.h1point8),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -111,95 +114,47 @@ class ActiveListView extends StatelessWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.w500),
-
-                            Visibility(
-                              visible: (items[index].note ?? "").isNotEmpty,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w1),
-
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: AppColorManager.subColor
-                                    )
-                                ),
-                                child: AppTextWidget(
-                                  text: '${items[index].note ?? ""}',
-                                  color: Colors.pink,
-                                  fontSize: FontSizeManager.fs16,
-                                  fontWeight: FontWeight.w700,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ),
-                              ),
-                            ),
                             SizedBox(
                               height: AppHeightManager.h2,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                MainAppButton(
-                                    color: AppColorManager.mainColor,
-                                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: AppWidthManager.w5,
-                                        vertical: AppHeightManager.h1),
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .pushNamed(RouteNamedScreens.updateAdvs,
-                                          arguments: UpdateAdvArgs(data: items[index]))
-                                          .then((value) {
-                                            selectedIndex=2;
-                                        Navigator.of(context).pushReplacementNamed(
-                                          RouteNamedScreens.mainBottomAppBar,
-                                        );
-                                      });
-                                    },
-                                    child: AppTextWidget(
-                                      text: "edit".tr(),
-                                      color: AppColorManager.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: FontSizeManager.fs15,
-                                    )),
-                                SizedBox(
-                                  width: AppWidthManager.w3Point8,
-                                ),
-                                MainAppButton(
-                                    color: Colors.red.withOpacity(0.8),
-                                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: AppWidthManager.w5,
-                                        vertical: AppHeightManager.h1),
-                                    onTap: () {
-                                      showDeleteAdDialog(
-                                          context: context,
-                                          item: items[index],
-                                          onSuccess: () {
-                                            NoteMessage.showSuccessSnackBar(
-                                                context: context,
-                                                text: "successfullyDone".tr());
-
-                                            selectedIndex=2;
-                                            Navigator.of(context).pushReplacementNamed(
-                                              RouteNamedScreens.mainBottomAppBar,
-
-                                            );
-                                          });
-                                    },
-                                    child: AppTextWidget(
-                                      text: "delete".tr(),
-                                      color: AppColorManager.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: FontSizeManager.fs15,
-                                    )),
-                                SizedBox(
-                                  width: AppWidthManager.w1Point2,
-                                ),
-                              ],
-                            )
                           ],
                         ),
-                      )
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            showEditDeleteAdDialog(
+                              context: context,
+                              onEditTaped: () {
+                                Navigator.of(context)
+                                    .pushNamed(RouteNamedScreens.updateAdvs,
+                                        arguments:
+                                            UpdateAdvArgs(data: items[index]))
+                                    .then((value) {
+                                  selectedIndex = 2;
+                                  Navigator.of(context).pushReplacementNamed(
+                                    RouteNamedScreens.mainBottomAppBar,
+                                  );
+                                });
+                              },
+                              onDeleteTaped: () {
+                                showDeleteAdDialog(
+                                    context: context,
+                                    item: items[index],
+                                    onSuccess: () {
+                                      NoteMessage.showSuccessSnackBar(
+                                          context: context,
+                                          text: "successfullyDone".tr());
+
+                                      selectedIndex = 2;
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(
+                                        RouteNamedScreens.mainBottomAppBar,
+                                      );
+                                    });
+                              },
+                            );
+                          },
+                          icon: Icon(Icons.more_vert))
                     ],
                   ),
                 ),

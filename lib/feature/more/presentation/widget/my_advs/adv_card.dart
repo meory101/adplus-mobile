@@ -16,6 +16,7 @@ import '../../../../../core/widget/text/app_text_widget.dart';
 import '../../../../../router/router.dart';
 import '../../../../home/presentation/screen/advertisement_details_screen.dart';
 
+import '../../../../profile/presentation/widget/dialog/edit_delete_ad_dialog.dart';
 import '../../screen/update_adv_screen.dart';
 import '../dialog/delete_ad_dialog.dart';
 
@@ -50,6 +51,7 @@ class AdvCard extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -72,12 +74,63 @@ class AdvCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              item.name ?? '',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: AppTextWidget(
+                                    text: item.name ?? "",
+                                    fontSize: 16,
+                                    maxLines: 1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: IconButton(
+                                      onPressed: () {
+                                        showEditDeleteAdDialog(
+                                          context: context,
+                                          onEditTaped: () {
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    RouteNamedScreens
+                                                        .updateAdvs,
+                                                    arguments: UpdateAdvArgs(
+                                                        data: item))
+                                                .then((value) {
+                                                  print('hereeeeeeeeeeeeeeeeeeeeeeee');
+                                              Navigator.of(context)
+                                                  .pushReplacementNamed(
+                                                RouteNamedScreens.myitem,
+                                              );
+                                            });
+                                          },
+                                          onDeleteTaped: () {
+                                            showDeleteAdDialog(
+                                                context: context,
+                                                item: item,
+                                                onSuccess: () {
+                                                  print('ddddddddddd'
+                                                  );
+                                                  NoteMessage
+                                                      .showSuccessSnackBar(
+                                                          context: context,
+                                                          text:
+                                                              "successfullyDone"
+                                                                  .tr());
+                                                  Navigator.of(context).pop();
+                                                  Navigator.of(context)
+                                                      .pushReplacementNamed(
+                                                    RouteNamedScreens.myitem,
+                                                  );
+                                                });
+                                          },
+                                        );
+                                      },
+                                      icon: Icon(Icons.more_vert)),
+                                )
+                              ],
                             ),
                             SizedBox(height: AppHeightManager.h08),
                             AppTextWidget(
@@ -92,7 +145,8 @@ class AdvCard extends StatelessWidget {
                               visible: (item.note ?? "").isNotEmpty,
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: AppWidthManager.w1,vertical: AppHeightManager.h05),
+                                    horizontal: AppWidthManager.w1,
+                                    vertical: AppHeightManager.h05),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
                                         AppRadiusManager.r5),
@@ -102,7 +156,8 @@ class AdvCard extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     CircleAvatar(
-                                      backgroundColor: AppColorManager.redOpacity15,
+                                      backgroundColor:
+                                          AppColorManager.redOpacity15,
                                       radius: AppRadiusManager.r10,
                                       child: Padding(
                                         padding:
@@ -110,7 +165,8 @@ class AdvCard extends StatelessWidget {
                                         child: SvgPicture.asset(
                                           AppIconManager.xMark,
                                           colorFilter: ColorFilter.mode(
-                                              AppColorManager.red, BlendMode.srcIn),
+                                              AppColorManager.red,
+                                              BlendMode.srcIn),
                                         ),
                                       ),
                                     ),
@@ -169,73 +225,74 @@ class AdvCard extends StatelessWidget {
                                   fontWeight: FontWeight.w700,
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      MainAppButton(
-                          color: AppColorManager.mainColor,
-                          borderRadius:
-                              BorderRadius.circular(AppRadiusManager.r10),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: AppWidthManager.w5,
-                              vertical: AppHeightManager.h1),
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(RouteNamedScreens.updateAdvs,
-                                    arguments: UpdateAdvArgs(data: item))
-                                .then((value) {
-                              Navigator.of(context).pushReplacementNamed(
-                                RouteNamedScreens.myitem,
-                              );
-                            });
-                          },
-                          child: AppTextWidget(
-                            text: "edit".tr(),
-                            color: AppColorManager.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: FontSizeManager.fs15,
-                          )),
-                      SizedBox(
-                        width: AppWidthManager.w3Point8,
-                      ),
-                      MainAppButton(
-                          color: AppColorManager.red,
-                          borderRadius:
-                              BorderRadius.circular(AppRadiusManager.r10),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: AppWidthManager.w5,
-                              vertical: AppHeightManager.h1),
-                          onTap: () {
-                            showDeleteAdDialog(
-                                context: context,
-                                item: item,
-                                onSuccess: () {
-                                  NoteMessage.showSuccessSnackBar(
-                                      context: context,
-                                      text: "successfullyDone".tr());
 
-                                  Navigator.of(context).pushReplacementNamed(
-                                    RouteNamedScreens.myitem,
-                                  );
-                                });
-                          },
-                          child: AppTextWidget(
-                            text: "delete".tr(),
-                            color: AppColorManager.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: FontSizeManager.fs15,
-                          )),
-                      SizedBox(
-                        width: AppWidthManager.w1Point2,
-                      ),
-                    ],
-                  )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     MainAppButton(
+                  //         color: AppColorManager.mainColor,
+                  //         borderRadius:
+                  //             BorderRadius.circular(AppRadiusManager.r10),
+                  //         padding: EdgeInsets.symmetric(
+                  //             horizontal: AppWidthManager.w5,
+                  //             vertical: AppHeightManager.h1),
+                  //         onTap: () {
+                  //           Navigator.of(context)
+                  //               .pushNamed(RouteNamedScreens.updateAdvs,
+                  //                   arguments: UpdateAdvArgs(data: item))
+                  //               .then((value) {
+                  //             Navigator.of(context).pushReplacementNamed(
+                  //               RouteNamedScreens.myitem,
+                  //             );
+                  //           });
+                  //         },
+                  //         child: AppTextWidget(
+                  //           text: "edit".tr(),
+                  //           color: AppColorManager.white,
+                  //           fontWeight: FontWeight.w500,
+                  //           fontSize: FontSizeManager.fs15,
+                  //         )),
+                  //     SizedBox(
+                  //       width: AppWidthManager.w3Point8,
+                  //     ),
+                  //     MainAppButton(
+                  //         color: AppColorManager.red,
+                  //         borderRadius:
+                  //             BorderRadius.circular(AppRadiusManager.r10),
+                  //         padding: EdgeInsets.symmetric(
+                  //             horizontal: AppWidthManager.w5,
+                  //             vertical: AppHeightManager.h1),
+                  //         onTap: () {
+                  //           showDeleteAdDialog(
+                  //               context: context,
+                  //               item: item,
+                  //               onSuccess: () {
+                  //                 NoteMessage.showSuccessSnackBar(
+                  //                     context: context,
+                  //                     text: "successfullyDone".tr());
+                  //
+                  //                 Navigator.of(context).pushReplacementNamed(
+                  //                   RouteNamedScreens.myitem,
+                  //                 );
+                  //               });
+                  //         },
+                  //         child: AppTextWidget(
+                  //           text: "delete".tr(),
+                  //           color: AppColorManager.white,
+                  //           fontWeight: FontWeight.w500,
+                  //           fontSize: FontSizeManager.fs15,
+                  //         )),
+                  //     SizedBox(
+                  //       width: AppWidthManager.w1Point2,
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),

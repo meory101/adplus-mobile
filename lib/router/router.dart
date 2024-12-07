@@ -176,6 +176,7 @@ abstract class AppRouter {
         );
 
       case RouteNamedScreens.searchUser:
+        argument as SearchArgs?;
         myRoute = RouteNamedScreens.searchUser;
 
         return FadeBuilderRoute(
@@ -188,7 +189,9 @@ abstract class AppRouter {
                 create: (context) => di.sl<SearchUserCubit>(),
               ),
             ],
-            child: const SearchUserScreen(),
+            child:  SearchUserScreen(
+              args: argument,
+            ),
           ),
         );
       case RouteNamedScreens.followers:
@@ -367,11 +370,10 @@ abstract class AppRouter {
         );
 
       case RouteNamedScreens.more:
-
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<ConvertBusinessAccountCubit>(),
-            child:  MoreScreen(),
+            child: MoreScreen(),
           ),
         );
       case RouteNamedScreens.editusername:
@@ -388,14 +390,13 @@ abstract class AppRouter {
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<ResetCubit>(),
-            child:  ResetPasswordScreen(
+            child: ResetPasswordScreen(
               args: argument,
             ),
           ),
         );
 
       case RouteNamedScreens.forgetpassword:
-
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<ForgetPasswordCubit>(),
@@ -614,6 +615,9 @@ abstract class AppRouter {
               ),
               BlocProvider(
                 create: (context) => di.sl<MyitemReviewCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => di.sl<SearchUserCubit>(),
               ),
               BlocProvider(
                 create: (context) => di.sl<CommentCubit>(),

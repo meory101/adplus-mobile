@@ -22,7 +22,7 @@ abstract class AppColorManager {
   static  Color red = Colors.red.withOpacity(0.8);
   static Color lightGreyOpacity6 = const Color(0xffe5e5ea).withOpacity(0.6);
   static const Color green = Color(0xff34c759);
-  static const Color pinkAccent = Colors.pinkAccent;
+  static const Color pinkAccent = Colors.pink;
   static const Color lightBlue = Colors.lightBlue;
   static const Color purple = Colors.purple;
   static const Color deepPurpleAccent = Colors.deepPurpleAccent;
