@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
+import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
@@ -45,8 +47,7 @@ class AdvCard extends StatelessWidget {
             ),
             child: Padding(
               padding: EdgeInsets.all(AppRadiusManager.r10),
-              child:
-              Column(
+              child: Column(
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,10 +55,12 @@ class AdvCard extends StatelessWidget {
                       Container(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                          borderRadius:
+                              BorderRadius.circular(AppRadiusManager.r10),
                         ),
                         child: MainImageWidget(
-                          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                          borderRadius:
+                              BorderRadius.circular(AppRadiusManager.r10),
                           height: AppHeightManager.h12,
                           width: AppHeightManager.h12,
                           imageUrl: AppConstantManager.imageBaseUrl +
@@ -77,7 +80,6 @@ class AdvCard extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: AppHeightManager.h08),
-
                             AppTextWidget(
                               text: '${item.startingPrice ?? 0}',
                               color: Colors.black,
@@ -89,19 +91,43 @@ class AdvCard extends StatelessWidget {
                             Visibility(
                               visible: (item.note ?? "").isNotEmpty,
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w1),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppWidthManager.w1,vertical: AppHeightManager.h05),
                                 decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        AppRadiusManager.r5),
                                     border: Border.all(
-                                        color: AppColorManager.subColor
-                                    )
-                                ),
-                                child: AppTextWidget(
-                                  text: '${item.note ?? ""}',
-                                  color: Colors.pink,
-                                  fontSize: FontSizeManager.fs16,
-                                  fontWeight: FontWeight.w700,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
+                                      color: AppColorManager.textGrey,
+                                    )),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: AppColorManager.redOpacity15,
+                                      radius: AppRadiusManager.r10,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.all(AppWidthManager.w1),
+                                        child: SvgPicture.asset(
+                                          AppIconManager.xMark,
+                                          colorFilter: ColorFilter.mode(
+                                              AppColorManager.red, BlendMode.srcIn),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: AppWidthManager.w1Point2,
+                                    ),
+                                    Expanded(
+                                      child: AppTextWidget(
+                                        text: '${item.note ?? ""}',
+                                        color: AppColorManager.textGrey,
+                                        fontSize: FontSizeManager.fs16,
+                                        fontWeight: FontWeight.w600,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 10,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -133,10 +159,12 @@ class AdvCard extends StatelessWidget {
                                 ),
                                 AppTextWidget(
                                   text:
-                                  (EnumManager.advsStateCode[item.status] ?? "")
-                                      .tr(),
-                                  color: EnumManager.advsStateColor[item.status] ??
-                                      AppColorManager.amber,
+                                      (EnumManager.advsStateCode[item.status] ??
+                                              "")
+                                          .tr(),
+                                  color:
+                                      EnumManager.advsStateColor[item.status] ??
+                                          AppColorManager.amber,
                                   fontSize: FontSizeManager.fs14,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -152,14 +180,15 @@ class AdvCard extends StatelessWidget {
                     children: [
                       MainAppButton(
                           color: AppColorManager.mainColor,
-                          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                          borderRadius:
+                              BorderRadius.circular(AppRadiusManager.r10),
                           padding: EdgeInsets.symmetric(
                               horizontal: AppWidthManager.w5,
                               vertical: AppHeightManager.h1),
                           onTap: () {
                             Navigator.of(context)
                                 .pushNamed(RouteNamedScreens.updateAdvs,
-                                arguments: UpdateAdvArgs(data: item))
+                                    arguments: UpdateAdvArgs(data: item))
                                 .then((value) {
                               Navigator.of(context).pushReplacementNamed(
                                 RouteNamedScreens.myitem,
@@ -177,7 +206,8 @@ class AdvCard extends StatelessWidget {
                       ),
                       MainAppButton(
                           color: AppColorManager.red,
-                          borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                          borderRadius:
+                              BorderRadius.circular(AppRadiusManager.r10),
                           padding: EdgeInsets.symmetric(
                               horizontal: AppWidthManager.w5,
                               vertical: AppHeightManager.h1),
@@ -208,10 +238,8 @@ class AdvCard extends StatelessWidget {
                   )
                 ],
               ),
-
             ),
           ),
-
         ],
       ),
     );
