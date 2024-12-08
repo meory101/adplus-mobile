@@ -44,6 +44,8 @@ class _SearchFormFieldState extends State<ProfileSearchFormField> {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
           child: AppTextFormField(
+            borderColor: AppColorManager.mainColor,
+
             onChanged: (value) {
               searchText = value;
               return null;

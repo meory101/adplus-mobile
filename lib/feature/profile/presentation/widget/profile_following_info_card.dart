@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import 'package:mzad_damascus/router/router.dart';
@@ -24,21 +25,23 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
     return _buildContent();
   }
 
+ bool isVisitor =  AppSharedPreferences.getToken().isEmpty;
   Widget _buildContent() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildFollowersSection(),
-        _buildFollowingSection(),
-        _buildPostedAdsSection(),
-        _buildWhatsappSection(),
+        _buildFollowersSection(isVisitor: isVisitor),
+        _buildFollowingSection(isVisitor: isVisitor),
+        _buildPostedAdsSection(isVisitor: isVisitor),
+        _buildWhatsappSection(isVisitor: isVisitor),
       ],
     );
   }
 
-  Widget _buildFollowersSection() {
+  Widget _buildFollowersSection({required bool isVisitor}) {
     return MainAppButton(
       onTap: (){
+        if(isVisitor == true)return;
         Navigator.of(context).pushNamed(RouteNamedScreens.myFollowers);
 
       },
@@ -62,9 +65,11 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
     );
   }
 
-  Widget _buildFollowingSection() {
+  Widget _buildFollowingSection({required bool isVisitor}) {
     return MainAppButton(
       onTap: () {
+        if(isVisitor == true)return;
+
         Navigator.of(context).pushNamed(RouteNamedScreens.myFollowing);
       },
       child: Column(
@@ -87,9 +92,11 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
     );
   }
 
-  Widget _buildPostedAdsSection() {
+  Widget _buildPostedAdsSection({required bool isVisitor}) {
     return InkWell(
       onTap: () {
+        if(isVisitor == true)return;
+
         Navigator.of(context).pushNamed(RouteNamedScreens.myitem);
       },
       child: Column(
@@ -113,7 +120,7 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
     );
   }
 
-  Widget _buildWhatsappSection() {
+  Widget _buildWhatsappSection({required bool isVisitor}) {
     return Column(
       children: [
         Directionality(

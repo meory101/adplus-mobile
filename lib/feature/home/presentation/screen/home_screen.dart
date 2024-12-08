@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         "",
                                                 fontSize: FontSizeManager.fs17,
                                                 color: AppColorManager
-                                                    .textAppColor,
+                                                    .mainColor,
                                                 fontWeight: FontWeight.w700),
                                             AppTextWidget(
                                                 text:

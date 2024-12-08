@@ -7,10 +7,14 @@ import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_det
 import 'package:mzad_damascus/feature/notification/domain/entities/request/notifications_request_entity.dart';
 import 'package:mzad_damascus/feature/notification/domain/entities/response/notifications_response_entity.dart';
 import 'package:mzad_damascus/router/router.dart';
+import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
+import '../../../../core/resource/font_manager.dart';
+import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/app_bar/main_app_bar.dart';
 import '../../../../core/widget/loading/app_circular_progress_widget.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
+import '../../../../core/widget/text/app_text_widget.dart';
 import '../cubit/notification/notification_cubit.dart';
 import '../cubit/notification/notification_state.dart';
 import '../widgets/notification_list_itme.dart';
@@ -71,11 +75,37 @@ class _NotificationScreenState extends State<NotificationScreen> {
               state.entity.data?.data == null) {
             return const Center(child: CircularProgressIndicator());
           }
-
-          if ((state.entity.data?.data ?? []).isEmpty) {
-            return Text('f');
-          }
           List<NotificationItem>? notifications = state.entity.data?.data ?? [];
+
+          if (notifications.isEmpty) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: AppHeightManager.h30,
+                ),
+                AppTextWidget(
+                  text: "noNotifications".tr(),
+                  fontSize: FontSizeManager.fs18,
+                  fontWeight: FontWeight.w700,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: AppHeightManager.h05,
+                ),
+                AppTextWidget(
+                  text:"youDon’tHaveAnyNotificationsYet".tr(),
+                  fontSize: FontSizeManager.fs16,
+                  fontWeight: FontWeight.w400,
+                  color: AppColorManager.grey,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                ),
+              ],
+            );
+          }
           return ListView.builder(
             itemCount: notifications.length,
             itemBuilder: (context, index) {

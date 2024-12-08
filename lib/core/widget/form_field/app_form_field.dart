@@ -21,6 +21,7 @@ class AppTextFormField extends StatelessWidget {
   final TextAlignVertical? textAlignVertical;
   final Color? textColor;
   final Color? labelColor;
+  final Color? borderColor;
   final int? maxLines;
   final int? minLines;
   final Widget? prefixIcon;
@@ -39,6 +40,7 @@ class AppTextFormField extends StatelessWidget {
   const AppTextFormField(
       {Key? key,
         this.borderRadius,
+        this.borderColor,
         this.minLines,
         this.filled,
         this.readOnly,
@@ -131,27 +133,27 @@ class AppTextFormField extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(
                 borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
             borderSide: BorderSide(
-              color: AppColorManager.lightGreyOpacity6,
+              color:borderColor?? AppColorManager.lightGreyOpacity6,
             )),
         disabledBorder: OutlineInputBorder(
 
             borderRadius: BorderRadius.all(Radius.circular(
                 borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
-            borderSide: const BorderSide(
-              color: Colors.transparent,
+            borderSide:  BorderSide(
+              color:borderColor?? Colors.transparent,
               // color: Colors.transparent,
             )),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(
                 borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
-            borderSide: const BorderSide(
-              color: AppColorManager.grey,
+            borderSide:  BorderSide(
+              color:borderColor?? AppColorManager.grey,
             )),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(
                 borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
             borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
+              color:borderColor?? Theme.of(context).primaryColor,
             )),
       ),
       style: style ??

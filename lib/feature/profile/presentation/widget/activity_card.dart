@@ -45,6 +45,7 @@ class _ActivityCardState extends State<ActivityCard> {
             children: [
               GestureDetector(
                 onTap: () {
+
                   setState(() {
                     selectedIndex =0;
                     widget.onActivityTapChanged(selectedIndex);

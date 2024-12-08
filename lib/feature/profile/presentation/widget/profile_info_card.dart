@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/profile_info_card_shimmer.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
@@ -32,17 +33,20 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
   ProfileInfo? profileInfo;
 
   onEditTaped() {
+    if (AppSharedPreferences.getToken().isEmpty) return;
     Navigator.of(context)
         .pushNamed(RouteNamedScreens.profileModification,
-        arguments: ProfileInfoModificationArgs(profileInfo: profileInfo))
+            arguments: ProfileInfoModificationArgs(profileInfo: profileInfo))
         .then(
-          (value) {
+      (value) {
         context.read<GetProfileInfoCubit>().getProfileInfo(context: context);
       },
     );
   }
 
   onAddTaped() {
+    if (AppSharedPreferences.getToken().isEmpty) return;
+
     Navigator.of(context).pushNamed(RouteNamedScreens.advertisementLanguage);
   }
 
@@ -101,7 +105,10 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: AppColorManager.mainColor,
+                                    color: AppSharedPreferences.getToken()
+                                            .isEmpty
+                                        ? AppColorManager.grey.withOpacity(0.4)
+                                        : AppColorManager.mainColor,
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Padding(
@@ -140,7 +147,10 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: AppColorManager.pinkAccent,
+                                    color: AppSharedPreferences.getToken()
+                                            .isEmpty
+                                        ? AppColorManager.grey.withOpacity(0.4)
+                                        : AppColorManager.pinkAccent,
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Padding(
@@ -200,12 +210,17 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                     textDirection: ui.TextDirection.ltr,
                     child: Row(
                       children: [
-                        SvgPicture.asset(((profileInfo?.user?.username ?? "")
-                            .isEmail()) ? AppIconManager.email : AppIconManager
-                            .phone,),
-                        SizedBox(width: AppWidthManager.w1Point2,),
+                        SvgPicture.asset(
+                          ((profileInfo?.user?.username ?? "").isEmail())
+                              ? AppIconManager.email
+                              : AppIconManager.phone,
+                        ),
+                        SizedBox(
+                          width: AppWidthManager.w1Point2,
+                        ),
                         AppTextWidget(
-                          text: profileInfo?.user?.username ?? '--',
+                          text: profileInfo?.user?.username ??
+                              'youAreNotRegisteredYet'.tr(),
                           fontSize: FontSizeManager.fs16,
                           fontWeight: FontWeight.w600,
                           color: AppColorManager.textAppColor,
@@ -216,7 +231,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                   Directionality(
                     textDirection: ui.TextDirection.ltr,
                     child: AppTextWidget(
-                      text:'${profileInfo?.user?.phone ?? '--'}',
+                      text:
+                          '${profileInfo?.user?.phone ?? 'noPhoneNumberYet'.tr()}',
                       fontSize: FontSizeManager.fs16,
                       color: AppColorManager.textGrey,
                     ),
@@ -224,8 +240,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                   Directionality(
                     textDirection: ui.TextDirection.ltr,
                     child: AppTextWidget(
-                      text:'${profileInfo?.user?.whatsapp ?? '--'}',
-
+                      text:
+                          '${profileInfo?.user?.whatsapp ?? 'noWhatsappYet'.tr()}',
                       fontSize: FontSizeManager.fs16,
                       color: AppColorManager.textGrey,
                     ),
@@ -236,7 +252,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                 children: [
                   Expanded(
                     child: AppTextWidget(
-                      text: profileInfo?.user?.description ?? '--',
+                      text: profileInfo?.user?.description ?? '',
                       fontSize: FontSizeManager.fs15,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,

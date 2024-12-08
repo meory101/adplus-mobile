@@ -25,21 +25,21 @@ import '../../../../core/resource/color_manager.dart';
 
 class SearchUserScreen extends StatefulWidget {
   final SearchArgs? args;
-  const SearchUserScreen({super.key,this.args});
+
+  const SearchUserScreen({super.key, this.args});
 
   @override
   State<SearchUserScreen> createState() => _SearchUserScreenState();
 }
 
 class _SearchUserScreenState extends State<SearchUserScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainAppBar(title: ""),
-      floatingActionButton:
-
-      SearchFormField(initValue: widget.args?.searchString,),
+      floatingActionButton: SearchFormField(
+        initValue: widget.args?.searchString,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       body: SingleChildScrollView(
         child: BlocConsumer<SearchUserCubit, SearchUserState>(
@@ -73,61 +73,83 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                     padding: EdgeInsets.symmetric(
                         vertical: AppHeightManager.h2,
                         horizontal: AppWidthManager.w3Point8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: AppWidthManager.w15,
-                              width: AppWidthManager.w15,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              decoration:
-                                  const BoxDecoration(shape: BoxShape.circle),
-                              child: MainImageWidget(
-                                imageUrl: users[index].photo ?? "",
-                                fit: BoxFit.cover,
+                        Visibility(
+                          visible: users[index].isCompany == 1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.verified,color: AppColorManager.mainColor,),
+                              SizedBox(width: AppWidthManager.w2,),
+                              AppTextWidget(
+                                text: "businessAccount".tr(),
+                                fontWeight: FontWeight.w700,
+                                fontSize: FontSizeManager.fs16,
                               ),
-                            ),
-                            SizedBox(
-                              width: AppWidthManager.w2,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppHeightManager.h1point8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
                               children: [
-                                AppTextWidget(
-                                  text: users[index].name ?? "",
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: FontSizeManager.fs16,
+                                Container(
+                                  height: AppWidthManager.w15,
+                                  width: AppWidthManager.w15,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle),
+                                  child: MainImageWidget(
+                                    imageUrl: users[index].photo ?? "",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                Directionality(
-                                  textDirection: ui.TextDirection.ltr,
-                                  child: AppTextWidget(
-                                      text: users[index].username ?? ""),
+                                SizedBox(
+                                  width: AppWidthManager.w2,
                                 ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppTextWidget(
+                                      text: users[index].name ?? "",
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: FontSizeManager.fs16,
+                                    ),
+                                    Directionality(
+                                      textDirection: ui.TextDirection.ltr,
+                                      child: AppTextWidget(
+                                          text: users[index].username ?? ""),
+                                    ),
+                                  ],
+                                )
                               ],
+                            ),
+                            MainAppButton(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                    RouteNamedScreens.authorProfile,
+                                    arguments: AuthorProfileArgs(
+                                        userName: users[index].username ?? ""));
+                              },
+                              borderRadius:
+                                  BorderRadius.circular(AppRadiusManager.r10),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: AppWidthManager.w3Point8,
+                                  vertical: AppHeightManager.h05),
+                              color: AppColorManager.mainColor,
+                              child: AppTextWidget(
+                                  text: "userProfile".tr(),
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColorManager.white,
+                                  fontSize: FontSizeManager.fs16),
                             )
                           ],
                         ),
-                        MainAppButton(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                                RouteNamedScreens.authorProfile,
-                                arguments: AuthorProfileArgs(
-                                    userName: users[index].username ?? ""));
-                          },
-                          borderRadius:
-                              BorderRadius.circular(AppRadiusManager.r10),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: AppWidthManager.w3Point8,
-                              vertical: AppHeightManager.h05),
-                          color: AppColorManager.mainColor,
-                          child: AppTextWidget(
-                              text: "userProfile".tr(),
-                              fontWeight: FontWeight.w600,
-                              color: AppColorManager.white,
-                              fontSize: FontSizeManager.fs16),
-                        )
                       ],
                     ),
                   );
@@ -141,7 +163,8 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
   }
 }
 
-class SearchArgs{
+class SearchArgs {
   final String? searchString;
+
   SearchArgs({required this.searchString});
 }

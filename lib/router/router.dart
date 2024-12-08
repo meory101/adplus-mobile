@@ -149,7 +149,6 @@ abstract class AppRouter {
         myRoute = RouteNamedScreens.splash;
         return FadeBuilderRoute(page: const SplashScreen());
       case RouteNamedScreens.profile:
-        myRoute = RouteNamedScreens.profile;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<MyitemReviewCubit>(),

@@ -89,7 +89,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               },
               builder: (context, state) {
                 if (state.status == CubitStatus.loading) {
-                  return const CircularProgressIndicator();
+                  return  Center(child: CircularProgressIndicator());
                 }
                 return MainAppButton(
                   onTap: () {

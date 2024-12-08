@@ -38,9 +38,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
     bottomBarScreens = [
       const HomeScreen(),
       const BiddingScreen(),
-      AppSharedPreferences.getToken().isEmpty
-          ? const LoginScreen()
-          : const ProfileScreen(),
+       const ProfileScreen(),
       MoreScreen(),
     ];
 

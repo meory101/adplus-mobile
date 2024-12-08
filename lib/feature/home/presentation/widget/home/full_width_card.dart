@@ -7,6 +7,7 @@ import '../../../../../core/resource/constant_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/resource/theme_manager.dart';
+import '../../../../../core/widget/container/decorated_container.dart';
 import '../../../../../core/widget/image/main_image_widget.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
 
@@ -43,18 +44,28 @@ class FullWidthCard extends StatelessWidget {
               imageUrl: AppConstantManager.imageBaseUrl + imagePath,
             ),
           ),
-          SizedBox(height: AppHeightManager.h05,),
-          AppTextWidget(
-            text: title,
-            fontSize: FontSizeManager.fs16,
-            fontWeight: FontWeight.w600,
-            color: AppColorManager.black,
-
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          SizedBox(
+            height: AppHeightManager.h1,
           ),
-          SizedBox(height: AppHeightManager.h1point8,),
+          DecoratedContainer(
 
+            padding: EdgeInsets.symmetric(vertical: AppHeightManager.h04),
+            alignment: Alignment.center,
+            width: AppWidthManager.w100,
+            color: AppColorManager.mainColor.withOpacity(0.8),
+            borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+            child: AppTextWidget(
+              text: title,
+              fontSize: FontSizeManager.fs16,
+              fontWeight: FontWeight.w600,
+              color: AppColorManager.white,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          SizedBox(
+            height: AppHeightManager.h1point8,
+          ),
         ],
       ),
     );

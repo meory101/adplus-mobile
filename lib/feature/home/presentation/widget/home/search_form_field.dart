@@ -26,7 +26,7 @@ class _SearchFormFieldState extends State<SearchFormField> {
 
   @override
   void initState() {
-    if(widget.initValue !=null){
+    if (widget.initValue != null) {
       entity.searchText = widget.initValue;
       context
           .read<SearchUserCubit>()
@@ -37,7 +37,7 @@ class _SearchFormFieldState extends State<SearchFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocConsumer<SearchUserCubit, SearchUserState>(
+    return BlocConsumer<SearchUserCubit, SearchUserState>(
       listener: (context, state) {
         if (state.status == CubitStatus.error) {
           NoteMessage.showErrorSnackBar(context: context, text: state.error);
@@ -56,12 +56,13 @@ class _SearchFormFieldState extends State<SearchFormField> {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
           child: AppTextFormField(
+            borderColor: AppColorManager.mainColor,
             onChanged: (value) {
               entity.searchText = value;
               return null;
             },
             hintText: "search".tr(),
-            initialValue:  entity.searchText,
+            initialValue: entity.searchText,
             suffixIcon: IconButton(
               icon: const Icon(
                 Icons.search,
@@ -80,4 +81,3 @@ class _SearchFormFieldState extends State<SearchFormField> {
     );
   }
 }
-
