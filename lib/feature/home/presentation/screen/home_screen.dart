@@ -5,6 +5,7 @@ import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
@@ -102,29 +103,29 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         i % 3 == 0
             ? cards.add(
-          BigCard(
-            index: i,
-            onTap: () {
-              onCategoryTaped(subcategories[i]);
-            },
-            title: LanguageHelper.checkIfLTR(context: context)
-                ? subcategories[i].enName ?? ""
-                : subcategories[i].name ?? "",
-            imagePath: subcategories[i].photo1 ?? "",
-          ),
-        )
+                BigCard(
+                  index: i,
+                  onTap: () {
+                    onCategoryTaped(subcategories[i]);
+                  },
+                  title: LanguageHelper.checkIfLTR(context: context)
+                      ? subcategories[i].enName ?? ""
+                      : subcategories[i].name ?? "",
+                  imagePath: subcategories[i].photo1 ?? "",
+                ),
+              )
             : cards.add(
-          StandardCard(
-            index: i,
-            onTap: () {
-              onCategoryTaped(subcategories[i]);
-            },
-            title: LanguageHelper.checkIfLTR(context: context)
-                ? subcategories[i].enName ?? ""
-                : subcategories[i].name ?? "",
-            imagePath: subcategories[i].photo1 ?? "",
-          ),
-        );
+                StandardCard(
+                  index: i,
+                  onTap: () {
+                    onCategoryTaped(subcategories[i]);
+                  },
+                  title: LanguageHelper.checkIfLTR(context: context)
+                      ? subcategories[i].enName ?? ""
+                      : subcategories[i].name ?? "",
+                  imagePath: subcategories[i].photo1 ?? "",
+                ),
+              );
       }
     }
 
@@ -153,7 +154,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 SizedBox(
                   height: AppHeightManager.h3,
                 ),
@@ -166,7 +166,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       AppTextWidget(
                         text: LanguageHelper.checkIfLTR(context: context)
-                            ? "Mzad Damascus" : "مزاد دمشق",
+                            ? "Mzad Damascus"
+                            : "مزاد دمشق",
                         fontSize: FontSizeManager.fs18,
                         fontWeight: FontWeight.w700,
                         color: AppColorManager.mainColor,
@@ -174,17 +175,37 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: AppWidthManager.w3Point8,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(RouteNamedScreens
-                              .searchUser);
-                        },
-                        child: SvgPicture.asset(
-                          AppIconManager.search,
-                          colorFilter: const ColorFilter.mode(
-                              AppColorManager.mainColor, BlendMode.srcIn),
+                    Row(
+                      children: [
+                        Visibility(
+
+                          visible: AppSharedPreferences.getToken().isNotEmpty,
+                          child:  InkWell(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(RouteNamedScreens.notifications);
+                            },
+                            child: SvgPicture.asset(
+                              AppIconManager.notification,
+                              colorFilter: const ColorFilter.mode(
+                                  AppColorManager.mainColor, BlendMode.srcIn),
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(width: AppWidthManager.w3Point8,),
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(RouteNamedScreens.searchUser);
+                          },
+                          child: SvgPicture.asset(
+                            AppIconManager.search,
+                            colorFilter: const ColorFilter.mode(
+                                AppColorManager.mainColor, BlendMode.srcIn),
+                          ),
+                        ),
+                      ],
+                    )
                     ],
                   ),
                 ),
@@ -215,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: List.generate(
                             categories.length,
-                                (index) {
+                            (index) {
                               List<SubCategory> subCategories =
                                   categories[index].children ?? [];
                               List<Widget> cards = generateCards(subCategories);
@@ -226,25 +247,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                       bottom: AppHeightManager.h1point8),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          AppTextWidget(
-                                              text: LanguageHelper.checkIfLTR(
-                                                  context: context)
-                                                  ? categories[index].enName ?? ""
-                                                  : categories[index].name ?? "",
-                                              fontSize: FontSizeManager.fs17,
-                                              color: AppColorManager.textAppColor,
-                                              fontWeight: FontWeight.w700),
-                                          AppTextWidget(
-                                              text:'${(categories[index].itemsCount??"0").toString()} ${'advertisement'.tr()}',
-                                              fontSize: FontSizeManager.fs16,
-                                              color: AppColorManager.textGrey,
-                                              fontWeight: FontWeight.w600),
-                                        ],
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: AppHeightManager.h1),
+                                        color:
+                                            AppColorManager.lightGreyOpacity6.withOpacity(0.4),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            AppTextWidget(
+                                                text: LanguageHelper.checkIfLTR(
+                                                        context: context)
+                                                    ? categories[index]
+                                                            .enName ??
+                                                        ""
+                                                    : categories[index].name ??
+                                                        "",
+                                                fontSize: FontSizeManager.fs17,
+                                                color: AppColorManager
+                                                    .textAppColor,
+                                                fontWeight: FontWeight.w700),
+                                            AppTextWidget(
+                                                text:
+                                                    '${(categories[index].itemsCount ?? "0").toString()} ${'advertisement'.tr()}',
+                                                fontSize: FontSizeManager.fs16,
+                                                color: AppColorManager.textGrey,
+                                                fontWeight: FontWeight.w600),
+                                          ],
+                                        ),
                                       ),
                                       SizedBox(
                                         height: AppHeightManager.h1point8,

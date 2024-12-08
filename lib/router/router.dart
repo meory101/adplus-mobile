@@ -57,6 +57,9 @@ import 'package:mzad_damascus/feature/more/presentation/screen/edit_password_scr
 import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
+import 'package:mzad_damascus/feature/notification/domain/entities/request/notifications_request_entity.dart';
+import 'package:mzad_damascus/feature/notification/presentation/cubit/notification/notification_cubit.dart';
+import 'package:mzad_damascus/feature/notification/presentation/screen/notification_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfollowers_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/profile_by_username_request_entity.dart';
@@ -133,6 +136,7 @@ abstract class RouteNamedScreens {
   static const String more = '/more';
   static const String aboutUs = '/about-Us';
   static const String privacyPolicy = '/privacy-Policy';
+  static const String notifications = '/notifications';
 }
 
 abstract class AppRouter {
@@ -145,6 +149,7 @@ abstract class AppRouter {
         myRoute = RouteNamedScreens.splash;
         return FadeBuilderRoute(page: const SplashScreen());
       case RouteNamedScreens.profile:
+        myRoute = RouteNamedScreens.profile;
         return FadeBuilderRoute(
           page: BlocProvider(
             create: (context) => di.sl<MyitemReviewCubit>(),
@@ -189,9 +194,26 @@ abstract class AppRouter {
                 create: (context) => di.sl<SearchUserCubit>(),
               ),
             ],
-            child:  SearchUserScreen(
+            child: SearchUserScreen(
               args: argument,
             ),
+          ),
+        );
+
+      case RouteNamedScreens.notifications:
+        myRoute = RouteNamedScreens.notifications;
+
+        return FadeBuilderRoute(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => di.sl<NotificationCubit>()
+                  ..getMyNotifications(
+                      context: context,
+                      entity: NotificationsRequestEntity(page: 1)),
+              ),
+            ],
+            child: NotificationScreen(),
           ),
         );
       case RouteNamedScreens.followers:

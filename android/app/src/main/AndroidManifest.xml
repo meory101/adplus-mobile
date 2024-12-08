@@ -6,8 +6,8 @@
     <application
         android:label="Mzad Damascus"
         android:name="${applicationName}"
-        android:roundIcon="@mipmap/ic_launcher"
-        android:icon="@mipmap/ic_launcher">
+        android:roundIcon="@mipmap/launcher_icon"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

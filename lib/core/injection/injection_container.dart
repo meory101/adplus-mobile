@@ -94,6 +94,11 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_under_revie
 import 'package:mzad_damascus/feature/more/presentation/cubit/rejected_ads_cubit/rejected_ads_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_cubit.dart';
+import 'package:mzad_damascus/feature/notification/data/datasources/remote/notification_remote.dart';
+import 'package:mzad_damascus/feature/notification/data/repositories/notification_repo_impl.dart';
+import 'package:mzad_damascus/feature/notification/domain/repositories/notification_repository.dart';
+import 'package:mzad_damascus/feature/notification/domain/usecases/notification_usecase.dart';
+import 'package:mzad_damascus/feature/notification/presentation/cubit/notification/notification_cubit.dart';
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:mzad_damascus/feature/profile/data/repository/profile_repository_implements.dart';
 import 'package:mzad_damascus/feature/profile/domain/repository/profile_repository.dart';
@@ -129,6 +134,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => NotificationCubit(usecase: sl()));
   sl.registerFactory(() => ConvertBusinessAccountCubit(usecase: sl()));
   sl.registerFactory(() => GetCompanyAccountsCubit(usecase: sl()));
   sl.registerFactory(() => RejectedAdsCubit(usecase: sl()));
@@ -157,6 +163,7 @@ Future<void> init() async {
   sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => NotificationUsecase(repository: sl()));
   sl.registerLazySingleton(() => DeleteAdvUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateAdvUsecase(repository: sl()));
   sl.registerLazySingleton(() => RemoveFollowUsecase(repository: sl()));
@@ -268,4 +275,10 @@ Future<void> init() async {
   sl.registerLazySingleton<CommentsRepository>(
       () => CommentsRepositoryImpl(remote: sl()));
   sl.registerLazySingleton<CommentRemote>(() => CommentRemoteImplement());
+
+
+
+  sl.registerLazySingleton<NotificationRepository>(
+          () => NotificationRepoImpl(remote: sl()));
+  sl.registerLazySingleton<NotificationRemote>(() => NotificationRemoteImpl());
 }

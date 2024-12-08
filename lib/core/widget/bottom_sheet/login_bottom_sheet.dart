@@ -66,7 +66,9 @@ void showLoginBottomSheet({required BuildContext context}) {
                               (route) => false,
                             );
                           }
-                          Navigator.of(context).pop();
+                        else{
+                              Navigator.of(context).pop();
+                          }
                         });
                       },
                       color: AppColorManager.mainColor,

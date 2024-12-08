@@ -216,7 +216,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                   Directionality(
                     textDirection: ui.TextDirection.ltr,
                     child: AppTextWidget(
-                      text: profileInfo?.user?.phone ?? '--',
+                      text:'${profileInfo?.user?.phone ?? '--'}',
                       fontSize: FontSizeManager.fs16,
                       color: AppColorManager.textGrey,
                     ),
@@ -224,7 +224,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                   Directionality(
                     textDirection: ui.TextDirection.ltr,
                     child: AppTextWidget(
-                      text: profileInfo?.user?.whatsapp ?? '--',
+                      text:'${profileInfo?.user?.whatsapp ?? '--'}',
+
                       fontSize: FontSizeManager.fs16,
                       color: AppColorManager.textGrey,
                     ),
@@ -244,14 +245,14 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                   ),
                 ],
               ),
-              SizedBox(height: AppHeightManager.h1),
+              SizedBox(height: AppHeightManager.h05),
               Divider(
                 color: AppColorManager.borderGrey,
                 thickness: 1.0,
                 indent: AppWidthManager.w3Point8,
                 endIndent: AppWidthManager.w3Point8,
               ),
-              SizedBox(height: AppHeightManager.h1),
+              SizedBox(height: AppHeightManager.h05),
               ProfileFollowingInfoCard(
                 profileInfo: profileInfo,
               ),

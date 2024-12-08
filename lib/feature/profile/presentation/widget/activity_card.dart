@@ -36,7 +36,7 @@ class _ActivityCardState extends State<ActivityCard> {
         ),
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
       ),
-      margin: EdgeInsets.all(AppWidthManager.w3Point8),
+      margin: EdgeInsets.symmetric(horizontal:  AppWidthManager.w3Point8),
       padding: EdgeInsets.all(AppWidthManager.w3Point8),
       child: Column(children: [
         SizedBox(height: AppHeightManager.h1),
@@ -53,14 +53,18 @@ class _ActivityCardState extends State<ActivityCard> {
                 },
                 child: Column(
                   children: [
-                    SvgPicture.asset(
-                        colorFilter: ColorFilter.mode(
-                            selectedIndex == 0 ?AppColorManager.mainColor : AppColorManager.textGrey,
-                            BlendMode.srcIn),
-                        AppIconManager.activity),
+                    SizedBox(
+                      height: AppHeightManager.h3point4,
+                      width: AppHeightManager.h3point4,
+                      child: SvgPicture.asset(
+                          colorFilter: ColorFilter.mode(
+                              selectedIndex == 0 ?AppColorManager.mainColor : AppColorManager.textGrey,
+                              BlendMode.srcIn),
+                          AppIconManager.activity),
+                    ),
                     AppTextWidget(
                       text: "active".tr(),
-                      fontSize: FontSizeManager.fs15,
+                      fontSize: FontSizeManager.fs16,
                       color: selectedIndex == 0 ? AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
@@ -76,14 +80,18 @@ class _ActivityCardState extends State<ActivityCard> {
                 },
                 child: Column(
                   children: [
-                    SvgPicture.asset(
-                        colorFilter: ColorFilter.mode(
-                            selectedIndex == 1 ? AppColorManager.mainColor : AppColorManager.textGrey,
-                            BlendMode.srcIn),
-                        AppIconManager.favorites),
+                    SizedBox(
+                      height: AppHeightManager.h3point4,
+                      width: AppHeightManager.h3point4,
+                      child: SvgPicture.asset(
+                          colorFilter: ColorFilter.mode(
+                              selectedIndex == 1 ? AppColorManager.mainColor : AppColorManager.textGrey,
+                              BlendMode.srcIn),
+                          AppIconManager.favorites),
+                    ),
                     AppTextWidget(
                       text: "favorites".tr(),
-                      fontSize: FontSizeManager.fs15,
+                      fontSize: FontSizeManager.fs16,
                       color: selectedIndex == 1 ? AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
@@ -101,14 +109,18 @@ class _ActivityCardState extends State<ActivityCard> {
                 },
                 child: Column(
                   children: [
-                    SvgPicture.asset(
-                        colorFilter: ColorFilter.mode(
-                            selectedIndex == 2 ? AppColorManager.mainColor : AppColorManager.textGrey,
-                            BlendMode.srcIn),
-                        AppIconManager.comments),
+                    SizedBox(
+                      height: AppHeightManager.h3point4,
+                      width: AppHeightManager.h3point4,
+                      child: SvgPicture.asset(
+                          colorFilter: ColorFilter.mode(
+                              selectedIndex == 2 ? AppColorManager.mainColor : AppColorManager.textGrey,
+                              BlendMode.srcIn),
+                          AppIconManager.comments),
+                    ),
                     AppTextWidget(
                       text: "comments".tr(),
-                      fontSize: FontSizeManager.fs15,
+                      fontSize: FontSizeManager.fs16,
                       color: selectedIndex == 2 ?AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
@@ -125,14 +137,18 @@ class _ActivityCardState extends State<ActivityCard> {
                 },
                 child: Column(
                   children: [
-                    SvgPicture.asset(
-                        colorFilter: ColorFilter.mode(
-                            selectedIndex == 3 ? AppColorManager.mainColor : AppColorManager.textGrey,
-                            BlendMode.srcIn),
-                        AppIconManager.likes),
+                    SizedBox(
+                      height: AppHeightManager.h3point4,
+                      width: AppHeightManager.h3point4,
+                      child: SvgPicture.asset(
+                          colorFilter: ColorFilter.mode(
+                              selectedIndex == 3 ? AppColorManager.mainColor : AppColorManager.textGrey,
+                              BlendMode.srcIn),
+                          AppIconManager.likes),
+                    ),
                     AppTextWidget(
                       text: "likes".tr(),
-                      fontSize: FontSizeManager.fs15,
+                      fontSize: FontSizeManager.fs16,
                       color: selectedIndex == 3 ?AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],

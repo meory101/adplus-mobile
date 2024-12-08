@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/comment/domain/entity/comments_request_entity.dart';
 import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/comment_cubit.dart';
@@ -35,9 +36,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    initScroll();
-    getData();
-    initProfileScreen();
+     initScroll();
+     getData();
+     initProfileScreen();
     super.initState();
   }
 
@@ -132,12 +133,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             ProfileSearchFormField(),
             const ProfileInfoCard(),
-            Divider(
-              color: AppColorManager.borderGrey,
-              thickness: 1.0,
-              indent: AppWidthManager.w3Point8,
-              endIndent: AppWidthManager.w3Point8,
-            ),
             ActivityCard(
               onActivityTapChanged: (index) {
                 setState(() {
