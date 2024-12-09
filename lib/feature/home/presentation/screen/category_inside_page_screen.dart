@@ -1,8 +1,11 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
+import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
@@ -95,12 +98,54 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            AppTextWidget(
-                              text: LanguageHelper.checkIfLTR(context: context)
-                                  ? insidePageData[index].attributeNameEn ?? ""
-                                  : insidePageData[index].attributeName ?? "",
-                              fontSize: FontSizeManager.fs17,
-                              fontWeight: FontWeight.w700,
+                            Container(
+                              width: AppWidthManager.w100,
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          width: 1,
+                                          color: AppColorManager.dotGrey))),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      AppTextWidget(
+                                        text: LanguageHelper.checkIfLTR(
+                                                context: context)
+                                            ? insidePageData[index]
+                                                    .attributeNameEn ??
+                                                ""
+                                            : insidePageData[index]
+                                                    .attributeName ??
+                                                "",
+                                        fontSize: FontSizeManager.fs17,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColorManager.mainColor,
+                                      ),
+                                      Container(
+                                        width: AppWidthManager.w20,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    width: 3,
+                                                    color: AppColorManager
+                                                        .pinkAccent))),
+                                      ),
+                                    ],
+                                  ),
+                                  Visibility(
+                                    visible: index == 0,
+                                    child: AppTextWidget(
+                                      text: "allAdvs".tr(),
+                                      fontSize: FontSizeManager.fs16,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColorManager.mainColor,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height: AppHeightManager.h1point8,

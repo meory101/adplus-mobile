@@ -75,6 +75,7 @@ class _CategoryAttributeFormScreenState
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
         onTap: () {
+          if(attributeFormValues.isEmpty)return;
           if ((formKey.currentState?.validate()) ?? false) {
             AdvertisementModel.entity?.attributes = attributeFormValues;
             Navigator.of(context)
