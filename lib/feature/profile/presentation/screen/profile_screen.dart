@@ -146,7 +146,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }
                 setState(() {
                   selectedIndex = index;
-                  print(selectedIndex);
                   getData();
                 });
               },

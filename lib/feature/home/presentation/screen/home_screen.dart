@@ -1,11 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
@@ -15,7 +14,12 @@ import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
+import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
+import '../../../notification/domain/entities/request/notifications_request_entity.dart';
+import '../../../notification/domain/entities/response/notifications_response_entity.dart';
+import '../../../notification/presentation/cubit/notification/notification_cubit.dart';
+import '../../../notification/presentation/cubit/notification/notification_state.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
 import '../widget/home/big_card.dart';
 import '../widget/home/full_width_card.dart';
@@ -143,6 +147,16 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
+            context
+                .read<NotificationCubit>()
+                .resetData();
+            context
+                .read<NotificationCubit>()
+                .getMyNotifications(
+                context: context,
+                entity:
+                NotificationsRequestEntity(
+                    page: 1));
             context.read<BannersCubit>().getHomeBanners(
                 context: context, source: EnumManager.homeBannerSource);
             return context
@@ -155,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: AppHeightManager.h3,
+                  height: AppHeightManager.h2,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -175,37 +189,115 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: AppWidthManager.w3Point8,
                       ),
-                    Row(
-                      children: [
-                        Visibility(
+                      Row(
+                        children: [
+                          Visibility(
+                            visible: AppSharedPreferences.getToken().isNotEmpty,
+                            child: BlocConsumer<NotificationCubit,
+                                    NotificationState>(
+                                listener: (context, state) {},
+                                builder: (context, state) {
+                                  if (state.status == CubitStatus.loading &&
+                                      state.entity.data?.data == null) {
+                                    return Center(
+                                        child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: AppHeightManager.h1),
+                                      child: ShimmerContainer(
+                                          boxShape: BoxShape.circle,
+                                          width: AppWidthManager.w7,
+                                          height: AppWidthManager.w7),
+                                    ));
+                                  }
+                                  Iterable<NotificationItem> items =
+                                      (state.entity.data?.data ?? []).where(
+                                    (element) => element.isRead == 0,
+                                  );
 
-                          visible: AppSharedPreferences.getToken().isNotEmpty,
-                          child:  InkWell(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushNamed(RouteNamedScreens.notifications);
-                            },
-                            child: SvgPicture.asset(
-                              AppIconManager.notification,
-                              colorFilter: const ColorFilter.mode(
-                                  AppColorManager.mainColor, BlendMode.srcIn),
+                                  return InkWell(
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .pushNamed(
+                                                RouteNamedScreens.notifications)
+                                            .then(
+                                          (value) {
+                                            context
+                                                .read<NotificationCubit>()
+                                                .resetData();
+                                            context
+                                                .read<NotificationCubit>()
+                                                .getMyNotifications(
+                                                    context: context,
+                                                    entity:
+                                                        NotificationsRequestEntity(
+                                                            page: 1));
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                          alignment: Alignment.center,
+                                          height: AppHeightManager.h5point8,
+                                          child: Stack(children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: AppHeightManager.h1),
+                                              child: SvgPicture.asset(
+                                                AppIconManager.notification,
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                        AppColorManager
+                                                            .mainColor,
+                                                        BlendMode.srcIn),
+                                              ),
+                                            ),
+                                            Visibility(
+                                              visible: (items.length??0 )>0,
+                                              child: Positioned(
+                                                right: AppWidthManager.w1Point5,
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                      bottom:
+                                                          AppHeightManager.h4),
+                                                  child: CircleAvatar(
+                                                      radius:
+                                                          AppRadiusManager.r8,
+                                                      backgroundColor:
+                                                          AppColorManager.red,
+                                                      child: AppTextWidget(
+                                                          color: AppColorManager
+                                                              .white,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize:
+                                                              FontSizeManager
+                                                                  .fs14,
+                                                          text:
+                                                              "${items.length}")),
+                                                ),
+                                              ),
+                                            ),
+                                          ])));
+                                }),
+                          ),
+                          SizedBox(
+                            width: AppWidthManager.w3Point8,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: AppHeightManager.h1),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(RouteNamedScreens.searchUser);
+                              },
+                              child: SvgPicture.asset(
+                                AppIconManager.search,
+                                colorFilter: const ColorFilter.mode(
+                                    AppColorManager.mainColor, BlendMode.srcIn),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: AppWidthManager.w3Point8,),
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(RouteNamedScreens.searchUser);
-                          },
-                          child: SvgPicture.asset(
-                            AppIconManager.search,
-                            colorFilter: const ColorFilter.mode(
-                                AppColorManager.mainColor, BlendMode.srcIn),
-                          ),
-                        ),
-                      ],
-                    )
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -252,8 +344,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             vertical: AppHeightManager.h1),
-                                        color:
-                                            AppColorManager.lightGreyOpacity6.withOpacity(0.4),
+                                        color: AppColorManager.lightGreyOpacity6
+                                            .withOpacity(0.4),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -267,8 +359,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     : categories[index].name ??
                                                         "",
                                                 fontSize: FontSizeManager.fs17,
-                                                color: AppColorManager
-                                                    .mainColor,
+                                                color:
+                                                    AppColorManager.mainColor,
                                                 fontWeight: FontWeight.w700),
                                             AppTextWidget(
                                                 text:

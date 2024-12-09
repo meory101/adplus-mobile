@@ -58,6 +58,7 @@ import 'package:mzad_damascus/feature/more/presentation/screen/edit_username_scr
 import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/my_item_screen.dart';
 import 'package:mzad_damascus/feature/notification/domain/entities/request/notifications_request_entity.dart';
+import 'package:mzad_damascus/feature/notification/presentation/cubit/mark_read_notification/mark_read_notification_cubit.dart';
 import 'package:mzad_damascus/feature/notification/presentation/cubit/notification/notification_cubit.dart';
 import 'package:mzad_damascus/feature/notification/presentation/screen/notification_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/myfolloweing_request_entity.dart';
@@ -211,6 +212,12 @@ abstract class AppRouter {
                       context: context,
                       entity: NotificationsRequestEntity(page: 1)),
               ),
+              BlocProvider(
+                create: (context) => di.sl<AdvDetailsCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => di.sl<MarkNotificationCubit>(),
+              ),
             ],
             child: NotificationScreen(),
           ),
@@ -275,7 +282,7 @@ abstract class AppRouter {
                   ..getCategoryAttributes(
                       context: context,
                       entity: GetCategoryAttributesRequestEntity(
-                        categoryId: argument.categoryId,
+                        categoryId: argument.category.categoryId,
                       )),
               ),
             ],
@@ -496,6 +503,10 @@ abstract class AppRouter {
                 create: (context) => di.sl<AddReactionCubit>(),
               ),
               BlocProvider(
+                create: (context) =>
+                    di.sl<GetCitiesCubit>()..getCities(context: context),
+              ),
+              BlocProvider(
                 create: (context) => di.sl<RemoveLikeCubit>(),
               ),
               BlocProvider(create: (context) => di.sl<CheckLikeCubit>()),
@@ -636,6 +647,12 @@ abstract class AppRouter {
               ),
               BlocProvider(
                 create: (context) => di.sl<MyitemReviewCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => di.sl<NotificationCubit>()
+                  ..getMyNotifications(
+                      context: context,
+                      entity: NotificationsRequestEntity(page: 1)),
               ),
               BlocProvider(
                 create: (context) => di.sl<SearchUserCubit>(),

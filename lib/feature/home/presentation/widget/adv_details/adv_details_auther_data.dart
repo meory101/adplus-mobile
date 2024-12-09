@@ -10,6 +10,7 @@ import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/widget/image/main_image_widget.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
 import 'dart:ui' as ui;
+
 class AdvDetailsAutherData extends StatelessWidget {
   final AdvDetails? advDetails;
 
@@ -19,7 +20,6 @@ class AdvDetailsAutherData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-
         InkWell(
           onTap: () {
             Navigator.of(context).pushNamed(RouteNamedScreens.authorProfile,
@@ -69,7 +69,6 @@ class AdvDetailsAutherData extends StatelessWidget {
             ),
             Directionality(
               textDirection: ui.TextDirection.ltr,
-
               child: AppTextWidget(
                   maxLines: 2,
                   fontWeight: FontWeight.w600,

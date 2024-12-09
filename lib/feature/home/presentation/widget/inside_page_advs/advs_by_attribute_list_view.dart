@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/constant_manager.dart';
@@ -21,7 +22,8 @@ import '../../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import '../../screen/advertisement_details_screen.dart';
 
 class AdvsByAttributeListView extends StatelessWidget {
-  const AdvsByAttributeListView({super.key});
+  final SubCategory category;
+  const AdvsByAttributeListView({super.key,required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +96,7 @@ class AdvsByAttributeListView extends StatelessWidget {
                         RouteNamedScreens.advertisementDetails,
                         arguments: AdvertisementDetailsArgs(
                           advertisement: advertisement,
+                          category: category
                         ),
                       );
                     },

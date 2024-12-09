@@ -1,10 +1,15 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/app/app.dart';
+import 'package:mzad_damascus/core/resource/image_manager.dart';
+import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
+import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
+import 'package:mzad_damascus/feature/notification/domain/entities/response/notifications_response_entity.dart';
+import 'package:mzad_damascus/feature/notification/presentation/widgets/dialog/show_notification_bottom_sheet.dart';
+import 'package:mzad_damascus/router/router.dart';
+import '../../../../core/helper/date_time_helper.dart';
 import '../../../../core/helper/language_helper.dart';
 import 'dart:ui' as ui;
 import '../../../../core/resource/color_manager.dart';
@@ -13,80 +18,106 @@ import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 
 class NotificationListItem extends StatelessWidget {
-  final String title;
-  final String body;
-  final String time;
-  final void Function()? onTap;
+  final NotificationItem notificationItem;
 
   const NotificationListItem({
     super.key,
-    required this.title,
-    required this.body,
-    required this.time,
-    this.onTap,
+    required this.notificationItem,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: AppHeightManager.h1point8,
-          bottom: AppHeightManager.h1point8,
           left: AppWidthManager.w3Point8, right: AppWidthManager.w3Point8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          SizedBox(
-            width: AppWidthManager.w3Point8,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Directionality(
+                textDirection: ui.TextDirection.ltr,
+                child: AppTextWidget(
+                  text: DateTimeHelper.formatDateMonthDayYear(
+                      date: notificationItem.createdAt ?? ""),
+                  fontSize: FontSizeManager.fs14,
+                  color: AppColorManager.grey,
+                ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    showNotificationBottomSheet(
+                        context: context,
+                        onSuccess: () {
+                          NoteMessage.showSuccessSnackBar(
+                              context: context,
+                              text: "readNotificationSuccessfully".tr());
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacementNamed(
+                              RouteNamedScreens.notifications);
+                        },
+                        notificationItem: notificationItem);
+                  },
+                  icon: Icon(
+                    Icons.more_horiz,
+                    color: AppColorManager.grey,
+                    size: AppWidthManager.w9,
+                  ))
+            ],
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppTextWidget(
-                  text: "notificationContent".tr(),
-                  fontWeight: FontWeight.w600,
-                  fontSize: FontSizeManager.fs16,
-                  color: AppColorManager.textAppColor,
-                ),
-                SizedBox(
-                  height: AppHeightManager.h1,
-                ),
-                Directionality(
-                  textDirection: LanguageHelper.isEnglishData(
-                          context: context, data: body ?? "")
-                      ? ui.TextDirection.ltr
-                      : ui.TextDirection.rtl,
-                  child: AppTextWidget(
-                    text: body,
-                    maxLines: 1,
-                    fontSize: FontSizeManager.fs15,
-                    overflow: TextOverflow.ellipsis,
-                    color: AppColorManager.textAppColor,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  MainImageWidget(
+                    height: AppHeightManager.h7,
+                    width: AppHeightManager.h7,
+                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                    imagePath: AppImageManager.splash,
+                    // imageUrl: AppConstantManager.imageBaseUrl + (photo),
                   ),
-                ),
-                SizedBox(
-                  height: AppHeightManager.h05,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  Visibility(
+                    visible: notificationItem.isRead == 0,
+                    child: CircleAvatar(
+                      radius: AppRadiusManager.r5,
+                      backgroundColor: AppColorManager.red,
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                width: AppWidthManager.w3Point8,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Directionality(
-                      textDirection: ui.TextDirection.ltr,
+                      textDirection: LanguageHelper.isEnglishData(
+                              context: context,
+                              data: notificationItem.message ?? "")
+                          ? ui.TextDirection.ltr
+                          : ui.TextDirection.rtl,
                       child: AppTextWidget(
-                        text: time,
-                        fontSize: FontSizeManager.fs13,
-                        color: AppColorManager.grey,
+                        text: notificationItem.message ?? "",
+                        maxLines: 3,
+                        fontSize: FontSizeManager.fs16,
+                        overflow: TextOverflow.ellipsis,
+                        color: AppColorManager.textAppColor,
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              SizedBox(
+                width: AppWidthManager.w3Point8,
+              ),
+            ],
           ),
-          SizedBox(
-            width: AppWidthManager.w3Point8,
-          ),
+          Divider(
+            color: AppColorManager.dotGrey,
+          )
         ],
       ),
     );

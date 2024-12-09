@@ -97,7 +97,9 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cub
 import 'package:mzad_damascus/feature/notification/data/datasources/remote/notification_remote.dart';
 import 'package:mzad_damascus/feature/notification/data/repositories/notification_repo_impl.dart';
 import 'package:mzad_damascus/feature/notification/domain/repositories/notification_repository.dart';
+import 'package:mzad_damascus/feature/notification/domain/usecases/mark_read_notification.dart';
 import 'package:mzad_damascus/feature/notification/domain/usecases/notification_usecase.dart';
+import 'package:mzad_damascus/feature/notification/presentation/cubit/mark_read_notification/mark_read_notification_cubit.dart';
 import 'package:mzad_damascus/feature/notification/presentation/cubit/notification/notification_cubit.dart';
 import 'package:mzad_damascus/feature/profile/data/datasource/remote/profile_remote.dart';
 import 'package:mzad_damascus/feature/profile/data/repository/profile_repository_implements.dart';
@@ -134,6 +136,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => MarkNotificationCubit(usecase: sl()));
   sl.registerFactory(() => NotificationCubit(usecase: sl()));
   sl.registerFactory(() => ConvertBusinessAccountCubit(usecase: sl()));
   sl.registerFactory(() => GetCompanyAccountsCubit(usecase: sl()));
@@ -172,6 +175,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CheckLikeUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvByUserUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddReactionUsecase(repository: sl()));
+  sl.registerLazySingleton(() => MarkReadNotification(repository: sl()));
   sl.registerLazySingleton(() => ConvertBusinessAccountUsecase(repository: sl()));
   sl.registerLazySingleton(() => BannersUsecase(repository: sl()));
   sl.registerLazySingleton(() => AddCommentUsecase(repository: sl()));

@@ -1,4 +1,3 @@
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
-import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
@@ -15,13 +13,12 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_categ
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/advs_by_attribute_list_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/cities_drop_down_list.dart';
-import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/widget/loading/shimmer/attribute_list_view_shimmer.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../domain/entity/response/advs_by_attribute_response_entity.dart';
-import '../../domain/entity/response/get_adv_details_response_entity.dart';
+import '../../domain/entity/response/get_categories_response_entity.dart';
 import '../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import '../widget/inside_page_advs/attributes_horizantal_list_view.dart';
 import '../widget/inside_page_advs/dialog/showAttributeListCheckBox.dart';
@@ -274,7 +271,9 @@ class _InsidePageCategoryAdvsScreenState
           margin: EdgeInsets.only(top: AppHeightManager.h4),
           child: SingleChildScrollView(
             controller: scrollController,
-            child: const AdvsByAttributeListView(),
+            child: AdvsByAttributeListView(
+              category: widget.args.category,
+            ),
           ),
         ));
   }
@@ -283,11 +282,11 @@ class _InsidePageCategoryAdvsScreenState
 class InsidePageCategoryAdvArgs {
   AdvsByAttributeRequestEntity entity;
 
-  num categoryId;
+  SubCategory category;
 
   InsidePageCategoryAdvArgs({
     required this.entity,
-    required this.categoryId,
+    required this.category,
   });
 }
 

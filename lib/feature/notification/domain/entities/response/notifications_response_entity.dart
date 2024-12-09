@@ -79,7 +79,10 @@ class NotificationData {
         _data?.add(NotificationItem.fromJson(v));
       });
     }
+
     _pagination = json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
+
+  print(_pagination?.totalItems);
   }
   List<NotificationItem>? _data;
   Pagination? _pagination;

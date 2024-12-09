@@ -12,6 +12,7 @@ import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/other_user_followers_screen.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/add_follow_request_entity.dart';
 import 'package:mzad_damascus/feature/profile/domain/entity/request/check_follow_request_entity.dart';

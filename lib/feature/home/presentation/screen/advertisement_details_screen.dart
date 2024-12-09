@@ -35,6 +35,7 @@ import '../../../../core/widget/bottom_sheet/login_bottom_sheet.dart';
 import '../../../../core/widget/loading/shimmer/adv_details_screen_shimmer.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_adv_details_response_entity.dart';
+import '../../domain/entity/response/get_categories_response_entity.dart';
 
 class AdvertisementDetailsScreen extends StatefulWidget {
   final AdvertisementDetailsArgs args;
@@ -57,31 +58,33 @@ class _AdvertisementDetailsScreenState
   }
 
   initScreen() {
-    if(AppSharedPreferences.getToken().isEmpty){
+    if (AppSharedPreferences
+        .getToken()
+        .isEmpty) {
       return;
     }
     context.read<CheckLikeCubit>().checkLike(
-          context: context,
-          entity: CheckLikeRequestEntity(
-            itemId: widget.args.advertisement?.itemId,
-          ),
-        );
+      context: context,
+      entity: CheckLikeRequestEntity(
+        itemId: widget.args.advertisement?.itemId,
+      ),
+    );
     context.read<CheckFavoriteCubit>().checkFavorite(
-          context: context,
-          entity: FavoriteRequestEntity(
-            itemId: widget.args.advertisement?.itemId,
-          ),
-        );
+      context: context,
+      entity: FavoriteRequestEntity(
+        itemId: widget.args.advertisement?.itemId,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AdvDetailsCubit, AdvDetailsState>(
         listener: (context, state) {
-      if (state.status == CubitStatus.error) {
-        NoteMessage.showErrorSnackBar(context: context, text: state.error);
-      }
-    }, builder: (context, state) {
+          if (state.status == CubitStatus.error) {
+            NoteMessage.showErrorSnackBar(context: context, text: state.error);
+          }
+        }, builder: (context, state) {
       if (state.status == CubitStatus.loading) {
         return const AdvDetailsScreenShimmer();
       }
@@ -108,7 +111,9 @@ class _AdvertisementDetailsScreenState
                 width: AppWidthManager.w2,
               ),
               AppTextWidget(
-                text: "",
+                text: LanguageHelper.checkIfLTR(context: context) ? "${widget
+                    .args.category?.enName ??"Mzad Damascus"}" : "${widget
+                    .args.category?.name ??"مزاد دمشق"}",
                 fontSize: FontSizeManager.fs16,
                 color: AppColorManager.mainColor,
                 fontWeight: FontWeight.w600,
@@ -126,17 +131,17 @@ class _AdvertisementDetailsScreenState
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: EnumManager.biddingStatusColor[
-                              state.entity.data?.biddingStatus ?? 0] ??
+                      state.entity.data?.biddingStatus ?? 0] ??
                           AppColorManager.textAppColor),
                 ),
                 SizedBox(width: AppWidthManager.w1Point2,),
                 AppTextWidget(
                   text: EnumManager.biddingStatus[
-                          state.entity.data?.biddingStatus ?? 0] ??
+                  state.entity.data?.biddingStatus ?? 0] ??
                       "",
                   fontSize: FontSizeManager.fs17,
                   color: EnumManager.biddingStatusColor[
-                          state.entity.data?.biddingStatus ?? 0] ??
+                  state.entity.data?.biddingStatus ?? 0] ??
                       AppColorManager.textAppColor,
                   fontWeight: FontWeight.w600,
                   textAlign: TextAlign.center,
@@ -170,21 +175,23 @@ class _AdvertisementDetailsScreenState
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    SizedBox(height: AppHeightManager.h1point8,),
                                     AppTextWidget(
                                         maxLines: 2,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: FontSizeManager.fs16,
+                                        fontSize: FontSizeManager.fs17,
                                         text: advDetails?.name ?? ""),
                                     AppTextWidget(
                                         maxLines: 2,
                                         fontWeight: FontWeight.w700,
                                         fontSize: FontSizeManager.fs16,
                                         text: advDetails?.startingPrice
-                                                .toString() ??
+                                            .toString() ??
                                             ""),
                                   ],
                                 ),
                               ),
+                              SizedBox(width: AppWidthManager.w2,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -208,13 +215,13 @@ class _AdvertisementDetailsScreenState
                                               context
                                                   .read<CheckFavoriteCubit>()
                                                   .checkFavorite(
-                                                      context: context,
-                                                      entity:
-                                                          FavoriteRequestEntity(
-                                                              itemId: widget
-                                                                  .args
-                                                                  .advertisement
-                                                                  ?.itemId));
+                                                  context: context,
+                                                  entity:
+                                                  FavoriteRequestEntity(
+                                                      itemId: widget
+                                                          .args
+                                                          .advertisement
+                                                          ?.itemId));
                                             }
                                           },
                                           builder: (context, state) {
@@ -236,20 +243,20 @@ class _AdvertisementDetailsScreenState
                                                     CubitStatus.success) {
                                                   NoteMessage
                                                       .showSuccessSnackBar(
-                                                          context: context,
-                                                          text:
-                                                              "addedToFavorite"
-                                                                  .tr());
+                                                      context: context,
+                                                      text:
+                                                      "addedToFavorite"
+                                                          .tr());
                                                   context
                                                       .read<
-                                                          CheckFavoriteCubit>()
+                                                      CheckFavoriteCubit>()
                                                       .checkFavorite(
-                                                          context: context,
-                                                          entity: FavoriteRequestEntity(
-                                                              itemId: widget
-                                                                  .args
-                                                                  .advertisement
-                                                                  ?.itemId));
+                                                      context: context,
+                                                      entity: FavoriteRequestEntity(
+                                                          itemId: widget
+                                                              .args
+                                                              .advertisement
+                                                              ?.itemId));
                                                 }
                                               },
                                               builder: (context, state) {
@@ -265,9 +272,9 @@ class _AdvertisementDetailsScreenState
                                                         CubitStatus.error) {
                                                       NoteMessage
                                                           .showErrorSnackBar(
-                                                              context: context,
-                                                              text:
-                                                                  state.error);
+                                                          context: context,
+                                                          text:
+                                                          state.error);
                                                     }
                                                   },
                                                   builder: (context, state) {
@@ -276,53 +283,54 @@ class _AdvertisementDetailsScreenState
                                                       return const AppCircularProgressWidget();
                                                     }
                                                     bool like = (state.entity
-                                                            .data?.exists ??
+                                                        .data?.exists ??
                                                         false);
 
                                                     return IconButton(
                                                         onPressed: () {
                                                           if (AppSharedPreferences
-                                                                  .getToken()
+                                                              .getToken()
                                                               .isEmpty) {
                                                             showLoginBottomSheet(
                                                                 context:
-                                                                    context);
+                                                                context);
                                                             return;
                                                           }
                                                           if (like == true) {
                                                             context
                                                                 .read<
-                                                                    RemoveFavoriteCubit>()
+                                                                RemoveFavoriteCubit>()
                                                                 .removeFavorite(
-                                                                    context:
-                                                                        context,
-                                                                    entity:
-                                                                        FavoriteRequestEntity(
-                                                                      itemId: advDetails
-                                                                          ?.itemId,
-                                                                    ));
+                                                                context:
+                                                                context,
+                                                                entity:
+                                                                FavoriteRequestEntity(
+                                                                  itemId: advDetails
+                                                                      ?.itemId,
+                                                                ));
                                                           } else {
                                                             context
                                                                 .read<
-                                                                    AddFavoriteCubit>()
+                                                                AddFavoriteCubit>()
                                                                 .addFavorite(
-                                                                    context:
-                                                                        context,
-                                                                    entity:
-                                                                        FavoriteRequestEntity(
-                                                                      itemId: advDetails
-                                                                          ?.itemId,
-                                                                    ));
+                                                                context:
+                                                                context,
+                                                                entity:
+                                                                FavoriteRequestEntity(
+                                                                  itemId: advDetails
+                                                                      ?.itemId,
+                                                                ));
                                                           }
                                                         },
                                                         icon: Icon(
                                                           Icons.favorite,
                                                           color: like == true
                                                               ? AppColorManager
-                                                                  .red
+                                                              .red
                                                               : AppColorManager
-                                                                  .white,
-                                                          size: AppWidthManager.w5,
+                                                              .white,
+                                                          size: AppWidthManager
+                                                              .w5,
                                                         ));
                                                   },
                                                 );
@@ -340,14 +348,15 @@ class _AdvertisementDetailsScreenState
                                               fontWeight: FontWeight.w600,
                                               fontSize: FontSizeManager.fs16,
                                               text:
-                                                  (advDetails?.likeCount ?? "")
-                                                      .toString()),
+                                              (advDetails?.likeCount ?? "")
+                                                  .toString()),
                                           SizedBox(
                                             width: AppWidthManager.w2,
                                           ),
                                           CircleAvatar(
                                             radius: AppWidthManager.w5,
-                                            backgroundColor: AppColorManager.grey
+                                            backgroundColor: AppColorManager
+                                                .grey
                                                 .withOpacity(0.2),
                                             child: BlocConsumer<RemoveLikeCubit,
                                                 RemoveLikeState>(
@@ -363,21 +372,21 @@ class _AdvertisementDetailsScreenState
                                                   context
                                                       .read<AdvDetailsCubit>()
                                                       .getAdvDetails(
-                                                          context: context,
-                                                          entity: GetAdvDetailsRequestEntity(
-                                                              itemId: widget
-                                                                  .args
-                                                                  .advertisement
-                                                                  ?.itemId));
+                                                      context: context,
+                                                      entity: GetAdvDetailsRequestEntity(
+                                                          itemId: widget
+                                                              .args
+                                                              .advertisement
+                                                              ?.itemId));
                                                   context
                                                       .read<CheckLikeCubit>()
                                                       .checkLike(
-                                                          context: context,
-                                                          entity: CheckLikeRequestEntity(
-                                                              itemId: widget
-                                                                  .args
-                                                                  .advertisement
-                                                                  ?.itemId));
+                                                      context: context,
+                                                      entity: CheckLikeRequestEntity(
+                                                          itemId: widget
+                                                              .args
+                                                              .advertisement
+                                                              ?.itemId));
                                                 }
                                               },
                                               builder: (context, state) {
@@ -393,32 +402,32 @@ class _AdvertisementDetailsScreenState
                                                         CubitStatus.error) {
                                                       NoteMessage
                                                           .showErrorSnackBar(
-                                                              context: context,
-                                                              text:
-                                                                  state.error);
+                                                          context: context,
+                                                          text:
+                                                          state.error);
                                                     }
                                                     if (state.status ==
                                                         CubitStatus.success) {
                                                       context
                                                           .read<
-                                                              AdvDetailsCubit>()
+                                                          AdvDetailsCubit>()
                                                           .getAdvDetails(
-                                                              context: context,
-                                                              entity: GetAdvDetailsRequestEntity(
-                                                                  itemId: widget
-                                                                      .args
-                                                                      .advertisement
-                                                                      ?.itemId));
+                                                          context: context,
+                                                          entity: GetAdvDetailsRequestEntity(
+                                                              itemId: widget
+                                                                  .args
+                                                                  .advertisement
+                                                                  ?.itemId));
                                                       context
                                                           .read<
-                                                              CheckLikeCubit>()
+                                                          CheckLikeCubit>()
                                                           .checkLike(
-                                                              context: context,
-                                                              entity: CheckLikeRequestEntity(
-                                                                  itemId: widget
-                                                                      .args
-                                                                      .advertisement
-                                                                      ?.itemId));
+                                                          context: context,
+                                                          entity: CheckLikeRequestEntity(
+                                                              itemId: widget
+                                                                  .args
+                                                                  .advertisement
+                                                                  ?.itemId));
                                                     }
                                                   },
                                                   builder: (context, state) {
@@ -435,10 +444,10 @@ class _AdvertisementDetailsScreenState
                                                             CubitStatus.error) {
                                                           NoteMessage
                                                               .showErrorSnackBar(
-                                                                  context:
-                                                                      context,
-                                                                  text: state
-                                                                      .error);
+                                                              context:
+                                                              context,
+                                                              text: state
+                                                                  .error);
                                                         }
                                                       },
                                                       builder:
@@ -449,55 +458,60 @@ class _AdvertisementDetailsScreenState
                                                           return const AppCircularProgressWidget();
                                                         }
                                                         bool like = (state
-                                                                .entity
-                                                                .data
-                                                                ?.exists ??
+                                                            .entity
+                                                            .data
+                                                            ?.exists ??
                                                             false);
 
                                                         return IconButton(
                                                             onPressed: () {
                                                               if (AppSharedPreferences
-                                                                      .getToken()
+                                                                  .getToken()
                                                                   .isEmpty) {
                                                                 showLoginBottomSheet(
                                                                     context:
-                                                                        context);
+                                                                    context);
                                                                 return;
                                                               }
                                                               if (like ==
                                                                   true) {
                                                                 context
                                                                     .read<
-                                                                        RemoveLikeCubit>()
+                                                                    RemoveLikeCubit>()
                                                                     .removeLike(
-                                                                        context:
-                                                                            context,
-                                                                        entity:
-                                                                            CheckLikeRequestEntity(
-                                                                          itemId:
-                                                                              advDetails?.itemId,
-                                                                        ));
-                                                              } else {
-                                                                context.read<AddReactionCubit>().addReaction(
                                                                     context:
-                                                                        context,
+                                                                    context,
+                                                                    entity:
+                                                                    CheckLikeRequestEntity(
+                                                                      itemId:
+                                                                      advDetails
+                                                                          ?.itemId,
+                                                                    ));
+                                                              } else {
+                                                                context.read<
+                                                                    AddReactionCubit>()
+                                                                    .addReaction(
+                                                                    context:
+                                                                    context,
                                                                     entity: AddReactionRequestEntity(
                                                                         itemId: advDetails
                                                                             ?.itemId,
                                                                         reactionType:
-                                                                            EnumManager.likeReaction));
+                                                                        EnumManager
+                                                                            .likeReaction));
                                                               }
                                                             },
                                                             icon: Icon(
                                                               Icons
                                                                   .thumb_up_alt_rounded,
                                                               color: like ==
-                                                                      true
+                                                                  true
                                                                   ? AppColorManager
-                                                                      .mainColor
+                                                                  .mainColor
                                                                   : AppColorManager
-                                                                      .white,
-                                                              size: AppWidthManager.w5,
+                                                                  .white,
+                                                              size: AppWidthManager
+                                                                  .w5,
                                                             ));
                                                       },
                                                     );
@@ -563,6 +577,7 @@ class _AdvertisementDetailsScreenState
 
 class AdvertisementDetailsArgs {
   AdData? advertisement;
+  SubCategory? category;
 
-  AdvertisementDetailsArgs({required this.advertisement});
+  AdvertisementDetailsArgs({required this.advertisement, this.category});
 }

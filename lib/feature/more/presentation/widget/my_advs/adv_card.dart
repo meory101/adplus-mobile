@@ -99,7 +99,6 @@ class AdvCard extends StatelessWidget {
                                                     arguments: UpdateAdvArgs(
                                                         data: item))
                                                 .then((value) {
-                                                  print('hereeeeeeeeeeeeeeeeeeeeeeee');
                                               Navigator.of(context)
                                                   .pushReplacementNamed(
                                                 RouteNamedScreens.myitem,
@@ -111,8 +110,7 @@ class AdvCard extends StatelessWidget {
                                                 context: context,
                                                 item: item,
                                                 onSuccess: () {
-                                                  print('ddddddddddd'
-                                                  );
+
                                                   NoteMessage
                                                       .showSuccessSnackBar(
                                                           context: context,

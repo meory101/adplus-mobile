@@ -55,8 +55,6 @@ class MoreRemoteImplement extends MoreRemote {
       {required UpdateUsernameRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.updateUsername, body: entity.toJson());
-    print(response.statusCode);
-    print(response.body);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return updateUsernameResponseEntityFromJson(response.body);
     } else {

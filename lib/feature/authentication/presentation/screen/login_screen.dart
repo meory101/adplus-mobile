@@ -150,10 +150,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           RouteNamedScreens.mainBottomAppBar,
                           (route) => false,
                         );
-                        return;
+                      } else {
+                        Navigator.of(context).pop();
                       }
-
-                      Navigator.of(context).pop();
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(

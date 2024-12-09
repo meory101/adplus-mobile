@@ -123,7 +123,6 @@ class MainCategory {
 }
 
   MainCategory.fromJson(dynamic json) {
-    print(json);
     _categoryId = json['category_id'];
     _parentId = json['parent_id'];
     _name = json['name'];

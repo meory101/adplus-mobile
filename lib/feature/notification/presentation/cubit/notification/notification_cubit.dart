@@ -59,6 +59,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   }
 
   void resetData() async {
+    hasMoreItems = true;
     currentPage = 1;
   }
 }

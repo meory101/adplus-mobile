@@ -16,14 +16,12 @@ import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside_page_request_entity.dart';
-import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_page_cubit/category_inside_page_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/category_inside_page/companies_accounts_list_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/home/home_banners.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
-import '../../domain/entity/response/get_adv_details_response_entity.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
 
 class CategoryInsidePageScreen extends StatefulWidget {
@@ -134,9 +132,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                         RouteNamedScreens
                                             .insidePageCategoryAdvs,
                                         arguments: InsidePageCategoryAdvArgs(
-                                            categoryId: widget.args.subCategory
-                                                    .categoryId ??
-                                                -1,
+                                            category: widget.args.subCategory,
                                             entity: entity));
                                   },
                                   child: DecoratedContainer(

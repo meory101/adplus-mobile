@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/helper/date_time_helper.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/feature/notification/domain/entities/request/notifications_request_entity.dart';
 import 'package:mzad_damascus/feature/notification/domain/entities/response/notifications_response_entity.dart';
@@ -45,9 +47,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
 
   initNotifications() {
-    print('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
     context.read<NotificationCubit>().getMyNotifications(
-        context: context, entity: NotificationsRequestEntity(page: 1));
+        context: context, entity: NotificationsRequestEntity());
   }
 
   int selectedIndex = 0;
@@ -62,72 +63,83 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MainAppBar(
-          title: "notifications".tr(),
-        ),
-        body: BlocConsumer<NotificationCubit, NotificationState>(
-            listener: (context, state) {
+      appBar: MainAppBar(
+        title: "notifications".tr(),
+      ),
+      body: BlocConsumer<NotificationCubit, NotificationState>(
+        listener: (context, state) {
           if (state.status == CubitStatus.error) {
-            NoteMessage.showErrorSnackBar(context: context, text: state.error);
+            NoteMessage.showErrorSnackBar(
+                context: context, text: state.error);
           }
-        }, builder: (context, state) {
+        },
+        builder: (context, state) {
           if (state.status == CubitStatus.loading &&
               state.entity.data?.data == null) {
             return const Center(child: CircularProgressIndicator());
           }
-          List<NotificationItem>? notifications = state.entity.data?.data ?? [];
+          List<NotificationItem>? notifications =
+              state.entity.data?.data ?? [];
 
           if (notifications.isEmpty) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: AppHeightManager.h30,
-                ),
-                AppTextWidget(
-                  text: "noNotifications".tr(),
-                  fontSize: FontSizeManager.fs18,
-                  fontWeight: FontWeight.w700,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: AppHeightManager.h05,
-                ),
-                AppTextWidget(
-                  text:"youDon’tHaveAnyNotificationsYet".tr(),
-                  fontSize: FontSizeManager.fs16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColorManager.grey,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                ),
-              ],
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppTextWidget(
+                    text: "noNotifications".tr(),
+                    fontSize: FontSizeManager.fs18,
+                    fontWeight: FontWeight.w700,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: AppHeightManager.h05,
+                  ),
+                  AppTextWidget(
+                    text: "youDon’tHaveAnyNotificationsYet".tr(),
+                    fontSize: FontSizeManager.fs16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColorManager.grey,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                  ),
+                ],
+              ),
             );
           }
           return ListView.builder(
-            itemCount: notifications.length,
+            controller: scrollController,
+            itemCount: notifications.length + 1,
             itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  if((notifications[index].itemId ?? "").toString().isEmpty){
-                    return;
-                  }
-                  Navigator.of(context).pushNamed(
-                      RouteNamedScreens.advertisementDetails,
-                      arguments: AdvertisementDetailsArgs(
-                          advertisement:
-                              AdData(itemId: notifications[index].itemId)));
-                },
-                child: NotificationListItem(
-                    title: notifications[index].message ?? "",
-                    body: notifications[index].message ?? "",
-                    time: DateTimeHelper.formatDateMonthDayYear(
-                        date: notifications[index].createdAt ?? "")),
-              );
+              if (index == notifications.length) {
+                return Center(
+                    child: state.status == CubitStatus.error
+                        ? const SizedBox()
+                        : const CircularProgressIndicator());
+              } else {
+                return InkWell(
+                    onTap: () {
+                      if ((notifications[index].itemId ?? "")
+                          .toString()
+                          .isEmpty) {
+                        return;
+                      }
+                      Navigator.of(context).pushNamed(
+                          RouteNamedScreens.advertisementDetails,
+                          arguments: AdvertisementDetailsArgs(
+                              advertisement: AdData(
+                                  itemId: notifications[index].itemId)));
+                    },
+                    child: NotificationListItem(
+                      notificationItem: notifications[index],
+                    ));
+              }
             },
           );
-        }));
+        },
+      ),
+    );
   }
 }
