@@ -37,6 +37,8 @@ class _InsidePageCategoryAdvsScreenState
     extends State<InsidePageCategoryAdvsScreen> {
   @override
   void initState() {
+
+    FilterRequest.entity = AdvsByAttributeRequestEntity();
     FilterRequest.entity = widget.args.entity;
     selectedAttributeMap = {};
     selectedAttributeMap[widget.args.entity.attributes?.first.attributeId ??
@@ -53,6 +55,8 @@ class _InsidePageCategoryAdvsScreenState
   }
 
   getAdvertisements() {
+
+
     context
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: FilterRequest.entity);

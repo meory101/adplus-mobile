@@ -1,7 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
+import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 
 import '../../../../../core/helper/language_helper.dart';
 import '../../../../../core/resource/color_manager.dart';
@@ -11,84 +14,169 @@ import '../../../../../core/widget/image/main_image_widget.dart';
 
 class AdvDetailsImagesSlider extends StatefulWidget {
   final AdvDetails? advDetails;
-  const AdvDetailsImagesSlider({super.key,required this.advDetails});
+
+  const AdvDetailsImagesSlider({super.key, required this.advDetails});
 
   @override
   State<AdvDetailsImagesSlider> createState() => _AdvDetailsImagesSliderState();
 }
 
 class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
-
-  int currentIndex =0;
+  int currentIndex = 0;
+  CarouselSliderController controller = CarouselSliderController();
+@override
+  void dispose() {
+    controller= CarouselSliderController();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         CarouselSlider(
           disableGesture: true,
+          carouselController: controller,
           options: CarouselOptions(
             onPageChanged: (index, reason) {
               setState(() {
                 currentIndex = index;
               });
             },
-            aspectRatio:
-            AppWidthManager.w92 / AppHeightManager.h35,
+            aspectRatio: AppWidthManager.w100 / AppHeightManager.h27,
             enableInfiniteScroll: true,
-            autoPlay: true,
+            autoPlay: false,
             viewportFraction: 1,
           ),
           items: List.generate(
             widget.advDetails?.photos?.length ?? 0,
-                (index) {
-              return Container(
-                  width: AppWidthManager.w92,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                          AppRadiusManager.r15)),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: MainImageWidget(
-                    imageUrl: AppConstantManager.imageBaseUrl +
-                        (widget.advDetails?.photos?[index].photo ?? ""),
-                  ));
+            (index) {
+              return Stack(
+                children: [
+                  Container(
+                      width: AppWidthManager.w100,
+                      child: MainImageWidget(
+                        imageUrl: AppConstantManager.imageBaseUrl +
+                            (widget.advDetails?.photos?[index].photo ?? ""),
+                      )),
+                  Positioned(
+                      right: 10,
+                      top: AppHeightManager.h11,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = selectedIndex +
+                                (LanguageHelper.checkIfLTR(context: context)
+                                    ? 1
+                                    : -1);
+                          });
+                          controller.animateToPage(selectedIndex);
+                        },
+                        child: Center(
+                          child: Icon(
+                            LanguageHelper.checkIfLTR(context: context)
+                                ? Icons.arrow_forward_ios
+                                : Icons.arrow_back_ios,
+                            size: AppWidthManager.w10,
+                            color: AppColorManager.white,
+                          ),
+                        ),
+                      )),
+                  Positioned(
+                    left: 10,
+                    top: AppHeightManager.h11,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = selectedIndex +
+                              (!LanguageHelper.checkIfLTR(context: context)
+                                  ? 1
+                                  : -1);
+                        });
+                        controller.animateToPage(selectedIndex);
+                      },
+                      child: Center(
+                        child: Icon(
+                          LanguageHelper.checkIfLTR(context: context)
+                              ? Icons.arrow_back_ios
+                              : Icons.arrow_forward_ios,
+                          size: AppWidthManager.w10,
+                          color: AppColorManager.white,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              );
             },
           ),
         ),
         SizedBox(
           height: AppHeightManager.h1point8,
         ),
-        Visibility(
-          visible: ( widget.advDetails?.photos?.length ?? 0)>1,
-          child: DotsIndicator(
-            dotsCount:  widget.advDetails?.photos?.length ?? 1,
-            position: currentIndex,
-            decorator: DotsDecorator(
-              spacing: EdgeInsets.only(
-                  left: LanguageHelper.checkIfLTR(context: context)
-                      ? AppWidthManager.w1Point8
-                      : 0,
-                  right:
-                  !LanguageHelper.checkIfLTR(context: context)
-                      ? AppWidthManager.w1Point8
-                      : 0),
-              activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  AppRadiusManager.r10,
-                ),
-              ),
-              activeSize: Size(
-                AppWidthManager.w6,
-                AppHeightManager.h08,
-              ),
-              size: Size(
-                AppWidthManager.w1Point5,
-                AppWidthManager.w1Point5,
-              ),
-              activeColor: AppColorManager.mainColor,
-              color: AppColorManager.borderGrey,
-            ),
-          ),
+        // Visibility(
+        //   visible: (widget.advDetails?.photos?.length ?? 0) > 1,
+        //   child: DotsIndicator(
+        //     dotsCount: widget.advDetails?.photos?.length ?? 1,
+        //     position: currentIndex,
+        //     decorator: DotsDecorator(
+        //       spacing: EdgeInsets.only(
+        //           left: LanguageHelper.checkIfLTR(context: context)
+        //               ? AppWidthManager.w1Point8
+        //               : 0,
+        //           right: !LanguageHelper.checkIfLTR(context: context)
+        //               ? AppWidthManager.w1Point8
+        //               : 0),
+        //       activeShape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(
+        //           AppRadiusManager.r10,
+        //         ),
+        //       ),
+        //       activeSize: Size(
+        //         AppWidthManager.w6,
+        //         AppHeightManager.h08,
+        //       ),
+        //       size: Size(
+        //         AppWidthManager.w1Point5,
+        //         AppWidthManager.w1Point5,
+        //       ),
+        //       activeColor: AppColorManager.mainColor,
+        //       color: AppColorManager.borderGrey,
+        //     ),
+        //   ),
+        // ),
+        SizedBox(
+          height: AppHeightManager.h2,
         ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+          child: GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                childAspectRatio: 1,
+                crossAxisSpacing: AppWidthManager.w2,
+                mainAxisSpacing: AppWidthManager.w2),
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                  controller.animateToPage(selectedIndex);
+                },
+                child: Container(
+                    height: AppHeightManager.h6,
+                    width: AppHeightManager.h6,
+                    child: MainImageWidget(
+                      imageUrl: AppConstantManager.imageBaseUrl +
+                          (widget.advDetails?.photos?[index].photo ?? ""),
+                    )),
+              );
+            },
+            itemCount: widget.advDetails?.photos?.length ?? 0,
+          ),
+        )
       ],
     );
   }

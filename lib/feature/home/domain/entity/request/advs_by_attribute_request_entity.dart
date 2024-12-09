@@ -10,15 +10,18 @@ class AdvsByAttributeRequestEntity {
   AdvsByAttributeRequestEntity({
       num? page,
     num? cityId,
+    num? categoryId,
       List<FilterAttribute>? attributes,}){
     _page = page;
     _cityId = cityId;
+    _categoryId = categoryId;
     _attributes = attributes;
 }
 
   AdvsByAttributeRequestEntity.fromJson(dynamic json) {
     _page = json['page'];
     _cityId = json ['city_id'];
+    _categoryId = json['categoryId'];
     if (json['attributes'] != null) {
       _attributes = [];
       json['attributes'].forEach((v) {
@@ -28,14 +31,21 @@ class AdvsByAttributeRequestEntity {
   }
   num? _page;
   num? _cityId;
+  num? _categoryId;
   List<FilterAttribute>? _attributes;
-AdvsByAttributeRequestEntity copyWith({  num? page,
+AdvsByAttributeRequestEntity copyWith({
+  num?categoryId,
+  num?cityId,
+  num? page,
   List<FilterAttribute>? attributes,
 }) => AdvsByAttributeRequestEntity(  page: page ?? _page,
   attributes: attributes ?? _attributes,
+  cityId: cityId?? _cityId,
+    categoryId: categoryId ?? _categoryId
 );
   num? get page => _page;
   num? get cityId => _cityId;
+  num? get categoryId => _categoryId;
   List<FilterAttribute>? get attributes => _attributes;
 
   set page(num? value) {
@@ -44,8 +54,13 @@ AdvsByAttributeRequestEntity copyWith({  num? page,
   set cityId(num? value) {
     _cityId = value;
   }
+  set categoryId(num? value) {
+    _categoryId = value;
+  }
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['category_id'] = _categoryId;
+    map['city_id'] = _cityId;
     map['page'] = _page;
     if (_attributes != null) {
       map['attributes'] = _attributes?.map((v) => v.toJson()).toList();

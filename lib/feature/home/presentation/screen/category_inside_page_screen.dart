@@ -137,11 +137,23 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                   ),
                                   Visibility(
                                     visible: index == 0,
-                                    child: AppTextWidget(
-                                      text: "allAdvs".tr(),
-                                      fontSize: FontSizeManager.fs16,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColorManager.mainColor,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                            RouteNamedScreens
+                                                .insidePageCategoryAdvs,
+                                            arguments: InsidePageCategoryAdvArgs(
+                                                category: widget.args.subCategory,
+                                                entity: AdvsByAttributeRequestEntity(
+                                                  categoryId: widget.args.subCategory.categoryId
+                                                )));
+                                      },
+                                      child: AppTextWidget(
+                                        text: "allAdvs".tr(),
+                                        fontSize: FontSizeManager.fs16,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColorManager.mainColor,
+                                      ),
                                     ),
                                   )
                                 ],
