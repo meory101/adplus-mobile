@@ -114,7 +114,7 @@
                 .map((option) => DropdownMenuItem<NameAndId>(
               value: option,
               child: Padding(
-                padding:  EdgeInsets.symmetric(horizontal: AppWidthManager.w1), // Add padding
+                padding:  EdgeInsets.zero, // Add padding
                 child: AppTextWidget(
                   color: AppColorManager.black,
                   text: option.name,

@@ -184,6 +184,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Row(
                         children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: AppHeightManager.h1),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(RouteNamedScreens.search);
+                              },
+                              child: SvgPicture.asset(
+                                AppIconManager.search,
+                                colorFilter: const ColorFilter.mode(
+                                    AppColorManager.mainColor, BlendMode.srcIn),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: AppWidthManager.w3Point8,
+                          ),
                           Visibility(
                             visible: AppSharedPreferences.getToken().isNotEmpty,
                             child: BlocConsumer<NotificationCubit,
@@ -266,23 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ])));
                                 }),
                           ),
-                          SizedBox(
-                            width: AppWidthManager.w3Point8,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: AppHeightManager.h1),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed(RouteNamedScreens.searchUser);
-                              },
-                              child: SvgPicture.asset(
-                                AppIconManager.search,
-                                colorFilter: const ColorFilter.mode(
-                                    AppColorManager.mainColor, BlendMode.srcIn),
-                              ),
-                            ),
-                          ),
+
                         ],
                       )
                     ],

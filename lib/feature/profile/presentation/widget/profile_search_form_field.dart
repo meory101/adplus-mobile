@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mzad_damascus/feature/home/presentation/screen/search_user.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/search_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
@@ -58,7 +58,7 @@ class _SearchFormFieldState extends State<ProfileSearchFormField> {
               ),
               onPressed: () {
                 if ((searchText ?? "").isEmpty) return;
-                Navigator.of(context).pushNamed(RouteNamedScreens.searchUser,
+                Navigator.of(context).pushNamed(RouteNamedScreens.search,
                 arguments: SearchArgs(searchString:searchText )
                 );
               },

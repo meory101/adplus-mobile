@@ -4,12 +4,14 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/add_reaction_re
 import 'package:mzad_damascus/feature/home/domain/entity/request/followers_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/item_search_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/item_search_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/search_user_response_entity.dart';
 
 import '../../../../../core/api/api_error/api_exception.dart';
@@ -33,6 +35,9 @@ abstract class HomeRemote {
 
   Future<FollowersResponseEntity> getFollowers(
       {required FollowersRequestEntity entity});
+
+  Future<ItemSearchResponseEntity> itemSearch(
+      {required ItemSearchRequestEntity entity});
 
   Future<FollowersResponseEntity> getFollowings(
       {required FollowersRequestEntity entity});
@@ -246,11 +251,24 @@ class HomeRemoteImplement extends HomeRemote {
   }
 
   @override
-  Future<GetCompanyAccountsResponseEntity> getCompanyAccounts({required GetCompanyAccountRequestEntity entity}) async{
+  Future<GetCompanyAccountsResponseEntity> getCompanyAccounts(
+      {required GetCompanyAccountRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(body: entity.toJson(), url: ApiPostUrl.businessClientByCategory);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getCompanyAccountsResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<ItemSearchResponseEntity> itemSearch(
+      {required ItemSearchRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.itemsSearch);
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return itemSearchResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

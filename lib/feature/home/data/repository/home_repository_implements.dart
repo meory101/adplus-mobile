@@ -8,6 +8,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/get_adv_details
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_advs_by_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_company_account_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/item_search_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/search_user_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
@@ -18,6 +19,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_detail
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_comments_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_company_accounts_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/item_search_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/search_user_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/myitems_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
@@ -102,7 +104,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, BannersResponseEntity>> getBanners({required int source}) {
+  Future<Either<ApiFailure, BannersResponseEntity>> getBanners(
+      {required int source}) {
     return Connector<BannersResponseEntity>().connect(
       remote: () async {
         final result = await remote.getBanners(source: source);
@@ -112,7 +115,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, bool>> addReaction({required AddReactionRequestEntity entity}) async{
+  Future<Either<ApiFailure, bool>> addReaction(
+      {required AddReactionRequestEntity entity}) async {
     return Connector<bool>().connect(
       remote: () async {
         final result = await remote.addReaction(entity: entity);
@@ -122,7 +126,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, MyItemResponseEntity>> getAdvByUser({required GetAdvsByUserRequestEntity entity}) async{
+  Future<Either<ApiFailure, MyItemResponseEntity>> getAdvByUser(
+      {required GetAdvsByUserRequestEntity entity}) async {
     return Connector<MyItemResponseEntity>().connect(
       remote: () async {
         final result = await remote.getAdvByUser(entity: entity);
@@ -132,7 +137,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-   Future<Either<ApiFailure, CheckLikeResponseEntity>> checkLike({required CheckLikeRequestEntity entity}) async{
+  Future<Either<ApiFailure, CheckLikeResponseEntity>> checkLike(
+      {required CheckLikeRequestEntity entity}) async {
     return Connector<CheckLikeResponseEntity>().connect(
       remote: () async {
         final result = await remote.checkLike(entity: entity);
@@ -142,7 +148,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, bool>> removeLike({required CheckLikeRequestEntity entity})async {
+  Future<Either<ApiFailure, bool>> removeLike(
+      {required CheckLikeRequestEntity entity}) async {
     return Connector<bool>().connect(
       remote: () async {
         final result = await remote.removeLike(entity: entity);
@@ -152,7 +159,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure,SearchUserResponseEntity>> searchUser({required SearchUserRequestEntity entity})async {
+  Future<Either<ApiFailure, SearchUserResponseEntity>> searchUser(
+      {required SearchUserRequestEntity entity}) async {
     return Connector<SearchUserResponseEntity>().connect(
       remote: () async {
         final result = await remote.searchUser(entity: entity);
@@ -162,7 +170,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure,FollowersResponseEntity>> getFollowers({required FollowersRequestEntity entity})async {
+  Future<Either<ApiFailure, FollowersResponseEntity>> getFollowers(
+      {required FollowersRequestEntity entity}) async {
     return Connector<FollowersResponseEntity>().connect(
       remote: () async {
         final result = await remote.getFollowers(entity: entity);
@@ -172,7 +181,8 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure,FollowersResponseEntity>> getFollowings({required FollowersRequestEntity entity}) async{
+  Future<Either<ApiFailure, FollowersResponseEntity>> getFollowings(
+      {required FollowersRequestEntity entity}) async {
     return Connector<FollowersResponseEntity>().connect(
       remote: () async {
         final result = await remote.getFollowings(entity: entity);
@@ -182,10 +192,23 @@ class HomeRepositoryImplements implements HomeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, GetCompanyAccountsResponseEntity>> getCompanyAccounts({required GetCompanyAccountRequestEntity entity})async {
+  Future<Either<ApiFailure, GetCompanyAccountsResponseEntity>>
+      getCompanyAccounts(
+          {required GetCompanyAccountRequestEntity entity}) async {
     return Connector<GetCompanyAccountsResponseEntity>().connect(
       remote: () async {
         final result = await remote.getCompanyAccounts(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, ItemSearchResponseEntity>> itemSearch(
+      {required ItemSearchRequestEntity entity}) async {
+    return Connector<ItemSearchResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.itemSearch(entity: entity);
         return Right(result);
       },
     );

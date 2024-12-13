@@ -1,30 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mzad_damascus/core/model/comment.dart';
-import 'package:mzad_damascus/feature/home/domain/usecase/get_comments_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/item_search_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/item_search_response_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/item_search_usecase.dart';
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
 import '../../../../../core/resource/enum_manager.dart';
-import '../../../domain/entity/request/get_comments_request_entity.dart';
-import '../../../domain/entity/response/get_comments_response_entity.dart';
 
-part 'get_comments_state.dart';
+part 'item_search_state.dart';
 
 /// Eng.Nour Othman(meory)*
 
-class GetCommentsCubit extends Cubit<GetCommentsState> {
-  final GetCommentsUsecase usecase;
+class ItemSearchCubit extends Cubit<ItemSearchState> {
+  final ItemSearchUsecase usecase;
   bool hasMoreItems = true;
   int currentPage = 1;
 
-  GetCommentsCubit({
+  ItemSearchCubit({
     required this.usecase,
-  }) : super(GetCommentsState.initial());
+  }) : super(ItemSearchState.initial());
 
-  void getComments(
+  void searchItems(
       {required BuildContext context,
-      required GetCommentsRequestEntity entity}) async {
+        required ItemSearchRequestEntity entity}) async {
     if (!hasMoreItems ||
         state.status == CubitStatus.loading ||
         state.status == CubitStatus.loadMore) return;
@@ -34,7 +34,7 @@ class GetCommentsCubit extends Cubit<GetCommentsState> {
 
     if (isClosed) return;
     result.fold(
-      (failure) async {
+          (failure) async {
         final ErrorEntity errorEntity = await ApiErrorHandler.mapFailure(
             failure: failure, buildContext: context);
         emit(state.copyWith(
@@ -46,14 +46,14 @@ class GetCommentsCubit extends Cubit<GetCommentsState> {
         } else {
           currentPage++;
         }
-        List<Comment>? existingItems = state.entity.data?.data ?? [];
-        List<Comment>? updatedItems = List.from(existingItems)
+        List<AdData>? existingItems = state.entity.data?.data ?? [];
+        List<AdData>? updatedItems = List.from(existingItems)
           ..addAll((data.data?.data ?? []).where((newItem) => !existingItems
-              .any((existingItem) => existingItem.commentId == newItem.commentId)));
+              .any((existingItem) => existingItem.itemId == newItem.itemId)));
         emit(state.copyWith(
             status: CubitStatus.success,
             entity:
-            GetCommentsResponseEntity(data: CommentsResult(data: updatedItems)),
+            ItemSearchResponseEntity(data: ItemSearchResult(data: updatedItems)),
             isReachedMax: !hasMoreItems));
       },
     );
@@ -64,7 +64,7 @@ class GetCommentsCubit extends Cubit<GetCommentsState> {
     hasMoreItems = true;
     emit(state.copyWith(
         status: CubitStatus.success,
-        entity: GetCommentsResponseEntity(data: CommentsResult(data: [])),
+        entity: ItemSearchResponseEntity(data: ItemSearchResult(data: [])),
         isReachedMax: false));
   }
 }

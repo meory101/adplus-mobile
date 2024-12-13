@@ -53,6 +53,7 @@ import 'package:mzad_damascus/feature/home/domain/usecase/get_categories_usecase
 import 'package:mzad_damascus/feature/home/domain/usecase/get_category_inside_page_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_comments_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_company_accounts_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/item_search_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/remove_like_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/search_user_usecase.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
@@ -68,6 +69,7 @@ import 'package:mzad_damascus/feature/home/presentation/cubit/following_cubit/fo
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_comments_cubit/get_comments_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/item_search/item_search_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/remove_like/remove_like_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/search_user/search_user_cubit.dart';
 import 'package:mzad_damascus/feature/likes/data/datasource/remote/likes_remote.dart';
@@ -136,6 +138,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => ItemSearchCubit(usecase: sl()));
   sl.registerFactory(() => MarkNotificationCubit(usecase: sl()));
   sl.registerFactory(() => NotificationCubit(usecase: sl()));
   sl.registerFactory(() => ConvertBusinessAccountCubit(usecase: sl()));
@@ -182,6 +185,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCommentsUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetAdvsByAttributeUsecase(repository: sl()));
   sl.registerLazySingleton(() => GetCompanyAccountsUsecase(repository: sl()));
+  sl.registerLazySingleton(() => ItemSearchUsecase(repository: sl()));
 
   sl.registerLazySingleton(
       () => GetCategoryInsidePageUsecase(repository: sl()));

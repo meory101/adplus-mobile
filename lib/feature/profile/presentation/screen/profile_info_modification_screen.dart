@@ -323,8 +323,6 @@ class _ProfileInfoModificationScreenState
                         return MainAppButton(
                           onTap: () {
                             if ((formKey.currentState?.validate() ?? false)) {
-                              print(entity.phone);
-                              print(entity.whatsapp);
                               context.read<UpdateProfileCubit>().updateProfile(
                                   context: context, entity: entity);
                             }

@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/item_search_request_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/item_search/item_search_cubit.dart';
+import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
 
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
@@ -15,6 +18,7 @@ import '../../cubit/search_user/search_user_cubit.dart';
 class SearchFormField extends StatefulWidget {
   final String? initValue;
 
+
   const SearchFormField({super.key, this.initValue});
 
   @override
@@ -22,17 +26,29 @@ class SearchFormField extends StatefulWidget {
 }
 
 class _SearchFormFieldState extends State<SearchFormField> {
-  SearchUserRequestEntity entity = SearchUserRequestEntity();
+
 
   @override
   void initState() {
     if (widget.initValue != null) {
-      entity.searchText = widget.initValue;
-      context
-          .read<SearchUserCubit>()
-          .searchUser(context: context, entity: entity);
+      SearchUserAndItemRequestEntity.userSearchEntity.searchText = widget.initValue;
+      SearchUserAndItemRequestEntity.itemSearchEntity.searchText = widget.initValue;
+    searchUsersAndItems();
+
     }
     super.initState();
+  }
+
+  searchUsersAndItems(){
+    context
+        .read<SearchUserCubit>()
+        .searchUser(context: context, entity: SearchUserAndItemRequestEntity.userSearchEntity);
+
+    context
+        .read<ItemSearchCubit>()
+        .resetData();
+    context
+        .read<ItemSearchCubit>().searchItems(context: context, entity: SearchUserAndItemRequestEntity.itemSearchEntity);
   }
 
   @override
@@ -58,26 +74,30 @@ class _SearchFormFieldState extends State<SearchFormField> {
           child: AppTextFormField(
             borderColor: AppColorManager.mainColor,
             onChanged: (value) {
-              entity.searchText = value;
+              SearchUserAndItemRequestEntity.userSearchEntity.searchText = value;
+              SearchUserAndItemRequestEntity.itemSearchEntity.searchText = value;
               return null;
             },
             hintText: "search".tr(),
-            initialValue: entity.searchText,
+            initialValue: SearchUserAndItemRequestEntity.userSearchEntity.searchText,
             suffixIcon: IconButton(
               icon: const Icon(
                 Icons.search,
                 color: AppColorManager.mainColor,
               ),
               onPressed: () {
-                if ((entity.searchText ?? "").isEmpty) return;
-                context
-                    .read<SearchUserCubit>()
-                    .searchUser(context: context, entity: entity);
-              },
+                if ((SearchUserAndItemRequestEntity.userSearchEntity
+                    .searchText ?? "").isEmpty) return;
+                searchUsersAndItems();
+              }
             ),
           ),
         );
       },
     );
   }
+}
+abstract class SearchUserAndItemRequestEntity{
+ static SearchUserRequestEntity userSearchEntity=SearchUserRequestEntity();
+ static ItemSearchRequestEntity itemSearchEntity = ItemSearchRequestEntity();
 }
