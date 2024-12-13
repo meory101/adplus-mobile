@@ -9,6 +9,8 @@ import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.d
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
+import 'package:mzad_damascus/feature/home/presentation/widget/search/search_form_field.dart';
+import 'package:mzad_damascus/feature/profile/presentation/widget/profile_search_form_field.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';
@@ -184,23 +186,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Row(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: AppHeightManager.h1),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed(RouteNamedScreens.search);
-                              },
-                              child: SvgPicture.asset(
-                                AppIconManager.search,
-                                colorFilter: const ColorFilter.mode(
-                                    AppColorManager.mainColor, BlendMode.srcIn),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: AppWidthManager.w3Point8,
-                          ),
                           Visibility(
                             visible: AppSharedPreferences.getToken().isNotEmpty,
                             child: BlocConsumer<NotificationCubit,
@@ -295,6 +280,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 HomeBanners(
                   source: EnumManager.homeBannerSource,
                 ),
+                SizedBox(
+                  height: AppHeightManager.h2,
+                ),
+                MainSearchFormField(),
                 SizedBox(
                   height: AppHeightManager.h3,
                 ),

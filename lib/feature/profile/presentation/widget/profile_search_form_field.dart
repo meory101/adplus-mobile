@@ -13,14 +13,14 @@ import '../../../../../core/widget/snack_bar/note_message.dart';
 import '../../../home/domain/entity/request/search_user_request_entity.dart';
 import '../../../home/presentation/cubit/search_user/search_user_cubit.dart';
 
-class ProfileSearchFormField extends StatefulWidget {
-  const ProfileSearchFormField({super.key});
+class MainSearchFormField extends StatefulWidget {
+  const MainSearchFormField({super.key});
 
   @override
-  State<ProfileSearchFormField> createState() => _SearchFormFieldState();
+  State<MainSearchFormField> createState() => _SearchFormFieldState();
 }
 
-class _SearchFormFieldState extends State<ProfileSearchFormField> {
+class _SearchFormFieldState extends State<MainSearchFormField> {
   String? searchText ;
 
   @override

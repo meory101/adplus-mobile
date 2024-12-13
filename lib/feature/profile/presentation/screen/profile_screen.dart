@@ -137,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ProfileSearchFormField(),
+            MainSearchFormField(),
             const ProfileInfoCard(),
             ActivityCard(
               onActivityTapChanged: (index) {
