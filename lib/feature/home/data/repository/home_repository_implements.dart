@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/ads_by_category_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/category_inside_page_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/check_like_request_entity.dart';
@@ -10,6 +11,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_re
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_company_account_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/item_search_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/search_user_request_entity.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/ads_by_category_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/banners_response_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/category_inside_page_response_entity.dart';
@@ -209,6 +211,17 @@ class HomeRepositoryImplements implements HomeRepository {
     return Connector<ItemSearchResponseEntity>().connect(
       remote: () async {
         final result = await remote.itemSearch(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, AdsByCategoryResponseEntity>> getItemsByCategory(
+      {required AdsByCategoryRequestEntity entity}) async {
+    return Connector<AdsByCategoryResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getItemsByCategory(entity: entity);
         return Right(result);
       },
     );

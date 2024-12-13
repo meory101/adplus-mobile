@@ -6,6 +6,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../more/domain/entity/response/myitems_response_entity.dart';
 import '../entity/request/add_comment_request_entity.dart';
+import '../entity/request/ads_by_category_request_entity.dart';
 import '../entity/request/advs_by_attribute_request_entity.dart';
 import '../entity/request/check_like_request_entity.dart';
 import '../entity/request/followers_request_entity.dart';
@@ -15,6 +16,7 @@ import '../entity/request/get_comments_request_entity.dart';
 import '../entity/request/get_company_account_request_entity.dart';
 import '../entity/request/item_search_request_entity.dart';
 import '../entity/request/search_user_request_entity.dart';
+import '../entity/response/ads_by_category_response_entity.dart';
 import '../entity/response/advs_by_attribute_response_entity.dart';
 import '../entity/response/banners_response_entity.dart';
 import '../entity/response/check_like_response_entity.dart';
@@ -43,7 +45,7 @@ abstract class HomeRepository {
   Future<Either< ApiFailure,FollowersResponseEntity>> getFollowings({required FollowersRequestEntity entity}) ;
   Future<Either< ApiFailure,FollowersResponseEntity>> getFollowers({required FollowersRequestEntity entity});
   Future<Either< ApiFailure,GetCompanyAccountsResponseEntity>> getCompanyAccounts({required GetCompanyAccountRequestEntity entity});
-  Future<Either< ApiFailure,ItemSearchResponseEntity>> itemSearch(
-      {required ItemSearchRequestEntity entity}) ;
-
+  Future<Either< ApiFailure,ItemSearchResponseEntity>> itemSearch({required ItemSearchRequestEntity entity}) ;
+  Future<Either< ApiFailure,AdsByCategoryResponseEntity>> getItemsByCategory(
+      {required AdsByCategoryRequestEntity entity});
   }

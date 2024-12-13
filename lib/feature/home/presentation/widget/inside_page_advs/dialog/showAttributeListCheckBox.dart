@@ -37,85 +37,66 @@ void showAttributeListCheckBox(
                 ),
                 height: AppHeightManager.h40,
                 width: AppWidthManager.w100,
-                child: ListView.builder(
-                  itemCount: options.length,
-                  itemBuilder: (context, i) {
-                    bool isSelected = false;
-                    if (optionNames.length != options.length - 1 &&
-                        options[i].name != 'all') {
-                      optionNames.add(options[i].name);
-                    }
-
-                    if (options[i].name == 'all') {
-                      isSelected =
-                          selectedAttributeMap[currentFilterItemId]?.length ==
-                              options.length - 1;
-                    } else {
-                      isSelected =
-                          selectedAttributeMap[currentFilterItemId]?.contains(options[i].name)??false;
-                    }
-
-                    return InkWell(
-                      child: Container(
-                          margin:
-                              EdgeInsets.only(top: AppHeightManager.h1point8),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(options.length, (i) {
+                      bool isSelected = false;
+                      if (optionNames.length != options.length - 1 && options[i].name != 'all') {
+                        print(options[i].name);
+                        optionNames.add(options[i].name);
+                      }
+                  
+                      if (options[i].name == 'all') {
+                        isSelected = selectedAttributeMap[currentFilterItemId]?.length == options.length - 1;
+                      } else {
+                        isSelected = selectedAttributeMap[currentFilterItemId]?.contains(options[i].name) ?? false;
+                      }
+                  
+                      return InkWell(
+                        child: Container(
+                          margin: EdgeInsets.only(top: AppHeightManager.h1point8),
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(AppRadiusManager.r15),
-                              color: isSelected
-                                  ? AppColorManager.lightGreyOpacity6
-                                  : AppColorManager.white),
+                            borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+                            color: isSelected ? AppColorManager.lightGreyOpacity6 : AppColorManager.white,
+                          ),
                           padding: EdgeInsets.only(
-                              left: LanguageHelper.checkIfLTR(context: context)
-                                  ? AppWidthManager.w3
-                                  : AppWidthManager.w1Point2,
-                              right: LanguageHelper.checkIfLTR(context: context)
-                                  ? AppWidthManager.w1Point2
-                                  : AppWidthManager.w3,
-                              top: AppHeightManager.h1,
-                              bottom: AppHeightManager.h05),
+                            left: LanguageHelper.checkIfLTR(context: context) ? AppWidthManager.w3 : AppWidthManager.w1Point2,
+                            right: LanguageHelper.checkIfLTR(context: context) ? AppWidthManager.w1Point2 : AppWidthManager.w3,
+                            top: AppHeightManager.h1,
+                            bottom: AppHeightManager.h05,
+                          ),
                           height: AppHeightManager.h7,
                           width: double.infinity,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               AppTextWidget(
-                                  text: options[i].name == "all"
-                                      ? "all".tr()
-                                      : options[i].name),
+                                text: options[i].name == "all" ? "all".tr() : options[i].name,
+                              ),
                               Checkbox(
                                 checkColor: AppColorManager.mainColor,
-                                fillColor: WidgetStatePropertyAll(
-                                    AppColorManager.lightGreyOpacity6),
+                                fillColor: WidgetStatePropertyAll(AppColorManager.lightGreyOpacity6),
                                 onChanged: (value) {
-                                  bool isListFull =
-                                      selectedAttributeMap[currentFilterItemId]
-                                              ?.length ==
-                                          options.length - 1;
-
+                                  bool isListFull = selectedAttributeMap[currentFilterItemId]?.length == options.length - 1;
+                  
                                   if (options[i].name == 'all') {
-                                    if (isListFull == false) {
-                                      selectedAttributeMap[
-                                          currentFilterItemId ?? 0] = [];
-                                      selectedAttributeMap[
-                                              currentFilterItemId ?? 0]
-                                          ?.addAll(optionNames);
+                                    print('all');
+                                    if (!isListFull) {
+                                      print('list full is not');
+                                      selectedAttributeMap[currentFilterItemId ?? 0] = [];
+                                      selectedAttributeMap[currentFilterItemId ?? 0]?.addAll(optionNames);
+                                      print(selectedAttributeMap);
+                                      print('---------------');
                                     } else {
-                                      selectedAttributeMap[
-                                          currentFilterItemId ?? 0] = [];
+                                      print('list full');
+                                      selectedAttributeMap[currentFilterItemId ?? 0] = [];
                                     }
                                   } else {
-                                    if ((selectedAttributeMap[
-                                                currentFilterItemId ?? 0] ??
-                                            [])
-                                        .contains(options[i].name)) {
-                                      selectedAttributeMap[
-                                              currentFilterItemId ?? 0]
-                                          ?.remove(options[i].name);
+                                    if ((selectedAttributeMap[currentFilterItemId ?? 0] ?? []).contains(options[i].name)) {
+                                      print('contains000000000000000000000');
+                                      selectedAttributeMap[currentFilterItemId ?? 0]?.remove(options[i].name);
                                     } else {
-                                      selectedAttributeMap[
-                                              currentFilterItemId ?? 0]
-                                          ?.add(options[i].name);
+                                      selectedAttributeMap[currentFilterItemId ?? 0]?.add(options[i].name);
                                     }
                                   }
                                   setState(() {});
@@ -123,13 +104,16 @@ void showAttributeListCheckBox(
                                 value: isSelected,
                                 activeColor: AppColorManager.textAppColor,
                                 visualDensity: const VisualDensity(
-                                    horizontal: VisualDensity.minimumDensity,
-                                    vertical: VisualDensity.minimumDensity),
-                              )
+                                  horizontal: VisualDensity.minimumDensity,
+                                  vertical: VisualDensity.minimumDensity,
+                                ),
+                              ),
                             ],
-                          )),
-                    );
-                  },
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
                 ),
               ),
               DoneButton()
@@ -140,15 +124,13 @@ void showAttributeListCheckBox(
     },
   ).then((value) {
     List<FilterAttribute> attributes = [];
-    selectedAttributeMap.forEach((key, value) {
-      if(value.isNotEmpty){
-        attributes.add(FilterAttribute(
-            value: value,
-            attributeId: key
-        ));
-      }
-
-    },);
+    selectedAttributeMap.forEach(
+      (key, value) {
+        if (value.isNotEmpty) {
+          attributes.add(FilterAttribute(value: value, attributeId: key));
+        }
+      },
+    );
     FilterRequest.entity.attributes = attributes;
     onDoneSelecting();
   });

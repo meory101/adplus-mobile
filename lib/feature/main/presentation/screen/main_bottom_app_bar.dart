@@ -181,12 +181,9 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                     },
                     child: Column(
                       children: [
-                        SvgPicture.asset(AppIconManager.more,
-                            colorFilter: ColorFilter.mode(
-                                selectedIndex == 3
-                                    ? AppColorManager.mainColor
-                                    : AppColorManager.grey,
-                                BlendMode.srcIn)),
+                       Icon(Icons.more_horiz_sharp,color:  selectedIndex == 3
+                           ? AppColorManager.mainColor
+                           : AppColorManager.grey,),
                         AppTextWidget(
                           text: "more".tr(),
                           color: selectedIndex == 3

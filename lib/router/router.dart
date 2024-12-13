@@ -28,6 +28,7 @@ import 'package:mzad_damascus/feature/home/domain/entity/request/get_comments_re
 import 'package:mzad_damascus/feature/home/domain/entity/request/get_company_account_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_comment_cubit/add_comment_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/add_reaction_cubit/add_reaction_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/ads_by_category_cubit/advs_by_category_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
@@ -280,6 +281,10 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) =>
                     di.sl<GetCitiesCubit>()..getCities(context: context),
+              ),
+              BlocProvider(
+                create: (context) =>
+                di.sl<AdsByCategoryCubit>()
               ),
               BlocProvider(
                 create: (context) => di.sl<GetCategoryAttributesCubit>()

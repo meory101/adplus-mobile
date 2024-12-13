@@ -20,18 +20,23 @@ import '../../../../../core/api/api_links.dart';
 import '../../../../../core/api/api_methods.dart';
 import '../../../../more/domain/entity/response/myitems_response_entity.dart';
 import '../../../domain/entity/request/add_comment_request_entity.dart';
+import '../../../domain/entity/request/ads_by_category_request_entity.dart';
 import '../../../domain/entity/request/advs_by_attribute_request_entity.dart';
 import '../../../domain/entity/request/category_inside_page_request_entity.dart';
 import '../../../domain/entity/request/check_like_request_entity.dart';
 import '../../../domain/entity/request/get_advs_by_user_request_entity.dart';
 import '../../../domain/entity/request/get_company_account_request_entity.dart';
 import '../../../domain/entity/request/search_user_request_entity.dart';
+import '../../../domain/entity/response/ads_by_category_response_entity.dart';
 import '../../../domain/entity/response/check_like_response_entity.dart';
 import '../../../domain/entity/response/followers_response_entity.dart';
 import '../../../domain/entity/response/get_company_accounts_response_entity.dart';
 
 abstract class HomeRemote {
   Future<GetCategoriesResponseEntity> getCategories();
+
+  Future<AdsByCategoryResponseEntity> getItemsByCategory(
+      {required AdsByCategoryRequestEntity entity});
 
   Future<FollowersResponseEntity> getFollowers(
       {required FollowersRequestEntity entity});
@@ -103,6 +108,7 @@ class HomeRemoteImplement extends HomeRemote {
       {required AdvsByAttributeRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(body: entity.toJson(), url: ApiPostUrl.getItemsByAttribute);
+
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return advsByAttributeResponseEntityFromJson(response.body);
     } else {
@@ -269,6 +275,20 @@ class HomeRemoteImplement extends HomeRemote {
         .post(body: entity.toJson(), url: ApiPostUrl.itemsSearch);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return itemSearchResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<AdsByCategoryResponseEntity> getItemsByCategory(
+      {required AdsByCategoryRequestEntity entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.categoryItems);
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      print(response.body);
+      print(response.statusCode);
+      return adsByCategoryResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

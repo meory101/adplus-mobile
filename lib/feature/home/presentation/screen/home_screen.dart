@@ -321,8 +321,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             vertical: AppHeightManager.h1),
-                                        color: AppColorManager.lightGreyOpacity6
-                                            .withOpacity(0.4),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,

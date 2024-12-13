@@ -46,6 +46,7 @@ import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.da
 import 'package:mzad_damascus/feature/home/data/repository/home_repository_implements.dart';
 import 'package:mzad_damascus/feature/home/domain/repository/home_repository.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/add_comment_usecase.dart';
+import 'package:mzad_damascus/feature/home/domain/usecase/ads_by_category_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/followers_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/following_usecase.dart';
 import 'package:mzad_damascus/feature/home/domain/usecase/get_advs_by_attribute_usecase.dart';
@@ -130,6 +131,7 @@ import '../../feature/home/domain/usecase/check_like_usecase.dart';
 import '../../feature/home/domain/usecase/get_adv_by_user_usecase.dart';
 import '../../feature/home/domain/usecase/get_adv_details_usecase.dart';
 
+import '../../feature/home/presentation/cubit/ads_by_category_cubit/advs_by_category_cubit.dart';
 import '../../feature/profile/domain/usecase/check_follow_uscase.dart';
 
 /// Eng.Nour Othman(meory)*
@@ -138,6 +140,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => AdsByCategoryCubit(usecase: sl()));
   sl.registerFactory(() => ItemSearchCubit(usecase: sl()));
   sl.registerFactory(() => MarkNotificationCubit(usecase: sl()));
   sl.registerFactory(() => NotificationCubit(usecase: sl()));
@@ -169,6 +172,7 @@ Future<void> init() async {
   sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => AdsByCategoryUsecase(repository: sl()));
   sl.registerLazySingleton(() => NotificationUsecase(repository: sl()));
   sl.registerLazySingleton(() => DeleteAdvUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateAdvUsecase(repository: sl()));

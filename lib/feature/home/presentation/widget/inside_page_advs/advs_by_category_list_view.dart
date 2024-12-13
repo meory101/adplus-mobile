@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/widget/empty/empty_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/cubit/ads_by_category_cubit/advs_by_category_cubit.dart';
 
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/constant_manager.dart';
@@ -22,13 +23,13 @@ import '../../../domain/entity/response/advs_by_attribute_response_entity.dart';
 import '../../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import '../../screen/advertisement_details_screen.dart';
 
-class AdvsByAttributeListView extends StatelessWidget {
+class AdsByCategoryListView extends StatelessWidget {
   final SubCategory category;
-  const AdvsByAttributeListView({super.key,required this.category});
+  const AdsByCategoryListView({super.key,required this.category});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AdvsByAttributeCubit, AdvsByAttributeState>(
+    return BlocConsumer<AdsByCategoryCubit, AdsByCategoryState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state.status ==
@@ -45,8 +46,7 @@ class AdvsByAttributeListView extends StatelessWidget {
           );
         }
 
-        List<AdData> advs = state.entity.data?.adData ?? [];
-
+        List<AdData> advs = state.entity.data?.data ?? [];
         if (advs.isEmpty) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,6 +65,7 @@ class AdvsByAttributeListView extends StatelessWidget {
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+
           children: [
             SizedBox(height: AppHeightManager.h15),
             Padding(
@@ -83,8 +84,8 @@ class AdvsByAttributeListView extends StatelessWidget {
                       Navigator.of(context).pushNamed(
                         RouteNamedScreens.advertisementDetails,
                         arguments: AdvertisementDetailsArgs(
-                          advertisement: advertisement,
-                          category: category
+                            advertisement: advertisement,
+                            category: category
                         ),
                       );
                     },
@@ -118,7 +119,7 @@ class AdvsByAttributeListView extends StatelessWidget {
                                 SizedBox(height: AppHeightManager.h08),
                                 AppTextWidget(
                                   text:
-                                  advertisement.name.toString() ?? "",
+                                  advertisement.name??"",
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   fontSize: FontSizeManager.fs15,
@@ -126,8 +127,7 @@ class AdvsByAttributeListView extends StatelessWidget {
                                 ),
                                 AppTextWidget(
                                   text: advertisement.startingPrice
-                                      .toString() ??
-                                      "",
+                                      .toString() ,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   fontSize: FontSizeManager.fs14,
@@ -141,7 +141,7 @@ class AdvsByAttributeListView extends StatelessWidget {
                         ),
                         Visibility(
                           visible:
-                          state.entity.data?.adData?[index].star ==
+                          state.entity.data?.data?[index].star ==
                               EnumManager.star,
                           child: MainAppButton(
                             borderRadius: BorderRadius.circular(

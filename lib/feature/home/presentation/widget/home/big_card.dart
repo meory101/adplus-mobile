@@ -29,6 +29,8 @@ class BigCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
           Container(
             clipBehavior: Clip.antiAliasWithSaveLayer,
