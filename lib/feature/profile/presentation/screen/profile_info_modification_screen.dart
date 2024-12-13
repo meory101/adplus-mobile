@@ -197,7 +197,7 @@ class _ProfileInfoModificationScreenState
                   },
                   validator: (value) {
                     if ((value ?? "").isEmpty) {
-                      return "required";
+                      return "required".tr();
                     }
                     return null;
                   },
@@ -215,7 +215,7 @@ class _ProfileInfoModificationScreenState
                   },
                   validator: (value) {
                     if ((value ?? "").isEmpty) {
-                      return "required";
+                      return "required".tr();
                     }
                     return null;
                   },
@@ -235,7 +235,7 @@ class _ProfileInfoModificationScreenState
                   },
                   validator: (value) {
                     if ((value ?? "").isEmpty) {
-                      return "required";
+                      return "required".tr();
                     }
                     bool isPhone = (value ?? "").isPhoneNumber();
                     if (isPhone == true) {
@@ -264,7 +264,7 @@ class _ProfileInfoModificationScreenState
                   },
                   validator: (value) {
                     if ((value ?? "").isEmpty) {
-                      return "required";
+                      return "required".tr();
                     }
                     bool isPhone = (value ?? "").isPhoneNumber();
                     if (isPhone == true) {
@@ -323,6 +323,8 @@ class _ProfileInfoModificationScreenState
                         return MainAppButton(
                           onTap: () {
                             if ((formKey.currentState?.validate() ?? false)) {
+                              print(entity.phone);
+                              print(entity.whatsapp);
                               context.read<UpdateProfileCubit>().updateProfile(
                                   context: context, entity: entity);
                             }

@@ -56,22 +56,14 @@ class BigCard extends StatelessWidget {
           ),
           SizedBox(height: AppHeightManager.h1,),
 
-      DecoratedContainer(
-
-        padding: EdgeInsets.symmetric(vertical: AppHeightManager.h04),
-        alignment: Alignment.center,
-        width: AppWidthManager.w60,
-        color: AppColorManager.mainColor.withOpacity(0.8),
-        borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-        child:
-          AppTextWidget(
-            text: title,
-            fontSize: FontSizeManager.fs16,
-            fontWeight: FontWeight.w600,
-            color: AppColorManager.white,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),),
+      AppTextWidget(
+        text: title,
+        fontSize: FontSizeManager.fs16,
+        fontWeight: FontWeight.w600,
+        color: AppColorManager.black,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
           SizedBox(height: AppHeightManager.h1point8,),
         ],
       ),
