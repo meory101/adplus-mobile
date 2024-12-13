@@ -147,16 +147,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            context
-                .read<NotificationCubit>()
-                .resetData();
-            context
-                .read<NotificationCubit>()
-                .getMyNotifications(
-                context: context,
-                entity:
-                NotificationsRequestEntity(
-                    page: 1));
+            context.read<NotificationCubit>().resetData();
+            context.read<NotificationCubit>().getMyNotifications(
+                context: context, entity: NotificationsRequestEntity(page: 1));
             context.read<BannersCubit>().getHomeBanners(
                 context: context, source: EnumManager.homeBannerSource);
             return context
@@ -197,8 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     NotificationState>(
                                 listener: (context, state) {},
                                 builder: (context, state) {
-                                  if (state.status == CubitStatus.loading &&
-                                      state.entity.data?.data == null) {
+                                  if (state.status == CubitStatus.loading) {
                                     return Center(
                                         child: Padding(
                                       padding: EdgeInsets.only(
@@ -209,11 +201,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: AppWidthManager.w7),
                                     ));
                                   }
-                                  Iterable<NotificationItem> items =
-                                      (state.entity.data?.data ?? []).where(
-                                    (element) => element.isRead == 0,
-                                  );
-
                                   return InkWell(
                                       onTap: () {
                                         Navigator.of(context)
@@ -251,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
                                             Visibility(
-                                              visible: (items.length??0 )>0,
+                                              visible: (state.entity.data?.pagination?.totalItems??0) > 0,
                                               child: Positioned(
                                                 right: AppWidthManager.w1Point5,
                                                 child: Container(
@@ -272,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               FontSizeManager
                                                                   .fs14,
                                                           text:
-                                                              "${items.length}")),
+                                                              "${state.entity.data?.pagination?.totalItems}")),
                                                 ),
                                               ),
                                             ),

@@ -52,7 +52,7 @@ class NotificationCubit extends Cubit<NotificationState> {
         emit(state.copyWith(
             status: CubitStatus.success,
             entity: NotificationsResponseEntity(
-                data: NotificationData(data: updatedItems)),
+                data: NotificationData(data: updatedItems,pagination: data.data?.pagination)),
             isReachedMax: !hasMoreItems));
       },
     );

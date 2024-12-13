@@ -2,8 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:mzad_damascus/app/app.dart';
-import 'package:mzad_damascus/core/resource/image_manager.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/feature/notification/domain/entities/response/notifications_response_entity.dart';
@@ -13,6 +11,7 @@ import '../../../../core/helper/date_time_helper.dart';
 import '../../../../core/helper/language_helper.dart';
 import 'dart:ui' as ui;
 import '../../../../core/resource/color_manager.dart';
+import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
@@ -70,12 +69,18 @@ class NotificationListItem extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  MainImageWidget(
-                    height: AppHeightManager.h7,
-                    width: AppHeightManager.h7,
-                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                    imagePath: AppImageManager.splash,
-                    // imageUrl: AppConstantManager.imageBaseUrl + (photo),
+                  Container(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(AppRadiusManager.r10)
+                    ),
+                    child: MainImageWidget(
+                      height: AppHeightManager.h7,
+                      width: AppHeightManager.h7,
+                      borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                      imageUrl: AppConstantManager.imageBaseUrl +
+                          (notificationItem.item?.photos?.first.photo??""),
+                    ),
                   ),
                   Visibility(
                     visible: notificationItem.isRead == 0,

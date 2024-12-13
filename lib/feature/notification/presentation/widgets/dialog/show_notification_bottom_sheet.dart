@@ -16,18 +16,19 @@ import '../../cubit/mark_read_notification/mark_read_notification_cubit.dart';
 import '../../../../../core/injection/injection_container.dart' as di;
 import '../../cubit/mark_read_notification/mark_read_notification_state.dart';
 
-void showNotificationBottomSheet({required BuildContext context,required Function()onSuccess,required NotificationItem notificationItem}){
+void showNotificationBottomSheet(
+    {required BuildContext context,
+    required Function() onSuccess,
+    required NotificationItem notificationItem}) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
-        borderRadius:
-        BorderRadius.circular(AppRadiusManager.r5)),
+        borderRadius: BorderRadius.circular(AppRadiusManager.r5)),
     context: context,
     builder: (context) {
       return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) =>
-                di.sl<MarkNotificationCubit>(),
+            create: (context) => di.sl<MarkNotificationCubit>(),
           ),
         ],
         child: Container(
@@ -48,8 +49,7 @@ void showNotificationBottomSheet({required BuildContext context,required Functio
               SizedBox(
                 height: AppHeightManager.h1,
               ),
-              BlocConsumer<MarkNotificationCubit,
-                  MarkNotificationState>(
+              BlocConsumer<MarkNotificationCubit, MarkNotificationState>(
                 listener: (context, state) {
                   if (state.status == CubitStatus.error) {
                     NoteMessage.showErrorSnackBar(
@@ -68,28 +68,30 @@ void showNotificationBottomSheet({required BuildContext context,required Functio
                   }
                   return InkWell(
                     onTap: () {
-                      context
-                          .read<MarkNotificationCubit>()
-                          .readNotification(
+                      context.read<MarkNotificationCubit>().readNotification(
                           context: context,
-                          entity:
-                          MarkReadNotificationRequestEntity(
-                              notificationId:
-                              notificationItem
-                                  .notificationId));
+                          entity: MarkReadNotificationRequestEntity(
+                              notificationId: notificationItem.notificationId));
                     },
                     child: Container(
                       alignment: Alignment.center,
                       width: AppWidthManager.w100,
                       padding: EdgeInsets.symmetric(
-                          horizontal:
-                          AppWidthManager.w3Point8),
-                      child: AppTextWidget(
-                        text:
-                        "convertToReadNotification".tr(),
-                        color: AppColorManager.grey,
-                        fontSize: FontSizeManager.fs16,
-                        fontWeight: FontWeight.w500,
+                          horizontal: AppWidthManager.w3Point8),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.notifications_on_rounded,
+                            color: AppColorManager.textGrey,
+                          ),
+                          SizedBox(width: AppWidthManager.w2,),
+                          AppTextWidget(
+                            text: "convertToReadNotification".tr(),
+                            color: AppColorManager.textAppColor,
+                            fontSize: FontSizeManager.fs16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -105,8 +107,8 @@ void showNotificationBottomSheet({required BuildContext context,required Functio
                 height: AppHeightManager.h3,
               ),
               MainAppButton(
-                margin: EdgeInsets.symmetric(
-                    horizontal: AppWidthManager.w3Point8),
+                margin:
+                    EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
                 onTap: () {
                   Navigator.of(context).pop();
                 },

@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import '../../../../../core/model/pagination.dart';
+import '../../../../home/domain/entity/response/advs_by_attribute_response_entity.dart';
 /// success : true
 /// message : "تمت العملية بنجاح"
-/// data : {"data":[{"notification_id":4103,"client_id":129,"item_id":103,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-12-07 08:31:47","update_at":"2024-12-07 08:31:47"},{"notification_id":4100,"client_id":129,"item_id":122,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-12-06 17:07:02","update_at":"2024-12-06 17:07:02"},{"notification_id":4099,"client_id":129,"item_id":122,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-12-06 17:06:59","update_at":"2024-12-06 17:06:59"},{"notification_id":4086,"client_id":129,"item_id":103,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-11-26 06:02:35","update_at":"2024-11-26 06:02:36"},{"notification_id":4081,"client_id":129,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:50","update_at":"2024-11-26 05:52:50"},{"notification_id":4076,"client_id":129,"item_id":145,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:35","update_at":"2024-11-26 05:52:35"},{"notification_id":4071,"client_id":129,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:22","update_at":"2024-11-26 05:52:22"},{"notification_id":4056,"client_id":129,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:17:27","update_at":"2024-11-25 20:17:27"},{"notification_id":4051,"client_id":129,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:17:09","update_at":"2024-11-25 20:17:09"},{"notification_id":4046,"client_id":129,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:58","update_at":"2024-11-25 20:16:58"}],"pagination":{"total_items":75,"total_pages":8,"current_page":1,"per_page":10}}
+/// data : {"data":[{"notification_id":4088,"client_id":80,"item_id":145,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-12-04 09:36:10","update_at":"2024-12-04 09:36:10","item":{"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}},{"notification_id":4085,"client_id":80,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:50","update_at":"2024-11-26 05:52:50","item":{"item_id":144,"category_id":4,"city_id":2,"name":"Etc gggg","starting_price":100,"type":null,"description":"Rtt is. 5ddd rrtf","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":177,"item_id":144,"photo":"1732565608_6744da6891882.webp"}]}},{"notification_id":4080,"client_id":80,"item_id":145,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:35","update_at":"2024-11-26 05:52:35","item":{"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}},{"notification_id":4075,"client_id":80,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:22","update_at":"2024-11-26 05:52:22","item":{"item_id":146,"category_id":4,"city_id":2,"name":"أفضل سيارة هذا العام","starting_price":100,"type":null,"description":"Cyfcc7","keywords":"سيارة,سابا,كيا","slug":null,"star":0,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":179,"item_id":146,"photo":"1732565697_6744dac1a1e06.webp"}]}},{"notification_id":4060,"client_id":80,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:17:27","update_at":"2024-11-25 20:17:27","item":{"item_id":146,"category_id":4,"city_id":2,"name":"أفضل سيارة هذا العام","starting_price":100,"type":null,"description":"Cyfcc7","keywords":"سيارة,سابا,كيا","slug":null,"star":0,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":179,"item_id":146,"photo":"1732565697_6744dac1a1e06.webp"}]}},{"notification_id":4055,"client_id":80,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:17:09","update_at":"2024-11-25 20:17:09","item":{"item_id":146,"category_id":4,"city_id":2,"name":"أفضل سيارة هذا العام","starting_price":100,"type":null,"description":"Cyfcc7","keywords":"سيارة,سابا,كيا","slug":null,"star":0,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":179,"item_id":146,"photo":"1732565697_6744dac1a1e06.webp"}]}},{"notification_id":4050,"client_id":80,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:58","update_at":"2024-11-25 20:16:58","item":{"item_id":144,"category_id":4,"city_id":2,"name":"Etc gggg","starting_price":100,"type":null,"description":"Rtt is. 5ddd rrtf","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":177,"item_id":144,"photo":"1732565608_6744da6891882.webp"}]}},{"notification_id":4045,"client_id":80,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:40","update_at":"2024-11-25 20:16:40","item":{"item_id":144,"category_id":4,"city_id":2,"name":"Etc gggg","starting_price":100,"type":null,"description":"Rtt is. 5ddd rrtf","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":177,"item_id":144,"photo":"1732565608_6744da6891882.webp"}]}},{"notification_id":4040,"client_id":80,"item_id":145,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:35","update_at":"2024-11-25 20:16:35","item":{"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}},{"notification_id":4035,"client_id":80,"item_id":145,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:11","update_at":"2024-11-25 20:16:11","item":{"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}}],"pagination":{"total_items":39,"total_pages":4,"current_page":1,"per_page":10}}
 /// errors : []
 
 NotificationsResponseEntity notificationsResponseEntityFromJson(String str) => NotificationsResponseEntity.fromJson(json.decode(str));
@@ -24,7 +25,7 @@ class NotificationsResponseEntity {
     _success = json['success'];
     _message = json['message'];
     _data = json['data'] != null ? NotificationData.fromJson(json['data']) : null;
-
+   
   }
   bool? _success;
   String? _message;
@@ -59,8 +60,8 @@ NotificationsResponseEntity copyWith({  bool? success,
 
 }
 
-/// data : [{"notification_id":4103,"client_id":129,"item_id":103,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-12-07 08:31:47","update_at":"2024-12-07 08:31:47"},{"notification_id":4100,"client_id":129,"item_id":122,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-12-06 17:07:02","update_at":"2024-12-06 17:07:02"},{"notification_id":4099,"client_id":129,"item_id":122,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-12-06 17:06:59","update_at":"2024-12-06 17:06:59"},{"notification_id":4086,"client_id":129,"item_id":103,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-11-26 06:02:35","update_at":"2024-11-26 06:02:36"},{"notification_id":4081,"client_id":129,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:50","update_at":"2024-11-26 05:52:50"},{"notification_id":4076,"client_id":129,"item_id":145,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:35","update_at":"2024-11-26 05:52:35"},{"notification_id":4071,"client_id":129,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:22","update_at":"2024-11-26 05:52:22"},{"notification_id":4056,"client_id":129,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:17:27","update_at":"2024-11-25 20:17:27"},{"notification_id":4051,"client_id":129,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:17:09","update_at":"2024-11-25 20:17:09"},{"notification_id":4046,"client_id":129,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:58","update_at":"2024-11-25 20:16:58"}]
-/// pagination : {"total_items":75,"total_pages":8,"current_page":1,"per_page":10}
+/// data : [{"notification_id":4088,"client_id":80,"item_id":145,"message":"تم التفاعل مع الاعلان من قبل احد المستخدمين","is_read":0,"created_at":"2024-12-04 09:36:10","update_at":"2024-12-04 09:36:10","item":{"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}},{"notification_id":4085,"client_id":80,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:50","update_at":"2024-11-26 05:52:50","item":{"item_id":144,"category_id":4,"city_id":2,"name":"Etc gggg","starting_price":100,"type":null,"description":"Rtt is. 5ddd rrtf","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":177,"item_id":144,"photo":"1732565608_6744da6891882.webp"}]}},{"notification_id":4080,"client_id":80,"item_id":145,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:35","update_at":"2024-11-26 05:52:35","item":{"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}},{"notification_id":4075,"client_id":80,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-26 05:52:22","update_at":"2024-11-26 05:52:22","item":{"item_id":146,"category_id":4,"city_id":2,"name":"أفضل سيارة هذا العام","starting_price":100,"type":null,"description":"Cyfcc7","keywords":"سيارة,سابا,كيا","slug":null,"star":0,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":179,"item_id":146,"photo":"1732565697_6744dac1a1e06.webp"}]}},{"notification_id":4060,"client_id":80,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:17:27","update_at":"2024-11-25 20:17:27","item":{"item_id":146,"category_id":4,"city_id":2,"name":"أفضل سيارة هذا العام","starting_price":100,"type":null,"description":"Cyfcc7","keywords":"سيارة,سابا,كيا","slug":null,"star":0,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":179,"item_id":146,"photo":"1732565697_6744dac1a1e06.webp"}]}},{"notification_id":4055,"client_id":80,"item_id":146,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:17:09","update_at":"2024-11-25 20:17:09","item":{"item_id":146,"category_id":4,"city_id":2,"name":"أفضل سيارة هذا العام","starting_price":100,"type":null,"description":"Cyfcc7","keywords":"سيارة,سابا,كيا","slug":null,"star":0,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":179,"item_id":146,"photo":"1732565697_6744dac1a1e06.webp"}]}},{"notification_id":4050,"client_id":80,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:58","update_at":"2024-11-25 20:16:58","item":{"item_id":144,"category_id":4,"city_id":2,"name":"Etc gggg","starting_price":100,"type":null,"description":"Rtt is. 5ddd rrtf","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":177,"item_id":144,"photo":"1732565608_6744da6891882.webp"}]}},{"notification_id":4045,"client_id":80,"item_id":144,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:40","update_at":"2024-11-25 20:16:40","item":{"item_id":144,"category_id":4,"city_id":2,"name":"Etc gggg","starting_price":100,"type":null,"description":"Rtt is. 5ddd rrtf","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":177,"item_id":144,"photo":"1732565608_6744da6891882.webp"}]}},{"notification_id":4040,"client_id":80,"item_id":145,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:35","update_at":"2024-11-25 20:16:35","item":{"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}},{"notification_id":4035,"client_id":80,"item_id":145,"message":"لقد تمت إضافة عنصر جديد في الفئة التي أبديت اهتمامك بها!","is_read":0,"created_at":"2024-11-25 20:16:11","update_at":"2024-11-25 20:16:11","item":{"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}}]
+/// pagination : {"total_items":39,"total_pages":4,"current_page":1,"per_page":10}
 
 NotificationData dataFromJson(String str) => NotificationData.fromJson(json.decode(str));
 String dataToJson(NotificationData data) => json.encode(data.toJson());
@@ -79,10 +80,7 @@ class NotificationData {
         _data?.add(NotificationItem.fromJson(v));
       });
     }
-
     _pagination = json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
-
-  print(_pagination?.totalItems);
   }
   List<NotificationItem>? _data;
   Pagination? _pagination;
@@ -107,17 +105,29 @@ NotificationData copyWith({  List<NotificationItem>? data,
 
 }
 
-NotificationItem notificationFromJson(String str) => NotificationItem.fromJson(json.decode(str));
-String notificationToJson(NotificationData data) => json.encode(data.toJson());
+
+
+/// notification_id : 4088
+/// client_id : 80
+/// item_id : 145
+/// message : "تم التفاعل مع الاعلان من قبل احد المستخدمين"
+/// is_read : 0
+/// created_at : "2024-12-04 09:36:10"
+/// update_at : "2024-12-04 09:36:10"
+/// item : {"item_id":145,"category_id":4,"city_id":2,"name":"Ftggg yyyy tytt","starting_price":100,"type":null,"description":"Yyyy tttt tttyy","keywords":"سيارة,سابا,كيا","slug":null,"star":1,"under_review":-1,"bidding_status":1,"homepage_appear":0,"ord":1,"photos":[{"image_id":209,"item_id":145,"photo":"1733590650_67547e7acf1cb.webp"}]}
+
+NotificationItem notificationItemFromJson(String str) => NotificationItem.fromJson(json.decode(str));
+String notificationItemToJson(NotificationData data) => json.encode(data.toJson());
 class NotificationItem {
-  NotificationData({
+  NotificationItem({
       num? notificationId, 
       num? clientId, 
       num? itemId, 
       String? message, 
       num? isRead, 
       String? createdAt, 
-      String? updateAt,}){
+      String? updateAt, 
+      AdData? item,}){
     _notificationId = notificationId;
     _clientId = clientId;
     _itemId = itemId;
@@ -125,6 +135,7 @@ class NotificationItem {
     _isRead = isRead;
     _createdAt = createdAt;
     _updateAt = updateAt;
+    _item = item;
 }
 
   NotificationItem.fromJson(dynamic json) {
@@ -135,6 +146,7 @@ class NotificationItem {
     _isRead = json['is_read'];
     _createdAt = json['created_at'];
     _updateAt = json['update_at'];
+    _item = json['item'] != null ? AdData.fromJson(json['item']) : null;
   }
   num? _notificationId;
   num? _clientId;
@@ -143,20 +155,23 @@ class NotificationItem {
   num? _isRead;
   String? _createdAt;
   String? _updateAt;
-  NotificationItem copyWith({  num? notificationId,
+  AdData? _item;
+NotificationItem copyWith({  num? notificationId,
   num? clientId,
   num? itemId,
   String? message,
   num? isRead,
   String? createdAt,
   String? updateAt,
-}) => NotificationData(  notificationId: notificationId ?? _notificationId,
+  AdData? item,
+}) => NotificationItem(  notificationId: notificationId ?? _notificationId,
   clientId: clientId ?? _clientId,
   itemId: itemId ?? _itemId,
   message: message ?? _message,
   isRead: isRead ?? _isRead,
   createdAt: createdAt ?? _createdAt,
   updateAt: updateAt ?? _updateAt,
+  item: item ?? _item,
 );
   num? get notificationId => _notificationId;
   num? get clientId => _clientId;
@@ -165,6 +180,7 @@ class NotificationItem {
   num? get isRead => _isRead;
   String? get createdAt => _createdAt;
   String? get updateAt => _updateAt;
+  AdData? get item => _item;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -175,7 +191,11 @@ class NotificationItem {
     map['is_read'] = _isRead;
     map['created_at'] = _createdAt;
     map['update_at'] = _updateAt;
+    if (_item != null) {
+      map['item'] = _item?.toJson();
+    }
     return map;
   }
 
 }
+

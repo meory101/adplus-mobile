@@ -111,7 +111,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           }
           return ListView.builder(
             controller: scrollController,
-            itemCount: notifications.length + 1,
+            itemCount: notifications.length + (state.isReachedMax == true ? 0 : 1),
             itemBuilder: (context, index) {
               if (index == notifications.length) {
                 return Center(
@@ -121,7 +121,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               } else {
                 return InkWell(
                     onTap: () {
-                      if ((notifications[index].itemId ?? "")
+                      if ((notifications[index].item?.itemId ?? "")
                           .toString()
                           .isEmpty) {
                         return;
@@ -130,7 +130,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           RouteNamedScreens.advertisementDetails,
                           arguments: AdvertisementDetailsArgs(
                               advertisement: AdData(
-                                  itemId: notifications[index].itemId)));
+                                  itemId: notifications[index].item?.itemId)));
                     },
                     child: NotificationListItem(
                       notificationItem: notifications[index],

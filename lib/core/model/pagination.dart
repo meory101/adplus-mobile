@@ -15,9 +15,7 @@ class Pagination {
   }
 
   Pagination.fromJson(dynamic json) {
-    print('pagination');
     _totalItems = json['total_items'];
-
     _totalPages = json['total_pages'];
     _currentPage = json['current_page'];
     _perPage = json['per_page'];

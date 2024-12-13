@@ -652,7 +652,7 @@ abstract class AppRouter {
                 create: (context) => di.sl<NotificationCubit>()
                   ..getMyNotifications(
                       context: context,
-                      entity: NotificationsRequestEntity(page: 1)),
+                      entity: NotificationsRequestEntity()),
               ),
               BlocProvider(
                 create: (context) => di.sl<SearchUserCubit>(),
