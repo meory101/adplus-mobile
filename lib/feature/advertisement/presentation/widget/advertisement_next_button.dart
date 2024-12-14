@@ -12,7 +12,8 @@ import '../../../../core/widget/text/app_text_widget.dart';
 class AdvertisementNextButton extends StatelessWidget {
   final void Function()? onTap;
   final String? buttonText;
-  const AdvertisementNextButton({super.key,required this.onTap,this.buttonText});
+  final bool? disable;
+  const AdvertisementNextButton({super.key,required this.onTap,this.buttonText, this.disable});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class AdvertisementNextButton extends StatelessWidget {
       onTap: onTap ,
       alignment: Alignment.center,
       margin: EdgeInsets.all(AppWidthManager.w3Point8),
-      color: AppColorManager.mainColor,
+      color:disable != null? AppColorManager.textGrey:  AppColorManager.mainColor,
       width: AppWidthManager.w100,
       height: AppHeightManager.h6,
       child: AppTextWidget(

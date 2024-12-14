@@ -46,6 +46,7 @@ class ActiveListView extends StatelessWidget {
         final items = state.entity.data?.data ?? [];
 
         return ListView.builder(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: items.length + (state.isReachedMax == true ? 0 : 1),

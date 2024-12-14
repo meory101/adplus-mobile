@@ -38,6 +38,7 @@ class DecoratedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       padding: padding,
       alignment: alignment,
       width: width,

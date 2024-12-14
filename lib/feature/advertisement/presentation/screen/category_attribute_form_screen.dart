@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_categ
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_state.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/container/dialog_container.dart';
+import '../../../../core/widget/empty/empty_widget.dart';
 import '../../../../core/widget/form_field/title_app_form_filed.dart';
 import '../../../../core/widget/loading/shimmer/category_attribute_form_list_view_shimmer.dart';
 import '../../../../router/router.dart';
@@ -74,6 +76,7 @@ class _CategoryAttributeFormScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
+        disable: attributeFormValues.isEmpty,
         onTap: () {
           if(attributeFormValues.isEmpty)return;
           if ((formKey.currentState?.validate()) ?? false) {
@@ -112,7 +115,15 @@ class _CategoryAttributeFormScreenState
                   }
                   List<CategoryAttributes> attributes =
                       state.entity.data?.attributes ?? [];
-
+                  if(attributes.isEmpty){
+                    return Padding(
+                      padding:  EdgeInsets.only(top: AppHeightManager.h20),
+                      child: EmptyWidget(
+                        title: "noResults".tr(),
+                        subTitle: "couldNotFindAnyResult".tr(),
+                      ),
+                    );
+                  }
                   return Form(
                     key: formKey,
                     child: Column(

@@ -35,6 +35,8 @@ class LikesListView extends StatelessWidget {
         }
         List<AdvDetails> likes = state.entity.data?.data ?? [];
         return ListView.builder(
+          padding: EdgeInsets.zero,
+
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: likes.length + (state.isReachedMax == true ? 0 : 1),

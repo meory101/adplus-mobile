@@ -35,7 +35,8 @@ class AdvDetailsAttributeGridView extends StatelessWidget {
               builder: (context, state) {
                 if (state.status == CubitStatus.loading) {
                   return ShimmerContainer(
-                      width: AppWidthManager.w20, height: AppHeightManager.h6);
+                      radius: AppRadiusManager.r3,
+                      width: AppWidthManager.w20, height: AppHeightManager.h9);
                 }
                 List<City> cities = state.entity.data ?? [];
                 String? cityName;

@@ -34,6 +34,8 @@ class CommentsListView extends StatelessWidget {
           return const AppCircularProgressWidget();
         }
         return ListView.builder(
+          padding: EdgeInsets.zero,
+
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: (state.entity.data?.comments??[]).length +(state.isReachedMax == true ? 0 : 1),

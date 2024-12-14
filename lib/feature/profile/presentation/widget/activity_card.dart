@@ -65,7 +65,7 @@ class _ActivityCardState extends State<ActivityCard> {
                     ),
                     AppTextWidget(
                       text: "active".tr(),
-                      fontSize: FontSizeManager.fs16,
+                      fontSize: FontSizeManager.fs15,
                       color: selectedIndex == 0 ? AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
@@ -92,7 +92,7 @@ class _ActivityCardState extends State<ActivityCard> {
                     ),
                     AppTextWidget(
                       text: "favorites".tr(),
-                      fontSize: FontSizeManager.fs16,
+                      fontSize: FontSizeManager.fs15,
                       color: selectedIndex == 1 ? AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
@@ -121,7 +121,7 @@ class _ActivityCardState extends State<ActivityCard> {
                     ),
                     AppTextWidget(
                       text: "comments".tr(),
-                      fontSize: FontSizeManager.fs16,
+                      fontSize: FontSizeManager.fs15,
                       color: selectedIndex == 2 ?AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
@@ -149,7 +149,7 @@ class _ActivityCardState extends State<ActivityCard> {
                     ),
                     AppTextWidget(
                       text: "likes".tr(),
-                      fontSize: FontSizeManager.fs16,
+                      fontSize: FontSizeManager.fs15,
                       color: selectedIndex == 3 ?AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],

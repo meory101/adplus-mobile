@@ -33,8 +33,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
-  bool isVisitor =  AppSharedPreferences.getToken().isEmpty;
+  bool isVisitor = AppSharedPreferences.getToken().isEmpty;
 
   @override
   void initState() {
@@ -117,31 +116,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        surfaceTintColor: AppColorManager.background,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AppTextWidget(
-                text: 'profile'.tr(),
-                fontSize: FontSizeManager.fs17,
-                color: AppColorManager.textAppColor,
-                fontWeight: FontWeight.w700),
-          ],
-        ),
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   elevation: 0,
+      //   surfaceTintColor: AppColorManager.background,
+      //   title: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       AppTextWidget(
+      //           text: 'profile'.tr(),
+      //           fontSize: FontSizeManager.fs17,
+      //           color: AppColorManager.textAppColor,
+      //           fontWeight: FontWeight.w700),
+      //     ],
+      //   ),
+      // ),
       body: SingleChildScrollView(
         controller: scrollController,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MainSearchFormField(),
+            SizedBox(
+              height: AppHeightManager.h8,
+            ),
+            MainSearchFormField(),// MainSearchFormField(),
             const ProfileInfoCard(),
             ActivityCard(
               onActivityTapChanged: (index) {
-                if (isVisitor==true) {
+                if (isVisitor == true) {
                   return;
                 }
                 setState(() {
@@ -154,11 +156,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: AppHeightManager.h2,
             ),
             Visibility(
-              visible: isVisitor==false,
+              visible: isVisitor == false,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   selectedIndex == 0
                       ? const ActiveListView()
                       : selectedIndex == 1

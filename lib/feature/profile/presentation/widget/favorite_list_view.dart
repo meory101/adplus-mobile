@@ -36,6 +36,8 @@ class FavoriteListView extends StatelessWidget {
         }
         List<AdvDetails> favorites = state.entity.data?.data ?? [];
         return ListView.builder(
+          padding: EdgeInsets.zero,
+
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: favorites.length + (state.isReachedMax == true ? 0 : 1),

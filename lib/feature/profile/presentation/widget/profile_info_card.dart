@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/icon_manager.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/profile_info_card_shimmer.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
@@ -31,6 +32,7 @@ class ProfileInfoCard extends StatefulWidget {
 
 class _ProfileInfoCardState extends State<ProfileInfoCard> {
   ProfileInfo? profileInfo;
+  bool isVisitor = AppSharedPreferences.getToken().isEmpty;
 
   onEditTaped() {
     if (AppSharedPreferences.getToken().isEmpty) return;
@@ -62,203 +64,192 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
         if (state.status == CubitStatus.loading) {
           return const ProfileInfoCardShimmer();
         }
-
         profileInfo = state.entity.data;
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: AppColorManager.textGrey,
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.circular(AppRadiusManager.r15),
-          ),
+        return DecoratedContainer(
+          borderRadius: BorderRadius.circular(AppRadiusManager.r15),
           margin: EdgeInsets.all(AppWidthManager.w3Point8),
           padding: EdgeInsets.all(AppWidthManager.w3Point8),
           child: Column(
             children: [
               SizedBox(height: AppHeightManager.h02),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: AppWidthManager.w25,
-                        height: AppWidthManager.w25,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: MainImageWidget(
-                          fit: BoxFit.cover,
-                          imageUrl: (AppConstantManager.imageBaseUrl +
-                              (profileInfo?.user?.photo ?? "")),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      Column(
                         children: [
                           InkWell(
                             onTap: onEditTaped,
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: AppSharedPreferences.getToken()
-                                            .isEmpty
-                                        ? AppColorManager.grey.withOpacity(0.4)
-                                        : AppColorManager.mainColor,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: AppHeightManager.h1,
-                                        horizontal: AppWidthManager.w4),
-                                    child: Row(
-                                      children: [
-                                        AppTextWidget(
-                                          text: "edit".tr(),
-                                          color: AppColorManager.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: FontSizeManager.fs15,
-                                        ),
-                                        SizedBox(
-                                          width: AppWidthManager.w2,
-                                        ),
-                                        Icon(
-                                          Icons.edit,
-                                          size: AppWidthManager.w5,
-                                          color: AppColorManager.white,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            child: SizedBox(
+                              width: AppHeightManager.h3,
+                              height: AppHeightManager.h3,
+                              child: SvgPicture.asset(
+                                AppIconManager.edit,
+                                colorFilter: ColorFilter.mode(
+                                    isVisitor==true?AppColorManager.grey: AppColorManager.mainColor,
+                                    BlendMode.srcIn),
+                              ),
                             ),
                           ),
                           SizedBox(
-                            width: AppWidthManager.w1Point2,
+                            height: AppHeightManager.h1point5,
                           ),
                           InkWell(
                             onTap: onAddTaped,
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: AppSharedPreferences.getToken()
-                                            .isEmpty
-                                        ? AppColorManager.grey.withOpacity(0.4)
-                                        : AppColorManager.pinkAccent,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: AppHeightManager.h1,
-                                        horizontal: AppWidthManager.w4),
-                                    child: Row(
-                                      children: [
-                                        AppTextWidget(
-                                          text: "newAdv".tr(),
-                                          color: AppColorManager.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: FontSizeManager.fs15,
-                                        ),
-                                        SizedBox(
-                                          width: AppWidthManager.w2,
-                                        ),
-                                        Icon(
-                                          Icons.add,
-                                          size: AppWidthManager.w5,
-                                          color: AppColorManager.white,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            child: Icon(
+                              Icons.add_circle_outline_outlined,
+                              color:isVisitor==true?AppColorManager.grey: AppColorManager.mainColor,
+                              size: AppHeightManager.h3,
                             ),
-                          )
+                          ),
                         ],
-                      )
+                      ),
+                      Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                color: AppColorManager.mainColor, width: 3)),
+                        child: Container(
+                          width: AppWidthManager.w28,
+                          height: AppWidthManager.w28,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: MainImageWidget(
+                            fit: BoxFit.cover,
+                            imageUrl: (AppConstantManager.imageBaseUrl +
+                                (profileInfo?.user?.photo ?? "")),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: (profileInfo?.user?.isCompany ?? 0) == 1,
+                        replacement: Icon(
+                          Icons.person,
+                          color: AppColorManager.white,
+                          size: AppHeightManager.h3,
+                        ),
+                        child: Icon(
+                          Icons.verified_rounded,
+                          color: AppColorManager.mainColor,
+                          size: AppHeightManager.h3,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: AppHeightManager.h1point8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  SizedBox(height: AppHeightManager.h1),
+                  Visibility(
+                      visible: isVisitor==false,
+                      child: Column(
                     children: [
                       AppTextWidget(
-                        text: "name".tr(),
-                        fontSize: FontSizeManager.fs16,
+                        text: profileInfo?.user?.name ?? "",
+                        fontSize: FontSizeManager.fs18,
                         color: AppColorManager.textAppColor,
                         fontWeight: FontWeight.w700,
                       ),
-                      SizedBox(
-                        width: AppWidthManager.w1Point2,
+                      Directionality(
+                        textDirection: ui.TextDirection.ltr,
+                        child: AppTextWidget(
+                          text: profileInfo?.user?.username ?? "",
+                          fontSize: FontSizeManager.fs16,
+                          color: AppColorManager.grey,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       AppTextWidget(
-                        text: profileInfo?.user?.name ?? "",
-                        fontSize: FontSizeManager.fs16,
-                        color: AppColorManager.textAppColor,
-                        fontWeight: FontWeight.w700,
+                        text: profileInfo?.user?.description ?? "",
+                        fontSize: FontSizeManager.fs15,
+                        color: AppColorManager.grey,
+                        fontWeight: FontWeight.w500,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  )),
+                  SizedBox(height: AppHeightManager.h1),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DecoratedContainer(
+                        boxShadow: [],
+                        color:
+                            AppColorManager.lightGreyOpacity6.withOpacity(0.5),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppWidthManager.w3,
+                            vertical: AppHeightManager.h05),
+                        borderRadius:
+                            BorderRadius.circular(AppRadiusManager.r15),
+                        child: Directionality(
+                          textDirection: ui.TextDirection.ltr,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.call,
+                                size: AppHeightManager.h2,
+                                color: AppColorManager.mainColor,
+                              ),
+                              SizedBox(
+                                width: AppWidthManager.w1Point2,
+                              ),
+                              AppTextWidget(
+                                text:
+                                    '${profileInfo?.user?.phone ?? 'noPhoneNumberYet'.tr()}',
+                                fontSize: FontSizeManager.fs15,
+                                color: AppColorManager.textGrey,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: AppWidthManager.w2,
+                      ),
+                      DecoratedContainer(
+                        boxShadow: [],
+                        color:
+                            AppColorManager.lightGreyOpacity6.withOpacity(0.5),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppWidthManager.w3,
+                            vertical: AppHeightManager.h05),
+                        borderRadius:
+                            BorderRadius.circular(AppRadiusManager.r15),
+                        child: Directionality(
+                          textDirection: ui.TextDirection.ltr,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: AppHeightManager.h2,
+                                height: AppHeightManager.h2,
+                                child: SvgPicture.asset(
+                                  AppIconManager.whatsapp,
+                                  colorFilter: ColorFilter.mode(
+                                      AppColorManager.mainColor,
+                                      BlendMode.srcIn),
+                                ),
+                              ),
+                              SizedBox(
+                                width: AppWidthManager.w1Point2,
+                              ),
+                              AppTextWidget(
+                                text:
+                                    '${profileInfo?.user?.whatsapp ?? 'noWhatsappYet'.tr()}',
+                                fontSize: FontSizeManager.fs15,
+                                color: AppColorManager.textGrey,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   SizedBox(height: AppHeightManager.h02),
-                  Directionality(
-                    textDirection: ui.TextDirection.ltr,
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          ((profileInfo?.user?.username ?? "").isEmail())
-                              ? AppIconManager.email
-                              : AppIconManager.phone,
-                        ),
-                        SizedBox(
-                          width: AppWidthManager.w1Point2,
-                        ),
-                        AppTextWidget(
-                          text: profileInfo?.user?.username ??
-                              'youAreNotRegisteredYet'.tr(),
-                          fontSize: FontSizeManager.fs16,
-                          fontWeight: FontWeight.w600,
-                          color: AppColorManager.textAppColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Directionality(
-                    textDirection: ui.TextDirection.ltr,
-                    child: AppTextWidget(
-                      text:
-                          '${profileInfo?.user?.phone ?? 'noPhoneNumberYet'.tr()}',
-                      fontSize: FontSizeManager.fs16,
-                      color: AppColorManager.textGrey,
-                    ),
-                  ),
-                  Directionality(
-                    textDirection: ui.TextDirection.ltr,
-                    child: AppTextWidget(
-                      text:
-                          '${profileInfo?.user?.whatsapp ?? 'noWhatsappYet'.tr()}',
-                      fontSize: FontSizeManager.fs16,
-                      color: AppColorManager.textGrey,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: AppTextWidget(
-                      text: profileInfo?.user?.description ?? '',
-                      fontSize: FontSizeManager.fs15,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      color: AppColorManager.textGrey,
-                    ),
-                  ),
                 ],
               ),
               SizedBox(height: AppHeightManager.h05),
@@ -268,7 +259,6 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                 indent: AppWidthManager.w3Point8,
                 endIndent: AppWidthManager.w3Point8,
               ),
-              SizedBox(height: AppHeightManager.h05),
               ProfileFollowingInfoCard(
                 profileInfo: profileInfo,
               ),

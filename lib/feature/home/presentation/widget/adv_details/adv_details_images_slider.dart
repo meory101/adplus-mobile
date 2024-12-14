@@ -166,6 +166,10 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                   controller.animateToPage(selectedIndex);
                 },
                 child: Container(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(AppRadiusManager.r3)
+                    ),
                     height: AppHeightManager.h6,
                     width: AppHeightManager.h6,
                     child: MainImageWidget(

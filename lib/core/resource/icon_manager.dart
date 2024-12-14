@@ -7,6 +7,7 @@ abstract class AppIconManager {
   static const String rocket = '$_iconBasePath/rocket.svg';
   static const String done = '$_iconBasePath/done.svg';
   static const String bidding = '$_iconBasePath/bidding.svg';
+  static const String edit = '$_iconBasePath/edit.svg';
 
   static const String language = '$_iconBasePath/language.svg';
   static const String likes = '$_iconBasePath/likes.svg';
