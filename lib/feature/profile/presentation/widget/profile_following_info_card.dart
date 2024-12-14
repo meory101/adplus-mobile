@@ -72,7 +72,7 @@ class _ProfileFollowingInfoCardState extends State<ProfileFollowingInfoCard> {
                 ),
                 SizedBox(height: AppHeightManager.h02),
                 AppTextWidget(
-                  text: 'followings'.tr(),
+                  text: 'following'.tr(),
                   fontSize: FontSizeManager.fs15,
                   color: AppColorManager.textGrey,
                   fontWeight: FontWeight.w600,
