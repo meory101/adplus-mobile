@@ -4,6 +4,7 @@ import 'package:flash/flash_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/router/router.dart';
 
 import '../../resource/color_manager.dart';
 import '../../resource/font_manager.dart';
@@ -22,7 +23,7 @@ abstract class NoteMessage {
     bool? refresh,
   }) {
     return context.showFlash(
-        duration:  Duration(seconds:  refresh ==null?2:4),
+        duration: Duration(seconds: refresh == null ? 2 : 4),
         builder: (context, controller) => FlashBar(
               shadowColor: AppColorManager.white,
               surfaceTintColor: AppColorManager.white,
@@ -51,7 +52,7 @@ abstract class NoteMessage {
                   children: [
                     Expanded(
                       child: AppTextWidget(
-                        text: text.isNotEmpty?text : "Something went wrong",
+                        text: text.isNotEmpty ? text : "Something went wrong",
                         fontSize: FontSizeManager.fs15,
                         color: AppColorManager.black,
                         fontWeight: FontWeight.w600,
@@ -60,23 +61,20 @@ abstract class NoteMessage {
                         softWrap: true,
                       ),
                     ),
-                   GestureDetector(
-                            onTap: () {
-                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-                            },
-                            child: Container(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              padding: EdgeInsets.all(AppWidthManager.w2),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColorManager.redOpacity15),
-                              child: SvgPicture.asset(AppIconManager.warning,
-                                  colorFilter:  ColorFilter.mode(
-                                      AppColorManager.red, BlendMode.srcIn)),
-                            ))
-
-
+                    GestureDetector(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        },
+                        child: Container(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          padding: EdgeInsets.all(AppWidthManager.w2),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColorManager.redOpacity15),
+                          child: SvgPicture.asset(AppIconManager.warning,
+                              colorFilter: ColorFilter.mode(
+                                  AppColorManager.red, BlendMode.srcIn)),
+                        ))
                   ]),
               backgroundColor: AppColorManager.white.withAlpha(230),
             ));
@@ -91,7 +89,7 @@ abstract class NoteMessage {
     int? maxLines,
   }) {
     return context.showFlash(
-        duration: const Duration(seconds:2),
+        duration: const Duration(seconds: 2),
         builder: (context, controller) => FlashBar(
               shadowColor: AppColorManager.white,
               surfaceTintColor: AppColorManager.white,
@@ -145,6 +143,63 @@ abstract class NoteMessage {
                         )),
                   ]),
               backgroundColor: AppColorManager.white.withAlpha(230),
+            ));
+  }
+
+  static showNotification({
+    required BuildContext context,
+    required String title,
+    required String content,
+    void Function()? onTap,
+    int? duration,
+    TextOverflow? overflow,
+    int? maxLines,
+  }) {
+    return context.showFlash(
+        duration: const Duration(seconds: 2),
+        builder: (context, controller) => FlashBar(
+              shadowColor: Color(0xff202020),
+              surfaceTintColor: Color(0xff202020),
+
+              useSafeArea: false,
+              controller: controller,
+              position: FlashPosition.top,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+              ),
+              margin: EdgeInsets.only(
+                  right: AppWidthManager.w3Point8,
+                  left: AppWidthManager.w3Point8,
+                  top: AppHeightManager.h6),
+              title: InkWell(
+                onTap: (){
+                  Navigator.of(context).pushNamed(RouteNamedScreens.notifications);
+                },
+                child: AppTextWidget(
+                  text: title,
+                  fontSize: FontSizeManager.fs16,
+                  color: AppColorManager.white,
+                  fontWeight: FontWeight.w600,
+                  overflow: overflow ?? TextOverflow.ellipsis,
+                  maxLines: maxLines ?? 2,
+                  softWrap: true,
+                ),
+              ),
+              content: InkWell(
+                onTap: (){
+                  Navigator.of(context).pushNamed(RouteNamedScreens.notifications);
+                },
+                child: AppTextWidget(
+                  text: content,
+                  fontSize: FontSizeManager.fs16,
+                  color: AppColorManager.white,
+                  fontWeight: FontWeight.w600,
+                  overflow: overflow ?? TextOverflow.ellipsis,
+                  maxLines: maxLines ?? 2,
+                  softWrap: true,
+                ),
+              ),
+              backgroundColor: Color(0xff202020).withOpacity(0.9),
             ));
   }
 }

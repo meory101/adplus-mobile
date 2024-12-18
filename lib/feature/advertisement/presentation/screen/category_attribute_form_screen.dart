@@ -70,13 +70,14 @@ class _CategoryAttributeFormScreenState
     } else {
       existingValue.value = value;
     }
+    setState(() {
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: AdvertisementNextButton(
-        disable: attributeFormValues.isEmpty,
         onTap: () {
           if(attributeFormValues.isEmpty)return;
           if ((formKey.currentState?.validate()) ?? false) {

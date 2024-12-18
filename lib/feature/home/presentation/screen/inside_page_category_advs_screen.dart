@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
@@ -46,8 +47,7 @@ class _InsidePageCategoryAdvsScreenState
           context: context,
           entity: AdsByCategoryRequestEntity(
               page: 1, categoryId: widget.args.category.categoryId));
-    }
-   else{
+    } else {
       FilterRequest.entity = AdvsByAttributeRequestEntity();
       FilterRequest.entity = widget.args.entity;
       selectedAttributeMap = {};
@@ -59,10 +59,8 @@ class _InsidePageCategoryAdvsScreenState
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         isAllAdvs = false;
-        setState(() {
-
-        });
-        },
+        setState(() {});
+      },
     );
     super.initState();
   }
@@ -82,7 +80,7 @@ class _InsidePageCategoryAdvsScreenState
   void onScroll() {
     if (scrollController.position.pixels >=
         scrollController.position.maxScrollExtent - AppHeightManager.h20) {
-      if ((FilterRequest.entity.attributes??[]).isEmpty == true) {
+      if ((FilterRequest.entity.attributes ?? []).isEmpty == true) {
         context.read<AdsByCategoryCubit>().getAdvsByCategory(
               context: context,
               entity: AdsByCategoryRequestEntity(
@@ -189,8 +187,8 @@ class _InsidePageCategoryAdvsScreenState
                                             .option ??
                                         "";
                             if (name ==
-                                widget
-                                    .args.entity.attributes?.first.value?.first) {
+                                widget.args.entity.attributes?.first.value
+                                    ?.first) {
                               selectedStarIndex = newIndex;
                             }
                           }
@@ -243,8 +241,8 @@ class _InsidePageCategoryAdvsScreenState
                                     selectedStarIndex = index;
                                     selectedAttributeMap[
                                         starItemAttributeId ?? 0] = [];
-                                    selectedAttributeMap[
-                                        starItemAttributeId ?? 0] = [name ?? ""];
+                                    selectedAttributeMap[starItemAttributeId ??
+                                        0] = [name ?? ""];
 
                                     List<FilterAttribute> attributes = [];
                                     selectedAttributeMap.forEach(
@@ -255,7 +253,8 @@ class _InsidePageCategoryAdvsScreenState
                                         }
                                       },
                                     );
-                                    FilterRequest.entity.attributes = attributes;
+                                    FilterRequest.entity.attributes =
+                                        attributes;
                                     getData();
                                     setState(() {});
                                   },
@@ -306,11 +305,18 @@ class _InsidePageCategoryAdvsScreenState
             ),
           ),
           body: Container(
-            margin: EdgeInsets.only(top: AppHeightManager.h4),
+            padding: EdgeInsets.only(top: AppHeightManager.h4),
             child: SingleChildScrollView(
               controller: scrollController,
               child: (FilterRequest.entity.attributes ?? []).isEmpty
-                  ? AdsByCategoryListView(category: widget.args.category)
+                  ? Column(
+                      children: [
+                        AdsByCategoryListView(category: widget.args.category),
+                        SizedBox(
+                          height: AppHeightManager.h2,
+                        ),
+                      ],
+                    )
                   : AdvsByAttributeListView(
                       category: widget.args.category,
                     ),

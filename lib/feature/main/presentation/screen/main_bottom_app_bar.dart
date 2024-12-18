@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
@@ -14,7 +16,6 @@ import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/storage/shared/shared_pref.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
-import '../../../authentication/presentation/screen/login_screen.dart';
 import '../../../bidding/bidding_screen.dart';
 import '../../../profile/presentation/screen/profile_screen.dart';
 
@@ -38,7 +39,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
     bottomBarScreens = [
       const HomeScreen(),
       const BiddingScreen(),
-       const ProfileScreen(),
+      const ProfileScreen(),
       MoreScreen(),
     ];
 
@@ -59,6 +60,36 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
         }
       },
       child: Scaffold(
+          floatingActionButton: MainAppButton(
+            onTap: () {
+              UrlLauncherHelper.openWhatsapp(phoneNumber: "0938421937");
+            },
+            alignment: Alignment.center,
+            width: AppWidthManager.w16,
+            height: AppWidthManager.w20,
+            padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w1),
+            borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+            color: AppColorManager.mainColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppTextWidget(
+                  text: "contactUs".tr(),
+                  color: AppColorManager.white,
+                  fontSize: FontSizeManager.fs14,
+                ),
+                SizedBox(
+                  height: AppHeightManager.h02,
+                ),
+                Icon(
+                  CupertinoIcons.chat_bubble_2_fill,
+                  color: Colors.white,
+                  size: 18,
+                )
+              ],
+            ),
+          ),
           bottomNavigationBar: BottomAppBar(
             height: AppHeightManager.h9,
             elevation: 0,
@@ -79,6 +110,8 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                       });
                     },
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SvgPicture.asset(AppIconManager.home,
                             colorFilter: ColorFilter.mode(
@@ -104,6 +137,8 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                       });
                     },
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SvgPicture.asset(AppIconManager.bidding,
                             colorFilter: ColorFilter.mode(
@@ -139,7 +174,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                             .pushNamed(RouteNamedScreens.advertisementLanguage);
                       },
                       child: Padding(
-                        padding: EdgeInsets.all(AppWidthManager.w4),
+                        padding: EdgeInsets.all(AppWidthManager.w3),
                         child: SvgPicture.asset(AppIconManager.add,
                             colorFilter: const ColorFilter.mode(
                                 AppColorManager.white, BlendMode.srcIn)),
@@ -155,6 +190,8 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                       });
                     },
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SvgPicture.asset(AppIconManager.person,
                             colorFilter: ColorFilter.mode(
@@ -180,10 +217,15 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
                       });
                     },
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                       Icon(Icons.more_horiz_sharp,color:  selectedIndex == 3
-                           ? AppColorManager.mainColor
-                           : AppColorManager.grey,),
+                        Icon(
+                          Icons.more_horiz_sharp,
+                          color: selectedIndex == 3
+                              ? AppColorManager.mainColor
+                              : AppColorManager.grey,
+                        ),
                         AppTextWidget(
                           text: "more".tr(),
                           color: selectedIndex == 3

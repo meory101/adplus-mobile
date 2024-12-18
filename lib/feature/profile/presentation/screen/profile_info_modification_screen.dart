@@ -332,7 +332,7 @@ class _ProfileInfoModificationScreenState
                           height: AppHeightManager.h6,
                           color: AppColorManager.mainColor,
                           child: AppTextWidget(
-                            text: "save",
+                            text: "save".tr(),
                             fontSize: FontSizeManager.fs16,
                             fontWeight: FontWeight.w600,
                             color: AppColorManager.white,

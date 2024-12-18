@@ -7,7 +7,6 @@ import '../../../../../core/resource/constant_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/resource/theme_manager.dart';
-import '../../../../../core/widget/container/decorated_container.dart';
 import '../../../../../core/widget/image/main_image_widget.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
 

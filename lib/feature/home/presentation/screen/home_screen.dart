@@ -9,7 +9,6 @@ import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.d
 import 'package:mzad_damascus/feature/home/presentation/cubit/banners_cubit/banners_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/get_categories_cubit/get_categories_cubit.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
-import 'package:mzad_damascus/feature/home/presentation/widget/search/search_form_field.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/profile_search_form_field.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/color_manager.dart';
@@ -189,86 +188,100 @@ class _HomeScreenState extends State<HomeScreen> {
                           Visibility(
                             visible: AppSharedPreferences.getToken().isNotEmpty,
                             child: BlocConsumer<NotificationCubit,
-                                    NotificationState>(
-                                listener: (context, state) {},
-                                builder: (context, state) {
-                                  if (state.status == CubitStatus.loading) {
-                                    return Center(
-                                        child: Padding(
-                                      padding: EdgeInsets.only(
-                                          top: AppHeightManager.h1),
-                                      child: ShimmerContainer(
-                                          boxShape: BoxShape.circle,
-                                          width: AppWidthManager.w7,
-                                          height: AppWidthManager.w7),
-                                    ));
-                                  }
-                                  return InkWell(
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .pushNamed(
-                                                RouteNamedScreens.notifications)
-                                            .then(
-                                          (value) {
-                                            context
-                                                .read<NotificationCubit>()
-                                                .resetData();
-                                            context
-                                                .read<NotificationCubit>()
-                                                .getMyNotifications(
-                                                    context: context,
-                                                    entity:
-                                                        NotificationsRequestEntity(
-                                                            page: 1));
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                          alignment: Alignment.center,
-                                          height: AppHeightManager.h5point8,
-                                          child: Stack(children: [
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  top: AppHeightManager.h1),
-                                              child: SvgPicture.asset(
-                                                AppIconManager.notification,
-                                                colorFilter:
-                                                    const ColorFilter.mode(
-                                                        AppColorManager
-                                                            .mainColor,
-                                                        BlendMode.srcIn),
-                                              ),
-                                            ),
-                                            Visibility(
-                                              visible: (state.entity.data?.pagination?.totalItems??0) > 0,
-                                              child: Positioned(
-                                                right: AppWidthManager.w1Point5,
-                                                child: Container(
-                                                  margin: EdgeInsets.only(
-                                                      bottom:
-                                                          AppHeightManager.h4),
-                                                  child: CircleAvatar(
-                                                      radius:
-                                                          AppRadiusManager.r8,
-                                                      backgroundColor:
-                                                          AppColorManager.red,
-                                                      child: AppTextWidget(
-                                                          color: AppColorManager
-                                                              .white,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize:
-                                                              FontSizeManager
-                                                                  .fs14,
-                                                          text:
-                                                              "${state.entity.data?.pagination?.totalItems}")),
-                                                ),
-                                              ),
-                                            ),
-                                          ])));
-                                }),
-                          ),
+                                NotificationState>(listener: (context, state) {
+                              if (state.status == CubitStatus.success) {
+                                if((state.entity.data?.pagination
+                                    ?.totalItems??0)<=0){
+                                  return;
+                                }
+                                NoteMessage.showNotification(
 
+                                    context: context,
+                                    title: "notifications".tr(),
+                                    content: "youHave".tr() +" "+
+                                        (state.entity.data?.pagination
+                                                ?.totalItems)
+                                            .toString() +" "+
+                                        'notification'.tr());
+                              }
+                            }, builder: (context, state) {
+                              if (state.status == CubitStatus.loading) {
+                                return Center(
+                                    child: Padding(
+                                  padding:
+                                      EdgeInsets.only(top: AppHeightManager.h1),
+                                  child: ShimmerContainer(
+                                      boxShape: BoxShape.circle,
+                                      width: AppWidthManager.w7,
+                                      height: AppWidthManager.w7),
+                                ));
+                              }
+                              return InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed(
+                                            RouteNamedScreens.notifications)
+                                        .then(
+                                      (value) {
+                                        context
+                                            .read<NotificationCubit>()
+                                            .resetData();
+                                        context
+                                            .read<NotificationCubit>()
+                                            .getMyNotifications(
+                                                context: context,
+                                                entity:
+                                                    NotificationsRequestEntity(
+                                                        page: 1));
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                      alignment: Alignment.center,
+                                      height: AppHeightManager.h5point8,
+                                      child: Stack(children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              top: AppHeightManager.h1),
+                                          child: SvgPicture.asset(
+                                            AppIconManager.notification,
+                                            colorFilter: const ColorFilter.mode(
+                                                AppColorManager.mainColor,
+                                                BlendMode.srcIn),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: (state
+                                                      .entity
+                                                      .data
+                                                      ?.pagination
+                                                      ?.totalItems ??
+                                                  0) >
+                                              0,
+                                          child: Positioned(
+                                            right: AppWidthManager.w1Point5,
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  bottom: AppHeightManager.h4),
+                                              child: CircleAvatar(
+                                                  radius: AppRadiusManager.r8,
+                                                  backgroundColor:
+                                                      AppColorManager.red,
+                                                  child: AppTextWidget(
+                                                      color:
+                                                          AppColorManager.white,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize:
+                                                          FontSizeManager.fs14,
+                                                      text:
+                                                          "${state.entity.data?.pagination?.totalItems}")),
+                                            ),
+                                          ),
+                                        ),
+                                      ])));
+                            }),
+                          ),
                         ],
                       )
                     ],

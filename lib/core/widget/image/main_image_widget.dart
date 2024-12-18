@@ -87,7 +87,7 @@ class MainProgressImageWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColorManager.shimmerBaseColor,
           borderRadius: BorderRadius.all(
-            Radius.circular(AppRadiusManager.r15),
+            Radius.circular(AppRadiusManager.r3),
           ),
         ),
       ),

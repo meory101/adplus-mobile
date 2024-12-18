@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
@@ -14,6 +15,7 @@ import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cu
 import 'package:mzad_damascus/feature/more/presentation/cubit/update_username_cubit/update_username_state.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/verfiy_username_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
+import '../../../../core/helper/phone_number_hepler.dart';
 import '../../../../core/widget/form_field/title_app_form_filed.dart';
 import '../../../../core/injection/injection_container.dart' as di;
 
@@ -46,21 +48,21 @@ class _EditUsernameScreenState extends State<EditUsernameScreen> {
                     title: "usernameRequired".tr(), // Localized title
                     hint: "nameHint".tr(), // Localized hint
                     onChanged: (value) {
-                      entity.username = value ?? "";
+                      entity.username = value;
                       return null;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'enterUsername'.tr(); // Localized validation message
+                        return "usernameRequired".tr();
                       }
 
-                      bool isEmail = RegExp(
-                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
-                          .hasMatch(value);
-                      bool isPhone = RegExp(r'^[0-9]{10,15}$').hasMatch(value);
-
+                      bool isEmail = value.isEmail();
+                      bool isPhone = value.isPhoneNumber();
+                      if(isPhone==true){
+                        entity.username =PhoneNumberHelper.formatPhoneNumberWithCountyCode(value);
+                      }
                       if (!isEmail && !isPhone) {
-                        return 'usernameInvalid'.tr(); // Localized validation message
+                        return "usernameInvalid".tr();
                       }
                       return null;
                     },

@@ -72,8 +72,9 @@ class AdsByCategoryListView extends StatelessWidget {
               padding:
               EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
               child: DynamicHeightGridView(
-                crossAxisSpacing: AppWidthManager.w2,
+                crossAxisSpacing: AppWidthManager.w3Point8,
                 crossAxisCount: 2,
+
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: advs.length,
@@ -89,77 +90,94 @@ class AdsByCategoryListView extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              height: AppHeightManager.h30,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              decoration: BoxDecoration(
-                                color: AppColorManager.lightGreyOpacity6,
-                                borderRadius: BorderRadius.circular(
-                                    AppRadiusManager.r15),
-                              ),
-                              child: MainImageWidget(
-                                fit: BoxFit.cover,
-                                height: AppHeightManager.h30,
-                                imageUrl: AppConstantManager
-                                    .imageBaseUrl +
-                                    (advertisement.photos?.first.photo ??
-                                        ""),
-                                borderRadius: BorderRadius.circular(
-                                    AppRadiusManager.r15),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: AppHeightManager.h08),
-                                AppTextWidget(
-                                  text:
-                                  advertisement.name??"",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  fontSize: FontSizeManager.fs15,
-                                  fontWeight: FontWeight.w600,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: AppHeightManager.h1point8),
+                      decoration: BoxDecoration(
+                        color: AppColorManager.textGrey.withOpacity(0.4)
+                      ),
+                      child: Stack(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: AppHeightManager.h20,
+                                width: AppWidthManager.w100,
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                decoration: BoxDecoration(
+                                  color: AppColorManager.grey,
                                 ),
-                                AppTextWidget(
-                                  text: advertisement.startingPrice
-                                      .toString() ,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  fontSize: FontSizeManager.fs14,
-                                  fontWeight: FontWeight.w500,
+                                child: MainImageWidget(
+                                  fit: BoxFit.fill,
+                                  height: AppHeightManager.h20,
+                                  imageUrl: AppConstantManager
+                                      .imageBaseUrl +
+                                      (advertisement.photos?.first.photo ??
+                                          ""),
                                 ),
-                                SizedBox(
-                                    height: AppHeightManager.h1point8),
-                              ],
-                            )
-                          ],
-                        ),
-                        Visibility(
-                          visible:
-                          state.entity.data?.data?[index].star ==
-                              EnumManager.star,
-                          child: MainAppButton(
-                            borderRadius: BorderRadius.circular(
-                                AppRadiusManager.r10),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: AppWidthManager.w3Point8,
-                              vertical: AppHeightManager.h04,
-                            ),
-                            color: AppColorManager.gold,
-                            child: AppTextWidget(
-                              text: 'featured'.tr(),
-                              color: AppColorManager.white,
-                              fontSize: FontSizeManager.fs16,
-                              fontWeight: FontWeight.w600,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: AppHeightManager.h08),
+                                    AppTextWidget(
+                                      text:
+                                      advertisement.name??"",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      fontSize: FontSizeManager.fs16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    AppTextWidget(
+                                      text:
+                                      advertisement.description??"",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      fontSize: FontSizeManager.fs15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.grey,
+                                    ),
+                                    AppTextWidget(
+                                      text: advertisement.startingPrice
+                                          .toString() ,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      fontSize: FontSizeManager.fs17,
+                                      color: AppColorManager.black,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    SizedBox(
+                                        height: AppHeightManager.h1point8),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Visibility(
+                            visible:
+                            state.entity.data?.data?[index].star ==
+                                EnumManager.star,
+                            child: MainAppButton(
+                              borderRadius: BorderRadius.circular(
+                                  AppRadiusManager.r10),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: AppWidthManager.w3Point8,
+                                vertical: AppHeightManager.h04,
+                              ),
+                              color: AppColorManager.gold,
+                              child: AppTextWidget(
+                                text: 'featured'.tr(),
+                                color: AppColorManager.white,
+                                fontSize: FontSizeManager.fs16,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },

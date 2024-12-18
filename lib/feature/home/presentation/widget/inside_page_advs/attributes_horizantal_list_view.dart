@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 
 import '../../../../../core/helper/language_helper.dart';
 import '../../../../../core/resource/color_manager.dart';
@@ -40,48 +41,51 @@ class AttributesHorizantalListView extends StatelessWidget {
                     : element.option ?? ""));
           },
         );
-        return InkWell(
-          onTap: () {
-            showAttributeListCheckBox(
-              context: context,
-              options: optionsList,
-              currentFilterItemId : filterItems[index].attributeId,
-              onDoneSelecting: () {
-                onDoneSelecting();
-              },
-            );
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColorManager.white,
-              border: Border.all(
-                  color: AppColorManager
-                      .lightGreyOpacity6),
-              borderRadius: BorderRadius.circular(
-                  AppRadiusManager.r10),
-            ),
-            height: AppHeightManager.h7,
-            width: AppWidthManager.w45,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal:
-                  AppWidthManager.w3Point8),
-              child: Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceBetween,
-                children: [
-                  AppTextWidget(
-                      text: LanguageHelper.checkIfLTR(
-                          context: context)
-                          ? filterItems[index]
-                          .attributeNameEn ??
-                          ""
-                          : filterItems[index]
-                          .attributeName ??
-                          ""),
-                  SvgPicture.asset(
-                      AppIconManager.arrowMenuDown)
-                ],
+        return Visibility(
+          visible: filterItems[index].attributeType?.name == EnumManager.list,
+          child: InkWell(
+            onTap: () {
+              showAttributeListCheckBox(
+                context: context,
+                options: optionsList,
+                currentFilterItemId : filterItems[index].attributeId,
+                onDoneSelecting: () {
+                  onDoneSelecting();
+                },
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColorManager.white,
+                border: Border.all(
+                    color: AppColorManager
+                        .lightGreyOpacity6),
+                borderRadius: BorderRadius.circular(
+                    AppRadiusManager.r10),
+              ),
+              height: AppHeightManager.h7,
+              width: AppWidthManager.w45,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal:
+                    AppWidthManager.w3Point8),
+                child: Row(
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppTextWidget(
+                        text: LanguageHelper.checkIfLTR(
+                            context: context)
+                            ? filterItems[index]
+                            .attributeNameEn ??
+                            ""
+                            : filterItems[index]
+                            .attributeName ??
+                            ""),
+                    SvgPicture.asset(
+                        AppIconManager.arrowMenuDown)
+                  ],
+                ),
               ),
             ),
           ),

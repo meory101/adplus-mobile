@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:mzad_damascus/router/router.dart';
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/key_manger.dart';
@@ -8,11 +9,9 @@ import '../../../../../core/storage/shared/shared_pref.dart';
 import '../../../../../core/widget/button/main_app_button.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
 
-
 /// Eng. Nour Othman(meory)
 
-void showLanguageDialog(
-    {required BuildContext context}) {
+void showLanguageDialog({required BuildContext context}) {
   String selectedLanguage = AppSharedPreferences.getLanguage();
   showDialog(
     context: context,
@@ -83,7 +82,6 @@ void showLanguageDialog(
                   text: "arabic".tr(),
                   fontSize: FontSizeManager.fs16,
                   fontWeight: FontWeight.w600,
-
                 ),
                 value: AppKeyManager.arabicLocalizationCode,
                 groupValue: selectedLanguage,
@@ -103,8 +101,7 @@ void showLanguageDialog(
             children: [
               MainAppButton(
                 width: MediaQuery.of(context).size.width / 2.6,
-                padding:
-                    EdgeInsets.symmetric(horizontal: AppWidthManager.w10),
+                padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w10),
                 borderRadius: BorderRadius.circular(AppRadiusManager.r10),
                 height: AppHeightManager.h5,
                 onTap: () {
@@ -117,37 +114,38 @@ void showLanguageDialog(
                   fontSize: FontSizeManager.fs16,
                 ),
               ),
-            MainAppButton(
-                    width: MediaQuery.of(context).size.width / 2.6,
-                    height: AppHeightManager.h5,
-                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                    onTap: () async{
-                      String languageCode = EasyLocalization.of(context)
-                              ?.currentLocale
-                              ?.languageCode ??
-                          "";
+              MainAppButton(
+                width: MediaQuery.of(context).size.width / 2.6,
+                height: AppHeightManager.h5,
+                borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                onTap: () async {
+                  String languageCode = EasyLocalization.of(context)
+                          ?.currentLocale
+                          ?.languageCode ??
+                      "";
 
-                      if (languageCode == selectedLanguage) {
-                        Navigator.pop(context);
-                        return;
-                      }
-                      EasyLocalization.of(context)
-                          ?.setLocale(Locale(selectedLanguage))
-                          .then((value) {
-                        AppSharedPreferences.cashLanguage(
-                            language: selectedLanguage);
-                        Navigator.of(context).pop();
-                      });
-                    },
-                    alignment: Alignment.center,
-                    color: AppColorManager.mainColor,
-                    child: AppTextWidget(
-                      text: "change".tr(),
-                      color: AppColorManager.white,
-                      fontSize: FontSizeManager.fs16,
-
-                  ),
-
+                  if (languageCode == selectedLanguage) {
+                    Navigator.pop(context);
+                    return;
+                  }
+                  EasyLocalization.of(context)
+                      ?.setLocale(Locale(selectedLanguage))
+                      .then((value) {
+                    AppSharedPreferences.cashLanguage(
+                        language: selectedLanguage);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      RouteNamedScreens.splash,
+                      (route) => false,
+                    );
+                  });
+                },
+                alignment: Alignment.center,
+                color: AppColorManager.mainColor,
+                child: AppTextWidget(
+                  text: "change".tr(),
+                  color: AppColorManager.white,
+                  fontSize: FontSizeManager.fs16,
+                ),
               ),
             ],
           ),

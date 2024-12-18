@@ -128,6 +128,8 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                           }
                           if (selectedFiles != null &&
                               selectedFiles.isNotEmpty) {
+                            print(selectedFiles);
+                            print('advertisemeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
                             selectedFiles.forEach(
                               (advFile) {
                                 advFiles.add(advFile!);

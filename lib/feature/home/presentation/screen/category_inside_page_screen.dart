@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:mzad_damascus/app/app.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
@@ -94,6 +95,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                     itemBuilder: (context, index) {
                       List<AttributeTypeList> attributeTypeList =
                           insidePageData[index].attributeTypeList ?? [];
+
+                      List<AttributeTypeList> searchDropDown =
+                          insidePageData[index].attributeTypeList ?? [];
                       currentInsidePageData = insidePageData[index];
 
                       return Visibility(
@@ -127,8 +131,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                         fontWeight: FontWeight.w700,
                                         color: AppColorManager.mainColor,
                                       ),
-                                      SizedBox(height:
-                                      AppHeightManager.h1,),
+                                      SizedBox(
+                                        height: AppHeightManager.h1,
+                                      ),
                                       Container(
                                         width: AppWidthManager.w20,
                                         decoration: BoxDecoration(
@@ -140,146 +145,224 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                       ),
                                     ],
                                   ),
-
                                 ],
                               ),
                             ),
                             SizedBox(
                               height: AppHeightManager.h2,
                             ),
+                            TypeAheadField(
+                              onSelected: (value) {
+                                int selectedIndex = attributeTypeList.indexOf(value);
+                                if (selectedIndex == -1) return;
+                                entity.page = 1;
+
+                                List<FilterAttribute> attributes = [];
+                                attributes.add(FilterAttribute(
+                                    attributeId: insidePageData[index].attributeId,
+                                    value: [
+                                      LanguageHelper.checkIfLTR(context: context)
+                                          ? attributeTypeList[selectedIndex].optionEn ?? ""
+                                          : attributeTypeList[selectedIndex].option ?? ""
+                                    ]
+                                ));
+
+                                entity.attributes = attributes;
+
+                                Navigator.of(context).pushNamed(
+                                  RouteNamedScreens.insidePageCategoryAdvs,
+                                  arguments: InsidePageCategoryAdvArgs(
+                                    isAllCategoryAds: false,
+                                    category: widget.args.subCategory,
+                                    entity: entity,
+                                  ),
+                                );
+                              },
+
+                              suggestionsCallback: (String pattern) async {
+                                return searchDropDown
+                                    .where((item) =>
+                                        (LanguageHelper.checkIfLTR(
+                                                    context: context)
+                                                ? item.optionEn
+                                                : item.option)
+                                            ?.toLowerCase()
+                                            .contains(pattern.toLowerCase()) ??
+                                        false)
+                                    .toList();
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  title: AppTextWidget(
+                                    maxLines: 1,
+                                    textAlign: TextAlign.center,
+                                    text: LanguageHelper.checkIfLTR(
+                                            context: context)
+                                        ? suggestion.optionEn ?? ""
+                                        : suggestion.option ?? "",
+                                    fontSize: FontSizeManager.fs15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                );
+                              },
+
+                            ),
+                            SizedBox(
+                              height: AppHeightManager.h2,
+                            ),
                             DynamicHeightGridView(
-                              itemCount: attributeTypeList.length+1,
+                              itemCount: attributeTypeList.length + 1,
                               crossAxisCount: 3,
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               builder: (context, i) {
-
-                                return i==0?InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                        RouteNamedScreens
-                                            .insidePageCategoryAdvs,
-                                        arguments: InsidePageCategoryAdvArgs(
-                                            isAllCategoryAds: true,
-                                            category: widget.args.subCategory,
-                                            entity: entity));
-                                  },
-                                  child:
-                                  currentInsidePageData?.star==1?
-                                  DecoratedContainer(
-                                    height: AppHeightManager.h6,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: AppHeightManager.h1point5
-                                    ),
-                                    child:  AppTextWidget(
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.center,
-                                      text: 'allAdvs'.tr(),
-                                      fontSize: FontSizeManager.fs15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ):
-
-                                  DecoratedContainer(
-                                      alignment: Alignment.center,
-                                      height: AppWidthManager.w30,
-                                      width: AppWidthManager.w30,
-                                      child:
-                                          AppTextWidget(
-                                            maxLines: 2,
-                                            textAlign: TextAlign.center,
-                                            text: "allAdvs".tr(),
-                                            fontSize: FontSizeManager.fs15,
-                                            fontWeight: FontWeight.w600,
-                                      )),
-                                ):
-                                  InkWell(
-                                  onTap: () {
-                                    entity.page = 1;
-                                    List<FilterAttribute> attributes = [];
-                                    attributes.add(FilterAttribute(
-                                        attributeId:
-                                            insidePageData[index].attributeId,
-                                        value: [
-                                          LanguageHelper.checkIfLTR(
-                                                  context: context)
-                                              ? (attributeTypeList[i-1]
-                                                      .optionEn ??
-                                                  "")
-                                              : attributeTypeList[i-1].option ??
-                                                  ""
-                                        ]));
-                                    entity.attributes = attributes;
-                                    Navigator.of(context).pushNamed(
-                                        RouteNamedScreens
-                                            .insidePageCategoryAdvs,
-                                        arguments: InsidePageCategoryAdvArgs(
-                                          isAllCategoryAds:false ,
-                                            category: widget.args.subCategory,
-                                            entity: entity));
-                                  },
-                                  child:
-                                  currentInsidePageData?.star==1?
-                                      DecoratedContainer(
-                                        height: AppHeightManager.h6,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: AppHeightManager.h1point5
-                                        ),
-                                       child:  AppTextWidget(
-                                          maxLines: 2,
-                                          textAlign: TextAlign.center,
-                                          text: LanguageHelper.checkIfLTR(
-                                              context: context)
-                                              ? '${attributeTypeList[i-1].optionEn ?? ""}'
-                                              : '${attributeTypeList[i-1].option ?? ""}',
-                                          fontSize: FontSizeManager.fs15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ):
-
-                                  DecoratedContainer(
-                                      height: AppWidthManager.w30,
-                                      width: AppWidthManager.w30,
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: AppWidthManager.w3Point8,vertical: AppHeightManager.h1),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          AppTextWidget(
-                                            maxLines: 2,
-                                            textAlign: TextAlign.center,
-                                            text: LanguageHelper.checkIfLTR(
-                                                context: context)
-                                                ? '${attributeTypeList[i-1].optionEn ?? ""}\n'
-                                                : '${attributeTypeList[i-1].option ?? ""}\n',
-                                            fontSize: FontSizeManager.fs15,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                          Visibility(
-                                            visible:
-                                                (attributeTypeList[i-1].photo ??
+                                return i == 0
+                                    ? InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              RouteNamedScreens
+                                                  .insidePageCategoryAdvs,
+                                              arguments:
+                                                  InsidePageCategoryAdvArgs(
+                                                      isAllCategoryAds: true,
+                                                      category: widget
+                                                          .args.subCategory,
+                                                      entity: entity));
+                                        },
+                                        child: currentInsidePageData?.star == 1
+                                            ? DecoratedContainer(
+                                                height: AppHeightManager.h6,
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: AppHeightManager
+                                                        .h1point5),
+                                                child: AppTextWidget(
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  text: 'allAdvs'.tr(),
+                                                  fontSize:
+                                                      FontSizeManager.fs15,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              )
+                                            : DecoratedContainer(
+                                                alignment: Alignment.center,
+                                                height: AppWidthManager.w30,
+                                                width: AppWidthManager.w30,
+                                                child: AppTextWidget(
+                                                  maxLines: 2,
+                                                  textAlign: TextAlign.center,
+                                                  text: "allAdvs".tr(),
+                                                  fontSize:
+                                                      FontSizeManager.fs15,
+                                                  fontWeight: FontWeight.w600,
+                                                )),
+                                      )
+                                    : InkWell(
+                                        onTap: () {
+                                          entity.page = 1;
+                                          List<FilterAttribute> attributes = [];
+                                          attributes.add(FilterAttribute(
+                                              attributeId: insidePageData[index]
+                                                  .attributeId,
+                                              value: [
+                                                LanguageHelper.checkIfLTR(
+                                                        context: context)
+                                                    ? (attributeTypeList[i - 1]
+                                                            .optionEn ??
                                                         "")
-                                                    .isNotEmpty,
-                                            child: MainImageWidget(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppRadiusManager.r10),
-                                              height: AppWidthManager.w13,
-                                              width: AppWidthManager.w13,
-                                              imageUrl: AppConstantManager
-                                                      .imageBaseUrl +
-                                                  attributeTypeList[i-1]
-                                                      .photo
-                                                      .toString(),
-                                            ),
-                                          ),
-
-                                        ],
-                                      )),
-                                );
+                                                    : attributeTypeList[i - 1]
+                                                            .option ??
+                                                        ""
+                                              ]));
+                                          entity.attributes = attributes;
+                                          Navigator.of(context).pushNamed(
+                                              RouteNamedScreens
+                                                  .insidePageCategoryAdvs,
+                                              arguments:
+                                                  InsidePageCategoryAdvArgs(
+                                                      isAllCategoryAds: false,
+                                                      category: widget
+                                                          .args.subCategory,
+                                                      entity: entity));
+                                        },
+                                        child: currentInsidePageData?.star == 1
+                                            ? DecoratedContainer(
+                                                height: AppHeightManager.h6,
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: AppHeightManager
+                                                        .h1point5),
+                                                child: AppTextWidget(
+                                                  maxLines: 2,
+                                                  textAlign: TextAlign.center,
+                                                  text: LanguageHelper
+                                                          .checkIfLTR(
+                                                              context: context)
+                                                      ? '${attributeTypeList[i - 1].optionEn ?? ""}'
+                                                      : '${attributeTypeList[i - 1].option ?? ""}',
+                                                  fontSize:
+                                                      FontSizeManager.fs15,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              )
+                                            : DecoratedContainer(
+                                                height: AppWidthManager.w30,
+                                                width: AppWidthManager.w30,
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: AppWidthManager
+                                                        .w3Point8,
+                                                    vertical:
+                                                        AppHeightManager.h1),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    AppTextWidget(
+                                                      maxLines: 2,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      text: LanguageHelper
+                                                              .checkIfLTR(
+                                                                  context:
+                                                                      context)
+                                                          ? '${attributeTypeList[i - 1].optionEn ?? ""}\n'
+                                                          : '${attributeTypeList[i - 1].option ?? ""}\n',
+                                                      fontSize:
+                                                          FontSizeManager.fs15,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                    Visibility(
+                                                      visible:
+                                                          (attributeTypeList[
+                                                                          i - 1]
+                                                                      .photo ??
+                                                                  "")
+                                                              .isNotEmpty,
+                                                      child: MainImageWidget(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                AppRadiusManager
+                                                                    .r10),
+                                                        height:
+                                                            AppWidthManager.w13,
+                                                        width:
+                                                            AppWidthManager.w13,
+                                                        imageUrl: AppConstantManager
+                                                                .imageBaseUrl +
+                                                            attributeTypeList[
+                                                                    i - 1]
+                                                                .photo
+                                                                .toString(),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )),
+                                      );
                               },
                             ),
                             SizedBox(
