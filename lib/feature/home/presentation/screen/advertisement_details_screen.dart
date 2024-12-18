@@ -90,7 +90,7 @@ class _AdvertisementDetailsScreenState
       }
       advDetails = state.entity.data;
       return Scaffold(
-        appBar: AppBar(
+        appBar: AppBar  (
           surfaceTintColor: AppColorManager.white,
           automaticallyImplyLeading: false,
           title: Row(

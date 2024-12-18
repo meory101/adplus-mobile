@@ -24,9 +24,18 @@ import 'package:mzad_damascus/feature/home/presentation/cubit/category_inside_pa
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/category_inside_page/companies_accounts_list_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/home/home_banners.dart';
+import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/dialog/showAttributeListCheckBox.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
+
+void clearFilter(){
+  FilterRequest.entity = AdvsByAttributeRequestEntity();
+  FilterRequest.entity.attributes = [];
+  selectedAttributeMap={};
+
+
+}
 
 class CategoryInsidePageScreen extends StatefulWidget {
   final CategoryInsidePageArgs args;
@@ -44,6 +53,8 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
     getCategoryInsidePage();
     super.initState();
   }
+
+
 
   getCategoryInsidePage() async {
     context.read<CategoryInsidePageCubit>().getCategoryInsidePage(
@@ -176,7 +187,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                     category: widget.args.subCategory,
                                     entity: entity,
                                   ),
-                                );
+                                ).then((value) {
+                                  clearFilter();
+                                },);
                               },
 
                               suggestionsCallback: (String pattern) async {
@@ -227,7 +240,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                       isAllCategoryAds: true,
                                                       category: widget
                                                           .args.subCategory,
-                                                      entity: entity));
+                                                      entity: entity)).then((value) {
+                                                        clearFilter();
+                                                      },);
                                         },
                                         child: currentInsidePageData?.star == 1
                                             ? DecoratedContainer(
@@ -285,7 +300,10 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                       isAllCategoryAds: false,
                                                       category: widget
                                                           .args.subCategory,
-                                                      entity: entity));
+                                                      entity: entity)).then((value) {
+
+                                                        clearFilter();
+                                                      },);
                                         },
                                         child: currentInsidePageData?.star == 1
                                             ? DecoratedContainer(

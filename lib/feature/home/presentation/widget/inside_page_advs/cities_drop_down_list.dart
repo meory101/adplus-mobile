@@ -35,7 +35,14 @@ class CitiesDropDownList extends StatelessWidget {
         }
         List<NameAndId> citiesOptions = [];
         List<City> cities = state.entity.data ?? [];
+        String? hint;
         cities.forEach((city) {
+          if(city.cityId==FilterRequest.entity.cityId){
+            hint = LanguageHelper.checkIfLTR(
+                context: context)
+                ? city.enName ?? ""
+                : city.arName ?? "";
+          }
           citiesOptions.add(NameAndId(
             name: LanguageHelper.checkIfLTR(
                 context: context)
@@ -47,7 +54,9 @@ class CitiesDropDownList extends StatelessWidget {
         return SizedBox(
           height: AppHeightManager.h7,
           width: AppWidthManager.w45,
+
           child: MainDropdownWidget(
+
             hintFontColor: AppColorManager.black,
             onChanged: (selectedCity) {
               FilterRequest.entity.cityId =
@@ -60,8 +69,9 @@ class CitiesDropDownList extends StatelessWidget {
                   .getAdvsByAttribute(
                   context: context,
                   entity: FilterRequest.entity);
+
             },
-            hint: 'city'.tr(), // Localized text
+            hint:hint==null? 'city'.tr() : hint??"", // Localized text
             options: citiesOptions,
           ),
         );

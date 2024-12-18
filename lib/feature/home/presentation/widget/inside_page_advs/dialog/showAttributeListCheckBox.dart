@@ -2,10 +2,13 @@ import 'package:dartz/dartz_unsafe.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/category_inside_page_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/inside_page_category_advs_screen.dart';
 import '../../../../../../core/helper/language_helper.dart';
 import '../../../../../../core/resource/color_manager.dart';
+import '../../../../../../core/resource/font_manager.dart';
 import '../../../../../../core/resource/size_manager.dart';
+import '../../../../../../core/widget/button/main_app_button.dart';
 import '../../../../../../core/widget/drop_down/NameAndId.dart';
 import '../../../../../../core/widget/text/app_text_widget.dart';
 import '../done_button.dart';
@@ -78,27 +81,28 @@ void showAttributeListCheckBox(
                                 fillColor: WidgetStatePropertyAll(AppColorManager.lightGreyOpacity6),
                                 onChanged: (value) {
                                   bool isListFull = selectedAttributeMap[currentFilterItemId]?.length == options.length - 1;
-                  
+
                                   if (options[i].name == 'all') {
-                                    print('all');
                                     if (!isListFull) {
-                                      print('list full is not');
                                       selectedAttributeMap[currentFilterItemId ?? 0] = [];
                                       selectedAttributeMap[currentFilterItemId ?? 0]?.addAll(optionNames);
-                                      print(selectedAttributeMap);
-                                      print('---------------');
+
                                     } else {
-                                      print('list full');
+
                                       selectedAttributeMap[currentFilterItemId ?? 0] = [];
                                     }
                                   } else {
                                     if ((selectedAttributeMap[currentFilterItemId ?? 0] ?? []).contains(options[i].name)) {
-                                      print('contains000000000000000000000');
                                       selectedAttributeMap[currentFilterItemId ?? 0]?.remove(options[i].name);
                                     } else {
+                                      if(selectedAttributeMap[currentFilterItemId ?? 0] == null){
+                                        selectedAttributeMap[currentFilterItemId ?? 0] = [];
+                                      }
                                       selectedAttributeMap[currentFilterItemId ?? 0]?.add(options[i].name);
+
                                     }
                                   }
+                                  print(selectedAttributeMap);
                                   setState(() {});
                                 },
                                 value: isSelected,
@@ -116,7 +120,38 @@ void showAttributeListCheckBox(
                   ),
                 ),
               ),
-              DoneButton()
+
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 30,
+                child: Row(
+                  children: [
+                    DoneButton(),
+                   MainAppButton(
+                  onTap: () {
+                    selectedAttributeMap[currentFilterItemId ?? 0] = [];
+                    setState(() {});
+                  },
+                  margin: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+                  alignment: Alignment.center,
+                  height: AppHeightManager.h6,
+                  padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+                  color: AppColorManager.white,
+                  outLinedBorde: true,
+                  borderColor: Colors.grey,
+                  child: AppTextWidget(
+                    text: "reset".tr(),
+                    color: AppColorManager.black,
+                    fontSize: FontSizeManager.fs16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                  ],
+                ),
+              )
+
             ],
           ),
         );

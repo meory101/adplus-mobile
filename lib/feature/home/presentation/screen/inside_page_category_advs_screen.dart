@@ -19,6 +19,7 @@ import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/
 import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/cities_drop_down_list.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
+import '../../../../core/widget/button/main_app_button.dart';
 import '../../../../core/widget/loading/shimmer/attribute_list_view_shimmer.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../domain/entity/response/advs_by_attribute_response_entity.dart';
@@ -26,6 +27,7 @@ import '../../domain/entity/response/get_categories_response_entity.dart';
 import '../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import '../widget/inside_page_advs/attributes_horizantal_list_view.dart';
 import '../widget/inside_page_advs/dialog/showAttributeListCheckBox.dart';
+import 'category_inside_page_screen.dart';
 
 class InsidePageCategoryAdvsScreen extends StatefulWidget {
   final InsidePageCategoryAdvArgs args;
@@ -116,213 +118,233 @@ class _InsidePageCategoryAdvsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      onPopInvokedWithResult: (didPop, result) {
-        FilterRequest.entity = AdvsByAttributeRequestEntity();
-        FilterRequest.entity.attributes = [];
-      },
-      child: Scaffold(
-          appBar: const MainAppBar(title: ""),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
-          floatingActionButton: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(
-              top: AppHeightManager.h20,
-            ),
-            height: AppHeightManager.h16,
-            color: AppColorManager.background,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
-              child: Column(
-                children: [
-                  BlocConsumer<GetCategoryAttributesCubit,
-                      GetCategoryAttributesState>(listener: (context, state) {
-                    if (state.status == CubitStatus.error) {
-                      NoteMessage.showErrorSnackBar(
-                          context: context, text: state.error);
-                    }
-                  }, builder: (context, state) {
-                    if (state.status == CubitStatus.loading) {
-                      return const AttributeListViewShimmer();
-                    }
+    return Scaffold(
+        appBar:  MainAppBar(title: ""),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
+        floatingActionButton: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(
+            top: AppHeightManager.h20,
+          ),
+          height: AppHeightManager.h16,
+          color: AppColorManager.background,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
+            child: Column(
+              children: [
+                BlocConsumer<GetCategoryAttributesCubit,
+                    GetCategoryAttributesState>(listener: (context, state) {
+                  if (state.status == CubitStatus.error) {
+                    NoteMessage.showErrorSnackBar(
+                        context: context, text: state.error);
+                  }
+                }, builder: (context, state) {
+                  if (state.status == CubitStatus.loading) {
+                    return const AttributeListViewShimmer();
+                  }
 
-                    List<CategoryAttributes>? filterItems = [];
-                    List<CategoryAttributes>? staredItems = [];
-                    if ((state.entity.data?.attributes ?? []).isNotEmpty) {
-                      state.entity.data?.attributes?.forEach(
-                        (attribute) {
-                          if (attribute.star == 0) {
-                            filterItems.add(attribute);
-                          } else {
-                            staredItems.add(attribute);
-                          }
-                        },
-                      );
-                    }
-                    if (staredItems.isNotEmpty) {
-                      starItemsLength =
-                          (staredItems.first.attributeTypeList ?? []).length;
-                      starItemAttributeId = staredItems.first.attributeId;
-                    }
+                  List<CategoryAttributes>? filterItems = [];
+                  List<CategoryAttributes>? staredItems = [];
+                  if ((state.entity.data?.attributes ?? []).isNotEmpty) {
+                    state.entity.data?.attributes?.forEach(
+                      (attribute) {
+                        if (attribute.star == 0) {
+                          filterItems.add(attribute);
+                        } else {
+                          staredItems.add(attribute);
+                        }
+                      },
+                    );
+                  }
+                  if (staredItems.isNotEmpty) {
+                    starItemsLength =
+                        (staredItems.first.attributeTypeList ?? []).length;
+                    starItemAttributeId = staredItems.first.attributeId;
+                  }
 
-                    if (starItemsLength > 0) {
-                      if (selectedStarIndex == -1) {
-                        if (widget.args.entity.attributes?.first.attributeId ==
-                            starItemAttributeId) {
-                          for (int newIndex = 0;
-                              newIndex <
-                                  (staredItems.first.attributeTypeList ?? [])
-                                      .length;
-                              newIndex++) {
-                            String? name =
-                                LanguageHelper.checkIfLTR(context: context)
-                                    ? (staredItems
-                                            .first
-                                            .attributeTypeList?[newIndex]
-                                            .optionEn ??
-                                        "")
-                                    : staredItems
-                                            .first
-                                            .attributeTypeList?[newIndex]
-                                            .option ??
-                                        "";
-                            if (name ==
-                                widget.args.entity.attributes?.first.value
-                                    ?.first) {
-                              selectedStarIndex = newIndex;
-                            }
+                  if (starItemsLength > 0) {
+                    if (selectedStarIndex == -1) {
+                      if (widget.args.entity.attributes?.first.attributeId ==
+                          starItemAttributeId) {
+                        for (int newIndex = 0;
+                            newIndex <
+                                (staredItems.first.attributeTypeList ?? [])
+                                    .length;
+                            newIndex++) {
+                          String? name =
+                              LanguageHelper.checkIfLTR(context: context)
+                                  ? (staredItems
+                                          .first
+                                          .attributeTypeList?[newIndex]
+                                          .optionEn ??
+                                      "")
+                                  : staredItems
+                                          .first
+                                          .attributeTypeList?[newIndex]
+                                          .option ??
+                                      "";
+                          if (name ==
+                              widget.args.entity.attributes?.first.value
+                                  ?.first) {
+                            selectedStarIndex = newIndex;
                           }
                         }
                       }
                     }
+                  }
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                            height: AppHeightManager.h7,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                CitiesDropDownList(),
-                                AttributesHorizantalListView(
-                                  filterItems: filterItems,
-                                  onDoneSelecting: () {
-                                    getData();
-                                  },
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          height: AppHeightManager.h7,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              CitiesDropDownList(),
+                              AttributesHorizantalListView(
+                                filterItems: filterItems,
+                                onDoneSelecting: () {
+                                  getData();
+                                },
+                              ),
+                              MainAppButton(
+                                onTap: () {
+                                  clearFilter();
+                                  selectedStarIndex = -1;
+                                  selectedAttributeMap[
+                                  starItemAttributeId ?? 0] = [];
+
+                                  setState(() {
+                                  });
+                                },
+                                margin:
+                                EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+                                alignment: Alignment.center,
+                                height: AppHeightManager.h6,
+                                width: AppWidthManager.w45,
+                                color: AppColorManager.white,
+                                outLinedBorde: true,
+                                borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                                borderColor: AppColorManager.lightGreyOpacity6,
+                                child: AppTextWidget(
+                                  text: "reset".tr(),
+                                  color: AppColorManager.black,
+                                  fontSize: FontSizeManager.fs16,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                              ],
-                            )),
-                        SizedBox(
-                          height: AppHeightManager.h1point8,
+                              )
+                            ],
+                          )),
+                      SizedBox(
+                        height: AppHeightManager.h1point8,
+                      ),
+                      Visibility(
+                        visible: starItemsLength > 0,
+                        replacement: AppTextWidget(
+                          text: "whatAreYouSearchingFor".tr(),
+                          color: AppColorManager.black,
+                          fontSize: FontSizeManager.fs16,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Visibility(
-                          visible: starItemsLength > 0,
-                          replacement: AppTextWidget(
-                            text: "whatAreYouSearchingFor".tr(),
-                            color: AppColorManager.black,
-                            fontSize: FontSizeManager.fs16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          child: SizedBox(
-                            height: AppHeightManager.h5,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: starItemsLength,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    String? name = LanguageHelper.checkIfLTR(
-                                            context: context)
-                                        ? (staredItems.first
-                                            .attributeTypeList?[index].optionEn)
-                                        : (staredItems.first
-                                            .attributeTypeList?[index].option);
-                                    selectedStarIndex = index;
-                                    selectedAttributeMap[
-                                        starItemAttributeId ?? 0] = [];
-                                    selectedAttributeMap[starItemAttributeId ??
-                                        0] = [name ?? ""];
+                        child: SizedBox(
+                          height: AppHeightManager.h5,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: starItemsLength,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  String? name = LanguageHelper.checkIfLTR(
+                                          context: context)
+                                      ? (staredItems.first
+                                          .attributeTypeList?[index].optionEn)
+                                      : (staredItems.first
+                                          .attributeTypeList?[index].option);
+                                  selectedStarIndex = index;
+                                  selectedAttributeMap[
+                                      starItemAttributeId ?? 0] = [];
+                                  selectedAttributeMap[starItemAttributeId ??
+                                      0] = [name ?? ""];
 
-                                    List<FilterAttribute> attributes = [];
-                                    selectedAttributeMap.forEach(
-                                      (key, value) {
-                                        if (value.isNotEmpty) {
-                                          attributes.add(FilterAttribute(
-                                              value: value, attributeId: key));
-                                        }
-                                      },
-                                    );
-                                    FilterRequest.entity.attributes =
-                                        attributes;
-                                    getData();
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: AppHeightManager.h5,
-                                    decoration: BoxDecoration(
-                                      color: selectedStarIndex == index
-                                          ? AppColorManager.mainColor
-                                          : AppColorManager.lightGreyOpacity6,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(AppRadiusManager.r8)),
-                                    ),
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: AppWidthManager.w2),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: AppWidthManager.w7,
-                                      vertical: AppHeightManager.h1,
-                                    ),
-                                    child: AppTextWidget(
-                                        fontWeight: FontWeight.w600,
-                                        color: selectedStarIndex == index
-                                            ? AppColorManager.white
-                                            : AppColorManager.textAppColor,
-                                        text: LanguageHelper.checkIfLTR(
-                                                context: context)
-                                            ? (staredItems
-                                                    .first
-                                                    .attributeTypeList?[index]
-                                                    .optionEn ??
-                                                "")
-                                            : staredItems
-                                                    .first
-                                                    .attributeTypeList?[index]
-                                                    .option ??
-                                                ""),
+                                  List<FilterAttribute> attributes = [];
+                                  selectedAttributeMap.forEach(
+                                    (key, value) {
+                                      if (value.isNotEmpty) {
+                                        attributes.add(FilterAttribute(
+                                            value: value, attributeId: key));
+                                      }
+                                    },
+                                  );
+                                  FilterRequest.entity.attributes =
+                                      attributes;
+                                  getData();
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: AppHeightManager.h5,
+                                  decoration: BoxDecoration(
+                                    color: selectedStarIndex == index
+                                        ? AppColorManager.mainColor
+                                        : AppColorManager.lightGreyOpacity6,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(AppRadiusManager.r8)),
                                   ),
-                                );
-                              },
-                            ),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: AppWidthManager.w2),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: AppWidthManager.w7,
+                                    vertical: AppHeightManager.h1,
+                                  ),
+                                  child: AppTextWidget(
+                                      fontWeight: FontWeight.w600,
+                                      color: selectedStarIndex == index
+                                          ? AppColorManager.white
+                                          : AppColorManager.textAppColor,
+                                      text: LanguageHelper.checkIfLTR(
+                                              context: context)
+                                          ? (staredItems
+                                                  .first
+                                                  .attributeTypeList?[index]
+                                                  .optionEn ??
+                                              "")
+                                          : staredItems
+                                                  .first
+                                                  .attributeTypeList?[index]
+                                                  .option ??
+                                              ""),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                      ],
-                    );
-                  }),
-                ],
-              ),
+                      ),
+                    ],
+                  );
+                }),
+              ],
             ),
           ),
-          body: Container(
-            padding: EdgeInsets.only(top: AppHeightManager.h4),
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: (FilterRequest.entity.attributes ?? []).isEmpty
-                  ? Column(
-                      children: [
-                        AdsByCategoryListView(category: widget.args.category),
-                        SizedBox(
-                          height: AppHeightManager.h2,
-                        ),
-                      ],
-                    )
-                  : AdvsByAttributeListView(
-                      category: widget.args.category,
-                    ),
-            ),
-          )),
-    );
+        ),
+        body: Container(
+          padding: EdgeInsets.only(top: AppHeightManager.h4),
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: (FilterRequest.entity.attributes ?? []).isEmpty
+                ? Column(
+                    children: [
+                      AdsByCategoryListView(category: widget.args.category),
+                      SizedBox(
+                        height: AppHeightManager.h2,
+                      ),
+                    ],
+                  )
+                : AdvsByAttributeListView(
+                    category: widget.args.category,
+                  ),
+          ),
+        ));
   }
 }
 

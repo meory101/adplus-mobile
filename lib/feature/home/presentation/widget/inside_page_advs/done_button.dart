@@ -12,36 +12,32 @@ class DoneButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: 0,
-      right: 0,
-      bottom: 30,
-      child: MainAppButton(
-        onTap: () {
-          Navigator.of(context)
-              .pop();
-        },
-        margin:
-        EdgeInsets.symmetric(
-            horizontal:
-            AppWidthManager
-                .w3Point8),
-        alignment:
-        Alignment.center,
-        height:
-        AppHeightManager.h6,
+    return MainAppButton(
+      onTap: () {
+        Navigator.of(context)
+            .pop();
+      },
+      margin:
+      EdgeInsets.symmetric(
+          horizontal:
+          AppWidthManager
+              .w3Point8),
+      alignment:
+      Alignment.center,
+      height:
+      AppHeightManager.h6,
+      width: AppWidthManager.w60,
+      color: AppColorManager
+          .mainColor,
+      child: AppTextWidget(
+        text: "done".tr(),
         color: AppColorManager
-            .mainColor,
-        child: AppTextWidget(
-          text: "done".tr(),
-          color: AppColorManager
-              .white,
-          fontSize:
-          FontSizeManager
-              .fs16,
-          fontWeight:
-          FontWeight.w600,
-        ),
+            .white,
+        fontSize:
+        FontSizeManager
+            .fs16,
+        fontWeight:
+        FontWeight.w600,
       ),
     );
   }
