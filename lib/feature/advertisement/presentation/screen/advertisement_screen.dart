@@ -15,16 +15,20 @@ import 'package:mzad_damascus/core/widget/drop_down/title_drop_down_form_field.d
 import 'package:mzad_damascus/core/widget/form_field/title_app_form_filed.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/response/currency_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_state.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/currency/currency_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/currency/currency_state.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
-import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_state.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/router/router.dart';
+import '../../../../core/model/currency.dart';
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/container/dialog_container.dart';
 import '../../domain/entity/response/get_cities_response_entity.dart';
+import '../cubit/get_cities_cubit/get_category_attributes_state.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
 
@@ -128,8 +132,6 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                           }
                           if (selectedFiles != null &&
                               selectedFiles.isNotEmpty) {
-                            print(selectedFiles);
-                            print('advertisemeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
                             selectedFiles.forEach(
                               (advFile) {
                                 advFiles.add(advFile!);
@@ -207,6 +209,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                         if ((city?.name ?? "").isEmpty) {
                           return "required".tr(); // Localized text
                         }
+                        return null;
                       },
                       onChanged: (selectedCity) {
                         AdvertisementModel.entity?.cityId =
@@ -220,6 +223,51 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                     );
                   },
                 ),
+
+                SizedBox(height: AppHeightManager.h2point5),
+                BlocConsumer<CurrencyCubit, CurrencyState>(
+                  listener: (context, state) {
+                    if (state.status == CubitStatus.error) {
+                      NoteMessage.showErrorSnackBar(
+                          context: context, text: state.error);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state.status == CubitStatus.loading) {
+                      return ShimmerContainer(
+                          width: AppWidthManager.w100,
+                          height: AppHeightManager.h6);
+                    }
+                    List<NameAndId> currenciesOptions = [];
+                    List<Currency> currencies = state.entity.data ?? [];
+                    currencies.forEach((currency) {
+                      currenciesOptions.add(NameAndId(
+                        name: LanguageHelper.checkIfLTR(context: context)
+                            ? currency.enName ?? ""
+                            : currency.arName ?? "",
+                        id:currency.currencyId.toString(),
+                      ));
+                    });
+                    return TitleDropDownFormFieldWidget(
+                      validator: (currency) {
+                        if ((currency?.name ?? "").isEmpty) {
+                          return "required".tr(); // Localized text
+                        }
+                        return null;
+                      },
+                      onChanged: (selectedCurrency) {
+                        AdvertisementModel.entity?.currencyId =
+                            num.parse(selectedCurrency?.id ?? "0");
+                      },
+                      hint: 'currency'.tr(),
+                      // Localized text
+                      title: 'currency'.tr(),
+                      // Localized text
+                      options: currenciesOptions,
+                    );
+                  },
+                ),
+
                 SizedBox(height: AppHeightManager.h1point8),
                 TitleAppFormFiled(
                   hint: "title".tr(), // Localized text

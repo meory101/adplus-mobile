@@ -13,7 +13,6 @@ import 'package:mzad_damascus/feature/advertisement/domain/entity/request/attrib
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
-import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_state.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/container/dialog_container.dart';
 import '../../../../core/widget/empty/empty_widget.dart';
@@ -22,6 +21,7 @@ import '../../../../core/widget/loading/shimmer/category_attribute_form_list_vie
 import '../../../../router/router.dart';
 import '../../../comment/domain/entity/response/comments_response_entity.dart';
 import '../../../home/domain/entity/response/get_adv_details_response_entity.dart';
+import '../cubit/get_category_attribute_cubit/get_category_attributes_state.dart';
 import '../widget/advertisement_app_bar.dart';
 import '../widget/advertisement_next_button.dart';
 

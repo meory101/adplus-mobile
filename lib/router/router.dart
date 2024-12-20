@@ -4,6 +4,7 @@ import 'package:mzad_damascus/core/navigation/slid_left_builder_route.dart';
 import 'package:mzad_damascus/core/navigation/slid_up_builder_route.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/currency/currency_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
@@ -600,6 +601,10 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) =>
                     di.sl<GetCitiesCubit>()..getCities(context: context),
+              ),
+              BlocProvider(
+                create: (context) =>
+                di.sl<CurrencyCubit>()..getCurrencies(context: context),
               ),
               BlocProvider(
                 create: (context) => di.sl<AddAdvertisementCubit>(),

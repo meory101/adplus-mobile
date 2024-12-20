@@ -1,19 +1,15 @@
 import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/add_advertisement_request_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_state.dart';
-import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_request_entity.dart';
-import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_cubit/myitem_cubit.dart';
 import '../../../../core/helper/app_image_helper.dart';
 import '../../../../core/helper/language_helper.dart';
 import '../../../../core/resource/color_manager.dart';
@@ -28,7 +24,6 @@ import '../../../../core/widget/form_field/title_app_form_filed.dart';
 import '../../../../core/widget/image/main_image_widget.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../advertisement/domain/entity/response/get_cities_response_entity.dart';
-import '../../../advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
 import '../../../advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import '../../../advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_state.dart';
 import '../../../advertisement/presentation/screen/category_attribute_form_screen.dart';

@@ -1,22 +1,26 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/api/api_error/api_failures.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/usecase/currency_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/get_cities_usecase.dart';
 import '../../../../../core/api/api_error/api_error.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
-import 'get_category_attributes_state.dart';
+import '../../../domain/entity/request/get_category_attributes_request_entity.dart';
+import '../../../domain/usecase/get_category_attributes_usecase.dart';
+import 'currency_state.dart';
 
 /// Eng.Nour Othman(meory)*
 
 
-class GetCitiesCubit extends Cubit<GetCitiesState> {
-  final GetCitiesUsecase usecase;
+class CurrencyCubit extends Cubit<CurrencyState> {
+  final CurrencyUsecase usecase;
 
-  GetCitiesCubit({
+  CurrencyCubit({
     required this.usecase,
-  }) : super(GetCitiesState.initial());
+  }) : super(CurrencyState.initial());
 
-  void getCities({required BuildContext context,}) async {
+  void getCurrencies({required BuildContext context,}) async {
     emit(state.copyWith(status: CubitStatus.loading));
     final result = await usecase();
 

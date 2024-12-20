@@ -45,7 +45,6 @@ void showAttributeListCheckBox(
                     children: List.generate(options.length, (i) {
                       bool isSelected = false;
                       if (optionNames.length != options.length - 1 && options[i].name != 'all') {
-                        print(options[i].name);
                         optionNames.add(options[i].name);
                       }
                   
@@ -102,7 +101,6 @@ void showAttributeListCheckBox(
 
                                     }
                                   }
-                                  print(selectedAttributeMap);
                                   setState(() {});
                                 },
                                 value: isSelected,

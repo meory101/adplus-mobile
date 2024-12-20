@@ -6,6 +6,7 @@ import '../../../../core/api/api_error/api_failures.dart';
 import '../entity/request/add_advertisement_request_entity.dart';
 import '../entity/request/delete_adv_request_entity.dart';
 import '../entity/request/get_category_attributes_request_entity.dart';
+import '../entity/response/currency_response_entity.dart';
 import '../entity/response/get_category_attributes_response_entity.dart';
 import '../entity/response/get_cities_response_entity.dart';
 
@@ -18,6 +19,7 @@ abstract class AdvertisementRepository {
   });
 
   Future<Either<ApiFailure,GetCitiesResponseEntity>> getCities();
+  Future<Either<ApiFailure,CurrencyResponseEntity>> getCurrencies();
 
   Future<Either<ApiFailure, bool>> addAdvertisement(
       {required AddAdvertisementRequestEntity entity, required List<File> files});

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete_adv_request_entity.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/response/currency_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_cities_response_entity.dart';
 import '../../../../../core/api/api_error/api_exception.dart';
@@ -12,10 +13,12 @@ import '../../../domain/entity/request/add_advertisement_request_entity.dart';
 import '../../../domain/entity/request/get_category_attributes_request_entity.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
+
 abstract class AdvertisementRemote {
   Future<GetCategoryAttributesResponseEntity> getCategoryAttributes({
     required GetCategoryAttributesRequestEntity entity,
   });
+  Future<CurrencyResponseEntity> getCurrencies();
 
   Future<GetCitiesResponseEntity> getCities();
 
@@ -152,6 +155,16 @@ class AdvertisementRemoteImplement extends AdvertisementRemote {
     final response = await ApiMethods().post(url: ApiPostUrl.deleteAdv,body: entity.toJson());
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<CurrencyResponseEntity> getCurrencies()async {
+    final response = await ApiMethods().post(url: ApiPostUrl.getActiveCurrencies,body: {});
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return currencyResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

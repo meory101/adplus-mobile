@@ -21,7 +21,8 @@ class AddAdvertisementRequestEntity {
   AddAdvertisementRequestEntity({
       num? categoryId, 
       num? cityId, 
-      String? name, 
+      num? currencyId,
+      String? name,
       num? startingPrice, 
       num? minIncreasePrice, 
       String? description,
@@ -43,6 +44,7 @@ class AddAdvertisementRequestEntity {
 
   AddAdvertisementRequestEntity.fromJson(dynamic json) {
     _categoryId = json['category_id'];
+    _currencyId = json['currency_id'];
     _itemId  = json['item_id'];
     _cityId = json['city_id'];
     _name = json['name'];
@@ -54,6 +56,7 @@ class AddAdvertisementRequestEntity {
     _attributes = json['attributes'];
   }
   num? _categoryId;
+  num? _currencyId;
   num? _cityId;
   String? _name;
   num? _itemId;
@@ -65,6 +68,7 @@ class AddAdvertisementRequestEntity {
   List<Attributes>? _attributes;
 AddAdvertisementRequestEntity copyWith({  num? categoryId,
   num? cityId,
+  num? currencyId,
   String? name,
   num? startingPrice,
   num? minIncreasePrice,
@@ -77,6 +81,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   cityId: cityId ?? _cityId,
   itemId: itemId?? _itemId,
   name: name ?? _name,
+  currencyId: currencyId ?? _currencyId,
   startingPrice: startingPrice ?? _startingPrice,
   minIncreasePrice: minIncreasePrice ?? _minIncreasePrice,
   description: description ?? _description,
@@ -99,6 +104,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
     final map = <String, dynamic>{};
     map['category_id'] = _categoryId;
     map['item_id'] = _itemId;
+    map['currency_id'] = _currencyId;
     map['city_id'] = _cityId;
     map['name'] = _name;
     map['starting_price'] = _startingPrice;
@@ -128,7 +134,9 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
   set description(String? value) {
     _description = value;
   }
-
+  set currencyId(num? value) {
+    _currencyId = value;
+  }
   set minIncreasePrice(num? value) {
     _minIncreasePrice = value;
   }

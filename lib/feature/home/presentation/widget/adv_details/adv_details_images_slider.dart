@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../../core/helper/language_helper.dart';
 import '../../../../../core/resource/color_manager.dart';
@@ -57,6 +58,27 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                       child: MainImageWidget(
                         imageUrl: AppConstantManager.imageBaseUrl +
                             (widget.advDetails?.photos?[index].photo ?? ""),
+                      )),
+                  Positioned(
+                      left: 10,
+                      top: AppHeightManager.h1,
+                      child: InkWell(
+                        onTap: () async {
+                          String result = widget.advDetails?.name??""
+                              .replaceAll(RegExp(' '), '-');
+                          final urlPreview =
+                              "https://mazaddimashq.com/adv/${widget.advDetails?.itemId}/$result";
+                          await Share.share(
+                              'Share this ${result} ! •\n\n$urlPreview');
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: AppColorManager.mainColor,
+                          child: Icon(
+                           Icons.share,
+                            size: AppWidthManager.w5,
+                            color: AppColorManager.white,
+                          ),
+                        ),
                       )),
                   Positioned(
                       right: 10,

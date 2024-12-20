@@ -121,9 +121,6 @@ class HomeRemoteImplement extends HomeRemote {
       {required GetAdvDetailsRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(body: entity.toJson(), url: ApiPostUrl.getItemsById);
-    print(response.body);
-    print(response.statusCode);
-    print('---------------------------------------------------');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return getAdvDetailsResponseEntityFromJson(response.body);
     } else {
@@ -288,8 +285,6 @@ class HomeRemoteImplement extends HomeRemote {
     final response = await ApiMethods()
         .post(body: entity.toJson(), url: ApiPostUrl.categoryItems);
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      print(response.body);
-      print(response.statusCode);
       return adsByCategoryResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);

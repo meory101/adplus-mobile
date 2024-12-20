@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mzad_damascus/core/model/currency.dart';
 import 'package:mzad_damascus/core/model/user.dart';
 
 import '../../../../../core/model/comment.dart';
@@ -132,6 +133,7 @@ class AdData {
     List<Comment>? comments,
     List<Reactions>? reactions,
     User? author,
+    Currency? currency,
     String? description,
     String? keywords,
     num? startingPrice,
@@ -147,6 +149,7 @@ class AdData {
     _star = star;
     _cityId = cityId;
     _name = name;
+    _currency=currency;
     _note = note;
     _biddingStatus = biddingStatus;
     _photos = photos;
@@ -166,7 +169,7 @@ class AdData {
   }
 
   AdData.fromJson(dynamic json) {
-
+    _currency =json['currency']!=null? Currency.fromJson(json['currency']):null;
     _categoryId = json['category_id'];
     _note = json['note'];
     _star = json['star'];
@@ -212,6 +215,7 @@ class AdData {
   }
   num? _categoryId;
   num? _cityId;
+  Currency? _currency;
   String? _name;
   num? _biddingStatus;
   num? _itemId;
@@ -250,9 +254,11 @@ class AdData {
     num? minIncreasePrice,
     String? biddingStartTime,
     List<Attributes>? attributes,
-    String? note
+    String? note,
+    Currency? currency
   }) =>
       AdData(
+        currency: currency??_currency,
         note: note?? _note,
         star: star ?? _star,
         categoryId: categoryId ?? _categoryId,

@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
+import 'package:mzad_damascus/main.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/helper/app_info_helper.dart';
 import '../../../../core/resource/color_manager.dart';
@@ -26,10 +29,19 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigateToNextPage() {
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          RouteNamedScreens.mainBottomAppBar,
-          (route) => false,
-        );
+        if (advId != null) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteNamedScreens.advertisementDetails,
+            arguments: AdvertisementDetailsArgs(
+                advertisement: AdData(itemId: num.parse(advId??""))),
+            (route) => false,
+          );
+        } else {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            RouteNamedScreens.mainBottomAppBar,
+            (route) => false,
+          );
+        }
       }
     });
   }

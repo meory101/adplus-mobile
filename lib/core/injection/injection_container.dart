@@ -3,11 +3,13 @@ import 'package:mzad_damascus/feature/advertisement/data/datasource/remote/adver
 import 'package:mzad_damascus/feature/advertisement/data/repository/advertisement_repository_impl.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/repository/advertisement_repository.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/add_advertisement_usecase.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/usecase/currency_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/delete_adv_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/get_category_attributes_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/get_cities_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/usecase/update_adv_usecase.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/currency/currency_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
@@ -140,6 +142,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => CurrencyCubit(usecase: sl()));
   sl.registerFactory(() => AdsByCategoryCubit(usecase: sl()));
   sl.registerFactory(() => ItemSearchCubit(usecase: sl()));
   sl.registerFactory(() => MarkNotificationCubit(usecase: sl()));
@@ -172,6 +175,7 @@ Future<void> init() async {
   sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => CurrencyUsecase(repository: sl()));
   sl.registerLazySingleton(() => AdsByCategoryUsecase(repository: sl()));
   sl.registerLazySingleton(() => NotificationUsecase(repository: sl()));
   sl.registerLazySingleton(() => DeleteAdvUsecase(repository: sl()));

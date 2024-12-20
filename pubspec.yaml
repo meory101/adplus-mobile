@@ -40,6 +40,10 @@ dependencies:
   country_code_picker: ^2.0.0
   pin_code_text_field: ^1.8.0
   flutter_typeahead: ^5.2.0
+  share_plus: ^10.0.0
+  app_links: ^6.3.2
+
+
 
 dev_dependencies:
   flutter_test:

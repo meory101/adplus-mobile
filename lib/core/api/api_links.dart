@@ -9,6 +9,7 @@ class ApiPostUrl {
   static String getCategoryAttributes = "api/category/category-info";
   static String categoryItems = "api/item/category-items";
   static String markAsRead = "api/notification/markAsRead";
+  static String getActiveCurrencies = "api/item/getActiveCurrencies";
   static String itemsSearch = "api/item/ItemsSearch";
   static String getNotifications = "api/notification/getNotifications";
   static String uploadfile = "api/auth/Uploadfile";

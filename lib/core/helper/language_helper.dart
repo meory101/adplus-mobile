@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Eng.Nour Othman(meory)*
+
+
 abstract class LanguageHelper {
   static bool checkIfLTR({required BuildContext context}) {
     return Directionality.of(context) == TextDirection.ltr;
