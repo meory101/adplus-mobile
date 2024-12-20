@@ -13,10 +13,12 @@ class TitleDropDownFormFieldWidget extends StatelessWidget {
   final List<NameAndId> options;
   final String? Function(NameAndId?)? validator;
   final Function(NameAndId?)? onChanged;
+  final Color? hintColor;
 
   const TitleDropDownFormFieldWidget(
       {super.key,
       required this.hint,
+        this.hintColor,
       required this.title,
          this.validator,
         this.onChanged,
@@ -36,7 +38,9 @@ class TitleDropDownFormFieldWidget extends StatelessWidget {
         SizedBox(
           height: AppHeightManager.h1point5,
         ),
-        DropDownFormFieldWidget(options: options, hint: hint,validator: validator,onChanged: onChanged,)
+        DropDownFormFieldWidget(
+          hintFontColor: hintColor,
+          options: options, hint: hint,validator: validator,onChanged: onChanged,)
       ],
     );
   }

@@ -91,6 +91,7 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
 );
   num? get categoryId => _categoryId;
   num? get itemId => _itemId;
+  num? get currencyId => _currencyId;
   num? get cityId => _cityId;
   String? get name => _name;
   num? get startingPrice => _startingPrice;

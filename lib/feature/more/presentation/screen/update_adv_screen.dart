@@ -5,9 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mzad_damascus/core/model/currency.dart';
 import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/add_advertisement_request_entity.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/currency/currency_cubit.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/cubit/currency/currency_state.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_state.dart';
 import '../../../../core/helper/app_image_helper.dart';
@@ -57,6 +60,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
     entity.startingPrice = widget.args.data.startingPrice;
     entity.biddingStatus = widget.args.data.biddingStatus;
     entity.cityId = widget.args.data.cityId;
+    entity.currencyId = widget.args.data.currency?.currencyId;
     super.initState();
   }
 
@@ -220,6 +224,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                             width: AppWidthManager.w100,
                             height: AppHeightManager.h6);
                       }
+
                       List<NameAndId> citiesOptions = [];
                       List<City> cities = state.entity.data ?? [];
                       String? initValue;
@@ -238,6 +243,8 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                         ));
                       });
                       return TitleDropDownFormFieldWidget(
+                        hintColor: AppColorManager.textAppColor,
+
                         validator: (city) {
                           if ((city?.name ?? "").isEmpty) {
                             return "required".tr(); // Localized text
@@ -252,6 +259,58 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                         title: 'city'.tr(),
                         // Localized text
                         options: citiesOptions,
+                      );
+                    },
+                  ),
+                  SizedBox(height: AppHeightManager.h1point8),
+                  BlocConsumer<CurrencyCubit, CurrencyState>(
+                    listener: (context, state) {
+                      if (state.status == CubitStatus.error) {
+                        NoteMessage.showErrorSnackBar(
+                            context: context, text: state.error);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state.status == CubitStatus.loading) {
+                        return ShimmerContainer(
+                            width: AppWidthManager.w100,
+                            height: AppHeightManager.h6);
+                      }
+                      List<NameAndId> currenciesOptions = [];
+                      List<Currency> cities = state.entity.data ?? [];
+                      String? initValue;
+                      cities.forEach((currency) {
+                        if (currency.currencyId == entity.currencyId) {
+                          initValue =
+                          LanguageHelper.checkIfLTR(context: context)
+                              ? currency.enName ?? ""
+                              : currency.arName ?? "";
+                        }
+                        currenciesOptions.add(NameAndId(
+                          name: LanguageHelper.checkIfLTR(context: context)
+                              ? currency.enName ?? ""
+                              : currency.arName ?? "",
+                          id: currency.currencyId.toString(),
+                        ));
+                      });
+                      return TitleDropDownFormFieldWidget(
+                        hintColor: AppColorManager.textAppColor,
+
+                        validator: (city) {
+                          if ((city?.name ?? "").isEmpty) {
+                            return "required".tr(); // Localized text
+                          }
+                          return null;
+                        },
+                        onChanged: (selectedCity) {
+                          entity.cityId = num.parse(selectedCity?.id ?? "0");
+                        },
+                        hint: initValue ?? 'currency'.tr(),
+
+                        // Localized text
+                        title: 'currency'.tr(),
+                        // Localized text
+                        options: currenciesOptions,
                       );
                     },
                   ),
@@ -307,6 +366,8 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                   ),
                   SizedBox(height: AppHeightManager.h1point8),
                   TitleDropDownFormFieldWidget(
+                    hintColor: AppColorManager.textAppColor,
+
                     options: [
                       NameAndId(name:EnumManager.biddingStatus[1]??"", id:"1" ),
                       NameAndId(name: EnumManager.biddingStatus[0]??"", id:"0" ),

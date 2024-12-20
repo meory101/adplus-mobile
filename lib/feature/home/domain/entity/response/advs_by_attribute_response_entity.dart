@@ -133,6 +133,7 @@ class AdData {
     List<Comment>? comments,
     List<Reactions>? reactions,
     User? author,
+
     Currency? currency,
     String? description,
     String? keywords,
@@ -291,6 +292,7 @@ class AdData {
   List<Comment>? get comments => _comments;
   List<Reactions>? get reactions => _reactions;
   User? get author => _author;
+  Currency? get currency => _currency;
   String? get description => _description;
   String? get keywords => _keywords;
   num? get startingPrice => _startingPrice;
