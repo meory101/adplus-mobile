@@ -56,6 +56,7 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                   Container(
                       width: AppWidthManager.w100,
                       child: MainImageWidget(
+                        fit: BoxFit.fitHeight,
                         imageUrl: AppConstantManager.imageBaseUrl +
                             (widget.advDetails?.photos?[index].photo ?? ""),
                       )),
@@ -99,7 +100,7 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                                 ? Icons.arrow_forward_ios
                                 : Icons.arrow_back_ios,
                             size: AppWidthManager.w10,
-                            color: AppColorManager.white,
+                            color: AppColorManager.mainColor,
                           ),
                         ),
                       )),
@@ -122,7 +123,8 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                               ? Icons.arrow_back_ios
                               : Icons.arrow_forward_ios,
                           size: AppWidthManager.w10,
-                          color: AppColorManager.white,
+                          color: AppColorManager.mainColor
+                          ,
                         ),
                       ),
                     ),

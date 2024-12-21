@@ -132,7 +132,7 @@ class AdvCard extends StatelessWidget {
                             ),
                             SizedBox(height: AppHeightManager.h08),
                             AppTextWidget(
-                              text: '${item.startingPrice ?? 0}',
+                              text: '${item.description ?? ""}',
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
                               overflow: TextOverflow.ellipsis,

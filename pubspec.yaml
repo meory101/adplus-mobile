@@ -53,7 +53,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/splash.png"
+  image_path: "assets/images/icon.png"
 
   flutter_lints: ^4.0.0
 

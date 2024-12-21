@@ -354,6 +354,10 @@ abstract class AppRouter {
                 create: (context) =>
                     di.sl<GetCitiesCubit>()..getCities(context: context),
               ),
+              BlocProvider(
+                create: (context) =>
+                di.sl<CurrencyCubit>()..getCurrencies(context: context),
+              ),
             ],
             child: UpdateAdvScreen(
               args: argument,

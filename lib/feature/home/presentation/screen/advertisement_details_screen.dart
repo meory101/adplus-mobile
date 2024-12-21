@@ -204,13 +204,35 @@ class _AdvertisementDetailsScreenState
                                           fontWeight: FontWeight.w600,
                                           fontSize: FontSizeManager.fs17,
                                           text: advDetails?.name ?? ""),
-                                      AppTextWidget(
-                                          maxLines: 2,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: FontSizeManager.fs16,
-                                          text: advDetails?.startingPrice
-                                                  .toString() ??
-                                              ""),
+                                      Row(
+                                        children: [
+                                          AppTextWidget(
+                                            text: (advDetails?.startingPrice??"")
+                                                .toString(),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            fontSize: FontSizeManager.fs17,
+                                            color: AppColorManager.black,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                          SizedBox(
+                                            width: AppWidthManager.w1Point2,
+                                          ),
+                                          AppTextWidget(
+                                            text: LanguageHelper.checkIfLTR(
+                                                context: context) ? advDetails
+                                                ?.currency?.enName??"" :
+                                            advDetails
+                                                ?.currency?.arName??""
+                                            ,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            fontSize: FontSizeManager.fs17,
+                                            color: AppColorManager.black,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 // import 'package:file_picker/file_picker.dart';
 
@@ -8,11 +9,11 @@ import 'package:path/path.dart' as path;
 
 abstract class FileHelper {
   static Future<File?> getFile() async {
-    // FilePickerResult? result = await FilePicker.platform.pickFiles();
-    // if (result != null) {
-    //   final file = File(result.files.single.path!);
-    //   return file;
-    // }
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      final file = File(result.files.single.path!);
+      return file;
+    }
     return null;
   }
 

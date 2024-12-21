@@ -91,28 +91,29 @@ void showBusinessAccountDialog(
                             return const AppCircularProgressWidget();
                           }
                           return MainAppButton(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: AppWidthManager.w10),
-                            borderRadius:
-                                BorderRadius.circular(AppRadiusManager.r10),
-                            height: AppHeightManager.h5,
                             onTap: () async {
                               File? file = await FileHelper.getFile();
                               if (file == null) return;
                               if (FileHelper.getFileExtension(
-                                      fileName:
-                                          FileHelper.getFileName(file: file)) ==
+                                  fileName:
+                                  FileHelper.getFileName(file: file)) ==
                                   'pdf') {
                                 context
                                     .read<ConvertBusinessAccountCubit>()
                                     .convertToBusinessAccount(
-                                        context: context, file: file);
+                                    context: context, file: file);
 
                                 return;
                               }
                               NoteMessage.showErrorSnackBar(
                                   context: context, text: "mustBePdfFile".tr());
                             },
+                            padding: EdgeInsets.symmetric(
+                                horizontal: AppWidthManager.w10),
+                            borderRadius:
+                                BorderRadius.circular(AppRadiusManager.r10),
+                            height: AppHeightManager.h5,
+
                             color: AppColorManager.mainColor,
                             alignment: Alignment.center,
                             child: AppTextWidget(

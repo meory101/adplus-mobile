@@ -152,7 +152,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                 bottom: BorderSide(
                                                     width: 3,
                                                     color: AppColorManager
-                                                        .pinkAccent))),
+                                                        .subColor))),
                                       ),
                                     ],
                                   ),
@@ -162,63 +162,66 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                             SizedBox(
                               height: AppHeightManager.h2,
                             ),
-                            TypeAheadField(
-                              onSelected: (value) {
-                                int selectedIndex = attributeTypeList.indexOf(value);
-                                if (selectedIndex == -1) return;
-                                entity.page = 1;
+                            Visibility(
+                              visible: insidePageData[index].star==0,
+                              child: TypeAheadField(
+                                onSelected: (value) {
+                                  int selectedIndex = attributeTypeList.indexOf(value);
+                                  if (selectedIndex == -1) return;
+                                  entity.page = 1;
 
-                                List<FilterAttribute> attributes = [];
-                                attributes.add(FilterAttribute(
-                                    attributeId: insidePageData[index].attributeId,
-                                    value: [
-                                      LanguageHelper.checkIfLTR(context: context)
-                                          ? attributeTypeList[selectedIndex].optionEn ?? ""
-                                          : attributeTypeList[selectedIndex].option ?? ""
-                                    ]
-                                ));
+                                  List<FilterAttribute> attributes = [];
+                                  attributes.add(FilterAttribute(
+                                      attributeId: insidePageData[index].attributeId,
+                                      value: [
+                                        LanguageHelper.checkIfLTR(context: context)
+                                            ? attributeTypeList[selectedIndex].optionEn ?? ""
+                                            : attributeTypeList[selectedIndex].option ?? ""
+                                      ]
+                                  ));
 
-                                entity.attributes = attributes;
+                                  entity.attributes = attributes;
 
-                                Navigator.of(context).pushNamed(
-                                  RouteNamedScreens.insidePageCategoryAdvs,
-                                  arguments: InsidePageCategoryAdvArgs(
-                                    isAllCategoryAds: false,
-                                    category: widget.args.subCategory,
-                                    entity: entity,
-                                  ),
-                                ).then((value) {
-                                  clearFilter();
-                                },);
-                              },
+                                  Navigator.of(context).pushNamed(
+                                    RouteNamedScreens.insidePageCategoryAdvs,
+                                    arguments: InsidePageCategoryAdvArgs(
+                                      isAllCategoryAds: false,
+                                      category: widget.args.subCategory,
+                                      entity: entity,
+                                    ),
+                                  ).then((value) {
+                                    clearFilter();
+                                  },);
+                                },
 
-                              suggestionsCallback: (String pattern) async {
-                                return searchDropDown
-                                    .where((item) =>
-                                        (LanguageHelper.checkIfLTR(
-                                                    context: context)
-                                                ? item.optionEn
-                                                : item.option)
-                                            ?.toLowerCase()
-                                            .contains(pattern.toLowerCase()) ??
-                                        false)
-                                    .toList();
-                              },
-                              itemBuilder: (context, suggestion) {
-                                return ListTile(
-                                  title: AppTextWidget(
-                                    maxLines: 1,
-                                    textAlign: TextAlign.center,
-                                    text: LanguageHelper.checkIfLTR(
-                                            context: context)
-                                        ? suggestion.optionEn ?? ""
-                                        : suggestion.option ?? "",
-                                    fontSize: FontSizeManager.fs15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                );
-                              },
+                                suggestionsCallback: (String pattern) async {
+                                  return searchDropDown
+                                      .where((item) =>
+                                          (LanguageHelper.checkIfLTR(
+                                                      context: context)
+                                                  ? item.optionEn
+                                                  : item.option)
+                                              ?.toLowerCase()
+                                              .contains(pattern.toLowerCase()) ??
+                                          false)
+                                      .toList();
+                                },
+                                itemBuilder: (context, suggestion) {
+                                  return ListTile(
+                                    title: AppTextWidget(
+                                      maxLines: 1,
+                                      textAlign: TextAlign.center,
+                                      text: LanguageHelper.checkIfLTR(
+                                              context: context)
+                                          ? suggestion.optionEn ?? ""
+                                          : suggestion.option ?? "",
+                                      fontSize: FontSizeManager.fs15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  );
+                                },
 
+                              ),
                             ),
                             SizedBox(
                               height: AppHeightManager.h2,

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/widget/empty/empty_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 
@@ -86,7 +87,7 @@ class AdvsByAttributeListView extends StatelessWidget {
                     },
                     child: Container(
                       margin:
-                          EdgeInsets.only(bottom: AppHeightManager.h1point8),
+                      EdgeInsets.only(bottom: AppHeightManager.h1point8),
                       decoration: BoxDecoration(
                           color: AppColorManager.textGrey.withOpacity(0.4)),
                       child: Stack(
@@ -130,14 +131,34 @@ class AdvsByAttributeListView extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       color: Colors.grey,
                                     ),
-                                    AppTextWidget(
-                                      text: advertisement.startingPrice
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      fontSize: FontSizeManager.fs17,
-                                      color: AppColorManager.black,
-                                      fontWeight: FontWeight.w700,
+                                    Row(
+                                      children: [
+                                        AppTextWidget(
+                                          text: advertisement.startingPrice
+                                              .toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          fontSize: FontSizeManager.fs17,
+                                          color: AppColorManager.black,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        SizedBox(
+                                          width: AppWidthManager.w1Point2,
+                                        ),
+                                        AppTextWidget(
+                                          text: LanguageHelper.checkIfLTR(
+                                              context: context) ? advertisement
+                                              .currency?.enName??"" :
+                                          advertisement
+                                              .currency?.arName??""
+                                              ,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          fontSize: FontSizeManager.fs17,
+                                          color: AppColorManager.black,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ],
                                     ),
                                     SizedBox(height: AppHeightManager.h1point8),
                                   ],
@@ -150,7 +171,7 @@ class AdvsByAttributeListView extends StatelessWidget {
                                 EnumManager.star,
                             child: MainAppButton(
                               borderRadius:
-                                  BorderRadius.circular(AppRadiusManager.r10),
+                              BorderRadius.circular(AppRadiusManager.r10),
                               padding: EdgeInsets.symmetric(
                                 horizontal: AppWidthManager.w3Point8,
                                 vertical: AppHeightManager.h04,

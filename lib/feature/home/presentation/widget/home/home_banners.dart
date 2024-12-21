@@ -131,7 +131,7 @@ class _HomeBannersState extends State<HomeBanners> {
                     AppWidthManager.w1Point5,
                     AppWidthManager.w1Point5,
                   ),
-                  activeColor: AppColorManager.mainColor,
+                  activeColor: AppColorManager.subColor,
                   color: AppColorManager.borderGrey,
                 ),
               ),

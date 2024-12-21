@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mzad_damascus/core/model/currency.dart';
+
 import '../../../../../core/model/user.dart';
 
 /// success : true
@@ -108,6 +110,7 @@ String dataToJson(AdvDetails data) => json.encode(data.toJson());
 class AdvDetails {
   AdvDetails({
     num? itemId,
+    Currency? currency,
     num? categoryId,
     num? cityId,
     String? name,
@@ -132,6 +135,7 @@ class AdvDetails {
     User? author,
   }) {
     _itemId = itemId;
+    _currency = currency;
     _likeCount = likeCount;
     _categoryId = categoryId;
     _cityId = cityId;
@@ -158,6 +162,7 @@ class AdvDetails {
 
   AdvDetails.fromJson(dynamic json) {
     _likeCount = json['like_count'];
+    _currency =  json['currency']!=null? Currency.fromJson(json['currency']) : null;
     _itemId = json['item_id'];
     _categoryId = json['category_id'];
     _cityId = json['city_id'];
@@ -192,6 +197,7 @@ class AdvDetails {
 
   num? _itemId;
   num? _categoryId;
+  Currency? _currency;
   num? _cityId;
   String? _name;
   num? _startingPrice;
@@ -238,8 +244,10 @@ class AdvDetails {
     List<dynamic>? comments,
     List<dynamic>? reaction,
     User? author,
+    Currency? currency,
   }) =>
       AdvDetails(
+        currency:currency?? _currency,
         likeCount:likeCount ?? _likeCount,
         itemId: itemId ?? _itemId,
         categoryId: categoryId ?? _categoryId,
@@ -309,6 +317,7 @@ class AdvDetails {
   List<dynamic>? get reaction => _reaction;
 
   User? get author => _author;
+  Currency? get currency => _currency;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

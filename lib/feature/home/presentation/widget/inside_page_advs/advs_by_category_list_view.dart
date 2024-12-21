@@ -7,6 +7,7 @@ import 'package:mzad_damascus/core/widget/empty/empty_widget.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/ads_by_category_cubit/advs_by_category_cubit.dart';
 
+import '../../../../../core/helper/language_helper.dart';
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/constant_manager.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
@@ -139,14 +140,34 @@ class AdsByCategoryListView extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       color: Colors.grey,
                                     ),
-                                    AppTextWidget(
-                                      text: advertisement.startingPrice
-                                          .toString() ,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      fontSize: FontSizeManager.fs17,
-                                      color: AppColorManager.black,
-                                      fontWeight: FontWeight.w700,
+                                    Row(
+                                      children: [
+                                        AppTextWidget(
+                                          text: advertisement.startingPrice
+                                              .toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          fontSize: FontSizeManager.fs17,
+                                          color: AppColorManager.black,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        SizedBox(
+                                          width: AppWidthManager.w1Point2,
+                                        ),
+                                        AppTextWidget(
+                                          text: LanguageHelper.checkIfLTR(
+                                              context: context) ? advertisement
+                                              .currency?.enName??"" :
+                                          advertisement
+                                              .currency?.arName??""
+                                          ,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          fontSize: FontSizeManager.fs17,
+                                          color: AppColorManager.black,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ],
                                     ),
                                     SizedBox(
                                         height: AppHeightManager.h1point8),

@@ -90,7 +90,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                               child: SvgPicture.asset(
                                 AppIconManager.edit,
                                 colorFilter: ColorFilter.mode(
-                                    isVisitor==true?AppColorManager.grey: AppColorManager.mainColor,
+                                    isVisitor==true?AppColorManager.grey: AppColorManager.subColor,
                                     BlendMode.srcIn),
                               ),
                             ),
@@ -102,7 +102,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                             onTap: onAddTaped,
                             child: Icon(
                               Icons.add_circle_outline_outlined,
-                              color:isVisitor==true?AppColorManager.grey: AppColorManager.mainColor,
+                              color:isVisitor==true?AppColorManager.grey: AppColorManager.subColor,
                               size: AppHeightManager.h3,
                             ),
                           ),
