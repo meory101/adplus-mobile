@@ -27,46 +27,54 @@ class BigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-
-        children: [
-          Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            width: AppWidthManager.w60,
-            height: AppHeightManager.h20,
-            margin: EdgeInsets.only(
-              left:   index % 2 == 0
-            ? !LanguageHelper.checkIfLTR(context: context)
-                ? AppWidthManager.w3Point8
-                : 0
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppColorManager.lightGreyOpacity6,
+            borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
+        margin: EdgeInsets.only(
+          bottom: AppHeightManager.h3,
+          left:   index % 2 == 0
+              ? !LanguageHelper.checkIfLTR(context: context)
+              ? AppWidthManager.w3Point8
+              : 0
               : 0,
-                right: index % 2 == 0
-                    ? LanguageHelper.checkIfLTR(context: context)
-                    ? AppWidthManager.w3Point8
-                    : 0
-                    : 0, ),
-            decoration: BoxDecoration(
-                boxShadow: ThemeManager.cardShadow,
-                color: AppColorManager.lightGreyOpacity6,
-                borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
-            child: MainImageWidget(
-              borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-              imageUrl: AppConstantManager.imageBaseUrl + imagePath,
-            ),
-          ),
-          SizedBox(height: AppHeightManager.h1,),
+          right: index % 2 == 0
+              ? LanguageHelper.checkIfLTR(context: context)
+              ? AppWidthManager.w3Point8
+              : 0
+              : 0, ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
 
-      AppTextWidget(
-        text: title,
-        fontSize: FontSizeManager.fs16,
-        fontWeight: FontWeight.w600,
-        color: AppColorManager.black,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-          SizedBox(height: AppHeightManager.h1point8,),
-        ],
+          children: [
+            Container(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              width: AppWidthManager.w60,
+              height: AppHeightManager.h20,
+
+              decoration: BoxDecoration(
+                  boxShadow: ThemeManager.cardShadow,
+                  color: AppColorManager.lightGreyOpacity6,
+                  borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
+              child: MainImageWidget(
+                borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                imageUrl: AppConstantManager.imageBaseUrl + imagePath,
+              ),
+            ),
+            SizedBox(height: AppHeightManager.h1,),
+
+        AppTextWidget(
+          text: title,
+          fontSize: FontSizeManager.fs16,
+          fontWeight: FontWeight.w600,
+          color: AppColorManager.black,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+            SizedBox(
+              height: AppHeightManager.h2,
+            ),        ],
+        ),
       ),
     );
   }

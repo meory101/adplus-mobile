@@ -55,14 +55,14 @@ class AdvDetailsAttributeGridView extends StatelessWidget {
                       AppTextWidget(
                         maxLines: 2,
                         fontWeight: FontWeight.w500,
-                        fontSize: FontSizeManager.fs16,
-                        text: "city".tr(),
+                        fontSize: FontSizeManager.fs14,
+                        text: "city".tr()+'\n',
                       ),
                       AppTextWidget(
                           maxLines: 2,
                           fontWeight: FontWeight.w700,
-                          fontSize: FontSizeManager.fs15,
-                          text: cityName??""),
+                          fontSize: FontSizeManager.fs14,
+                          text: cityName??""+'\n'),
                     ],
                   ),
                 );
@@ -77,18 +77,18 @@ class AdvDetailsAttributeGridView extends StatelessWidget {
                 AppTextWidget(
                     maxLines: 2,
                     fontWeight: FontWeight.w500,
-                    fontSize: FontSizeManager.fs16,
-                    text: LanguageHelper.checkIfLTR(context: context)
+                    fontSize: FontSizeManager.fs14,
+                    text:( LanguageHelper.checkIfLTR(context: context)
                         ? (advDetails?.attributes?[index].attribute
-                                ?.attributeNameEn ??
-                            "")
+                        ?.attributeNameEn ??
+                        "")
                         : (advDetails
-                                ?.attributes?[index].attribute?.attributeName ??
-                            "")),
+                        ?.attributes?[index].attribute?.attributeName ??
+                        ""))+'\n'),
                 AppTextWidget(
                     maxLines: 2,
                     fontWeight: FontWeight.w700,
-                    fontSize: FontSizeManager.fs15,
+                    fontSize: FontSizeManager.fs14,
                     text: advDetails?.attributes?[index].value ?? ""),
               ],
             ),

@@ -54,11 +54,21 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
               return Stack(
                 children: [
                   Container(
-                      width: AppWidthManager.w100,
-                      child: MainImageWidget(
-                        fit: BoxFit.fitHeight,
-                        imageUrl: AppConstantManager.imageBaseUrl +
-                            (widget.advDetails?.photos?[index].photo ?? ""),
+                     color: AppColorManager.lightGreyOpacity6,
+                      child:Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                        Container(
+                        width: AppWidthManager.w50,
+                        height: AppWidthManager.w50,
+                        child:  MainImageWidget(  width: AppWidthManager.w50,
+                          height: AppWidthManager.w50,
+                          fit: BoxFit.fill,
+                          imageUrl: AppConstantManager.imageBaseUrl +
+                              (widget.advDetails?.photos?[index].photo ?? ""),
+                        ),
+                        )]
                       )),
                   Positioned(
                       left: 10,

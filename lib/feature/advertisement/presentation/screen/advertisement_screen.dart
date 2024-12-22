@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mzad_damascus/core/helper/app_image_helper.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
@@ -15,13 +14,13 @@ import 'package:mzad_damascus/core/widget/drop_down/title_drop_down_form_field.d
 import 'package:mzad_damascus/core/widget/form_field/title_app_form_filed.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
-import 'package:mzad_damascus/feature/advertisement/domain/entity/response/currency_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/add_advertisement_cubit/add_advertisement_state.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/currency/currency_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/currency/currency_state.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
+import 'package:mzad_damascus/feature/home/presentation/widget/adv_details/comments_section.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/model/currency.dart';
 import '../../../../core/resource/color_manager.dart';
@@ -44,7 +43,12 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
   Map data = {};
   GlobalKey<FormState> formKey = GlobalKey();
   DateTime? dateTime;
-
+@override
+  void initState() {
+    AdvertisementModel.entity?.startingPrice = null;
+    AdvertisementModel.entity?.currencyId = null;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,49 +228,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                   },
                 ),
 
-                SizedBox(height: AppHeightManager.h2point5),
-                BlocConsumer<CurrencyCubit, CurrencyState>(
-                  listener: (context, state) {
-                    if (state.status == CubitStatus.error) {
-                      NoteMessage.showErrorSnackBar(
-                          context: context, text: state.error);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state.status == CubitStatus.loading) {
-                      return ShimmerContainer(
-                          width: AppWidthManager.w100,
-                          height: AppHeightManager.h6);
-                    }
-                    List<NameAndId> currenciesOptions = [];
-                    List<Currency> currencies = state.entity.data ?? [];
-                    currencies.forEach((currency) {
-                      currenciesOptions.add(NameAndId(
-                        name: LanguageHelper.checkIfLTR(context: context)
-                            ? currency.enName ?? ""
-                            : currency.arName ?? "",
-                        id:currency.currencyId.toString(),
-                      ));
-                    });
-                    return TitleDropDownFormFieldWidget(
-                      validator: (currency) {
-                        if ((currency?.name ?? "").isEmpty) {
-                          return "required".tr(); // Localized text
-                        }
-                        return null;
-                      },
-                      onChanged: (selectedCurrency) {
-                        AdvertisementModel.entity?.currencyId =
-                            num.parse(selectedCurrency?.id ?? "0");
-                      },
-                      hint: 'currency'.tr(),
-                      // Localized text
-                      title: 'currency'.tr(),
-                      // Localized text
-                      options: currenciesOptions,
-                    );
-                  },
-                ),
+
 
                 SizedBox(height: AppHeightManager.h1point8),
                 TitleAppFormFiled(
@@ -306,14 +268,73 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                   title: "price".tr(),
                   // Localized text
                   onChanged: (value) {
-                    AdvertisementModel.entity?.startingPrice =
-                        num.parse(value ?? "0");
+                    AdvertisementModel.entity?.startingPrice=null;
+                    if((value??"").isNotEmpty){
+                      AdvertisementModel.entity?.startingPrice =
+                          num.parse(value ?? "");
+                      setState(() {
+
+                      });
+                    }
+
                     return null;
                   },
                   validator: (value) {
                     return null;
                   },
                 ),
+               Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   SizedBox(height: AppHeightManager.h2point5),
+                   BlocConsumer<CurrencyCubit, CurrencyState>(
+                     listener: (context, state) {
+                       if (state.status == CubitStatus.error) {
+                         NoteMessage.showErrorSnackBar(
+                             context: context, text: state.error);
+                       }
+                     },
+                     builder: (context, state) {
+                       if (state.status == CubitStatus.loading) {
+                         return ShimmerContainer(
+                             width: AppWidthManager.w100,
+                             height: AppHeightManager.h6);
+                       }
+                       List<NameAndId> currenciesOptions = [];
+                       List<Currency> currencies = state.entity.data ?? [];
+                       currencies.forEach((currency) {
+                         currenciesOptions.add(NameAndId(
+                           name: LanguageHelper.checkIfLTR(context: context)
+                               ? currency.enName ?? ""
+                               : currency.arName ?? "",
+                           id:currency.currencyId.toString(),
+                         ));
+                       });
+                       return TitleDropDownFormFieldWidget(
+                         validator: (currency) {
+                           print( AdvertisementModel.entity?.currencyId);
+                           print( AdvertisementModel.entity?.startingPrice);
+                           if(AdvertisementModel.entity?.startingPrice!=null){
+                             if ( (currency?.name ?? "").isEmpty) {
+                               return "required".tr(); // Localized text
+                             }
+                           }
+                           return null;
+                         },
+                         onChanged: (selectedCurrency) {
+                           AdvertisementModel.entity?.currencyId =
+                               num.parse(selectedCurrency?.id ?? "0");
+                         },
+                         hint: 'currency'.tr(),
+                         // Localized text
+                         title: 'currency'.tr(),
+                         // Localized text
+                         options: currenciesOptions,
+                       );
+                     },
+                   ),
+                 ],
+               ),
                 SizedBox(height: AppHeightManager.h9),
               ],
             ),

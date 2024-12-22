@@ -86,10 +86,12 @@ class AdvsByAttributeListView extends StatelessWidget {
                       );
                     },
                     child: Container(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
                       margin:
                       EdgeInsets.only(bottom: AppHeightManager.h1point8),
                       decoration: BoxDecoration(
-                          color: AppColorManager.textGrey.withOpacity(0.4)),
+                        borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+                        color: AppColorManager.lightGreyOpacity6,),
                       child: Stack(
                         children: [
                           Column(
@@ -138,8 +140,8 @@ class AdvsByAttributeListView extends StatelessWidget {
                                               .toString(),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
-                                          fontSize: FontSizeManager.fs17,
-                                          color: AppColorManager.black,
+                                          fontSize: FontSizeManager.fs16,
+                                          color: AppColorManager.subColor,
                                           fontWeight: FontWeight.w700,
                                         ),
                                         SizedBox(
@@ -154,8 +156,8 @@ class AdvsByAttributeListView extends StatelessWidget {
                                               ,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
-                                          fontSize: FontSizeManager.fs17,
-                                          color: AppColorManager.black,
+                                          fontSize: FontSizeManager.fs16,
+                                          color: AppColorManager.subColor,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ],

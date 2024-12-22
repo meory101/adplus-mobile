@@ -124,7 +124,7 @@ class _InsidePageCategoryAdvsScreenState
         floatingActionButton: Container(
           alignment: Alignment.center,
           margin: EdgeInsets.only(
-            top: AppHeightManager.h20,
+            top: AppHeightManager.h14,
           ),
           height: AppHeightManager.h16,
           color: AppColorManager.background,
@@ -226,12 +226,12 @@ class _InsidePageCategoryAdvsScreenState
                                 color: AppColorManager.white,
                                 outLinedBorde: true,
                                 borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                                borderColor: AppColorManager.lightGreyOpacity6,
+                                borderColor: AppColorManager.subColor,
                                 child: AppTextWidget(
                                   text: "reset".tr(),
-                                  color: AppColorManager.black,
+                                  color: AppColorManager.subColor,
                                   fontSize: FontSizeManager.fs16,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )
                             ],
@@ -328,7 +328,7 @@ class _InsidePageCategoryAdvsScreenState
           ),
         ),
         body: Container(
-          padding: EdgeInsets.only(top: AppHeightManager.h4),
+          padding: EdgeInsets.only(top: AppHeightManager.h1),
           child: SingleChildScrollView(
             controller: scrollController,
             child: (FilterRequest.entity.attributes ?? []).isEmpty

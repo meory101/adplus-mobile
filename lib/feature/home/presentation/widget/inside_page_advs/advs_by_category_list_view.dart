@@ -91,10 +91,13 @@ class AdsByCategoryListView extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      margin: EdgeInsets.only(bottom: AppHeightManager.h1point8),
+
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      margin:
+                      EdgeInsets.only(bottom: AppHeightManager.h1point8),
                       decoration: BoxDecoration(
-                        color: AppColorManager.textGrey.withOpacity(0.4)
-                      ),
+                        borderRadius: BorderRadius.circular(AppRadiusManager.r15),
+                        color: AppColorManager.lightGreyOpacity6,),
                       child: Stack(
                         children: [
                           Column(
@@ -147,8 +150,8 @@ class AdsByCategoryListView extends StatelessWidget {
                                               .toString(),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
-                                          fontSize: FontSizeManager.fs17,
-                                          color: AppColorManager.black,
+                                          fontSize: FontSizeManager.fs16,
+                                          color: AppColorManager.subColor,
                                           fontWeight: FontWeight.w700,
                                         ),
                                         SizedBox(
@@ -163,8 +166,8 @@ class AdsByCategoryListView extends StatelessWidget {
                                           ,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
-                                          fontSize: FontSizeManager.fs17,
-                                          color: AppColorManager.black,
+                                          fontSize: FontSizeManager.fs16,
+                                          color: AppColorManager.subColor,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ],

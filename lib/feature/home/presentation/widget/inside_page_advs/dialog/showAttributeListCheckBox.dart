@@ -137,10 +137,10 @@ void showAttributeListCheckBox(
                   padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
                   color: AppColorManager.white,
                   outLinedBorde: true,
-                  borderColor: Colors.grey,
+                  borderColor: AppColorManager.subColor,
                   child: AppTextWidget(
                     text: "reset".tr(),
-                    color: AppColorManager.black,
+                    color: AppColorManager.subColor,
                     fontSize: FontSizeManager.fs16,
                     fontWeight: FontWeight.w600,
                   ),

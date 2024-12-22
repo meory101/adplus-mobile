@@ -98,7 +98,7 @@ class _HomeBannersState extends State<HomeBanners> {
                                   BorderRadius.circular(AppRadiusManager.r10)),
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           child: MainImageWidget(
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                             imageUrl: AppConstantManager.imageBaseUrl+(banners?[index].photo??"")
                           )),
                         );

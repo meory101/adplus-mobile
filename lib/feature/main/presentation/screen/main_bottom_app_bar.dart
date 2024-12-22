@@ -7,6 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
+import 'package:mzad_damascus/feature/advertisement/domain/entity/request/add_advertisement_request_entity.dart';
+import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/home_screen.dart';
 import 'package:mzad_damascus/feature/more/presentation/screen/more_screen.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
@@ -33,6 +35,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
 
   @override
   void initState() {
+    AdvertisementModel.entity = AddAdvertisementRequestEntity();
     if (AppSharedPreferences.getToken().isNotEmpty) {
       context.read<GetProfileInfoCubit>().getProfileInfo(context: context);
     }
