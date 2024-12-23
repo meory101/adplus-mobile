@@ -193,7 +193,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                               Icon(
                                 Icons.call,
                                 size: AppHeightManager.h2,
-                                color: AppColorManager.mainColor,
+                                color: AppColorManager.subColor,
                               ),
                               SizedBox(
                                 width: AppWidthManager.w1Point2,
@@ -230,7 +230,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                                 child: SvgPicture.asset(
                                   AppIconManager.whatsapp,
                                   colorFilter: ColorFilter.mode(
-                                      AppColorManager.mainColor,
+                                      AppColorManager.subColor,
                                       BlendMode.srcIn),
                                 ),
                               ),

@@ -17,6 +17,7 @@ import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
+import '../../../../main.dart';
 import '../../../notification/domain/entities/request/notifications_request_entity.dart';
 import '../../../notification/domain/entities/response/notifications_response_entity.dart';
 import '../../../notification/presentation/cubit/notification/notification_cubit.dart';
@@ -194,15 +195,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ?.totalItems??0)<=0){
                                   return;
                                 }
-                                NoteMessage.showNotification(
+                                if(showedNotificationNoteMessage ==false){
+                                  NoteMessage.showNotification(
 
-                                    context: context,
-                                    title: "notifications".tr(),
-                                    content: "youHave".tr() +" "+
-                                        (state.entity.data?.pagination
-                                                ?.totalItems)
-                                            .toString() +" "+
-                                        'notification'.tr());
+                                      context: context,
+                                      title: "notifications".tr(),
+                                      content: "youHave".tr() +" "+
+                                          (state.entity.data?.pagination
+                                              ?.totalItems)
+                                              .toString() +" "+
+                                          'notification'.tr());
+                                }
+                                showedNotificationNoteMessage = true;
+
                               }
                             }, builder: (context, state) {
                               if (state.status == CubitStatus.loading) {

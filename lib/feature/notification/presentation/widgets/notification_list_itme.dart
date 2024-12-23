@@ -69,17 +69,24 @@ class NotificationListItem extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Container(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppRadiusManager.r10)
-                    ),
-                    child: MainImageWidget(
-                      height: AppHeightManager.h7,
-                      width: AppHeightManager.h7,
-                      borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                      imageUrl: AppConstantManager.imageBaseUrl +
-                          (notificationItem.item?.photos?.first.photo??""),
+                  Visibility(
+                    visible: (notificationItem.item?.photos ?? []).isNotEmpty,
+                    child: Container(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(AppRadiusManager.r10)),
+                      child: MainImageWidget(
+                        height: AppHeightManager.h7,
+                        width: AppHeightManager.h7,
+                        borderRadius:
+                            BorderRadius.circular(AppRadiusManager.r10),
+                        imageUrl: AppConstantManager.imageBaseUrl +
+                            ((notificationItem.item?.photos ?? []).isEmpty
+                                ? ""
+                                : (notificationItem.item?.photos?.first.photo ??
+                                    "")),
+                      ),
                     ),
                   ),
                   Visibility(

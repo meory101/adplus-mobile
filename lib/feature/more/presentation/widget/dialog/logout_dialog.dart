@@ -99,7 +99,7 @@ void showLogoutDialog({
                                     borderRadius: BorderRadius.circular(
                                         AppRadiusManager.r10),
                                     height: AppHeightManager.h5,
-                                    color: AppColorManager.red,
+                                    color: AppColorManager.mainColor,
                                     alignment: Alignment.center,
                                     child: AppTextWidget(
                                       text: "logout".tr(),

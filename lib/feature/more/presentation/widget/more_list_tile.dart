@@ -23,8 +23,8 @@ class MoreListTile extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         radius: AppRadiusManager.r20,
-        backgroundColor: color.withOpacity(0.1),
-        child: Icon(icon, color: color),
+        backgroundColor: AppColorManager.subColor.withOpacity(0.1),
+        child: Icon(icon, color: AppColorManager.subColor),
       ),
       title: AppTextWidget(
           text: label,

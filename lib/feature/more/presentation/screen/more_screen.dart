@@ -180,7 +180,7 @@ class MoreScreen extends StatelessWidget {
                     onTap: () {
                       showLogoutDialog(context: context);
                     },
-                   color: AppColorManager.red,
+                   color: AppColorManager.mainColor,
                     child: AppTextWidget(
                       text: "logout".tr(),
                       color: AppColorManager.white,

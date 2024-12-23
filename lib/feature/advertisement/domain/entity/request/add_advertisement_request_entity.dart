@@ -105,10 +105,15 @@ AddAdvertisementRequestEntity copyWith({  num? categoryId,
     final map = <String, dynamic>{};
     map['category_id'] = _categoryId;
     map['item_id'] = _itemId;
-    map['currency_id'] = _currencyId;
+
     map['city_id'] = _cityId;
     map['name'] = _name;
+  if(_startingPrice!=null){
     map['starting_price'] = _startingPrice;
+  }
+  if(_currencyId!=null){
+    map['currency_id'] = _currencyId;
+  }
     map['min_increase_price'] = _minIncreasePrice;
     map['description'] = _description;
     map['keywords'] = _keywords;

@@ -63,7 +63,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
         }
       },
       child: Scaffold(
-          floatingActionButton: MainAppButton(
+          floatingActionButton: selectedIndex==3?SizedBox(): MainAppButton(
             onTap: () {
               UrlLauncherHelper.openWhatsapp(phoneNumber: "0938421937");
             },

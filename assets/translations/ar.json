@@ -163,5 +163,6 @@
   "youHave" : "لديك",
   "reset" : "اعادة ضبط",
   "contactUs" : "مساعدة",
-  "currency" : "العملة"
+  "currency" : "العملة",
+  "pleaseTurnOnWifiOrMobileData" : "يرجى تشغيل بيانات الهاتف المحمول"
 }

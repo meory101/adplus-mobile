@@ -1,11 +1,6 @@
 import 'dart:async';
-
-import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mzad_damascus/core/resource/color_manager.dart';
-import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
-import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app/app.dart';
@@ -15,6 +10,7 @@ import 'core/resource/key_manger.dart';
 import 'core/injection/injection_container.dart' as di;
 import 'core/storage/shared/shared_pref.dart';
 
+bool showedNotificationNoteMessage =false;
 bool isOpenFromDeepLink = false;
 List<String> deepLinkPaths = [];
 String? advId;
