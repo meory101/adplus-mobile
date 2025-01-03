@@ -12,6 +12,7 @@ import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/constant_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/widget/image/main_image_widget.dart';
+import '../home/dialog/show_dialog_image.dart';
 
 class AdvDetailsImagesSlider extends StatefulWidget {
   final AdvDetails? advDetails;
@@ -53,23 +54,31 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
             (index) {
               return Stack(
                 children: [
-                  Container(
-                     color: AppColorManager.lightGreyOpacity6,
-                      child:Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                        Container(
-                        width: AppWidthManager.w50,
-                        height: AppWidthManager.w50,
-                        child:  MainImageWidget(  width: AppWidthManager.w50,
+                  InkWell(
+                    onLongPress: () {
+                      showDialogImage(
+                          context: context,
+                          url:
+                          (widget.advDetails?.photos?[index].photo ?? ""));
+                    },
+                    child: Container(
+                       color: AppColorManager.lightGreyOpacity6,
+                        child:Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                          SizedBox(
+                          width: AppWidthManager.w50,
                           height: AppWidthManager.w50,
-                          fit: BoxFit.fill,
-                          imageUrl: AppConstantManager.imageBaseUrl +
-                              (widget.advDetails?.photos?[index].photo ?? ""),
-                        ),
-                        )]
-                      )),
+                          child:  MainImageWidget(  width: AppWidthManager.w50,
+                            height: AppWidthManager.w50,
+                            fit: BoxFit.fill,
+                            imageUrl: AppConstantManager.imageBaseUrl +
+                                (widget.advDetails?.photos?[index].photo ?? ""),
+                          ),
+                          )]
+                        )),
+                  ),
                   Positioned(
                       left: 10,
                       top: AppHeightManager.h1,

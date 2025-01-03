@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
-
 import '../../../../../core/helper/language_helper.dart';
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/constant_manager.dart';
@@ -47,12 +45,13 @@ class StandardCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: AppWidthManager.w25,
         decoration: BoxDecoration(
-            color: AppColorManager.lightGreyOpacity6,
+            color: AppColorManager.background,
             borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
         margin: itemCount == 3
             ? EdgeInsets.only(
-          bottom: AppHeightManager.h3,
+          bottom: 0,
             left: LanguageHelper.checkIfLTR(context: context)
                 ? AppWidthManager.w3Point8
                 : 0,
@@ -73,10 +72,8 @@ class StandardCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: [
             Container(
-
               clipBehavior: Clip.antiAliasWithSaveLayer,
               width: AppWidthManager.w25,
               height: AppHeightManager.h20,
@@ -86,6 +83,7 @@ class StandardCard extends StatelessWidget {
                   color: AppColorManager.lightGreyOpacity6,
                   borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
               child: MainImageWidget(
+
                 borderRadius: BorderRadius.circular(AppRadiusManager.r10),
                 imageUrl: AppConstantManager.imageBaseUrl + imagePath,
               ),
@@ -94,16 +92,15 @@ class StandardCard extends StatelessWidget {
               height: AppHeightManager.h1,
             ),
             AppTextWidget(
-              text: title,
+              text: "$title\n",
               fontSize: FontSizeManager.fs16,
               fontWeight: FontWeight.w600,
               color: AppColorManager.black,
+              textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(
-              height: AppHeightManager.h2,
-            ),
+
           ],
         ),
       ),

@@ -106,7 +106,7 @@ class _MyItemsScreenState extends State<MyItemsScreen> {
   }
 
   Widget _buildFilterButtons() {
-    return Container(
+    return SizedBox(
       height: AppHeightManager.h5,
 
       child: ListView.builder(

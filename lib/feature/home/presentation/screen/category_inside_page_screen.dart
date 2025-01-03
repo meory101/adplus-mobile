@@ -247,188 +247,191 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                   height: AppHeightManager.h2,
                                 ),
                               ),
-                              DynamicHeightGridView(
-                                itemCount: attributeTypeList.length +
-                                    (showAllAds ? 1 : 0),
-                                crossAxisCount: 3,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                builder: (context, i) {
-                                  return i == 0
-                                      ? InkWell(
-                                          onTap: () {
-                                            Navigator.of(context)
-                                                .pushNamed(
-                                                    RouteNamedScreens
-                                                        .insidePageCategoryAdvs,
-                                                    arguments:
-                                                        InsidePageCategoryAdvArgs(
-                                                            isAllCategoryAds:
-                                                                true,
-                                                            category: widget
-                                                                .args
-                                                                .subCategory,
-                                                            entity: entity))
-                                                .then(
-                                              (value) {
-                                                clearFilter();
-                                              },
-                                            );
-                                          },
-                                          child: currentInsidePageData?.star ==
-                                                  1
-                                              ? DecoratedContainer(
-                                                  height: AppHeightManager.h6,
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: AppHeightManager
-                                                          .h1point5),
-                                                  child: AppTextWidget(
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.center,
-                                                    text: 'allAdvs'.tr(),
-                                                    fontSize:
-                                                        FontSizeManager.fs15,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                )
-                                              : DecoratedContainer(
-                                                  alignment: Alignment.center,
-                                                  height: AppWidthManager.w30,
-                                                  width: AppWidthManager.w30,
-                                                  child: AppTextWidget(
-                                                    maxLines: 2,
-                                                    textAlign: TextAlign.center,
-                                                    text: "allAdvs".tr(),
-                                                    fontSize:
-                                                        FontSizeManager.fs15,
-                                                    fontWeight: FontWeight.w600,
-                                                  )),
-                                        )
-                                      : InkWell(
-                                          onTap: () {
-                                            entity.page = 1;
-                                            List<FilterAttribute> attributes =
-                                                [];
-                                            attributes.add(FilterAttribute(
-                                                attributeId:
-                                                    insidePageData[index]
-                                                        .attributeId,
-                                                value: [
-                                                  LanguageHelper.checkIfLTR(
-                                                          context: context)
-                                                      ? (attributeTypeList[
-                                                                  i - 1]
-                                                              .optionEn ??
-                                                          "")
-                                                      : attributeTypeList[i - 1]
-                                                              .option ??
-                                                          ""
-                                                ]));
-                                            entity.attributes = attributes;
-                                            Navigator.of(context)
-                                                .pushNamed(
-                                                    RouteNamedScreens
-                                                        .insidePageCategoryAdvs,
-                                                    arguments:
-                                                        InsidePageCategoryAdvArgs(
-                                                            isAllCategoryAds:
-                                                                false,
-                                                            category: widget
-                                                                .args
-                                                                .subCategory,
-                                                            entity: entity))
-                                                .then(
-                                              (value) {
-                                                clearFilter();
-                                              },
-                                            );
-                                          },
-                                          child: currentInsidePageData?.star ==
-                                                  1
-                                              ? DecoratedContainer(
-                                                  height: AppHeightManager.h6,
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: AppHeightManager
-                                                          .h1point5),
-                                                  child: AppTextWidget(
-                                                    maxLines: 2,
-                                                    textAlign: TextAlign.center,
-                                                    text: LanguageHelper
-                                                            .checkIfLTR(
-                                                                context:
-                                                                    context)
-                                                        ? '${attributeTypeList[i - 1].optionEn ?? ""}'
-                                                        : '${attributeTypeList[i - 1].option ?? ""}',
-                                                    fontSize:
-                                                        FontSizeManager.fs15,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                )
-                                              : DecoratedContainer(
-                                                  height: AppWidthManager.w30,
-                                                  width: AppWidthManager.w30,
-                                                  alignment: Alignment.center,
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          AppWidthManager
-                                                              .w3Point8,
-                                                      vertical:
-                                                          AppHeightManager.h1),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      AppTextWidget(
-                                                        maxLines: 2,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        text: LanguageHelper
-                                                                .checkIfLTR(
-                                                                    context:
-                                                                        context)
-                                                            ? '${attributeTypeList[i - 1].optionEn ?? ""}\n'
-                                                            : '${attributeTypeList[i - 1].option ?? ""}\n',
-                                                        fontSize:
-                                                            FontSizeManager
-                                                                .fs15,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                      Visibility(
-                                                        visible:
-                                                            (attributeTypeList[
-                                                                            i - 1]
-                                                                        .photo ??
-                                                                    "")
-                                                                .isNotEmpty,
-                                                        child: MainImageWidget(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  AppRadiusManager
-                                                                      .r10),
-                                                          height:
-                                                              AppWidthManager
-                                                                  .w13,
-                                                          width: AppWidthManager
-                                                              .w13,
-                                                          imageUrl: AppConstantManager
-                                                                  .imageBaseUrl +
-                                                              attributeTypeList[
-                                                                      i - 1]
-                                                                  .photo
-                                                                  .toString(),
+                              Visibility(
+                                visible:  attributeTypeList.isNotEmpty,
+                                child: DynamicHeightGridView(
+                                  itemCount: attributeTypeList.length +(showAllAds==true ? 1:0),
+                                  crossAxisCount: 3,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  builder: (context, i) {
+                                    return i == 0 && showAllAds==true
+                                        ? InkWell(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .pushNamed(
+                                                      RouteNamedScreens
+                                                          .insidePageCategoryAdvs,
+                                                      arguments:
+                                                          InsidePageCategoryAdvArgs(
+                                                              isAllCategoryAds:
+                                                                  true,
+                                                              category: widget
+                                                                  .args
+                                                                  .subCategory,
+                                                              entity: entity))
+                                                  .then(
+                                                (value) {
+                                                  clearFilter();
+                                                },
+                                              );
+                                            },
+                                            child: currentInsidePageData?.star ==
+                                                    1
+                                                ? DecoratedContainer(
+                                                    height: AppHeightManager.h6,
+                                                    padding: EdgeInsets.symmetric(
+                                                        vertical: AppHeightManager
+                                                            .h1point5),
+                                                    child: AppTextWidget(
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.center,
+                                                      text: 'allAdvs'.tr(),
+                                                      fontSize:
+                                                          FontSizeManager.fs15,
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                  )
+                                                : DecoratedContainer(
+                                                    alignment: Alignment.center,
+                                                    height: AppWidthManager.w30,
+                                                    width: AppWidthManager.w30,
+                                                    child: AppTextWidget(
+                                                      maxLines: 2,
+                                                      textAlign: TextAlign.center,
+                                                      text: "allAdvs".tr(),
+                                                      fontSize:
+                                                          FontSizeManager.fs15,
+                                                      fontWeight: FontWeight.w600,
+                                                    )),
+                                          )
+                                        : InkWell(
+                                            onTap: () {
+                                              entity.page = 1;
+                                              List<FilterAttribute> attributes =
+                                                  [];
+                                              attributes.add(FilterAttribute(
+                                                  attributeId:
+                                                      insidePageData[index]
+                                                          .attributeId,
+                                                  value: [
+                                                    LanguageHelper.checkIfLTR(
+                                                            context: context)
+                                                        ? (attributeTypeList[
+                                                                   showAllAds==true ? i - 1:i]
+                                                                .optionEn ??
+                                                            "")
+                                                        : attributeTypeList[ showAllAds==true ? i - 1:i]
+                                                                .option ??
+                                                            ""
+                                                  ]));
+                                              entity.attributes = attributes;
+                                              Navigator.of(context)
+                                                  .pushNamed(
+                                                      RouteNamedScreens
+                                                          .insidePageCategoryAdvs,
+                                                      arguments:
+                                                          InsidePageCategoryAdvArgs(
+                                                              isAllCategoryAds:
+                                                                  false,
+                                                              category: widget
+                                                                  .args
+                                                                  .subCategory,
+                                                              entity: entity))
+                                                  .then(
+                                                (value) {
+                                                  clearFilter();
+                                                },
+                                              );
+                                            },
+                                            child: currentInsidePageData?.star ==
+                                                    1
+                                                ? DecoratedContainer(
+                                                    height: AppHeightManager.h6,
+                                                    padding: EdgeInsets.symmetric(
+                                                        vertical: AppHeightManager
+                                                            .h1point5),
+                                                    child: AppTextWidget(
+                                                      maxLines: 2,
+                                                      textAlign: TextAlign.center,
+                                                      text: LanguageHelper
+                                                              .checkIfLTR(
+                                                                  context:
+                                                                      context)
+                                                          ? attributeTypeList[showAllAds==true?i - 1:i].optionEn ?? ""
+                                                          : attributeTypeList[showAllAds==true?i - 1:i].option ?? "",
+                                                      fontSize:
+                                                          FontSizeManager.fs15,
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                  )
+                                                : DecoratedContainer(
+                                                    height: AppWidthManager.w30,
+                                                    width: AppWidthManager.w30,
+                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            AppWidthManager
+                                                                .w3Point8,
+                                                        vertical:
+                                                            AppHeightManager.h1),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        AppTextWidget(
+                                                          maxLines: 2,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          text: LanguageHelper
+                                                                  .checkIfLTR(
+                                                                      context:
+                                                                          context)
+                                                              ? attributeTypeList[showAllAds==true?i - 1:i].optionEn ?? ""
+                                                              : attributeTypeList[showAllAds==true?i - 1:i].option ?? "",
+                                                          fontSize:
+                                                              FontSizeManager
+                                                                  .fs15,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
-                                                      ),
-                                                    ],
-                                                  )),
-                                        );
-                                },
+                                                        Visibility(
+                                                          visible:
+                                                              ( attributeTypeList[showAllAds==true?
+                                                                              i - 1 :i]
+                                                                          .photo ??
+                                                                      "")
+                                                                  .isNotEmpty,
+                                                          child: MainImageWidget(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    AppRadiusManager
+                                                                        .r10),
+                                                            height:
+                                                                AppWidthManager
+                                                                    .w13,
+                                                            width: AppWidthManager
+                                                                .w13,
+                                                            imageUrl: AppConstantManager
+                                                                    .imageBaseUrl +
+                                                                attributeTypeList[
+                                                                showAllAds==true?
+                                                                i - 1 :i]
+                                                                    .photo
+                                                                    .toString(),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )),
+                                          );
+                                  },
+                                ),
                               ),
                               SizedBox(
                                 height: AppHeightManager.h2point5,

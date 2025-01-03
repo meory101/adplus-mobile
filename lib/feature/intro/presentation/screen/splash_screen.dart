@@ -31,6 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigateToNextPage() {
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
+        print('adv id in the splash screeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen');
+        print(advId);
         if (advId != null) {
           Navigator.of(context).pushNamedAndRemoveUntil(
             RouteNamedScreens.advertisementDetails,

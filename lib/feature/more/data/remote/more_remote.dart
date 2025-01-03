@@ -55,7 +55,11 @@ class MoreRemoteImplement extends MoreRemote {
       {required UpdateUsernameRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.updateUsername, body: entity.toJson());
+    print(response.body);
+    print(response.statusCode);
+    print('dddddddddddddddddddddddddddddddddddddddddddddd');
     if (ApiStatusCode.success().contains(response.statusCode)) {
+
       return updateUsernameResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
@@ -67,6 +71,8 @@ class MoreRemoteImplement extends MoreRemote {
       {required VerifyUsernameRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(url: ApiPostUrl.verfiyusername, body: entity.toJson());
+    print('fffffffffffffffffffffffffffffffffffffffffff');
+    print(response.statusCode);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return verifyUsernameResponseEntityFromJson(response.body);
     } else {

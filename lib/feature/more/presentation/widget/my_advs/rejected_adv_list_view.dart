@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/widget/empty/empty_widget.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/rejected_ads_cubit/rejected_ads_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/rejected_ads_cubit/rejected_ads_state.dart';
 
@@ -31,7 +32,11 @@ class RejectedAdvListView extends StatelessWidget {
         final items = state.entity.data?.data ?? [];
 
         if (items.isEmpty) {
-          return  Center(child: AppTextWidget(text: "noAdvertisements".tr()));
+          return  EmptyWidget(
+            title: "noAdvertisements".tr(),
+            subTitle: "noAdvertisements".tr(),
+
+          );
         }
 
         return NotificationListener<ScrollNotification>(

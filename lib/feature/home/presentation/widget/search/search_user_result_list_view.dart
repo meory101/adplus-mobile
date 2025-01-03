@@ -41,7 +41,7 @@ class SearchUserResultListView extends StatelessWidget {
         List<User> users = state.entity.data ?? [];
         if (users.isEmpty) {
           return Padding(
-            padding:  EdgeInsets.only(top: AppHeightManager.h20),
+            padding:  EdgeInsets.only(top: AppHeightManager.h10),
             child: EmptyWidget(
               title: "noResults".tr(),
               subTitle: "couldNotFindAnyResult".tr(),

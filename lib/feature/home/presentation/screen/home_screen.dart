@@ -200,11 +200,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                       context: context,
                                       title: "notifications".tr(),
-                                      content: "youHave".tr() +" "+
-                                          (state.entity.data?.pagination
-                                              ?.totalItems)
-                                              .toString() +" "+
-                                          'notification'.tr());
+                                      content: "${"youHave".tr()} ${state.entity.data?.pagination
+                                              ?.totalItems} ${'notification'.tr()}");
                                 }
                                 showedNotificationNoteMessage = true;
 

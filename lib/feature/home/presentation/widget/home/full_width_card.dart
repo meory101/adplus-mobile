@@ -30,6 +30,8 @@ class FullWidthCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: AppWidthManager.w100,
+
         decoration: BoxDecoration(
             color: AppColorManager.lightGreyOpacity6,
             borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
@@ -54,11 +56,13 @@ class FullWidthCard extends StatelessWidget {
               height: AppHeightManager.h1,
             ),
             AppTextWidget(
-              text: title,
+              text: "$title\n",
               fontSize: FontSizeManager.fs16,
               fontWeight: FontWeight.w600,
               color: AppColorManager.black,
               maxLines: 2,
+              textAlign: TextAlign.center,
+
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(

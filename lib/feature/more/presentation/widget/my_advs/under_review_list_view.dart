@@ -6,6 +6,7 @@ import 'package:mzad_damascus/feature/more/presentation/widget/my_advs/adv_card.
 
 import '../../../../../core/resource/cubit_status_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
+import '../../../../../core/widget/empty/empty_widget.dart';
 import '../../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
 import '../../../domain/entity/request/myitem_under_review_request_entiity.dart';
@@ -31,7 +32,11 @@ class UnderReviewListView extends StatelessWidget {
         final items = state.entity.data?.data ?? [];
 
         if (items.isEmpty) {
-          return  Center(child: AppTextWidget(text: "noAdvertisements".tr()));
+          return  EmptyWidget(
+            title: "noAdvertisements".tr(),
+            subTitle: "noAdvertisements".tr(),
+
+          );
         }
 
         return NotificationListener<ScrollNotification>(

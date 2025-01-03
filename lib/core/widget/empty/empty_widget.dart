@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mzad_damascus/core/resource/image_manager.dart';
 
 import '../../resource/color_manager.dart';
 import '../../resource/font_manager.dart';
@@ -20,21 +21,20 @@ class EmptyWidget extends StatelessWidget {
     return Visibility(
       replacement: const SizedBox(),
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
+
           children: [
             MainImageWidget(
               height: AppWidthManager.w70,
               width: AppWidthManager.w70,
               fit: BoxFit.cover,
-              imagePath: image,
+              imagePath:  AppImageManager.empty,
             ),
             SizedBox(
               height: AppHeightManager.h1point8,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60),
+              padding:  EdgeInsets.only(top: AppHeightManager.h14,left: 60,right: 60),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

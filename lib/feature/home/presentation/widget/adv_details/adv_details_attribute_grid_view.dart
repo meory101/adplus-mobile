@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/helper/language_helper.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/get_adv_details_response_entity.dart';
-
-import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/size_manager.dart';

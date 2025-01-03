@@ -136,7 +136,7 @@ class AdsByCategoryListView extends StatelessWidget {
                                     ),
                                     AppTextWidget(
                                       text:
-                                      advertisement.description??"",
+                                      "${advertisement.description??""}\n",
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                       fontSize: FontSizeManager.fs15,

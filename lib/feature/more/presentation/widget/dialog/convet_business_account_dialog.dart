@@ -1,28 +1,18 @@
 import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mzad_damascus/core/helper/app_image_helper.dart';
 import 'package:mzad_damascus/core/helper/file_helper.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
-import 'package:mzad_damascus/core/resource/image_manager.dart';
 import 'package:mzad_damascus/core/widget/loading/app_circular_progress_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
-import 'package:mzad_damascus/feature/advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_state.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/convert_business_account_cubit/convert_business_account_cubit.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/convert_business_account_cubit/convert_business_account_state.dart';
-
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
 import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/widget/button/main_app_button.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
-import '../../../../../router/router.dart';
-import '../../../../advertisement/domain/entity/request/delete_adv_request_entity.dart';
-import '../../../../advertisement/presentation/cubit/delete_adv_cubit/delete_advertisement_cubit.dart';
-import '../../../../home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import '../../../../../core/injection/injection_container.dart' as di;
 
 void showBusinessAccountDialog(
@@ -94,10 +84,10 @@ void showBusinessAccountDialog(
                             onTap: () async {
                               File? file = await FileHelper.getFile();
                               if (file == null) return;
-                              if (FileHelper.getFileExtension(
-                                  fileName:
-                                  FileHelper.getFileName(file: file)) ==
-                                  'pdf') {
+                              // if (FileHelper.getFileExtension(
+                              //     fileName:
+                              //     FileHelper.getFileName(file: file)) ==
+                              //     'pdf') {
                                 context
                                     .read<ConvertBusinessAccountCubit>()
                                     .convertToBusinessAccount(
@@ -105,9 +95,10 @@ void showBusinessAccountDialog(
 
                                 return;
                               }
-                              NoteMessage.showErrorSnackBar(
-                                  context: context, text: "mustBePdfFile".tr());
-                            },
+                            //   NoteMessage.showErrorSnackBar(
+                            //       context: context, text: "mustBePdfFile".tr());
+                            // },
+                              ,
                             padding: EdgeInsets.symmetric(
                                 horizontal: AppWidthManager.w10),
                             borderRadius:

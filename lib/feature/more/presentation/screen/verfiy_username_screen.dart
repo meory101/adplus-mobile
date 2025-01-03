@@ -1,4 +1,5 @@
  
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
  import 'package:mzad_damascus/core/resource/color_manager.dart';
@@ -36,7 +37,7 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MainAppBar(
-        title: 'Verification Username Code',
+        title: '',
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -44,7 +45,7 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Enter the 6-digit code sent to your Email',
+              'enterVerificationCode'.tr(),
               style: TextStyle(color: Colors.blue, fontSize: 15),
             ),
             SizedBox(height: 20),
@@ -52,7 +53,7 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
               padding: const EdgeInsets.all(15.0),
               child: PinCodeTextField(
                 pinBoxBorderWidth: 1,
-                pinBoxWidth: AppWidthManager.w12,
+                pinBoxWidth: AppWidthManager.w9,
                 pinBoxHeight: AppHeightManager.h6,
                 maxLength: 6,
                 controller: codeController,
@@ -96,7 +97,7 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
                   color: AppColorManager.mainColor,
                   alignment: Alignment.center,
                   child: AppTextWidget(
-                    text: "Verify username",
+                    text: "verify".tr(),
                     color: Colors.white,
                     fontSize: FontSizeManager.fs16,
                     fontWeight: FontWeight.w600,
