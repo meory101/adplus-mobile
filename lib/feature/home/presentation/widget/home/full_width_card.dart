@@ -45,7 +45,7 @@ class FullWidthCard extends StatelessWidget {
               height: AppHeightManager.h20,
               decoration: BoxDecoration(
                   boxShadow: ThemeManager.cardShadow,
-                  color: AppColorManager.lightGreyOpacity6,
+                  color: AppColorManager.white,
                   borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
               child: MainImageWidget(
                 borderRadius: BorderRadius.circular(AppRadiusManager.r10),

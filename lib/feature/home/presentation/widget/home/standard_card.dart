@@ -47,7 +47,7 @@ class StandardCard extends StatelessWidget {
       child: Container(
         width: AppWidthManager.w25,
         decoration: BoxDecoration(
-            color: AppColorManager.background,
+            color: AppColorManager.white,
             borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
         margin: itemCount == 3
             ? EdgeInsets.only(

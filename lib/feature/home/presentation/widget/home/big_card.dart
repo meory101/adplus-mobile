@@ -31,7 +31,7 @@ class BigCard extends StatelessWidget {
         width: AppWidthManager.w60,
 
         decoration: BoxDecoration(
-            color: AppColorManager.lightGreyOpacity6,
+            color: AppColorManager.white,
             borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
         margin: EdgeInsets.only(
           bottom: AppHeightManager.h3,
