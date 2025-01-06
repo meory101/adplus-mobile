@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: AppHeightManager.h1),
                   DecoratedContainer(
                     borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                    height: AppHeightManager.h37,
+                    height: AppHeightManager.h42,
                     width: AppWidthManager.w95,
                     color: AppColorManager.white,
                     child: Column(

@@ -45,7 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
-                top: AppHeightManager.h10,
+                top: AppHeightManager.h6,
                 left: AppWidthManager.w5,
                 right: AppWidthManager.w5),
             child: Form(
@@ -59,12 +59,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: MainImageWidget(imagePath: AppImageManager.icon),
                     ),
                   ),
-                  SizedBox(
-                    height: AppHeightManager.h2,
-                  ),
                   DecoratedContainer(
                     borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                    height: AppHeightManager.h70,
+                    height: AppHeightManager.h77,
                     width: AppWidthManager.w95,
                     color: AppColorManager.white,
                     child: Column(
@@ -258,7 +255,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 "passwordsDoNotMatch".tr(),
                                 style: TextStyle(color: Colors.red),
                               ),
-                        SizedBox(height: AppHeightManager.h4),
+                        SizedBox(height: AppHeightManager.h1),
                         BlocConsumer<RegisterCubit, RegisterState>(
                           listener: (context, state) {
                             if (state.status == CubitStatus.success) {
