@@ -15,7 +15,6 @@ import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/login_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/login_cubit.dart';
-import 'package:mzad_damascus/feature/authentication/presentation/screen/reset_password_screen.dart';
 import '../../../../core/resource/size_manager.dart';
 import '../../../../router/router.dart';
 
@@ -43,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
-                top: AppHeightManager.h20,
+                top: AppHeightManager.h18,
                 left: AppWidthManager.w5,
                 right: AppWidthManager.w5),
             child: Form(
@@ -57,191 +56,209 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: MainImageWidget(imagePath: AppImageManager.icon),
                     ),
                   ),
+                  SizedBox(
+                    height: AppHeightManager.h1,
+                  ),
                   SizedBox(height: AppHeightManager.h1),
                   DecoratedContainer(
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: AppHeightManager.h5,
+                          color: AppColorManager.grey.withValues(alpha: 0.6))
+                    ],
                     borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                    height: AppHeightManager.h42,
                     width: AppWidthManager.w95,
                     color: AppColorManager.white,
-                    child: Column(
-                      children: [
-                        SizedBox(height: AppHeightManager.h4),
-                        Container(
-                          width: AppWidthManager.w80,
-                          child: AppTextFormField(
-                            fillColor: AppColorManager.lightGreyOpacity6,
-                            textInputType: TextInputType.emailAddress,
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: AppWidthManager.w3Point8),
-                              child: SvgPicture.asset(
-                                AppIconManager.person,
-                                colorFilter: const ColorFilter.mode(
-                                    AppColorManager.textGrey, BlendMode.srcIn),
-                              ),
-                            ),
-                            hintText: "name".tr(),
-                            hintStyle: const TextStyle(
-                                color: AppColorManager.textGrey),
-                            onChanged: (value) {
-                              entity.username = value;
-                              return null;
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "usernameRequired".tr();
-                              }
-
-                              bool isEmail = RegExp(
-                                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
-                                  .hasMatch(value);
-                              bool isPhone =
-                                  RegExp(r'^[0-9]{10,15}$').hasMatch(value);
-
-                              if (!isEmail && !isPhone) {
-                                return "usernameInvalid".tr();
-                              }
-                              return null;
-                            },
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(height: AppHeightManager.h4),
+                          AppTextWidget(
+                            text: "welcomeBack".tr(),
+                            fontSize: FontSizeManager.fs20,
+                            fontWeight: FontWeight.bold,
+                            color: AppColorManager.black,
                           ),
-                        ),
-                        SizedBox(height: AppHeightManager.h1point8),
-                        Container(
-                          width: AppWidthManager.w80,
-                          child: AppTextFormField(
-                            fillColor: AppColorManager.lightGreyOpacity6,
-                            maxLines: 1,
-                            textInputType: TextInputType.visiblePassword,
-                            hintText: "passwordHint".tr(),
-                            hintStyle: const TextStyle(
-                                color: AppColorManager.textGrey),
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: AppWidthManager.w3Point8),
-                              child: SvgPicture.asset(
-                                AppIconManager.lock,
-                                colorFilter: const ColorFilter.mode(
-                                    AppColorManager.textGrey, BlendMode.srcIn),
+                          SizedBox(height: AppHeightManager.h2),
+                          Container(
+                            width: AppWidthManager.w80,
+                            child: AppTextFormField(
+                              fillColor: AppColorManager.lightGreyOpacity6,
+                              textInputType: TextInputType.emailAddress,
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppWidthManager.w3Point8),
+                                child: SvgPicture.asset(
+                                  AppIconManager.person,
+                                  colorFilter: const ColorFilter.mode(
+                                      AppColorManager.textGrey,
+                                      BlendMode.srcIn),
+                                ),
                               ),
-                            ),
-                            onChanged: (value) {
-                              entity.password = value;
-                              return null;
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "passwordRequired".tr();
-                              }
-                              return null;
-                            },
-                            suffixIcon: IconButton(
-                              splashColor: AppColorManager.transparent,
-                              highlightColor: AppColorManager.transparent,
-                              icon: Icon(
-                                passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: AppColorManager.textGrey,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
+                              hintText: "name".tr(),
+                              hintStyle: const TextStyle(
+                                  color: AppColorManager.textGrey),
+                              onChanged: (value) {
+                                entity.username = value;
+                                return null;
                               },
-                            ),
-                            obscureText: !passwordVisible,
-                          ),
-                        ),
-                        SizedBox(
-                          height: AppHeightManager.h2,
-                        ),
-                        MainAppButton(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              RouteNamedScreens.forgetpassword,
-                            );
-                          },
-                          child: AppTextWidget(
-                            text: "forgotPassword".tr(),
-                            color: AppColorManager.mainColor,
-                            fontSize: FontSizeManager.fs15,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(
-                          height: AppHeightManager.h2,
-                        ),
-                        BlocConsumer<LoginCubit, LoginState>(
-                          listener: (context, state) {
-                            if (state.status == CubitStatus.success) {
-                              if (myRoute ==
-                                  RouteNamedScreens.mainBottomAppBar) {
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                  RouteNamedScreens.mainBottomAppBar,
-                                  (route) => false,
-                                );
-                              } else {
-                                Navigator.of(context).pop();
-                              }
-                            }
-                            if (state.status == CubitStatus.error) {
-                              NoteMessage.showErrorSnackBar(
-                                  context: context, text: state.error);
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state.status == CubitStatus.loading) {
-                              return const CircularProgressIndicator();
-                            }
-                            return MainAppButton(
-                              onTap: () {
-                                if ((formKey.currentState?.validate()) ??
-                                    false) {
-                                  context
-                                      .read<LoginCubit>()
-                                      .login(context: context, entity: entity);
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "usernameRequired".tr();
                                 }
+
+                                bool isEmail = RegExp(
+                                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+                                    .hasMatch(value);
+                                bool isPhone =
+                                    RegExp(r'^[0-9]{10,15}$').hasMatch(value);
+
+                                if (!isEmail && !isPhone) {
+                                  return "usernameInvalid".tr();
+                                }
+                                return null;
                               },
-                              width: AppWidthManager.w40,
-                              height: AppHeightManager.h6,
-                              color: AppColorManager.mainColor,
-                              alignment: Alignment.center,
-                              child: AppTextWidget(
-                                text: "login".tr(),
-                                color: AppColorManager.white,
-                                fontSize: FontSizeManager.fs16,
-                                fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: AppHeightManager.h1point8),
+                          Container(
+                            width: AppWidthManager.w80,
+                            child: AppTextFormField(
+                              fillColor: AppColorManager.lightGreyOpacity6,
+                              maxLines: 1,
+                              textInputType: TextInputType.visiblePassword,
+                              hintText: "passwordHint".tr(),
+                              hintStyle: const TextStyle(
+                                  color: AppColorManager.textGrey),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppWidthManager.w3Point8),
+                                child: SvgPicture.asset(
+                                  AppIconManager.lock,
+                                  colorFilter: const ColorFilter.mode(
+                                      AppColorManager.textGrey,
+                                      BlendMode.srcIn),
+                                ),
                               ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: AppHeightManager.h2,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AppTextWidget(
-                              text: "noAccount".tr(),
-                              color: AppColorManager.textAppColor,
+                              onChanged: (value) {
+                                entity.password = value;
+                                return null;
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "passwordRequired".tr();
+                                }
+                                return null;
+                              },
+                              suffixIcon: IconButton(
+                                splashColor: AppColorManager.transparent,
+                                highlightColor: AppColorManager.transparent,
+                                icon: Icon(
+                                  passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: AppColorManager.textGrey,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    passwordVisible = !passwordVisible;
+                                  });
+                                },
+                              ),
+                              obscureText: !passwordVisible,
+                            ),
+                          ),
+                          SizedBox(
+                            height: AppHeightManager.h2,
+                          ),
+                          MainAppButton(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                RouteNamedScreens.forgetpassword,
+                              );
+                            },
+                            child: AppTextWidget(
+                              text: "forgotPassword".tr(),
+                              color: AppColorManager.orange,
                               fontSize: FontSizeManager.fs15,
+                              fontWeight: FontWeight.w600,
                             ),
-                            SizedBox(width: AppWidthManager.w1),
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushReplacementNamed(
-                                    RouteNamedScreens.register);
-                              },
-                              child: AppTextWidget(
-                                text: "createAccount".tr(),
-                                color: AppColorManager.mainColor,
+                          ),
+                          SizedBox(
+                            height: AppHeightManager.h2,
+                          ),
+                          BlocConsumer<LoginCubit, LoginState>(
+                            listener: (context, state) {
+                              if (state.status == CubitStatus.success) {
+                                if (myRoute ==
+                                    RouteNamedScreens.mainBottomAppBar) {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    RouteNamedScreens.mainBottomAppBar,
+                                    (route) => false,
+                                  );
+                                } else {
+                                  Navigator.of(context).pop();
+                                }
+                              }
+                              if (state.status == CubitStatus.error) {
+                                NoteMessage.showErrorSnackBar(
+                                    context: context, text: state.error);
+                              }
+                            },
+                            builder: (context, state) {
+                              if (state.status == CubitStatus.loading) {
+                                return const CircularProgressIndicator();
+                              }
+                              return MainAppButton(
+                                onTap: () {
+                                  if ((formKey.currentState?.validate()) ??
+                                      false) {
+                                    context.read<LoginCubit>().login(
+                                        context: context, entity: entity);
+                                  }
+                                },
+                                width: AppWidthManager.w80,
+                                height: AppHeightManager.h6,
+                                color: AppColorManager.orange,
+                                alignment: Alignment.center,
+                                child: AppTextWidget(
+                                  text: "login".tr(),
+                                  color: AppColorManager.white,
+                                  fontSize: FontSizeManager.fs16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: AppHeightManager.h2,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AppTextWidget(
+                                text: "noAccount".tr(),
+                                color: AppColorManager.textAppColor,
                                 fontSize: FontSizeManager.fs15,
-                                fontWeight: FontWeight.w600,
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              SizedBox(width: AppWidthManager.w1),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      RouteNamedScreens.register);
+                                },
+                                child: AppTextWidget(
+                                  text: "createAccount".tr(),
+                                  color: AppColorManager.orange,
+                                  fontSize: FontSizeManager.fs15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: AppHeightManager.h4),
+                        ],
+                      ),
                     ),
                   ),
                 ],

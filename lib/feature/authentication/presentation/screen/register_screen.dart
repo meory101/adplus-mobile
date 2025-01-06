@@ -42,36 +42,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover, image: AssetImage(AppImageManager.mzad))),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: AppHeightManager.h6,
-                left: AppWidthManager.w5,
-                right: AppWidthManager.w5),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  ClipOval(
-                    child: Container(
-                      height: AppHeightManager.h12,
-                      width: AppHeightManager.h12,
-                      child: MainImageWidget(imagePath: AppImageManager.icon),
-                    ),
+        child: Padding(
+          padding: EdgeInsets.only(
+              top: AppHeightManager.h3,
+              left: AppWidthManager.w5,
+              right: AppWidthManager.w5),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: AppHeightManager.h4,
+                ),
+                ClipOval(
+                  child: Container(
+                    height: AppHeightManager.h12,
+                    width: AppHeightManager.h12,
+                    child: MainImageWidget(imagePath: AppImageManager.icon),
                   ),
-                  DecoratedContainer(
-                    borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-                    height: AppHeightManager.h77,
-                    width: AppWidthManager.w95,
-                    color: AppColorManager.white,
+                ),
+                SizedBox(
+                  height: AppHeightManager.h1,
+                ),
+                DecoratedContainer(
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: AppHeightManager.h5,
+                        color: AppColorManager.grey.withValues(alpha: 0.6))
+                  ],
+                  borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                  width: AppWidthManager.w95,
+                  color: AppColorManager.white,
+                  child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        SizedBox(
+                          height: AppHeightManager.h4,
+                        ),
+                        AppTextWidget(
+                          text: "createNewAccount".tr(),
+                          color: AppColorManager.textAppColor,
+                          fontSize: FontSizeManager.fs20,
+                          fontWeight: FontWeight.w700,
+                        ),
                         SizedBox(
                           height: AppHeightManager.h3,
                         ),
                         Container(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
+                            fillColor: AppColorManager.lightGreyOpacity6,
                             textInputType: TextInputType.name,
                             hintText: "fullNameHint".tr(),
                             hintStyle: const TextStyle(
@@ -92,6 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Container(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
+                            fillColor: AppColorManager.lightGreyOpacity6,
                             textInputType: TextInputType.text,
                             hintText: "usernameHint".tr(),
                             hintStyle: const TextStyle(
@@ -125,6 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Container(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
+                            fillColor: AppColorManager.lightGreyOpacity6,
                             textInputType: TextInputType.number,
                             hintText: "phoneNumberHint".tr(),
                             hintStyle: const TextStyle(
@@ -149,6 +171,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Container(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
+                            fillColor: AppColorManager.lightGreyOpacity6,
                             textInputType: TextInputType.number,
                             hintText: "whatsapp".tr(),
                             hintStyle: const TextStyle(
@@ -172,6 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Container(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
+                            fillColor: AppColorManager.lightGreyOpacity6,
                             maxLines: 1,
                             hintText: "passwordHint".tr(),
                             hintStyle: const TextStyle(
@@ -210,6 +234,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Container(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
+                            fillColor: AppColorManager.lightGreyOpacity6,
                             maxLines: 1,
                             hintText: "confirmPasswordHint".tr(),
                             hintStyle: const TextStyle(
@@ -283,9 +308,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       entity: entity, context: context);
                                 }
                               },
-                              width: AppWidthManager.w40,
+                              width: AppWidthManager.w80,
                               height: AppHeightManager.h6,
-                              color: AppColorManager.mainColor,
+                              color: AppColorManager.orange,
                               alignment: Alignment.center,
                               child: AppTextWidget(
                                 text: "createAccount".tr(),
@@ -315,18 +340,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                               child: AppTextWidget(
                                 text: "login".tr(),
-                                color: AppColorManager.mainColor,
+                                color: AppColorManager.orange,
                                 fontSize: FontSizeManager.fs15,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: AppHeightManager.h4,
+                        ),
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
