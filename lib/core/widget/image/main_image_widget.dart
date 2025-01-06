@@ -4,13 +4,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../resource/color_manager.dart';
 import '../../resource/image_manager.dart';
+
 class MainImageWidget extends StatelessWidget {
   const MainImageWidget({
-    Key? key,
+    super.key,
     this.imageUrl = '',
     this.imagePath,
     this.placeholderUrl,
@@ -19,7 +21,7 @@ class MainImageWidget extends StatelessWidget {
     this.height,
     this.shape,
     this.borderRadius,
-  }) : super(key: key);
+  });
   final String imageUrl;
   final String? imagePath;
   final String? placeholderUrl;
@@ -49,7 +51,12 @@ class MainImageWidget extends StatelessWidget {
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
-                  borderRadius: borderRadius,
+                  borderRadius: borderRadius ??
+                      BorderRadius.all(
+                        Radius.circular(
+                          AppRadiusManager.r15,
+                        ),
+                      ),
                   image: DecorationImage(
                     image: Image.asset(
                       imagePath!,
@@ -72,13 +79,16 @@ class MainProgressImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppColorManager.white,
-      highlightColor: AppColorManager.white,
+      baseColor: AppColorManager.shimmerBaseColor,
+      highlightColor: AppColorManager.shimmerHighlightColor,
       child: Container(
         width: width,
         height: height,
-        decoration:  const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColorManager.shimmerBaseColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(AppRadiusManager.r3),
+          ),
         ),
       ),
     );

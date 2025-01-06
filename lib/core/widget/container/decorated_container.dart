@@ -6,7 +6,7 @@ import '../../resource/size_manager.dart';
 //A Decorated Container With Default Shadow Effect
 class DecoratedContainer extends StatelessWidget {
   const DecoratedContainer({
-    Key? key,
+    super.key,
     this.color,
     this.margin,
     this.padding,
@@ -20,7 +20,7 @@ class DecoratedContainer extends StatelessWidget {
     this.image,
     this.borderRadius,
     this.isGradient,
-  }) : super(key: key);
+  });
   final Color? color;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
@@ -38,6 +38,7 @@ class DecoratedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       padding: padding,
       alignment: alignment,
       width: width,
@@ -59,7 +60,7 @@ class DecoratedContainer extends StatelessWidget {
         boxShadow: boxShadow ??
             [
               const BoxShadow(
-                color: AppColorManager.grey,
+                color: AppColorManager.shadow,
                 blurRadius: 2,
                 spreadRadius: 0,
                 offset:

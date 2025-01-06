@@ -37,7 +37,7 @@ void showWheelDatePicker(
                 padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w5),
                 child: CupertinoDatePicker(
 
-                  initialDateTime: DateTime(DateTime.now().year - 12),
+                  initialDateTime: DateTime.now(),
                   onDateTimeChanged: (DateTime? pickedDate) {
                     if (pickedDate != null) {
                       selectedDate = pickedDate;
@@ -47,8 +47,6 @@ void showWheelDatePicker(
 
                   mode: CupertinoDatePickerMode.date,
                   use24hFormat: true,
-                  minimumDate: DateTime(1950),
-                  maximumDate: DateTime(DateTime.now().year - 12),
                 ),
               ),
             ),

@@ -1,11 +1,15 @@
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+
 import '../../helper/language_helper.dart';
 import '../../resource/color_manager.dart';
 import '../../resource/font_manager.dart';
 import '../../resource/size_manager.dart';
 import '../container/decorated_container.dart';
+import '../container/dialog_container.dart';
 import '../text/app_text_widget.dart';
 
 class NameAndId {
@@ -31,7 +35,7 @@ class NameAndId {
 
 class MainDropdownWidget extends StatefulWidget {
   const MainDropdownWidget({
-    Key? key,
+    super.key,
     required this.options,
     required this.hint,
     this.hintFontColor,
@@ -44,7 +48,7 @@ class MainDropdownWidget extends StatefulWidget {
     this.borderColor,
     this.value,
     this.onChanged,
-  }) : super(key: key);
+  });
   final List<NameAndId> options;
   final String hint;
   final bool? reset;
@@ -82,7 +86,7 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
     return DecoratedContainer(
       width: widget.width ?? widget.width,
       border: Border.all(
-        color:widget.borderColor?? AppColorManager.grey,
+        color:widget.borderColor?? AppColorManager.lightGreyOpacity6,
 
       ),
       borderRadius: BorderRadius.circular(AppRadiusManager.r10),

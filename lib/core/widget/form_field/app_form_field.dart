@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../resource/color_manager.dart';
 import '../../resource/font_manager.dart';
 import '../../resource/size_manager.dart';
@@ -22,10 +21,11 @@ class AppTextFormField extends StatelessWidget {
   final TextAlignVertical? textAlignVertical;
   final Color? textColor;
   final Color? labelColor;
+  final Color? borderColor;
   final int? maxLines;
   final int? minLines;
   final Widget? prefixIcon;
-  final TextStyle? hintStyle, style;
+  final TextStyle? hintStyle;
   final String? hintText;
   final bool? outlinedBorder;
   final bool? expand;
@@ -34,14 +34,15 @@ class AppTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final bool? filled;
   final bool? readOnly;
-  final GlobalKey<FormState>? formKey;
+  final TextStyle? style;
+  final void Function()? onTap;
 
   const AppTextFormField(
-      {Key? key,
+      {super.key,
         this.borderRadius,
+        this.borderColor,
         this.minLines,
         this.filled,
-        this.style,
         this.readOnly,
         this.enabled,
         this.suffixIcon,
@@ -49,9 +50,9 @@ class AppTextFormField extends StatelessWidget {
         this.expand,
         this.contentPadding,
         this.controller,
-        this.formKey,
         this.obscureText,
         this.autoFoucs,
+        this.onTap,
         this.validator,
         this.hintStyle,
         this.editingComplete,
@@ -61,94 +62,104 @@ class AppTextFormField extends StatelessWidget {
         this.textAlignVertical,
         this.focusNode,
         this.labelText,
-        this.textColor,
+        this.style,
+        this.textColor = AppColorManager.textAppColor,
         this.labelColor,
         this.onFilledSubmited,
         this.initialValue,
         this.maxLines,
         this.prefixIcon,
         this.hintText,
-        this.outlinedBorder})
-      : super(key: key);
+        this.outlinedBorder});
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: TextFormField(
-        key: Key(initialValue ?? ""),
-        readOnly: readOnly ?? false,
-        textAlignVertical: textAlignVertical,
-        onFieldSubmitted: onFilledSubmited,
-        validator: validator,
-        controller: controller,
-        focusNode: focusNode,
-        obscureText: obscureText ?? false,
-        onChanged: onChanged,
-        autofocus: autoFoucs ?? false,
-        onEditingComplete: editingComplete,
-        keyboardType: textInputType,
-        textInputAction: textInputAction,
-        minLines: minLines,
-        maxLines: maxLines,
-        initialValue: initialValue,
-        enabled: enabled,
-        expands: expand ?? false,
-        decoration: InputDecoration(
-          filled: filled ?? true,
-          fillColor: fillColor ?? AppColorManager.white,
-          hintText: hintText,
-          suffixIcon: suffixIcon,
-          prefixIcon: prefixIcon,
-          hintStyle: hintStyle,
-          prefixIconColor: Colors.grey,
-          suffixIconColor: Colors.grey,
-          contentPadding: contentPadding ??
-              EdgeInsets.symmetric(
-                  horizontal: AppWidthManager.w3,
-                  vertical: AppHeightManager.h1),
-          labelText: labelText,
-          labelStyle: TextStyle(
-              color: labelColor,
-              fontSize: FontSizeManager.fs16,
-              fontWeight: FontWeight.bold,
-              fontFamily: FontFamilyManager.cairo),
-          errorStyle: TextStyle(
-            fontSize: FontSizeManager.fs14,
-            fontFamily: FontFamilyManager.cairo,
-          ),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(
-                  borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
-              borderSide: BorderSide(
-                color: AppColorManager.lightGreyOpacity6,
-              )),
-          disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(
-                  borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
-              borderSide: const BorderSide(
-                color: Colors.transparent,
-                // color: Colors.transparent,
-              )),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(
-                  borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
-              borderSide: BorderSide(
-                color: AppColorManager.lightGreyOpacity6,
-              )),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(
-                  borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
-              borderSide: BorderSide(
-                color: Theme.of(context).primaryColor,
-              )),
+    return TextFormField(
+
+      onTap: onTap,
+      key: Key(initialValue ?? ""),
+      readOnly: readOnly ?? false,
+      textAlignVertical: textAlignVertical,
+      onFieldSubmitted: onFilledSubmited,
+      cursorColor: AppColorManager.mainColor,
+      validator: validator,
+      controller: controller,
+      focusNode: focusNode,
+      obscureText: obscureText ?? false,
+      onChanged: onChanged,
+
+      autofocus: autoFoucs ?? false,
+      onEditingComplete: editingComplete,
+      keyboardType: textInputType,
+      textInputAction: textInputAction,
+      minLines: minLines,
+      maxLines: maxLines,
+      initialValue: initialValue,
+      enabled: enabled,
+      expands: expand ?? false,
+      decoration: InputDecoration(
+        filled: filled ?? true,
+        fillColor: fillColor ?? AppColorManager.white,
+        hintText: hintText,
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
+        hintStyle: hintStyle ??TextStyle(
+            color: AppColorManager.grey,
+            fontSize: FontSizeManager.fs15
         ),
-        style: style ??
-            TextStyle(
-                color: textColor,
-                fontSize: FontSizeManager.fs16,
-                fontFamily: FontFamilyManager.cairo),
+        prefixIconColor: Colors.grey,
+        suffixIconColor: Colors.grey,
+        contentPadding: contentPadding ??
+            EdgeInsets.symmetric(
+                horizontal: AppWidthManager.w3, vertical: AppHeightManager.h1),
+        labelText: labelText,
+        labelStyle: TextStyle(
+            color: labelColor,
+            fontSize: FontSizeManager.fs16,
+            fontWeight: FontWeight.bold,
+            fontFamily: FontFamilyManager.cairo),
+        errorStyle: TextStyle(
+          fontSize: FontSizeManager.fs14,
+          fontFamily: FontFamilyManager.cairo,
+        ),
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(
+                borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
+            borderSide:   BorderSide(
+              color: AppColorManager.red,
+            )),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(
+                borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
+            borderSide: BorderSide(
+              color:borderColor?? AppColorManager.lightGreyOpacity6,
+            )),
+        disabledBorder: OutlineInputBorder(
+
+            borderRadius: BorderRadius.all(Radius.circular(
+                borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
+            borderSide:  BorderSide(
+              color:borderColor?? Colors.transparent,
+              // color: Colors.transparent,
+            )),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(
+                borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
+            borderSide:  BorderSide(
+              color:borderColor?? AppColorManager.grey,
+            )),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(
+                borderRadius != null ? borderRadius! : AppRadiusManager.r10)),
+            borderSide: BorderSide(
+              color:borderColor?? Theme.of(context).primaryColor,
+            )),
       ),
+      style: style ??
+          TextStyle(
+              color: textColor,
+              fontSize: FontSizeManager.fs16,
+              fontFamily: FontFamilyManager.cairo),
     );
   }
 }

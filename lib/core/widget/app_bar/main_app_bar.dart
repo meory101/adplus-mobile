@@ -8,9 +8,10 @@ import '../../resource/size_manager.dart';
 import '../text/app_text_widget.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MainAppBar({super.key, required this.title});
+  const MainAppBar({super.key, required this.title,this.onPop});
 
   final String title;
+  final void Function()? onPop;
 
   @override
   Size get preferredSize => Size.fromHeight(AppHeightManager.h9);
@@ -25,21 +26,29 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           InkWell(
             onTap: () {
-              Navigator.pop(context);
+              if(onPop!=null){
+                onPop!();
+              }
+
+              else{
+                Navigator.pop(context);
+              }
             },
             child: SvgPicture.asset(
               LanguageHelper.checkIfLTR(context: context)
                   ? AppIconManager.arrowLeft
                   : AppIconManager.arrowRight,
               colorFilter:
-                  const ColorFilter.mode(AppColorManager.mainColor, BlendMode.srcIn),
+              const ColorFilter.mode(
+                  AppColorManager.mainColor, BlendMode.srcIn),
             ),
           ),
           SizedBox(
             width: AppWidthManager.w2,
           ),
           AppTextWidget(
-            text: title,
+            text: title.isNotEmpty ? title : LanguageHelper.checkIfLTR(
+                context: context) ? 'Mzad Damascus': 'مزاد دمشق',
             fontSize: FontSizeManager.fs18,
             color: AppColorManager.mainColor,
             fontWeight: FontWeight.w600,

@@ -1,13 +1,11 @@
-/**
- * Created by Eng.Eyad AlSayed on 2/26/2024.
- */
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
+import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
 
-import 'api_error_method.dart';
 import 'api_error_response_entity.dart';
 import 'api_failures.dart';
-import 'api_status_code.dart';
 
 class ErrorEntity {
   String errorMessage;
@@ -26,7 +24,7 @@ class ErrorEntity {
 
 abstract class ApiErrorHandler {
   static Future<ErrorEntity> mapFailure({
-    BuildContext? buildContext,
+   required BuildContext buildContext,
     required ApiFailure failure,
   }) {
     ErrorEntity errorEntity = ErrorEntity();
@@ -58,24 +56,34 @@ abstract class ApiErrorHandler {
   }
 
   static Future<ErrorEntity> handleApiServerFailure(
-      {BuildContext? buildContext,
+      {required BuildContext buildContext,
       required ApiServerFailure failure,
       required ErrorEntity errorEntity}) {
     if ((failure.response?.body ?? "").isNotEmpty) {
       final ErrorResponseEntity errorResponseEntity;
       try {
-        errorResponseEntity =
-            errorResponseEntityFromJson(failure.response?.body ?? '{}');
+        errorResponseEntity = errorResponseEntityFromJson(
+            jsonDecode(failure.response?.body ?? "")['errors'] ?? '{}');
 
-        errorEntity.errorMessage = errorResponseEntity.message;
+        errorEntity.errorMessage =
+            jsonDecode(failure.response?.body ?? "")['errors'].toString();
         errorEntity.statusCode = failure.response?.statusCode ?? 0;
         errorEntity.errorCode = errorResponseEntity.errorCode;
-        if (buildContext != null &&
-            ApiStatusCode.invalidSessionToken() == errorEntity.errorCode) {
-          ApiErrorMethod.invalidSessionToken(context: buildContext);
+        if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
+            'Unauthenticated.') {
+          AppSharedPreferences.cashToken(token: "");
+          showLoginBottomSheet(context: buildContext);
         }
       } catch (e) {
-        errorEntity.errorMessage = "serverError";
+        errorEntity.errorMessage =
+            jsonDecode(failure.response?.body ?? "")['errors'].toString();
+
+        if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
+            'Unauthenticated.') {
+          AppSharedPreferences.cashToken(token: "");
+          showLoginBottomSheet(context: buildContext);
+
+        }
       }
     }
     return Future.value(errorEntity);

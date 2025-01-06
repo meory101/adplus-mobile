@@ -65,7 +65,7 @@ class _AppTextWidgetState extends State<AppTextWidget> {
           style: TextStyle(
             fontFamily: FontFamilyManager.cairo,
             letterSpacing: -0.4,
-            fontSize: widget.fontSize ?? FontSizeManager.fs14,
+            fontSize: widget.fontSize ?? FontSizeManager.fs15,
             fontWeight: widget.fontWeight,
             color: widget.color,
             decoration: widget.textDecoration,

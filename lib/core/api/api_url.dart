@@ -21,7 +21,6 @@ class ApiUrl {
       baseUrl = firstBaseUrl;
     }
 
-    print(baseUrl + _link);
     return Uri.parse(baseUrl + _link);
   }
 

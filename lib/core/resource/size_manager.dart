@@ -161,6 +161,10 @@ abstract class AppHeightManager {
   static double h37 = 38.h;
   static double h39 = 39.h;
   static double h40 = 40.h;
+  static double h42 = 42.h;
+
+  static double h43 = 43.h;
+
   static double h45 = 45.h;
   static double h46 = 46.h;
   static double h47 = 47.h;
@@ -175,6 +179,9 @@ abstract class AppHeightManager {
   static double h60 = 60.h;
   static double h64 = 64.h;
   static double h70 = 70.h;
+  static double h75 = 75.h;
+  static double h77 = 77.h;
+
   static double h80 = 80.h;
   static double h90 = 90.h;
   static double h100 = 100.h;
@@ -184,6 +191,3 @@ abstract class AppPixelManager {
   static double px24 = 24.px;
   static double px54 = 54.px;
 }
-
-
-

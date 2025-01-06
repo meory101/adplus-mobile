@@ -98,8 +98,8 @@ ThemeData lightTheme() {
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
-        borderSide: const BorderSide(
-          color: AppColorManager.mainColor,
+        borderSide:  BorderSide(
+          color: AppColorManager.red,
         ),
       ),
       enabledBorder: OutlineInputBorder(
@@ -110,7 +110,7 @@ ThemeData lightTheme() {
           horizontal: AppWidthManager.w16, vertical: AppHeightManager.h1point5),
       hintStyle: TextStyle(
         color: AppColorManager.grey,
-        fontSize: FontSizeManager.fs16,
+        fontSize: FontSizeManager.fs15,
         fontWeight: FontWeight.normal,
       ),
       floatingLabelStyle: const TextStyle(
@@ -118,7 +118,7 @@ ThemeData lightTheme() {
       ),
       iconColor: AppColorManager.mainColor,
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: AppColorManager.mainColor),
+        borderSide:  BorderSide(color: AppColorManager.lightGreyOpacity6),
         borderRadius: BorderRadius.circular(AppRadiusManager.r10),
       ),
       border: OutlineInputBorder(

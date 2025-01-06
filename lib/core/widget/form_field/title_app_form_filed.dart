@@ -58,14 +58,12 @@ class TitleAppFormFiled extends StatelessWidget {
         ),
         SizedBox(
           child: AppTextFormField(
-            formKey: formKey,
             controller: controller,
-
             style: style,
             readOnly: readOnly,
             suffixIcon: suffixIcon != null && onIconTaped != null
                 ? InkWell(
-              overlayColor: const MaterialStatePropertyAll(
+              overlayColor: const WidgetStatePropertyAll(
                   AppColorManager.transparent),
               onTap: onIconTaped,
               child: Padding(
