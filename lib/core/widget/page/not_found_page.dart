@@ -5,7 +5,7 @@ import '../../../app/app.dart';
 
 
 class NotFoundScreen extends StatelessWidget {
-  const NotFoundScreen({Key? key}) : super(key: key);
+  const NotFoundScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

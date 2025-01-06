@@ -16,13 +16,13 @@ abstract class PhoneNumberHelper{
       print(formatedPhone);
       print('fffffffffffffff');
     }
-    return '+963${formatedPhone}';
+    return '+963$formatedPhone';
   }
   static String formatPhoneNumberWithoutCountyCode(String phone){
     if((phone).isEmpty) return "";
     String formatedPhone = "";
       formatedPhone= phone.substring(4);
-    return '0${formatedPhone}';
+    return '0$formatedPhone';
   }
 
 }

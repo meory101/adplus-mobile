@@ -34,7 +34,7 @@ abstract class AppImageHelper {
         imageQuality: 100,
       );
 
-      if (photos == null || photos.isEmpty) return null;
+      if (photos.isEmpty) return null;
 
       for (XFile? photo in photos) {
         if ((photo?.path ?? "").isNotEmpty) {

@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/request/edit_password_request_entity.dart';
-import 'package:mzad_damascus/feature/more/domain/entity/request/update_profile_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/edit_password_response_entity.dart';
-import 'package:mzad_damascus/feature/more/domain/entity/response/update_profile_username_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/repository/more_repository.dart';
  import '../../../../core/api/api_error/api_failures.dart';
 

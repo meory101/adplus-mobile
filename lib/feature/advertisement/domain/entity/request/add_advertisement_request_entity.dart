@@ -1,10 +1,7 @@
 import 'dart:convert';
 
-import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
-import 'package:mzad_damascus/feature/comment/domain/entity/response/comments_response_entity.dart';
 
 import '../../../../home/domain/entity/response/get_adv_details_response_entity.dart';
-import 'attribute_form_value.dart';
 /// category_id : 4
 /// city_id : 3
 /// name : "ففففف"

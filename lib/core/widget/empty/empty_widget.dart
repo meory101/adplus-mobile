@@ -14,7 +14,7 @@ class EmptyWidget extends StatelessWidget {
   final String? image;
   final Widget? actions;
 
-  const EmptyWidget({this.image, this.subTitle, this.title, this.actions});
+  const EmptyWidget({super.key, this.image, this.subTitle, this.title, this.actions});
 
   @override
   Widget build(BuildContext context) {

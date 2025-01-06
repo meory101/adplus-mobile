@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
-import 'package:mzad_damascus/feature/more/domain/entity/response/myitems_response_entity.dart';
 import 'package:mzad_damascus/feature/notification/domain/entities/response/notifications_response_entity.dart';
 
 class NotificationState extends Equatable {

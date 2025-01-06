@@ -18,7 +18,7 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class VerfiyUsernameScreen extends StatefulWidget {
   final VerfiyusernameArgs args;
-  const VerfiyUsernameScreen({Key? key, required this.args}) : super(key: key);
+  const VerfiyUsernameScreen({super.key, required this.args});
 
   @override
   State<VerfiyUsernameScreen> createState() => _VerfiyUsernameScreenState();

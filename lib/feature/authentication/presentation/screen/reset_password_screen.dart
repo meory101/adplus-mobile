@@ -12,7 +12,6 @@ import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/reset_passwod_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/reset_password_cubit/reset_password__cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/reset_password_cubit/reset_password_state.dart';
-import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
 class ResetPasswordScreen extends StatefulWidget {

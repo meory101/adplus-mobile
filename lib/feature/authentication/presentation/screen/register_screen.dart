@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: AppHeightManager.h4,
                 ),
                 ClipOval(
-                  child: Container(
+                  child: SizedBox(
                     height: AppHeightManager.h12,
                     width: AppHeightManager.h12,
                     child: MainImageWidget(imagePath: AppImageManager.icon),
@@ -88,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: AppHeightManager.h3,
                         ),
-                        Container(
+                        SizedBox(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
                             fillColor: AppColorManager.lightGreyOpacity6,
@@ -109,7 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         SizedBox(height: AppHeightManager.h1point8),
-                        Container(
+                        SizedBox(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
                             fillColor: AppColorManager.lightGreyOpacity6,
@@ -133,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if (value[0] == "0") {
                                   newValue = value.substring(1);
                                 }
-                                entity.username = '+963${newValue}';
+                                entity.username = '+963$newValue';
                               }
                               if (!isEmail && !isPhone) {
                                 return "usernameInvalid".tr();
@@ -143,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         SizedBox(height: AppHeightManager.h1point8),
-                        Container(
+                        SizedBox(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
                             fillColor: AppColorManager.lightGreyOpacity6,
@@ -168,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         SizedBox(height: AppHeightManager.h1point8),
-                        Container(
+                        SizedBox(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
                             fillColor: AppColorManager.lightGreyOpacity6,
@@ -192,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         SizedBox(height: AppHeightManager.h1point8),
-                        Container(
+                        SizedBox(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
                             fillColor: AppColorManager.lightGreyOpacity6,
@@ -231,7 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         SizedBox(height: AppHeightManager.h1point8),
-                        Container(
+                        SizedBox(
                           width: AppWidthManager.w80,
                           child: AppTextFormField(
                             fillColor: AppColorManager.lightGreyOpacity6,

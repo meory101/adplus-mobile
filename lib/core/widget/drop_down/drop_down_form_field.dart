@@ -10,7 +10,7 @@
 
   class DropDownFormFieldWidget extends StatefulWidget {
     const DropDownFormFieldWidget({
-      Key? key,
+      super.key,
       required this.options,
       required this.hint,
       this.hintFontColor,
@@ -24,7 +24,7 @@
       this.borderColor,
       this.value,
       this.onChanged,
-    }) : super(key: key);
+    });
 
     final List<NameAndId> options;
     final String hint;

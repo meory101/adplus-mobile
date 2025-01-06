@@ -157,18 +157,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Visibility(
               visible: isVisitor == false,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  selectedIndex == 0
-                      ? const ActiveListView()
-                      : selectedIndex == 1
-                          ? const FavoriteListView()
-                          : selectedIndex == 2
-                              ? const CommentsListView()
-                              : const LikesListView()
-                ],
-              ),
               replacement: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -201,6 +189,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: AppColorManager.white,
                     ),
                   ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  selectedIndex == 0
+                      ? const ActiveListView()
+                      : selectedIndex == 1
+                          ? const FavoriteListView()
+                          : selectedIndex == 2
+                              ? const CommentsListView()
+                              : const LikesListView()
                 ],
               ),
             )

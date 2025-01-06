@@ -11,8 +11,6 @@ import 'package:mzad_damascus/feature/more/domain/entity/response/edit_password_
 import 'package:mzad_damascus/feature/more/domain/entity/response/myitems_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/update_profile_username_response_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/entity/response/verfiy_username_response_entity.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/request/update_profile_request_entity.dart';
-import 'package:mzad_damascus/feature/profile/domain/entity/response/get_profile_info_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 
 /// Eng.Nour Othman(meory)*

@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   ClipOval(
-                    child: Container(
+                    child: SizedBox(
                       height: AppHeightManager.h12,
                       width: AppHeightManager.h12,
                       child: MainImageWidget(imagePath: AppImageManager.icon),
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: AppColorManager.black,
                           ),
                           SizedBox(height: AppHeightManager.h2),
-                          Container(
+                          SizedBox(
                             width: AppWidthManager.w80,
                             child: AppTextFormField(
                               fillColor: AppColorManager.lightGreyOpacity6,
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(height: AppHeightManager.h1point8),
-                          Container(
+                          SizedBox(
                             width: AppWidthManager.w80,
                             child: AppTextFormField(
                               fillColor: AppColorManager.lightGreyOpacity6,

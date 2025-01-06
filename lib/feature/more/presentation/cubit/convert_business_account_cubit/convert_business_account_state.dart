@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
-import 'package:mzad_damascus/feature/more/domain/entity/response/verfiy_username_response_entity.dart';
 
 class ConvertBusinessAccountState extends Equatable {
   final String error;

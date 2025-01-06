@@ -1,10 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/verfication_request.dart';
-import 'package:mzad_damascus/feature/authentication/domain/entity/response/register_response_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/verfication_response.dart';
 import 'package:mzad_damascus/feature/authentication/domain/repository/auth_repository.dart';
 import '../../../../core/api/api_error/api_failures.dart';
-import '../entity/request/register_request_entity.dart';
 
 /// Eng.Hussaen Baghdadi*
 

@@ -213,7 +213,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                                 Expanded(
                                   child: ListView.builder(
                                     controller: scrollController,
-                                    itemCount: (comments?.length ?? 0) + 1,
+                                    itemCount: (comments.length ?? 0) + 1,
                                     itemBuilder: (context, index) {
                                       if (index == comments.length) {
                                         return Visibility(
@@ -286,7 +286,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                                                         fontSize:
                                                             FontSizeManager
                                                                 .fs15,
-                                                        text: comments?[index]
+                                                        text: comments[index]
                                                                 .client
                                                                 ?.name ??
                                                             ""),
@@ -297,7 +297,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                                                         fontSize:
                                                             FontSizeManager
                                                                 .fs15,
-                                                        text: comments?[index]
+                                                        text: comments[index]
                                                                 .comment ??
                                                             ""),
                                                   ],

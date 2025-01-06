@@ -1,6 +1,4 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
@@ -20,7 +18,6 @@ import '../../../../router/router.dart';
 import '../../domain/entity/request/get_advs_by_user_request_entity.dart';
 import '../cubit/get_advs_by_user_cubit/get_adv_by_user_cubit.dart';
 import 'advertisement_details_screen.dart';
-import 'dart:ui' as ui;
 
 class AuthorProfileScreen extends StatefulWidget {
   final AuthorProfileArgs arg;

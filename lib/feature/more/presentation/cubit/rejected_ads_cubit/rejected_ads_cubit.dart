@@ -27,7 +27,9 @@ class RejectedAdsCubit extends Cubit<RejectedAdsState> {
   }) async {
     if (!hasMoreItems ||
         state.status == CubitStatus.loading ||
-        state.status == CubitStatus.loadMore) return;
+        state.status == CubitStatus.loadMore) {
+      return;
+    }
     emit(state.copyWith(
         status: currentPage == 1 ? CubitStatus.loading : CubitStatus.loadMore));
     entity.page = currentPage;

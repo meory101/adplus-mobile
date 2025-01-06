@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mzad_damascus/core/widget/container/shimmer_container.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/search_user_list_view_shimmer.dart';
 
 import '../../../../../core/model/user.dart';
@@ -14,7 +12,6 @@ import '../../../../../core/widget/button/main_app_button.dart';
 import '../../../../../core/widget/container/decorated_container.dart';
 import '../../../../../core/widget/empty/empty_widget.dart';
 import '../../../../../core/widget/image/main_image_widget.dart';
-import '../../../../../core/widget/loading/app_circular_progress_widget.dart';
 import '../../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../../core/widget/text/app_text_widget.dart';
 import '../../../../../router/router.dart';

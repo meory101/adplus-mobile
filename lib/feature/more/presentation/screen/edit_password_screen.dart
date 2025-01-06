@@ -17,7 +17,7 @@ import '../../../../core/resource/font_manager.dart';
 import '../../../../core/injection/injection_container.dart' as di;
 
 class EditPasswordScreen extends StatefulWidget {
-  const EditPasswordScreen({Key? key}) : super(key: key);
+  const EditPasswordScreen({super.key});
 
   @override
   _EditPasswordScreenState createState() => _EditPasswordScreenState();
@@ -54,6 +54,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     onChanged: (value) {
                       entity.password = value;
                       checkPasswordsMatch();
+                      return null;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -82,6 +83,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     onChanged: (value) {
                       entity.passwordConfirmation = value;
                       checkPasswordsMatch();
+                      return null;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {

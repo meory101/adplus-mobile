@@ -1,12 +1,8 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mzad_damascus/feature/more/domain/entity/request/verfiy_username_request_entity.dart';
 import 'package:mzad_damascus/feature/more/domain/usecase/convert_business_account_usecase.dart';
-import 'package:mzad_damascus/feature/more/domain/usecase/verfiyusername_usecase.dart';
-import 'package:mzad_damascus/feature/more/presentation/cubit/verfiyusername_cubit/verfiy_username_state.dart';
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
 import 'convert_business_account_state.dart';

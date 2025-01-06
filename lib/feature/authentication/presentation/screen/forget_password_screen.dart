@@ -18,7 +18,7 @@ import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
-  const ForgetPasswordScreen({Key? key}) : super(key: key);
+  const ForgetPasswordScreen({super.key});
 
   @override
   State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();

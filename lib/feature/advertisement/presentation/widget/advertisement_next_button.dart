@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mzad_damascus/app/app.dart';
 
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/resource/font_manager.dart';

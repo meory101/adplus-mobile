@@ -228,7 +228,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                       List<NameAndId> citiesOptions = [];
                       List<City> cities = state.entity.data ?? [];
                       String? initValue;
-                      cities.forEach((city) {
+                      for (var city in cities) {
                         if (city.cityId == entity.cityId) {
                           initValue =
                               LanguageHelper.checkIfLTR(context: context)
@@ -241,7 +241,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                               : city.arName ?? "",
                           id: city.cityId.toString(),
                         ));
-                      });
+                      }
                       return TitleDropDownFormFieldWidget(
                         hintColor: AppColorManager.textAppColor,
 
@@ -249,6 +249,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                           if ((city?.name ?? "").isEmpty) {
                             return "required".tr(); // Localized text
                           }
+                          return null;
                         },
                         onChanged: (selectedCity) {
                           entity.cityId = num.parse(selectedCity?.id ?? "0");
@@ -279,7 +280,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                       List<NameAndId> currenciesOptions = [];
                       List<Currency> cities = state.entity.data ?? [];
                       String? initValue;
-                      cities.forEach((currency) {
+                      for (var currency in cities) {
                         if (currency.currencyId == entity.currencyId) {
                           initValue =
                           LanguageHelper.checkIfLTR(context: context)
@@ -292,7 +293,7 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                               : currency.arName ?? "",
                           id: currency.currencyId.toString(),
                         ));
-                      });
+                      }
                       return TitleDropDownFormFieldWidget(
                         hintColor: AppColorManager.textAppColor,
 

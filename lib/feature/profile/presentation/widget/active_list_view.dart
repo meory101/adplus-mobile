@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/feature/main/presentation/screen/main_bottom_app_bar.dart';
@@ -10,9 +9,7 @@ import '../../../../core/resource/constant_manager.dart';
 import '../../../../core/resource/cubit_status_manager.dart';
 import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/size_manager.dart';
-import '../../../../core/widget/button/main_app_button.dart';
 import '../../../../core/widget/container/decorated_container.dart';
-import '../../../../core/widget/drop_down/NameAndId.dart';
 import '../../../../core/widget/image/main_image_widget.dart';
 import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
@@ -24,7 +21,6 @@ import '../../../more/presentation/cubit/my_reviewd_item_cubit/myitem_under_revi
 import '../../../more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_state.dart';
 import '../../../more/presentation/screen/update_adv_screen.dart';
 import '../../../more/presentation/widget/dialog/delete_ad_dialog.dart';
-import '../../../more/presentation/widget/my_advs/adv_card.dart';
 
 class ActiveListView extends StatelessWidget {
   const ActiveListView({super.key});

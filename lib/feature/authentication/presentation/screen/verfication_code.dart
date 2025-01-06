@@ -17,7 +17,7 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class VerificationScreen extends StatefulWidget {
   final VerificationCodeArgs args;
-  const VerificationScreen({Key? key, required this.args}) : super(key: key);
+  const VerificationScreen({super.key, required this.args});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();

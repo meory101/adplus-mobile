@@ -24,7 +24,9 @@ class NotificationCubit extends Cubit<NotificationState> {
   }) async {
     if (!hasMoreItems ||
         state.status == CubitStatus.loading ||
-        state.status == CubitStatus.loadMore) return;
+        state.status == CubitStatus.loadMore) {
+      return;
+    }
     emit(state.copyWith(status: CubitStatus.loading));
     entity.page = currentPage;
 

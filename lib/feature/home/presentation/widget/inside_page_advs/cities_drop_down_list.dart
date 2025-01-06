@@ -36,7 +36,7 @@ class CitiesDropDownList extends StatelessWidget {
         List<NameAndId> citiesOptions = [];
         List<City> cities = state.entity.data ?? [];
         String? hint;
-        cities.forEach((city) {
+        for (var city in cities) {
           if(city.cityId==FilterRequest.entity.cityId){
             hint = LanguageHelper.checkIfLTR(
                 context: context)
@@ -50,7 +50,7 @@ class CitiesDropDownList extends StatelessWidget {
                 : city.arName ?? "",
             id: city.cityId.toString(),
           ));
-        });
+        }
         return SizedBox(
           height: AppHeightManager.h7,
           width: AppWidthManager.w45,

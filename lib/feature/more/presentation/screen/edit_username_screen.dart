@@ -20,7 +20,7 @@ import '../../../../core/widget/form_field/title_app_form_filed.dart';
 import '../../../../core/injection/injection_container.dart' as di;
 
 class EditUsernameScreen extends StatefulWidget {
-  const EditUsernameScreen({Key? key}) : super(key: key);
+  const EditUsernameScreen({super.key});
 
   @override
   _EditUsernameScreenState createState() => _EditUsernameScreenState();
