@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: AppHeightManager.h4),
                           AppTextWidget(
                             text: "welcomeBack".tr(),
-                            fontSize: FontSizeManager.fs20,
+                            fontSize: FontSizeManager.fs19,
                             fontWeight: FontWeight.bold,
                             color: AppColorManager.black,
                           ),
