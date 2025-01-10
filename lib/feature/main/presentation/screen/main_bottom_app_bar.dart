@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mzad_damascus/core/helper/lanucher_helper.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/request/add_advertisement_request_entity.dart';
@@ -65,7 +66,7 @@ class _MainAppBottomAppBarState extends State<MainBottomAppBar> {
       child: Scaffold(
           floatingActionButton: selectedIndex==3?SizedBox(): MainAppButton(
             onTap: () {
-              UrlLauncherHelper.openWhatsapp(phoneNumber: "0938421937");
+              UrlLauncherHelper.openWhatsapp(phoneNumber:EnumManager.supportNumber);
             },
             alignment: Alignment.center,
             width: AppWidthManager.w16,

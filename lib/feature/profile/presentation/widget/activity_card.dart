@@ -33,7 +33,6 @@ class _ActivityCardState extends State<ActivityCard> {
       margin: EdgeInsets.symmetric(horizontal:  AppWidthManager.w3Point8),
       padding: EdgeInsets.all(AppWidthManager.w3Point8),
       child: Column(children: [
-        SizedBox(height: AppHeightManager.h1),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -151,7 +150,6 @@ class _ActivityCardState extends State<ActivityCard> {
               ),
 
             ]),
-        SizedBox(height: AppHeightManager.h1),
       ]),
     );
   }

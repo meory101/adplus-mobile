@@ -15,6 +15,7 @@ abstract class EnumManager {
     -1: underReview,
     1: active
   };
+  static String supportNumber = "0989712143";
 
   static num star = 1;
   static num paginationLength = 10;
