@@ -18,13 +18,6 @@ class ApiMethods {
       headers = {'Content-Type': 'application/json',
       'platform' : 'app'
       };
-      // headers = {
-      //   "Content-type": "application/json",
-      //   "Accept": "application/json",
-      //   "X-Parse-Application-Id": "soa",
-      //   "X-Parse-REST-API-Key": "soa12345",
-      //   "lang": AppSharedPreferences.getLanguage()
-      // };
       if (AppSharedPreferences.getToken().isNotEmpty) {
         print(AppSharedPreferences.getToken());
         headers['Authorization'] = 'Bearer ${AppSharedPreferences.getToken()}';

@@ -3,10 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
-import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
-import 'package:mzad_damascus/router/router.dart';
-
-import 'api_error_method.dart';
 import 'api_error_response_entity.dart';
 import 'api_failures.dart';
 import 'api_status_code.dart';
@@ -28,7 +24,7 @@ class ErrorEntity {
 
 abstract class ApiErrorHandler {
   static Future<ErrorEntity> mapFailure({
-   required BuildContext buildContext,
+    required BuildContext buildContext,
     required ApiFailure failure,
   }) {
     ErrorEntity errorEntity = ErrorEntity();
@@ -70,7 +66,9 @@ abstract class ApiErrorHandler {
             jsonDecode(failure.response?.body ?? "")['errors'] ?? '{}');
 
         errorEntity.errorMessage =
-            jsonDecode(failure.response?.body ?? "")['errors'].toString();
+        jsonDecode(failure.response?.body ?? "")['errors'].isEmpty
+            ? jsonDecode(failure.response?.body ?? "")['message']
+            : jsonDecode(failure.response?.body ?? "")['errors'].toString();
         errorEntity.statusCode = failure.response?.statusCode ?? 0;
         errorEntity.errorCode = errorResponseEntity.errorCode;
         if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
@@ -80,13 +78,14 @@ abstract class ApiErrorHandler {
         }
       } catch (e) {
         errorEntity.errorMessage =
-            jsonDecode(failure.response?.body ?? "")['errors'].toString();
+            jsonDecode(failure.response?.body ?? "")['errors'].isEmpty
+                ? jsonDecode(failure.response?.body ?? "")['message']
+                : jsonDecode(failure.response?.body ?? "")['errors'].toString();
 
         if (jsonDecode(failure.response?.body ?? "")['errors'].toString() ==
             'Unauthenticated.') {
           AppSharedPreferences.cashToken(token: "");
           showLoginBottomSheet(context: buildContext);
-
         }
       }
     }
