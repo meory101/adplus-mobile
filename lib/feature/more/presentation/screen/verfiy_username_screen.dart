@@ -51,7 +51,7 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                height: AppHeightManager.h8,
+                height: AppHeightManager.h10,
               ),
               ClipOval(
                 child: SizedBox(
@@ -70,19 +70,21 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
                 text: 'verificationCode'.tr(),
               ),
               SizedBox(
-                height: AppHeightManager.h20,
+                height: AppHeightManager.h10,
               ),
               AppTextWidget(
                   text: 'enterVerificationCode'.tr(),
                   color: Colors.orange,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
                   fontSize: FontSizeManager.fs15),
               SizedBox(height: 20),
               Padding(
                 padding: EdgeInsets.all(AppWidthManager.w3Point8),
                 child: PinCodeTextField(
                   pinBoxBorderWidth: 2,
-                  pinBoxWidth: AppWidthManager.w12,
-                  pinBoxHeight: AppHeightManager.h6,
+                  pinBoxWidth: AppWidthManager.w10,
+                  pinBoxHeight: AppWidthManager.w10,
                   maxLength: 6,
                   pinBoxRadius: AppRadiusManager.r10,
                   defaultBorderColor: AppColorManager.grey,

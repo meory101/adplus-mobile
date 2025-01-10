@@ -45,8 +45,8 @@ class _EditUsernameScreenState extends State<EditUsernameScreen> {
               child: Column(
                 children: [
                   TitleAppFormFiled(
-                    title: "usernameRequired".tr(), // Localized title
-                    hint: "nameHint".tr(), // Localized hint
+                    title: "usernameHint".tr(), // Localized title
+                    hint: "usernameHint".tr(), // Localized hint
                     onChanged: (value) {
                       entity.username = value;
                       return null;
