@@ -29,8 +29,8 @@ abstract class AuthRemote {
   Future<ResetPasswordResponse> resetPassword(
       {required PasswordResetRequestEntity entity});
   Future<ForgetPasswordResponseEntity> forgetpassword(
-      {required ForgetPasswordRequestEntity entity}); 
-       Future<CheckUpdateAvailabilityResponseEntity> checkupdate({ entity});
+      {required ForgetPasswordRequestEntity entity});
+  Future<CheckUpdateAvailabilityResponseEntity> checkupdate({entity});
 }
 
 class AuthRemoteImplement extends AuthRemote {
@@ -84,13 +84,11 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<ResetPasswordResponse> resetPassword(
       {required PasswordResetRequestEntity entity}) async {
-    final response = await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.resetPassword); 
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.resetPassword);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      return resetPasswordResponseFromJson(
-          response.body);  
+      return resetPasswordResponseFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }
@@ -99,27 +97,23 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<ForgetPasswordResponseEntity> forgetpassword(
       {required ForgetPasswordRequestEntity entity}) async {
-    final response = await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.forgetpassword); 
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.forgetpassword);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      return forgetPasswordResponseEntityFromJson(
-          response.body);  
+      return forgetPasswordResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }
   }
+
   @override
-  Future<CheckUpdateAvailabilityResponseEntity> checkupdate(
-      { entity}) async {
-    final response = await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.forgetpassword); 
+  Future<CheckUpdateAvailabilityResponseEntity> checkupdate({entity}) async {
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.checkupdate);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      return checkUpdateAvailabilityResponseEntityFromJson(
-          response.body);  
+      return checkUpdateAvailabilityResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }
