@@ -10,4 +10,7 @@ abstract class AppInfoHelper {
   static String getAppVersion() {
     return packageInfo?.version ?? "";
   }
+  static String getAppBuildNumber() {
+    return packageInfo?.buildNumber ?? "";
+  }
 }
