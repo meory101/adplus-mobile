@@ -3,6 +3,7 @@ import 'package:mzad_damascus/feature/authentication/data/datasource/remote/auth
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/forget_password_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/reset_passwod_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/verfication_request.dart';
+import 'package:mzad_damascus/feature/authentication/domain/entity/response/check_update_availability_response_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/forget_password_response_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/login_response_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/logout_response_entity.dart';
@@ -84,6 +85,17 @@ class AuthRepositoryImplements implements AuthRepository {
     return Connector<ForgetPasswordResponseEntity>().connect(
       remote: () async {
         final result = await remote.forgetpassword(entity: entity);
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, CheckUpdateAvailabilityResponseEntity>> checkupdate(
+      {entity}) async {
+    return Connector<CheckUpdateAvailabilityResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.checkupdate(entity: entity);
         return Right(result);
       },
     );

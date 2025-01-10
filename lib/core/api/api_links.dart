@@ -13,7 +13,8 @@ class ApiPostUrl {
   static String itemsSearch = "api/item/ItemsSearch";
   static String getNotifications = "api/notification/getNotifications";
   static String uploadfile = "api/auth/Uploadfile";
-  static String businessClientByCategory = "api/category/BusinessClientByCategory";
+  static String businessClientByCategory =
+      "api/category/BusinessClientByCategory";
   static String myRefusedItems = "api/item/MyRefusedItems";
   static String getFollowersByUsername = "api/following/getFollowersByUsername";
   static String getFollowingByUsername = "api/following/getFollowingByUsername";
@@ -57,6 +58,7 @@ class ApiPostUrl {
   static String checkFavorite = "api/reaction/checkFavorite";
   static String removeFavorite = "api/reaction/removeFavorite";
   static String myFavoriteItems = "api/item/myFavoriteItems";
+  static String checkupdate = "/api/auth/checkUpdateAvailability";
 }
 
 class ApiDeleteUrl {}
