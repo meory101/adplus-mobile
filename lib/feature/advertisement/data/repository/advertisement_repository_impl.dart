@@ -6,8 +6,6 @@ import 'package:mzad_damascus/feature/advertisement/domain/entity/request/delete
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/currency_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/repository/advertisement_repository.dart';
-import 'package:mzad_damascus/feature/home/data/datasource/remote/home_remote.dart';
-import 'package:mzad_damascus/feature/home/domain/entity/response/get_categories_response_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 import '../../../../core/api/connector.dart';
 import '../../domain/entity/request/add_advertisement_request_entity.dart';

@@ -87,7 +87,9 @@ class _SearchFormFieldState extends State<SearchFormField> {
               ),
               onPressed: () {
                 if ((SearchUserAndItemRequestEntity.userSearchEntity
-                    .searchText ?? "").isEmpty) return;
+                    .searchText ?? "").isEmpty) {
+                  return;
+                }
                 searchUsersAndItems();
               }
             ),

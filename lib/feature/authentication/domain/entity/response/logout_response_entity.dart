@@ -20,7 +20,7 @@ class LogoutResponseEntity {
     _success = json['success'];
     _message = json['message'];
     _errors = json['errors'] != null ? List<dynamic>.from(json['errors']) : [];
-    _data = json['data'] != null ? json['data'] : {};
+    _data = json['data'] ?? {};
   }
 
   bool? _success;

@@ -40,7 +40,6 @@ class CheckLikeCubit extends Cubit<CheckLikeState> {
       (failure) async {
         final ErrorEntity errorEntity =
                         await ApiErrorHandler.mapFailure(failure: failure,buildContext: context);
-;
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },

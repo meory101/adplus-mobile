@@ -283,10 +283,7 @@ abstract class AppRouter {
                 create: (context) =>
                     di.sl<GetCitiesCubit>()..getCities(context: context),
               ),
-              BlocProvider(
-                create: (context) =>
-                di.sl<AdsByCategoryCubit>()
-              ),
+              BlocProvider(create: (context) => di.sl<AdsByCategoryCubit>()),
               BlocProvider(
                 create: (context) => di.sl<GetCategoryAttributesCubit>()
                   ..getCategoryAttributes(
@@ -356,7 +353,7 @@ abstract class AppRouter {
               ),
               BlocProvider(
                 create: (context) =>
-                di.sl<CurrencyCubit>()..getCurrencies(context: context),
+                    di.sl<CurrencyCubit>()..getCurrencies(context: context),
               ),
             ],
             child: UpdateAdvScreen(
@@ -608,7 +605,7 @@ abstract class AppRouter {
               ),
               BlocProvider(
                 create: (context) =>
-                di.sl<CurrencyCubit>()..getCurrencies(context: context),
+                    di.sl<CurrencyCubit>()..getCurrencies(context: context),
               ),
               BlocProvider(
                 create: (context) => di.sl<AddAdvertisementCubit>(),
@@ -669,8 +666,7 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) => di.sl<NotificationCubit>()
                   ..getMyNotifications(
-                      context: context,
-                      entity: NotificationsRequestEntity()),
+                      context: context, entity: NotificationsRequestEntity()),
               ),
               BlocProvider(
                 create: (context) => di.sl<SearchUserCubit>(),

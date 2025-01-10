@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/feature/notification/domain/entities/request/mark_read_notification_request_entity.dart';
-import 'package:mzad_damascus/feature/notification/domain/entities/response/notifications_response_entity.dart';
 import '../../../../../../core/api/api_error/api_error.dart';
 import '../../../../../../core/resource/cubit_status_manager.dart';
-import '../../../domain/entities/request/notifications_request_entity.dart';
 import '../../../domain/usecases/mark_read_notification.dart';
 import 'mark_read_notification_state.dart';
 

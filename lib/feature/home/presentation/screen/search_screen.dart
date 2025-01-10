@@ -81,8 +81,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     right: AppWidthManager.w3Point8),
                 child: Visibility(
                   visible: selectedTabIndex == 0,
-                  child: SearchItemResultGridView(),
                   replacement: SearchUserResultListView(),
+                  child: SearchItemResultGridView(),
                 ),
               )
             ],

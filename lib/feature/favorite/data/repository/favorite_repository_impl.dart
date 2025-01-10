@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:mzad_damascus/feature/advertisement/data/datasource/remote/advertisement_remote.dart';
 import 'package:mzad_damascus/feature/favorite/data/datasource/remote/favorite_remote.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/response/check_favorite_response_entity.dart';
 import 'package:mzad_damascus/feature/favorite/domain/entity/response/favorites_response_entity.dart';

@@ -21,7 +21,7 @@ extension EmailValidation on String {
   }
   extension PasswordValidation on String {
   bool isValidPassword() {
-    return this.length >= 8;
+    return length >= 8;
   }
 
 }

@@ -1,6 +1,5 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/core/widget/empty/empty_widget.dart';
@@ -21,7 +20,6 @@ import '../../../../../core/widget/loading/shimmer/advs_by_attribute_shimmer.dar
 import '../../../../../core/widget/text/app_text_widget.dart';
 import '../../../../../router/router.dart';
 import '../../../domain/entity/response/advs_by_attribute_response_entity.dart';
-import '../../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
 import '../../screen/advertisement_details_screen.dart';
 
 class AdsByCategoryListView extends StatelessWidget {

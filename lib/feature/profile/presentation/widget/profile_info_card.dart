@@ -200,7 +200,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                               ),
                               AppTextWidget(
                                 text:
-                                    '${profileInfo?.user?.phone ?? 'noPhoneNumberYet'.tr()}',
+                                    profileInfo?.user?.phone ?? 'noPhoneNumberYet'.tr(),
                                 fontSize: FontSizeManager.fs15,
                                 color: AppColorManager.textGrey,
                               ),
@@ -239,7 +239,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                               ),
                               AppTextWidget(
                                 text:
-                                    '${profileInfo?.user?.whatsapp ?? 'noWhatsappYet'.tr()}',
+                                    profileInfo?.user?.whatsapp ?? 'noWhatsappYet'.tr(),
                                 fontSize: FontSizeManager.fs15,
                                 color: AppColorManager.textGrey,
                               ),

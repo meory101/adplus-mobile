@@ -89,7 +89,7 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                           final urlPreview =
                               "https://mazaddimashq.com/adv/${widget.advDetails?.itemId}/$result";
                           await Share.share(
-                              'Share this ${result} ! •\n\n$urlPreview');
+                              'Share this $result ! •\n\n$urlPreview');
                         },
                         child: CircleAvatar(
                           backgroundColor: AppColorManager.mainColor,

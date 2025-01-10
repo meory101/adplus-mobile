@@ -30,7 +30,9 @@ class LikesCubit extends Cubit<LikesState> {
       required LikesRequestEntity entity}) async {
     if (!hasMoreItems ||
         state.status == CubitStatus.loading ||
-        state.status == CubitStatus.loadMore) return;
+        state.status == CubitStatus.loadMore) {
+      return;
+    }
     emit(state.copyWith(status:currentPage==1? CubitStatus.loading : CubitStatus.loadMore));
     entity.page = currentPage;
     final result = await usecase(entity: entity);
@@ -39,7 +41,7 @@ class LikesCubit extends Cubit<LikesState> {
     result.fold(
       (failure) async {
         final ErrorEntity errorEntity =
-                        await ApiErrorHandler.mapFailure(failure: failure,buildContext: context);;
+                        await ApiErrorHandler.mapFailure(failure: failure,buildContext: context);
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },

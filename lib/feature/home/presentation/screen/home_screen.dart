@@ -19,7 +19,6 @@ import '../../../../core/widget/snack_bar/note_message.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../../main.dart';
 import '../../../notification/domain/entities/request/notifications_request_entity.dart';
-import '../../../notification/domain/entities/response/notifications_response_entity.dart';
 import '../../../notification/presentation/cubit/notification/notification_cubit.dart';
 import '../../../notification/presentation/cubit/notification/notification_state.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';

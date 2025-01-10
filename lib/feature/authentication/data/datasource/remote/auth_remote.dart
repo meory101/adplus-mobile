@@ -79,6 +79,7 @@ class AuthRemoteImplement extends AuthRemote {
     }
   }
 
+  @override
   Future<ResetPasswordResponse> resetPassword(
       {required PasswordResetRequestEntity entity}) async {
     final response = await ApiMethods().post(
@@ -93,6 +94,7 @@ class AuthRemoteImplement extends AuthRemote {
     }
   }
 
+  @override
   Future<ForgetPasswordResponseEntity> forgetpassword(
       {required ForgetPasswordRequestEntity entity}) async {
     final response = await ApiMethods().post(

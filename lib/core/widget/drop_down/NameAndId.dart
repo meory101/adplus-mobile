@@ -35,7 +35,7 @@ class NameAndId {
 
 class MainDropdownWidget extends StatefulWidget {
   const MainDropdownWidget({
-    Key? key,
+    super.key,
     required this.options,
     required this.hint,
     this.hintFontColor,
@@ -48,7 +48,7 @@ class MainDropdownWidget extends StatefulWidget {
     this.borderColor,
     this.value,
     this.onChanged,
-  }) : super(key: key);
+  });
   final List<NameAndId> options;
   final String hint;
   final bool? reset;

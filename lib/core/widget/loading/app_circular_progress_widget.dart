@@ -6,9 +6,9 @@ import '../../resource/color_manager.dart';
 class AppCircularProgressWidget extends StatelessWidget {
   final Color? color;
   const AppCircularProgressWidget({
-    Key? key,
+    super.key,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

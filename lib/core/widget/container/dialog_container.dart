@@ -7,7 +7,7 @@ import '../../resource/theme_manager.dart';
 //A Decorated Container With Default Shadow Effect
 class DialogContainer extends StatelessWidget {
   const DialogContainer({
-    Key? key,
+    super.key,
     this.color,
     this.margin,
     this.padding,
@@ -21,7 +21,7 @@ class DialogContainer extends StatelessWidget {
     this.image,
     this.borderRadius,
     this.isGradient,
-  }) : super(key: key);
+  });
   final Color? color;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;

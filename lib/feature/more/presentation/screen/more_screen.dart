@@ -26,6 +26,8 @@ import '../widget/dialog/logout_dialog.dart';
 import '../widget/more_list_tile.dart';
 
 class MoreScreen extends StatelessWidget {
+  const MoreScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

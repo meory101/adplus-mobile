@@ -83,7 +83,7 @@ class AttributesHorizantalListView extends StatelessWidget {
                         children: [
                           AppTextWidget(
                               text: hint != null
-                                  ? "${hint}"
+                                  ? hint
                                   : LanguageHelper.checkIfLTR(context: context)
                                       ? filterItems[index].attributeNameEn ?? ""
                                       : filterItems[index].attributeName ?? ""),

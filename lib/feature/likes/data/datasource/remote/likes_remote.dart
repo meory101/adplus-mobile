@@ -1,5 +1,3 @@
-import 'package:mzad_damascus/feature/favorite/domain/entity/response/check_favorite_response_entity.dart';
-import 'package:mzad_damascus/feature/favorite/domain/entity/response/favorites_response_entity.dart';
 import 'package:mzad_damascus/feature/likes/domain/entity/request/likes_request_entity.dart';
 import 'package:mzad_damascus/feature/likes/domain/entity/response/likes_response_entity.dart';
 import '../../../../../core/api/api_error/api_exception.dart';

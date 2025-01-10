@@ -38,13 +38,13 @@ class AdvDetailsAttributeGridView extends StatelessWidget {
                 }
                 List<City> cities = state.entity.data ?? [];
                 String? cityName;
-                cities.forEach((city) {
+                for (var city in cities) {
                   if (city.cityId == advDetails?.cityId) {
                     cityName = LanguageHelper.checkIfLTR(context: context)
                         ? city.enName
                         : city.arName;
                   }
-                });
+                }
                 return DecoratedContainer(
                   padding: EdgeInsets.all(AppWidthManager.w3Point8),
                   child: Column(
@@ -54,13 +54,13 @@ class AdvDetailsAttributeGridView extends StatelessWidget {
                         maxLines: 2,
                         fontWeight: FontWeight.w500,
                         fontSize: FontSizeManager.fs14,
-                        text: "city".tr()+'\n',
+                        text: '${"city".tr()}\n',
                       ),
                       AppTextWidget(
                           maxLines: 2,
                           fontWeight: FontWeight.w700,
                           fontSize: FontSizeManager.fs14,
-                          text: cityName??""+'\n'),
+                          text: cityName??""'\n'),
                     ],
                   ),
                 );
@@ -76,13 +76,13 @@ class AdvDetailsAttributeGridView extends StatelessWidget {
                     maxLines: 2,
                     fontWeight: FontWeight.w500,
                     fontSize: FontSizeManager.fs14,
-                    text:( LanguageHelper.checkIfLTR(context: context)
+                    text:'${LanguageHelper.checkIfLTR(context: context)
                         ? (advDetails?.attributes?[index].attribute
                         ?.attributeNameEn ??
                         "")
                         : (advDetails
                         ?.attributes?[index].attribute?.attributeName ??
-                        ""))+'\n'),
+                        "")}\n'),
                 AppTextWidget(
                     maxLines: 2,
                     fontWeight: FontWeight.w700,

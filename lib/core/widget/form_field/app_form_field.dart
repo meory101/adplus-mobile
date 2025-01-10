@@ -38,7 +38,7 @@ class AppTextFormField extends StatelessWidget {
   final void Function()? onTap;
 
   const AppTextFormField(
-      {Key? key,
+      {super.key,
         this.borderRadius,
         this.borderColor,
         this.minLines,
@@ -70,8 +70,7 @@ class AppTextFormField extends StatelessWidget {
         this.maxLines,
         this.prefixIcon,
         this.hintText,
-        this.outlinedBorder})
-      : super(key: key);
+        this.outlinedBorder});
 
   @override
   Widget build(BuildContext context) {

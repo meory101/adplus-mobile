@@ -36,7 +36,6 @@ class FollowingCubit extends Cubit<FollowingState> {
       (failure) async {
         final ErrorEntity errorEntity =
                         await ApiErrorHandler.mapFailure(failure: failure,buildContext: context);
-;
         emit(state.copyWith(
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },

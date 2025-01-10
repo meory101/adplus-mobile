@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mzad_damascus/feature/comment/domain/entity/response/comments_response_entity.dart';
 import 'package:mzad_damascus/feature/comment/domain/repository/comments_repository.dart';
-import 'package:mzad_damascus/feature/likes/domain/entity/request/likes_request_entity.dart';
 import '../../../../core/api/api_error/api_failures.dart';
 import '../entity/comments_request_entity.dart';
 

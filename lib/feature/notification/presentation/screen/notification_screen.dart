@@ -22,7 +22,7 @@ import '../cubit/notification/notification_state.dart';
 import '../widgets/notification_list_itme.dart';
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+  const NotificationScreen({super.key});
 
   @override
   State<NotificationScreen> createState() => _NotificationScreenState();

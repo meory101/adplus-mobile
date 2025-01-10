@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/search_screen.dart';
@@ -10,7 +9,6 @@ import '../../../../../core/resource/size_manager.dart';
 import '../../../../../core/widget/container/shimmer_container.dart';
 import '../../../../../core/widget/form_field/app_form_field.dart';
 import '../../../../../core/widget/snack_bar/note_message.dart';
-import '../../../home/domain/entity/request/search_user_request_entity.dart';
 import '../../../home/presentation/cubit/search_user/search_user_cubit.dart';
 
 class MainSearchFormField extends StatefulWidget {

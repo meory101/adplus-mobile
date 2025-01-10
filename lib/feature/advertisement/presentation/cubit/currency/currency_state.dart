@@ -1,11 +1,9 @@
 
 
 import 'package:equatable/equatable.dart';
-import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_cities_response_entity.dart';
 
 import '../../../../../core/resource/cubit_status_manager.dart';
 import '../../../domain/entity/response/currency_response_entity.dart';
-import '../../../domain/entity/response/get_category_attributes_response_entity.dart';
 
 /// Eng.Nour Othman(meory)*
 

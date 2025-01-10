@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:http/http.dart' as http;
 import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import '../storage/shared/shared_pref.dart';

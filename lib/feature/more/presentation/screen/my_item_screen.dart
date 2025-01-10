@@ -22,7 +22,7 @@ import '../cubit/myitem_under_review/myitem_under_review_cubit.dart';
 import '../../domain/entity/request/myitem_request_entity.dart';
 
 class MyItemsScreen extends StatefulWidget {
-  const MyItemsScreen({Key? key}) : super(key: key);
+  const MyItemsScreen({super.key});
 
   @override
   State<MyItemsScreen> createState() => _MyItemsScreenState();

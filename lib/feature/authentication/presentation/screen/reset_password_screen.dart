@@ -5,19 +5,20 @@ import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/resource/image_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
+import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/reset_passwod_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/reset_password_cubit/reset_password__cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/reset_password_cubit/reset_password_state.dart';
-import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final ResetPasswordArgs? args;
-  const ResetPasswordScreen({super.key,required this.args});
+  const ResetPasswordScreen({super.key, required this.args});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -40,16 +41,33 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Container(
+        height: AppHeightManager.h100,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover, image: AssetImage(AppImageManager.mzad))),
         child: Padding(
           padding: EdgeInsets.only(
-              top: AppHeightManager.h20,
+              top: AppHeightManager.h1,
               left: AppWidthManager.w5,
               right: AppWidthManager.w5),
           child: Form(
             key: formKey,
             child: Column(
               children: [
+                SizedBox(
+                  height: AppHeightManager.h8,
+                ),
+                ClipOval(
+                  child: SizedBox(
+                    height: AppHeightManager.h12,
+                    width: AppHeightManager.h12,
+                    child: MainImageWidget(imagePath: AppImageManager.icon),
+                  ),
+                ),
+                SizedBox(
+                  height: AppHeightManager.h2,
+                ),
                 AppTextWidget(
                   text: "resetPassword".tr(),
                   color: AppColorManager.textAppColor,
@@ -57,7 +75,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   fontWeight: FontWeight.w700,
                 ),
                 SizedBox(height: AppHeightManager.h5),
-
                 AppTextFormField(
                   textInputType: TextInputType.emailAddress,
                   hintText: "codeHint".tr(),
@@ -70,7 +87,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     if (value == null || value.isEmpty) {
                       return "codeRequired".tr();
                     }
-                    if(value.length!=6){
+                    if (value.length != 6) {
                       return "inValidCode".tr();
                     }
                     return null;
@@ -90,7 +107,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     if (value == null || value.isEmpty) {
                       return "newPasswordRequired".tr();
                     }
-                    if(!value.isValidPassword()){
+                    if (!value.isValidPassword()) {
                       return "invalidPassword".tr();
                     }
                     return null;
@@ -145,13 +162,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 SizedBox(height: AppHeightManager.h1point8),
                 passwordsMatch
                     ? Text(
-                  "passwordsMatch".tr(),
-                  style: TextStyle(color: Colors.green),
-                )
+                        "passwordsMatch".tr(),
+                        style: TextStyle(color: Colors.green),
+                      )
                     : Text(
-                  "passwordsDoNotMatch".tr(),
-                  style: TextStyle(color: Colors.red),
-                ),
+                        "passwordsDoNotMatch".tr(),
+                        style: TextStyle(color: Colors.red),
+                      ),
                 SizedBox(height: AppHeightManager.h3),
                 BlocConsumer<ResetCubit, ResetPasswordState>(
                   listener: (context, state) {
@@ -182,7 +199,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         }
                       },
                       height: AppHeightManager.h6,
-                      color: AppColorManager.mainColor,
+                      color: AppColorManager.orange,
                       alignment: Alignment.center,
                       child: AppTextWidget(
                         text: "resetPasswordButton".tr(),
@@ -208,7 +225,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 }
 
-class ResetPasswordArgs{
+class ResetPasswordArgs {
   String? userName;
   ResetPasswordArgs({required this.userName});
 }

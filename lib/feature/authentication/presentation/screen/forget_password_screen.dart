@@ -6,8 +6,10 @@ import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
+import 'package:mzad_damascus/core/resource/image_manager.dart';
 import 'package:mzad_damascus/core/widget/button/main_app_button.dart';
 import 'package:mzad_damascus/core/widget/form_field/app_form_field.dart';
+import 'package:mzad_damascus/core/widget/image/main_image_widget.dart';
 import 'package:mzad_damascus/core/widget/snack_bar/note_message.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/forget_password_request_entity.dart';
@@ -18,7 +20,7 @@ import 'package:mzad_damascus/router/router.dart';
 import '../../../../core/resource/size_manager.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
-  const ForgetPasswordScreen({Key? key}) : super(key: key);
+  const ForgetPasswordScreen({super.key});
 
   @override
   State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
@@ -31,23 +33,40 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Container(
+        height: AppHeightManager.h100,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover, image: AssetImage(AppImageManager.mzad))),
         child: Padding(
           padding: EdgeInsets.only(
-              top: AppHeightManager.h40,
+              top: AppHeightManager.h1,
               left: AppWidthManager.w5,
               right: AppWidthManager.w5),
           child: Form(
             key: formKey,
             child: Column(
               children: [
+                SizedBox(
+                  height: AppHeightManager.h8,
+                ),
+                ClipOval(
+                  child: SizedBox(
+                    height: AppHeightManager.h12,
+                    width: AppHeightManager.h12,
+                    child: MainImageWidget(imagePath: AppImageManager.icon),
+                  ),
+                ),
+                SizedBox(
+                  height: AppHeightManager.h2,
+                ),
                 AppTextWidget(
                   text: "resetYourPassword".tr(),
                   fontSize: FontSizeManager.fs20,
                   fontWeight: FontWeight.bold,
                   color: AppColorManager.black,
                 ),
-                SizedBox(height: AppHeightManager.h3),
+                SizedBox(height: AppHeightManager.h15),
                 AppTextFormField(
                   textInputType: TextInputType.text,
                   hintText: "usernameHint".tr(),
@@ -63,8 +82,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
                     bool isEmail = value.isEmail();
                     bool isPhone = value.isPhoneNumber();
-                    if(isPhone==true){
-                      entity.username =PhoneNumberHelper.formatPhoneNumberWithCountyCode(value);
+                    if (isPhone == true) {
+                      entity.username =
+                          PhoneNumberHelper.formatPhoneNumberWithCountyCode(
+                              value);
                     }
                     if (!isEmail && !isPhone) {
                       return "usernameInvalid".tr();
@@ -83,8 +104,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     }
                     if (state.status == CubitStatus.error) {
                       NoteMessage.showErrorSnackBar(
-                          context: context,
-                          text: state.error);
+                          context: context, text: state.error);
                     }
                   },
                   builder: (context, state) {
@@ -100,7 +120,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         }
                       },
                       height: AppHeightManager.h6,
-                      color: AppColorManager.mainColor,
+                      color: AppColorManager.orange,
                       alignment: Alignment.center,
                       child: AppTextWidget(
                         text: "sendResetLink".tr(),

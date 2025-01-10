@@ -136,11 +136,9 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                           }
                           if (selectedFiles != null &&
                               selectedFiles.isNotEmpty) {
-                            selectedFiles.forEach(
-                              (advFile) {
+                            for (var advFile in selectedFiles) {
                                 advFiles.add(advFile!);
-                              },
-                            );
+                              }
                             setState(() {});
                           }
                         },
@@ -200,14 +198,14 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                     }
                     List<NameAndId> citiesOptions = [];
                     List<City> cities = state.entity.data ?? [];
-                    cities.forEach((city) {
+                    for (var city in cities) {
                       citiesOptions.add(NameAndId(
                         name: LanguageHelper.checkIfLTR(context: context)
                             ? city.enName ?? ""
                             : city.arName ?? "",
                         id: city.cityId.toString(),
                       ));
-                    });
+                    }
                     return TitleDropDownFormFieldWidget(
                       validator: (city) {
                         if ((city?.name ?? "").isEmpty) {
@@ -304,14 +302,14 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                       }
                       List<NameAndId> currenciesOptions = [];
                       List<Currency> currencies = state.entity.data ?? [];
-                      currencies.forEach((currency) {
+                      for (var currency in currencies) {
                         currenciesOptions.add(NameAndId(
                           name: LanguageHelper.checkIfLTR(context: context)
                               ? currency.enName ?? ""
                               : currency.arName ?? "",
                           id:currency.currencyId.toString(),
                         ));
-                      });
+                      }
                       return TitleDropDownFormFieldWidget(
                         validator: (currency) {
                           print( AdvertisementModel.entity?.currencyId);
