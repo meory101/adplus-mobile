@@ -85,6 +85,8 @@ class AdvsByAttributeListView extends StatelessWidget {
                       );
                     },
                     child: Container(
+
+                      height: AppHeightManager.h34,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       margin:
                       EdgeInsets.only(bottom: AppHeightManager.h1point8),
@@ -106,8 +108,9 @@ class AdvsByAttributeListView extends StatelessWidget {
                                 child: MainImageWidget(
                                   fit: BoxFit.fill,
                                   height: AppHeightManager.h20,
-                                  imageUrl: AppConstantManager.imageBaseUrl +
-                                      (advertisement.photos?.first.photo ?? ""),
+                                  imageUrl:(advertisement.photos??[]).isNotEmpty ? AppConstantManager
+                                      .imageBaseUrl + (advertisement.photos?.first.photo ??
+                                      "") :"ب",
                                 ),
                               ),
                               Padding(

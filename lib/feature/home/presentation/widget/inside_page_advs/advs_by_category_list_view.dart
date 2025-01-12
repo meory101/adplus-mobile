@@ -89,7 +89,7 @@ class AdsByCategoryListView extends StatelessWidget {
                       );
                     },
                     child: Container(
-
+                      height: AppHeightManager.h34,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       margin:
                       EdgeInsets.only(bottom: AppHeightManager.h1point8),
@@ -111,10 +111,9 @@ class AdsByCategoryListView extends StatelessWidget {
                                 child: MainImageWidget(
                                   fit: BoxFit.fill,
                                   height: AppHeightManager.h20,
-                                  imageUrl: AppConstantManager
-                                      .imageBaseUrl +
-                                      (advertisement.photos?.first.photo ??
-                                          ""),
+                                  imageUrl:(advertisement.photos??[]).isNotEmpty ? AppConstantManager
+                                      .imageBaseUrl + (advertisement.photos?.first.photo ??
+                                      "") :"ب",
                                 ),
                               ),
                               Padding(
@@ -128,7 +127,7 @@ class AdsByCategoryListView extends StatelessWidget {
                                       text:
                                       advertisement.name??"",
                                       overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
+                                      maxLines: 1,
                                       fontSize: FontSizeManager.fs16,
                                       fontWeight: FontWeight.w600,
                                     ),

@@ -117,6 +117,8 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                         currentInsidePageData = insidePageData[index];
                         if (index == 1) {
                           showAllAds = true;
+                        }else{
+                          showAllAds =false;
                         }
                         return Visibility(
                           visible: attributeTypeList.isNotEmpty,
@@ -307,6 +309,8 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                           )
                                         : InkWell(
                                             onTap: () {
+                                              print(showAllAds);
+                                              print('show all ads');
                                               entity.page = 1;
                                               List<FilterAttribute> attributes =
                                                   [];
@@ -318,10 +322,10 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                     LanguageHelper.checkIfLTR(
                                                             context: context)
                                                         ? (attributeTypeList[
-                                                                   showAllAds==true ? i - 1:i]
+                                                    showAllAds==true ?i - 1:i]
                                                                 .optionEn ??
                                                             "")
-                                                        : attributeTypeList[ showAllAds==true ? i - 1:i]
+                                                        : attributeTypeList[showAllAds==true ?i - 1:i]
                                                                 .option ??
                                                             ""
                                                   ]));

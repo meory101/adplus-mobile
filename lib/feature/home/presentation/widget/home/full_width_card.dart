@@ -28,11 +28,9 @@ class FullWidthCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: AppWidthManager.w100,
-
         decoration: BoxDecoration(
-            color: AppColorManager.lightGreyOpacity6,
+            // color: AppColorManager.lightGreyOpacity6,
             borderRadius: BorderRadius.circular(AppRadiusManager.r10)),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -61,9 +59,6 @@ class FullWidthCard extends StatelessWidget {
               textAlign: TextAlign.center,
 
               overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(
-              height: AppHeightManager.h2,
             ),
           ],
         ),
