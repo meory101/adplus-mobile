@@ -32,9 +32,13 @@ class AttributesHorizantalListView extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         List<NameAndId> optionsList = [];
+        List<String> otherLanguageNames = [];
         optionsList.add(const NameAndId(name: "all", id: "all"));
         filterItems[index].attributeTypeList?.forEach(
           (element) {
+            otherLanguageNames.add( !LanguageHelper.checkIfLTR(context: context)
+                ? element.optionEn ?? ""
+                : element.option ?? "");
             optionsList.add(NameAndId(
                 name: LanguageHelper.checkIfLTR(context: context)
                     ? element.optionEn ?? ""
@@ -49,6 +53,7 @@ class AttributesHorizantalListView extends StatelessWidget {
             .isNotEmpty) {
           hint =
               (selectedAttributeMap[filterItems[index].attributeId] ?? []).last;
+
         }
         return
 
@@ -60,6 +65,7 @@ class AttributesHorizantalListView extends StatelessWidget {
                     showAttributeListCheckBox(
                       context: context,
                       options: optionsList,
+                      otherLanguageNames: otherLanguageNames,
                       currentFilterItemId: filterItems[index].attributeId,
                       onDoneSelecting: () {
                         onDoneSelecting();
@@ -82,11 +88,9 @@ class AttributesHorizantalListView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           AppTextWidget(
-                              text: hint != null
-                                  ? hint
-                                  : LanguageHelper.checkIfLTR(context: context)
+                              text: hint ?? (LanguageHelper.checkIfLTR(context: context)
                                       ? filterItems[index].attributeNameEn ?? ""
-                                      : filterItems[index].attributeName ?? ""),
+                                      : filterItems[index].attributeName ?? "")),
                           SvgPicture.asset(AppIconManager.arrowMenuDown)
                         ],
                       ),

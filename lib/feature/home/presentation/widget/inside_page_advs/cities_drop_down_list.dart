@@ -13,6 +13,7 @@ import '../../../../advertisement/domain/entity/response/get_cities_response_ent
 import '../../../../advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_cubit.dart';
 import '../../../../advertisement/presentation/cubit/get_cities_cubit/get_category_attributes_state.dart';
 import '../../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
+import '../../screen/category_inside_page_screen.dart';
 import '../../screen/inside_page_category_advs_screen.dart';
 
 class CitiesDropDownList extends StatelessWidget {
@@ -59,6 +60,7 @@ class CitiesDropDownList extends StatelessWidget {
 
             hintFontColor: AppColorManager.black,
             onChanged: (selectedCity) {
+              print('ddddddddddddddddddddddddddddddddd');
               FilterRequest.entity.cityId =
                   num.parse(selectedCity?.id ?? "0");
               context
@@ -69,7 +71,6 @@ class CitiesDropDownList extends StatelessWidget {
                   .getAdvsByAttribute(
                   context: context,
                   entity: FilterRequest.entity);
-
             },
             hint:hint==null? 'city'.tr() : hint??"", // Localized text
             options: citiesOptions,

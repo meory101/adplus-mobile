@@ -1,26 +1,32 @@
 import 'dart:convert';
 
 import '../response/get_adv_details_response_entity.dart';
+
 /// page : 1
 /// attributes : [{"attribute_id":19,"value":"مرسيدس"}]
 
-AdvsByAttributeRequestEntity advsByAttributeRequestEntityFromJson(String str) => AdvsByAttributeRequestEntity.fromJson(json.decode(str));
-String advsByAttributeRequestEntityToJson(AdvsByAttributeRequestEntity data) => json.encode(data.toJson());
+AdvsByAttributeRequestEntity advsByAttributeRequestEntityFromJson(String str) =>
+    AdvsByAttributeRequestEntity.fromJson(json.decode(str));
+
+String advsByAttributeRequestEntityToJson(AdvsByAttributeRequestEntity data) =>
+    json.encode(data.toJson());
+
 class AdvsByAttributeRequestEntity {
   AdvsByAttributeRequestEntity({
-      num? page,
+    num? page,
     num? cityId,
     num? categoryId,
-      List<FilterAttribute>? attributes,}){
+    List<FilterAttribute>? attributes,
+  }) {
     _page = page;
     _cityId = cityId;
     _categoryId = categoryId;
     _attributes = attributes;
-}
+  }
 
   AdvsByAttributeRequestEntity.fromJson(dynamic json) {
     _page = json['page'];
-    _cityId = json ['city_id'];
+    _cityId = json['city_id'];
     _categoryId = json['categoryId'];
     if (json['attributes'] != null) {
       _attributes = [];
@@ -29,34 +35,44 @@ class AdvsByAttributeRequestEntity {
       });
     }
   }
+
   num? _page;
   num? _cityId;
   num? _categoryId;
   List<FilterAttribute>? _attributes;
-AdvsByAttributeRequestEntity copyWith({
-  num?categoryId,
-  num?cityId,
-  num? page,
-  List<FilterAttribute>? attributes,
-}) => AdvsByAttributeRequestEntity(  page: page ?? _page,
-  attributes: attributes ?? _attributes,
-  cityId: cityId?? _cityId,
-    categoryId: categoryId ?? _categoryId
-);
+
+  AdvsByAttributeRequestEntity copyWith({
+    num? categoryId,
+    num? cityId,
+    num? page,
+    List<FilterAttribute>? attributes,
+  }) =>
+      AdvsByAttributeRequestEntity(
+          page: page ?? _page,
+          attributes: attributes ?? _attributes,
+          cityId: cityId ?? _cityId,
+          categoryId: categoryId ?? _categoryId);
+
   num? get page => _page;
+
   num? get cityId => _cityId;
+
   num? get categoryId => _categoryId;
+
   List<FilterAttribute>? get attributes => _attributes;
 
   set page(num? value) {
     _page = value;
   }
+
   set cityId(num? value) {
     _cityId = value;
   }
+
   set categoryId(num? value) {
     _categoryId = value;
   }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['category_id'] = _categoryId;
@@ -65,7 +81,12 @@ AdvsByAttributeRequestEntity copyWith({
     if (_attributes != null) {
       map['attributes'] = _attributes?.map((v) => v.toJson()).toList();
     }
+    print(
+        '------------------------------------------------------------------------------');
+
     print(map);
+    print(
+        '------------------------------------------------------------------------------');
     return map;
   }
 
@@ -73,7 +94,6 @@ AdvsByAttributeRequestEntity copyWith({
     _attributes = value;
   }
 }
-
 
 FilterAttribute attributesFromJson(String str) =>
     FilterAttribute.fromJson(json.decode(str));
@@ -120,7 +140,6 @@ class FilterAttribute {
         attributeId: attributeId ?? _attributeId,
         value: value ?? _value,
       );
-
 
   List<String>? get value => _value;
 

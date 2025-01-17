@@ -98,7 +98,11 @@ class _InsidePageCategoryAdvsScreenState
 
   getData() async {
     FilterRequest.entity.attributes?.forEach(
-      (element) {},
+      (element) {
+        print('dddddddddddddddddddddddddddddddddddddd');
+        print(element.value);
+        print(element.attributeId);
+      },
     );
     context.read<AdvsByAttributeCubit>().resetData();
     getAdvertisements();
@@ -211,9 +215,9 @@ class _InsidePageCategoryAdvsScreenState
                                 onTap: () {
                                   clearFilter();
                                   selectedStarIndex = -1;
+                                  selectedStarIndex=100;
                                   selectedAttributeMap[
                                   starItemAttributeId ?? 0] = [];
-
                                   setState(() {
                                   });
                                 },

@@ -32,6 +32,7 @@ void clearFilter() {
   FilterRequest.entity = AdvsByAttributeRequestEntity();
   FilterRequest.entity.attributes = [];
   selectedAttributeMap = {};
+  selectedOtherLanguageAttributeMap = {};
 }
 
 class CategoryInsidePageScreen extends StatefulWidget {

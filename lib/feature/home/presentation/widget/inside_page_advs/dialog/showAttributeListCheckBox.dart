@@ -12,10 +12,12 @@ import '../../../../../../core/widget/text/app_text_widget.dart';
 import '../done_button.dart';
 
 Map<num, List<String>> selectedAttributeMap = {};
+Map<num, List<String>> selectedOtherLanguageAttributeMap = {};
 
 void showAttributeListCheckBox(
     {required BuildContext context,
     required List<NameAndId> options,
+    required List<String> otherLanguageNames,
     required Function() onDoneSelecting,
     required num? currentFilterItemId}) {
   showModalBottomSheet(
@@ -42,26 +44,39 @@ void showAttributeListCheckBox(
                   child: Column(
                     children: List.generate(options.length, (i) {
                       bool isSelected = false;
-                      if (optionNames.length != options.length - 1 && options[i].name != 'all') {
+                      if (optionNames.length != options.length - 1 &&
+                          options[i].name != 'all') {
                         optionNames.add(options[i].name);
                       }
-                  
+
                       if (options[i].name == 'all') {
-                        isSelected = selectedAttributeMap[currentFilterItemId]?.length == options.length - 1;
+                        isSelected =
+                            selectedAttributeMap[currentFilterItemId]?.length ==
+                                (options.length - 1);
                       } else {
-                        isSelected = selectedAttributeMap[currentFilterItemId]?.contains(options[i].name) ?? false;
+                        isSelected = selectedAttributeMap[currentFilterItemId]
+                                ?.contains(options[i].name) ??
+                            false;
                       }
-                  
+
                       return InkWell(
                         child: Container(
-                          margin: EdgeInsets.only(top: AppHeightManager.h1point8),
+                          margin:
+                              EdgeInsets.only(top: AppHeightManager.h1point8),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppRadiusManager.r15),
-                            color: isSelected ? AppColorManager.lightGreyOpacity6 : AppColorManager.white,
+                            borderRadius:
+                                BorderRadius.circular(AppRadiusManager.r15),
+                            color: isSelected
+                                ? AppColorManager.lightGreyOpacity6
+                                : AppColorManager.white,
                           ),
                           padding: EdgeInsets.only(
-                            left: LanguageHelper.checkIfLTR(context: context) ? AppWidthManager.w3 : AppWidthManager.w1Point2,
-                            right: LanguageHelper.checkIfLTR(context: context) ? AppWidthManager.w1Point2 : AppWidthManager.w3,
+                            left: LanguageHelper.checkIfLTR(context: context)
+                                ? AppWidthManager.w3
+                                : AppWidthManager.w1Point2,
+                            right: LanguageHelper.checkIfLTR(context: context)
+                                ? AppWidthManager.w1Point2
+                                : AppWidthManager.w3,
                             top: AppHeightManager.h1,
                             bottom: AppHeightManager.h05,
                           ),
@@ -71,32 +86,67 @@ void showAttributeListCheckBox(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               AppTextWidget(
-                                text: options[i].name == "all" ? "all".tr() : options[i].name,
+                                text: options[i].name == "all"
+                                    ? "all".tr()
+                                    : options[i].name,
                               ),
                               Checkbox(
                                 checkColor: AppColorManager.mainColor,
-                                fillColor: WidgetStatePropertyAll(AppColorManager.lightGreyOpacity6),
+                                fillColor: WidgetStatePropertyAll(
+                                    AppColorManager.lightGreyOpacity6),
                                 onChanged: (value) {
-                                  bool isListFull = selectedAttributeMap[currentFilterItemId]?.length == options.length - 1;
+                                  bool isListFull =
+                                      selectedAttributeMap[currentFilterItemId]
+                                              ?.length ==
+                                          (options.length - 1);
 
                                   if (options[i].name == 'all') {
                                     if (!isListFull) {
-                                      selectedAttributeMap[currentFilterItemId ?? 0] = [];
-                                      selectedAttributeMap[currentFilterItemId ?? 0]?.addAll(optionNames);
+                                      selectedAttributeMap[
+                                          currentFilterItemId ?? 0] = [];
+                                      selectedAttributeMap[
+                                              currentFilterItemId ?? 0]
+                                          ?.addAll(optionNames);
 
+                                      selectedOtherLanguageAttributeMap[
+                                          currentFilterItemId ?? 0] = [];
+                                      selectedOtherLanguageAttributeMap[
+                                              currentFilterItemId ?? 0]
+                                          ?.addAll(otherLanguageNames);
                                     } else {
-
-                                      selectedAttributeMap[currentFilterItemId ?? 0] = [];
+                                      selectedAttributeMap[
+                                          currentFilterItemId ?? 0] = [];
+                                      selectedOtherLanguageAttributeMap[
+                                          currentFilterItemId ?? 0] = [];
                                     }
                                   } else {
-                                    if ((selectedAttributeMap[currentFilterItemId ?? 0] ?? []).contains(options[i].name)) {
-                                      selectedAttributeMap[currentFilterItemId ?? 0]?.remove(options[i].name);
+                                    if ((selectedAttributeMap[
+                                                currentFilterItemId ?? 0] ??
+                                            [])
+                                        .contains(options[i].name)) {
+                                      selectedAttributeMap[
+                                              currentFilterItemId ?? 0]
+                                          ?.remove(options[i].name);
+                                      selectedOtherLanguageAttributeMap[
+                                              currentFilterItemId ?? 0]
+                                          ?.remove(otherLanguageNames[i]);
                                     } else {
-                                      if(selectedAttributeMap[currentFilterItemId ?? 0] == null){
-                                        selectedAttributeMap[currentFilterItemId ?? 0] = [];
-                                      }
-                                      selectedAttributeMap[currentFilterItemId ?? 0]?.add(options[i].name);
+                                      if (selectedAttributeMap[
+                                              currentFilterItemId ?? 0] ==
+                                          null) {
+                                        selectedAttributeMap[
+                                            currentFilterItemId ?? 0] = [];
 
+                                        selectedOtherLanguageAttributeMap[
+                                            currentFilterItemId ?? 0] = [];
+                                      }
+                                      selectedAttributeMap[
+                                              currentFilterItemId ?? 0]
+                                          ?.add(options[i].name);
+
+                                      selectedOtherLanguageAttributeMap[
+                                              currentFilterItemId ?? 0]
+                                          ?.add(otherLanguageNames[i]);
                                     }
                                   }
                                   setState(() {});
@@ -116,7 +166,6 @@ void showAttributeListCheckBox(
                   ),
                 ),
               ),
-
               Positioned(
                 left: 0,
                 right: 0,
@@ -124,30 +173,30 @@ void showAttributeListCheckBox(
                 child: Row(
                   children: [
                     DoneButton(),
-                   MainAppButton(
-                  onTap: () {
-                    selectedAttributeMap[currentFilterItemId ?? 0] = [];
-                    setState(() {});
-                  },
-                  margin: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
-                  alignment: Alignment.center,
-                  height: AppHeightManager.h6,
-                  padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
-                  color: AppColorManager.white,
-                  outLinedBorde: true,
-                  borderColor: AppColorManager.subColor,
-                  child: AppTextWidget(
-                    text: "reset".tr(),
-                    color: AppColorManager.subColor,
-                    fontSize: FontSizeManager.fs16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-
+                    MainAppButton(
+                      onTap: () {
+                        selectedAttributeMap[currentFilterItemId ?? 0] = [];
+                        setState(() {});
+                      },
+                      margin: EdgeInsets.symmetric(
+                          horizontal: AppWidthManager.w3Point8),
+                      alignment: Alignment.center,
+                      height: AppHeightManager.h6,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppWidthManager.w3Point8),
+                      color: AppColorManager.white,
+                      outLinedBorde: true,
+                      borderColor: AppColorManager.subColor,
+                      child: AppTextWidget(
+                        text: "reset".tr(),
+                        color: AppColorManager.subColor,
+                        fontSize: FontSizeManager.fs16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
               )
-
             ],
           ),
         );
@@ -158,7 +207,10 @@ void showAttributeListCheckBox(
     selectedAttributeMap.forEach(
       (key, value) {
         if (value.isNotEmpty) {
-          attributes.add(FilterAttribute(value: value, attributeId: key));
+          List<String> temp =[];
+          temp.addAll(value);
+          temp.addAll(selectedOtherLanguageAttributeMap[key]??[]);
+          attributes.add(FilterAttribute(value: temp, attributeId: key));
         }
       },
     );
