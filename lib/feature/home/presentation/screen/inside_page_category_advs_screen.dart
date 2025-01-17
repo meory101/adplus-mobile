@@ -53,6 +53,9 @@ class _InsidePageCategoryAdvsScreenState
       selectedAttributeMap = {};
       selectedAttributeMap[widget.args.entity.attributes?.first.attributeId ??
           -1] = widget.args.entity.attributes?.first.value ?? [];
+
+      print(widget.args.entity.attributes?.first.value ?? []);
+      print('sdlkffffffffffffffffffffffffff');
       getAdvertisements();
     }
     scrollController.addListener(onScroll);
@@ -253,17 +256,15 @@ class _InsidePageCategoryAdvsScreenState
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  String? name = LanguageHelper.checkIfLTR(
-                                          context: context)
-                                      ? (staredItems.first
-                                          .attributeTypeList?[index].optionEn)
-                                      : (staredItems.first
-                                          .attributeTypeList?[index].option);
+                                  List<String>? name =[  staredItems.first
+                                          .attributeTypeList?[index].optionEn ??"",
+                                       staredItems.first
+                                          .attributeTypeList?[index].option ??""];
                                   selectedStarIndex = index;
                                   selectedAttributeMap[
                                       starItemAttributeId ?? 0] = [];
                                   selectedAttributeMap[starItemAttributeId ??
-                                      0] = [name ?? ""];
+                                      0] = name;
 
                                   List<FilterAttribute> attributes = [];
                                   selectedAttributeMap.forEach(

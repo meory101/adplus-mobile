@@ -68,10 +68,10 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                           SizedBox(
-                          width: AppWidthManager.w50,
-                          height: AppWidthManager.w50,
-                          child:  MainImageWidget(  width: AppWidthManager.w50,
-                            height: AppWidthManager.w50,
+                          width: AppWidthManager.w100,
+                          height: AppWidthManager.w70,
+                          child:  MainImageWidget(  width: AppWidthManager.w100,
+                            height: AppWidthManager.w70,
                             fit: BoxFit.fill,
                             imageUrl: AppConstantManager.imageBaseUrl +
                                 (widget.advDetails?.photos?[index].photo ?? ""),

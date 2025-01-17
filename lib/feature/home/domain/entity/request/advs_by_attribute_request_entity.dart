@@ -65,6 +65,7 @@ AdvsByAttributeRequestEntity copyWith({
     if (_attributes != null) {
       map['attributes'] = _attributes?.map((v) => v.toJson()).toList();
     }
+    print(map);
     return map;
   }
 

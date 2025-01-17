@@ -37,6 +37,7 @@ class RejectedAdvListView extends StatelessWidget {
           );
         }
 
+
         return NotificationListener<ScrollNotification>(
             onNotification: (ScrollNotification scrollInfo) {
               if (((state.status != CubitStatus.loading) ||

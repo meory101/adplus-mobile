@@ -97,6 +97,8 @@ class ApiMethods {
       {required String url,
       Map<String, dynamic>? body,
       Map<String, dynamic>? query}) async {
+    print( ApiUrl(url, useSecondBaseUrl: isSecondBaseUrl).getLink());
+    print('-------------------------------------------');
     if (query != null) {
       query = filterRequest(query);
     }

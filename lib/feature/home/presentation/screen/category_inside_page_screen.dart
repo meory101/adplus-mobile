@@ -60,7 +60,6 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
 
   AdvsByAttributeRequestEntity entity = AdvsByAttributeRequestEntity();
   CategoryAttributes? currentInsidePageData;
-  bool showAllAds = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +97,9 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                   Visibility(
                     visible: insidePageData.isNotEmpty,
                     replacement: Padding(
-                      padding:  EdgeInsets.symmetric(vertical: AppHeightManager.h10),
-                      child: EmptyWidget(
-                        title: "noResults".tr(),
-                        subTitle: "couldNotFindAnyResult".tr(),
-                      ),
-                    ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: AppHeightManager.h10),
+                        child: SizedBox()),
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -115,11 +111,7 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                         List<AttributeTypeList> searchDropDown =
                             insidePageData[index].attributeTypeList ?? [];
                         currentInsidePageData = insidePageData[index];
-                        if (index == 1) {
-                          showAllAds = true;
-                        }else{
-                          showAllAds =false;
-                        }
+
                         return Visibility(
                           visible: attributeTypeList.isNotEmpty,
                           child: Column(
@@ -184,16 +176,24 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                     attributes.add(FilterAttribute(
                                         attributeId:
                                             insidePageData[index].attributeId,
-                                        value: [
-                                          LanguageHelper.checkIfLTR(
-                                                  context: context)
-                                              ? attributeTypeList[selectedIndex]
-                                                      .optionEn ??
-                                                  ""
-                                              : attributeTypeList[selectedIndex]
-                                                      .option ??
-                                                  ""
-                                        ]));
+                                        value: LanguageHelper.checkIfLTR(
+                                                context: context)
+                                            ? [
+                                                attributeTypeList[selectedIndex]
+                                                        .option ??
+                                                    "",
+                                                attributeTypeList[selectedIndex]
+                                                        .optionEn ??
+                                                    ""
+                                              ]
+                                            : [
+                                                attributeTypeList[selectedIndex]
+                                                        .optionEn ??
+                                                    "",
+                                                attributeTypeList[selectedIndex]
+                                                        .option ??
+                                                    ""
+                                              ]));
 
                                     entity.attributes = attributes;
 
@@ -248,14 +248,15 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                 ),
                               ),
                               Visibility(
-                                visible:  attributeTypeList.isNotEmpty,
+                                visible: attributeTypeList.isNotEmpty,
                                 child: DynamicHeightGridView(
-                                  itemCount: attributeTypeList.length +(showAllAds==true ? 1:0),
+                                  itemCount: attributeTypeList.length +
+                                      (index == 1 ? 1 : 0),
                                   crossAxisCount: 3,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   builder: (context, i) {
-                                    return i == 0 && showAllAds==true
+                                    return i == 0 && index == 1
                                         ? InkWell(
                                             onTap: () {
                                               Navigator.of(context)
@@ -276,22 +277,27 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                 },
                                               );
                                             },
-                                            child: currentInsidePageData?.star ==
+                                            child: currentInsidePageData
+                                                        ?.star ==
                                                     1
                                                 ? DecoratedContainer(
                                                     height: AppHeightManager.h6,
-                                                    padding: EdgeInsets.symmetric(
-                                                        vertical: AppHeightManager
-                                                            .h1point5),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical:
+                                                                AppHeightManager
+                                                                    .h1point5),
                                                     child: AppTextWidget(
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.center,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       text: 'allAdvs'.tr(),
                                                       fontSize:
                                                           FontSizeManager.fs15,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
                                                   )
                                                 : DecoratedContainer(
@@ -300,17 +306,17 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                     width: AppWidthManager.w30,
                                                     child: AppTextWidget(
                                                       maxLines: 2,
-                                                      textAlign: TextAlign.center,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       text: "allAdvs".tr(),
                                                       fontSize:
                                                           FontSizeManager.fs15,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     )),
                                           )
                                         : InkWell(
                                             onTap: () {
-                                              print(showAllAds);
-                                              print('show all ads');
                                               entity.page = 1;
                                               List<FilterAttribute> attributes =
                                                   [];
@@ -318,17 +324,41 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                   attributeId:
                                                       insidePageData[index]
                                                           .attributeId,
-                                                  value: [
-                                                    LanguageHelper.checkIfLTR(
-                                                            context: context)
-                                                        ? (attributeTypeList[
-                                                    showAllAds==true ?i - 1:i]
-                                                                .optionEn ??
-                                                            "")
-                                                        : attributeTypeList[showAllAds==true ?i - 1:i]
-                                                                .option ??
-                                                            ""
-                                                  ]));
+                                                  value: LanguageHelper
+                                                          .checkIfLTR(
+                                                              context: context)
+                                                      ? [
+                                                          (attributeTypeList[
+                                                                      index == 1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                  .option ??
+                                                              ""),
+                                                          attributeTypeList[
+                                                                      index == 1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                  .optionEn ??
+                                                              ""
+                                                        ]
+                                                      : [
+                                                          (attributeTypeList[
+                                                                      index == 1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                  .optionEn ??
+                                                              ""),
+                                                          attributeTypeList[
+                                                                      index == 1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                  .option ??
+                                                              ""
+                                                        ]));
                                               entity.attributes = attributes;
                                               Navigator.of(context)
                                                   .pushNamed(
@@ -348,37 +378,56 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                 },
                                               );
                                             },
-                                            child: currentInsidePageData?.star ==
+                                            child: currentInsidePageData
+                                                        ?.star ==
                                                     1
                                                 ? DecoratedContainer(
                                                     height: AppHeightManager.h6,
-                                                    padding: EdgeInsets.symmetric(
-                                                        vertical: AppHeightManager
-                                                            .h1point5),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical:
+                                                                AppHeightManager
+                                                                    .h1point5),
                                                     child: AppTextWidget(
                                                       maxLines: 2,
-                                                      textAlign: TextAlign.center,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       text: LanguageHelper
                                                               .checkIfLTR(
                                                                   context:
                                                                       context)
-                                                          ? attributeTypeList[showAllAds==true?i - 1:i].optionEn ?? ""
-                                                          : attributeTypeList[showAllAds==true?i - 1:i].option ?? "",
+                                                          ? attributeTypeList[
+                                                                      index == 1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                  .optionEn ??
+                                                              ""
+                                                          : attributeTypeList[
+                                                                      index == 1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                  .option ??
+                                                              "",
                                                       fontSize:
                                                           FontSizeManager.fs15,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
                                                   )
                                                 : DecoratedContainer(
                                                     height: AppWidthManager.w30,
                                                     width: AppWidthManager.w30,
                                                     alignment: Alignment.center,
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal:
-                                                            AppWidthManager
-                                                                .w3Point8,
-                                                        vertical:
-                                                            AppHeightManager.h1),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                AppWidthManager
+                                                                    .w3Point8,
+                                                            vertical:
+                                                                AppHeightManager
+                                                                    .h1),
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -395,8 +444,20 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                                   .checkIfLTR(
                                                                       context:
                                                                           context)
-                                                              ? attributeTypeList[showAllAds==true?i - 1:i].optionEn ?? ""
-                                                              : attributeTypeList[showAllAds==true?i - 1:i].option ?? "",
+                                                              ? attributeTypeList[index ==
+                                                                              1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                      .optionEn ??
+                                                                  ""
+                                                              : attributeTypeList[index ==
+                                                                              1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                      .option ??
+                                                                  "",
                                                           fontSize:
                                                               FontSizeManager
                                                                   .fs15,
@@ -404,13 +465,16 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                               FontWeight.w600,
                                                         ),
                                                         Visibility(
-                                                          visible:
-                                                              ( attributeTypeList[showAllAds==true?
-                                                                              i - 1 :i]
-                                                                          .photo ??
-                                                                      "")
-                                                                  .isNotEmpty,
-                                                          child: MainImageWidget(
+                                                          visible: (attributeTypeList[index ==
+                                                                              1
+                                                                          ? i -
+                                                                              1
+                                                                          : i]
+                                                                      .photo ??
+                                                                  "")
+                                                              .isNotEmpty,
+                                                          child:
+                                                              MainImageWidget(
                                                             borderRadius:
                                                                 BorderRadius.circular(
                                                                     AppRadiusManager
@@ -418,13 +482,17 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                             height:
                                                                 AppWidthManager
                                                                     .w13,
-                                                            width: AppWidthManager
-                                                                .w13,
+                                                            width:
+                                                                AppWidthManager
+                                                                    .w13,
                                                             imageUrl: AppConstantManager
                                                                     .imageBaseUrl +
                                                                 attributeTypeList[
-                                                                showAllAds==true?
-                                                                i - 1 :i]
+                                                                        index ==
+                                                                                1
+                                                                            ? i -
+                                                                                1
+                                                                            : i]
                                                                     .photo
                                                                     .toString(),
                                                           ),

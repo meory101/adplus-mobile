@@ -29,12 +29,12 @@ class UnderReviewListView extends StatelessWidget {
 
         final items = state.entity.data?.data ?? [];
 
-        if (items.isEmpty) {
-          return  EmptyWidget(
-            title: "noAdvertisements".tr(),
-            subTitle: "noAdvertisements".tr(),
+          if (items.isEmpty) {
+            return  EmptyWidget(
+              title: "noAdvertisements".tr(),
+              subTitle: "noAdvertisements".tr(),
 
-          );
+            );
         }
 
         return NotificationListener<ScrollNotification>(
