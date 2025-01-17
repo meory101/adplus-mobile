@@ -6,15 +6,12 @@ import 'package:easy_localization/easy_localization.dart';
 
 abstract class PhoneNumberHelper{
   static String formatPhoneNumberWithCountyCode(String phone){
-    print(phone);
     if((phone).isEmpty) return " ";
     String newPhone = phone.trim().replaceAll(" ", "");
     String formatedPhone = newPhone;
 
     if(newPhone[0]=="0"){
       formatedPhone= newPhone.substring(1);
-      print(formatedPhone);
-      print('fffffffffffffff');
     }
     return '+963$formatedPhone';
   }

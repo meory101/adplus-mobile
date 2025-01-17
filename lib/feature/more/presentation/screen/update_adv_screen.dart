@@ -379,8 +379,6 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                     title: "status".tr(),
                     onChanged: (value) {
                       entity.biddingStatus = num.parse(value?.id ??"");
-                      print(entity.biddingStatus);
-                      print('ddddddddddddddddddddddddddddddddddddddd');
                       return null;
                     },
                     validator: (value) {

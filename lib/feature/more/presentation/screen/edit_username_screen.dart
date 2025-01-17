@@ -60,7 +60,6 @@ class _EditUsernameScreenState extends State<EditUsernameScreen> {
                       bool isPhone = value.trim().isPhoneNumber();
                       if(isPhone==true){
                         entity.username =PhoneNumberHelper.formatPhoneNumberWithCountyCode(value);
-                        print(entity.username);
                       }
                       if (!isEmail && !isPhone) {
                         return "usernameInvalid".tr();

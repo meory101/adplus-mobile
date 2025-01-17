@@ -312,8 +312,6 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                       }
                       return TitleDropDownFormFieldWidget(
                         validator: (currency) {
-                          print( AdvertisementModel.entity?.currencyId);
-                          print( AdvertisementModel.entity?.startingPrice);
                           if(AdvertisementModel.entity?.startingPrice!=null){
                             if ( (currency?.name ?? "").isEmpty) {
                               return "required".tr(); // Localized text

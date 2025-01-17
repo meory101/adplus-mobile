@@ -4,6 +4,8 @@ import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
+import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../core/theme/app_theme.dart';
 import '../main.dart';
@@ -21,7 +23,6 @@ class MzadApp extends StatefulWidget {
 class _InanaaState extends State<MzadApp> {
   StreamSubscription? _sub;
 
-
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
@@ -30,9 +31,10 @@ class _InanaaState extends State<MzadApp> {
     initUniLinks(context);
     super.initState();
   }
+
   @override
   dispose() {
-     _sub?.cancel();
+    _sub?.cancel();
     super.dispose();
   }
 
@@ -40,8 +42,9 @@ class _InanaaState extends State<MzadApp> {
     _sub = AppLinks().uriLinkStream.listen((Uri? uri) {
       if (uri != null) {
         deepLinkPaths = uri.pathSegments;
-        advId = deepLinkPaths[1];
-        // openDeepLinkScreen();
+        advId =
+        deepLinkPaths[1];
+        openDeepLinkScreen();
       }
     }, onError: (Object err) {
       print(err);
@@ -57,6 +60,7 @@ class _InanaaState extends State<MzadApp> {
       print(e);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(builder: (context, orientation, screenType) {

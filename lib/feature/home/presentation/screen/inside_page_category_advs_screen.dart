@@ -54,8 +54,6 @@ class _InsidePageCategoryAdvsScreenState
       selectedAttributeMap[widget.args.entity.attributes?.first.attributeId ??
           -1] = widget.args.entity.attributes?.first.value ?? [];
 
-      print(widget.args.entity.attributes?.first.value ?? []);
-      print('sdlkffffffffffffffffffffffffff');
       getAdvertisements();
     }
     scrollController.addListener(onScroll);

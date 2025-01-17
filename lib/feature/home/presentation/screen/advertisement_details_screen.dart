@@ -36,7 +36,7 @@ import '../../../../core/widget/loading/shimmer/adv_details_screen_shimmer.dart'
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../domain/entity/response/get_adv_details_response_entity.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
-
+import '../../../../core/injection/injection_container.dart' as di;
 class AdvertisementDetailsScreen extends StatefulWidget {
   final AdvertisementDetailsArgs args;
 
@@ -77,7 +77,9 @@ class _AdvertisementDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AdvDetailsCubit, AdvDetailsState>(
+    return BlocProvider(
+        create: (context) => di.sl<AdvDetailsCubit>(),
+    child:BlocConsumer<AdvDetailsCubit, AdvDetailsState>(
         listener: (context, state) {
       if (state.status == CubitStatus.error) {
         NoteMessage.showErrorSnackBar(context: context, text: state.error);
@@ -616,7 +618,7 @@ class _AdvertisementDetailsScreenState
           ),
         ),
       );
-    });
+    }));
   }
 }
 
