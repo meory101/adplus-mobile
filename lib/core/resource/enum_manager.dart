@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
+import 'package:mzad_damascus/core/resource/constant_manager.dart';
+import 'package:mzad_damascus/core/resource/key_manger.dart';
 
 abstract class EnumManager {
   // static int textCode = 1;
@@ -57,6 +59,11 @@ abstract class EnumManager {
     list: TextInputType.text,
     "": TextInputType.text
   };
-
+static void reloadData(String? lang){
+  biddingStatus={
+    1 : lang ==AppKeyManager.englishLocalizationCode ? 'Available' :'متاح',
+    0 :lang ==AppKeyManager.englishLocalizationCode ?  'Un Available' : 'مباع',
+  };
+}
   // static String advTypeCode = "نوع الإعلان";
 }

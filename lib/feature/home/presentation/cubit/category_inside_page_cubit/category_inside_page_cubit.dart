@@ -37,6 +37,16 @@ class CategoryInsidePageCubit extends Cubit<CategoryInsidePageState> {
             error: errorEntity.errorMessage, status: CubitStatus.error));
       },
       (data) {
+        data.data?.sort((a, b) {
+          if (a.star == 1 && b.star != 1) {
+            return -1;
+          } else if (a.star != 1 && b.star == 1) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
         emit(state.copyWith(status: CubitStatus.success, entity: data));
       },
     );

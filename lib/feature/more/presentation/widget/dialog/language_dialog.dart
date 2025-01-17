@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:mzad_damascus/core/resource/enum_manager.dart';
 import 'package:mzad_damascus/router/router.dart';
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/font_manager.dart';
@@ -133,6 +134,7 @@ void showLanguageDialog({required BuildContext context}) {
                       .then((value) {
                     AppSharedPreferences.cashLanguage(
                         language: selectedLanguage);
+                    EnumManager.reloadData(selectedLanguage);
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       RouteNamedScreens.splash,
                       (route) => false,

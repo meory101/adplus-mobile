@@ -184,9 +184,9 @@ class _InsidePageCategoryAdvsScreenState
                                           .attributeTypeList?[newIndex]
                                           .option ??
                                       "";
-                          if (name ==
-                              widget.args.entity.attributes?.first.value
-                                  ?.first) {
+                          if (
+                          widget.args.entity.attributes?.first.value
+                                  ?.contains(name) ==true){
                             selectedStarIndex = newIndex;
                           }
                         }
