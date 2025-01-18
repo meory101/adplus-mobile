@@ -53,6 +53,7 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                   currentIndex = index;
                 });
               },
+              height: MediaQuery.of(context).size.width * 0.9,
               aspectRatio: AppWidthManager.w100 / AppHeightManager.h27,
               enableInfiniteScroll: true,
               autoPlay: false,
@@ -78,11 +79,9 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                               children: [
                                 SizedBox(
                                   width: AppWidthManager.w100,
-                                  height: AppWidthManager.w70,
+                                  height: AppHeightManager.h100,
                                   child: MainImageWidget(
-                                    width: AppWidthManager.w100,
-                                    height: AppWidthManager.w70,
-                                    fit: BoxFit.fill,
+
                                     imageUrl: AppConstantManager.imageBaseUrl +
                                         (widget.advDetails?.photos?[index]
                                                 .photo ??

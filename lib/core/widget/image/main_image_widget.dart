@@ -21,13 +21,16 @@ class MainImageWidget extends StatelessWidget {
     this.height,
     this.shape,
     this.borderRadius,
+    this.filterQuality = FilterQuality.high, // قيمة افتراضية
   });
+
   final String imageUrl;
   final String? imagePath;
   final String? placeholderUrl;
   final BoxFit? fit;
   final double? width;
   final double? height;
+  final FilterQuality filterQuality; // تم ضبط القيمة الافتراضية هنا
   final BoxShape? shape;
   final BorderRadiusGeometry? borderRadius;
 
@@ -35,39 +38,49 @@ class MainImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return imageUrl.isNotEmpty
         ? CachedNetworkImage(
-            imageUrl: imageUrl,
-            width: width,
-            fit: fit ?? BoxFit.cover,
-            errorWidget: (context, url, error) => Image.asset(
-              AppImageManager.placeholder,
-              fit: fit ?? BoxFit.cover,
-            ),
-            progressIndicatorBuilder: (context, url, progress) {
-              return const MainProgressImageWidget();
-            },
-          )
+      imageUrl: imageUrl,
+      width: width,
+      height: height,
+      fit: fit ?? BoxFit.cover,
+      filterQuality: filterQuality, // تم استخدام القيمة هنا
+      errorWidget: (context, url, error) => Image.asset(
+        AppImageManager.placeholder,
+        width: width,
+        height: height,
+        fit: fit ?? BoxFit.cover,
+      ),
+      progressIndicatorBuilder: (context, url, progress) {
+        return MainProgressImageWidget(
+          width: width,
+          height: height,
+        );
+      },
+    )
         : imagePath != null
-            ? Container(
-                width: width,
-                height: height,
-                decoration: BoxDecoration(
-                  borderRadius: borderRadius ??
-                      BorderRadius.all(
-                        Radius.circular(
-                          AppRadiusManager.r15,
-                        ),
-                      ),
-                  image: DecorationImage(
-                    image: Image.asset(
-                      imagePath!,
-                      width: width,
-                      height: height,
-                    ).image,
-                    fit: fit ?? BoxFit.cover,
-                  ),
-                ),
-              )
-            : const MainProgressImageWidget();
+        ? Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: borderRadius ??
+            BorderRadius.all(
+              Radius.circular(
+                AppRadiusManager.r15,
+              ),
+            ),
+        image: DecorationImage(
+          image: Image.asset(
+            imagePath!,
+            width: width,
+            height: height,
+          ).image,
+          fit: fit ?? BoxFit.cover,
+        ),
+      ),
+    )
+        : MainProgressImageWidget(
+      width: width,
+      height: height,
+    );
   }
 }
 
