@@ -140,7 +140,7 @@ class _MyFollowingScreenState extends State<MyFollowingScreen> {
                             child: SvgPicture.asset(
                               AppIconManager.whatsapp,
                               colorFilter: ColorFilter.mode(
-                                  follower?.photo == null
+                                  follower?.whatsapp == null
                                       ? AppColorManager.textGrey
                                       : AppColorManager.green,
                                   BlendMode.srcIn),
@@ -151,14 +151,14 @@ class _MyFollowingScreenState extends State<MyFollowingScreen> {
                             splashColor: AppColorManager.transparent,
                             highlightColor: AppColorManager.transparent,
                             onPressed: () {
-                              if (follower?.photo == null) return;
+                              if (follower?.phone == null) return;
                               UrlLauncherHelper.makeCall(
                                   phoneNumber: follower?.phone);
                             },
                             icon: Icon(
                               Icons.call,
                               size: AppHeightManager.h2point5,
-                              color: follower?.photo == null
+                              color: follower?.phone == null
                                   ? AppColorManager.textGrey
                                   : AppColorManager.mainColor,
                             )),

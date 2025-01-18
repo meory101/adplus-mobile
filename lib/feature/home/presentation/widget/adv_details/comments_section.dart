@@ -358,6 +358,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                     context: context, text: state.error);
               }
               if (state.status == CubitStatus.success) {
+                entity.comment = null;
                 context.read<GetCommentsCubit>().resetData();
                 context.read<GetCommentsCubit>().getComments(
                     context: context,
@@ -376,11 +377,15 @@ class _CommentsSectionState extends State<CommentsSection> {
               }
               return MainAppButton(
                 onTap: () {
+
                   if (AppSharedPreferences.getToken().isEmpty) {
                     showLoginBottomSheet(context: context);
                     return;
                   }
-
+                  print(entity.comment);
+                  if((entity.comment??"").isEmpty){
+                    return;
+                  }
                   context
                       .read<AddCommentCubit>()
                       .addComment(context: context, entity: entity);

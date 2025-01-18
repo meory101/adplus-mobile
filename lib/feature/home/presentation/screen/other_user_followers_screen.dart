@@ -139,7 +139,7 @@ class _OtherUserFollowersScreenState extends State<OtherUserFollowersScreen> {
                           onTap: () {
                             if (following?.whatsapp == null) return;
                             UrlLauncherHelper.openWhatsapp(
-                                phoneNumber: following?.whatsapp);
+                                phoneNumber: following?.whatsapp??"");
                           },
                           child: SizedBox(
                             width: AppHeightManager.h2point5,
@@ -147,7 +147,7 @@ class _OtherUserFollowersScreenState extends State<OtherUserFollowersScreen> {
                             child: SvgPicture.asset(
                               AppIconManager.whatsapp,
                               colorFilter: ColorFilter.mode(
-                                  following?.photo == null
+                                  following?.whatsapp == null
                                       ? AppColorManager.textGrey
                                       : AppColorManager.green,
                                   BlendMode.srcIn),
@@ -158,14 +158,14 @@ class _OtherUserFollowersScreenState extends State<OtherUserFollowersScreen> {
                             splashColor: AppColorManager.transparent,
                             highlightColor: AppColorManager.transparent,
                             onPressed: () {
-                              if (following?.photo == null) return;
+                              if (following?.phone == null) return;
                               UrlLauncherHelper.makeCall(
-                                  phoneNumber: following?.phone);
+                                  phoneNumber: following?.phone??"");
                             },
                             icon: Icon(
                               Icons.call,
                               size: AppHeightManager.h2point5,
-                              color: following?.photo == null
+                              color: following?.phone == null
                                   ? AppColorManager.textGrey
                                   : AppColorManager.mainColor,
                             )),

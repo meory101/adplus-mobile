@@ -95,6 +95,8 @@ void showAttributeListCheckBox(
                                 fillColor: WidgetStatePropertyAll(
                                     AppColorManager.lightGreyOpacity6),
                                 onChanged: (value) {
+                                  print(i);
+                                  print('ffffffffffffffffffffffffffffffffffffff');
                                   bool isListFull =
                                       selectedAttributeMap[currentFilterItemId]
                                               ?.length ==
@@ -129,7 +131,7 @@ void showAttributeListCheckBox(
                                           ?.remove(options[i].name);
                                       selectedOtherLanguageAttributeMap[
                                               currentFilterItemId ?? 0]
-                                          ?.remove(otherLanguageNames[i]);
+                                          ?.remove(otherLanguageNames[i-1]);
                                     } else {
                                       if (selectedAttributeMap[
                                               currentFilterItemId ?? 0] ==
@@ -146,7 +148,7 @@ void showAttributeListCheckBox(
 
                                       selectedOtherLanguageAttributeMap[
                                               currentFilterItemId ?? 0]
-                                          ?.add(otherLanguageNames[i]);
+                                          ?.add(otherLanguageNames[i-1]);
                                     }
                                   }
                                   setState(() {});
