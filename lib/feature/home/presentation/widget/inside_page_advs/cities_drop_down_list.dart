@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 
 import '../../../../../core/helper/language_helper.dart';
 import '../../../../../core/resource/color_manager.dart';

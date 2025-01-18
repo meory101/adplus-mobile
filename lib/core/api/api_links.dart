@@ -7,6 +7,7 @@ class ApiGetUrl {
 
 class ApiPostUrl {
   static String getCategoryAttributes = "api/category/category-info";
+  static String checkupdate = "api/auth/checkUpdateAvailability";
   static String categoryItems = "api/item/category-items";
   static String markAsRead = "api/notification/markAsRead";
   static String getActiveCurrencies = "api/item/getActiveCurrencies";

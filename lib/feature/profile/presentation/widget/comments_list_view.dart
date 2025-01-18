@@ -75,11 +75,9 @@ class CommentsListView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(
                         AppRadiusManager.r10)),
                 width: AppWidthManager.w35,
-                child: MainImageWidget(
-                  imageUrl: AppConstantManager.imageBaseUrl +
-                      (state.entity.data?.comments?[index].item?.photos?.first
-                          .photo ??
-                          ""),
+                height: AppWidthManager.w35,                child: MainImageWidget(
+                  imageUrl: AppConstantManager.imageBaseUrl +((state.entity.data?.comments?[index].item?.photos??[]).isNotEmpty ?
+                  (state.entity.data?.comments?[index].item?.photos?.first.photo ?? "") :""),
                 ),
               ),
               SizedBox(width: AppWidthManager.w3Point8,),

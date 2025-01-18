@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/check_ubdate_cubit/check_ubdate_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/response/advs_by_attribute_response_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/screen/advertisement_details_screen.dart';
 import 'package:mzad_damascus/main.dart';
@@ -21,7 +24,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-
     super.initState();
     showedNotificationNoteMessage = false;
     navigateToNextPage();
@@ -30,17 +32,19 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigateToNextPage() {
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
+        print('adv id in the splash screeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen');
+        print(advId);
         if (advId != null) {
           Navigator.of(context).pushNamedAndRemoveUntil(
             RouteNamedScreens.advertisementDetails,
             arguments: AdvertisementDetailsArgs(
-                advertisement: AdData(itemId: num.parse(advId??""))),
-            (route) => false,
+                advertisement: AdData(itemId: num.parse(advId ?? ""))),
+                (route) => false,
           );
         } else {
           Navigator.of(context).pushNamedAndRemoveUntil(
             RouteNamedScreens.mainBottomAppBar,
-            (route) => false,
+                (route) => false,
           );
         }
       }
@@ -49,40 +53,63 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: AppHeightManager.h100,
-        width: AppWidthManager.w100,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage(AppImageManager.splash),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            AppTextWidget(
-              text: "V ${AppInfoHelper.getAppVersion()}",
-              color: AppColorManager.mainColor,
-            ),
-            SizedBox(
-              height: AppHeightManager.h1point8,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w5),
-              child: SizedBox(
-                height: AppHeightManager.h2,
-                width: AppHeightManager.h2,
-                child: const AppCircularProgressWidget(),
+    return BlocConsumer<CheckUbdateCubit, CheckUbdateState>(
+      listener: (context, state) {
+        if (state.status == CubitStatus.success) {
+          final currentBuildNumber =
+              int.tryParse(AppInfoHelper.getAppBuildNumber()) ?? 0;
+          final serverVersion = int.tryParse(
+              state.entity.data?.versionUpdate?.replaceAll('.', '') ??
+                  '') ??
+              0;
+
+          if (currentBuildNumber > serverVersion) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              RouteNamedScreens.mainBottomAppBar,
+                  (route) => false,
+            );
+          } else {
+            print('سوسو');
+          }
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: Container(
+            height: AppHeightManager.h100,
+            width: AppWidthManager.w100,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(AppImageManager.splash),
               ),
             ),
-            SizedBox(
-              height: AppHeightManager.h2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppTextWidget(
+                  text: "V ${AppInfoHelper.getAppVersion()}",
+                  color: AppColorManager.mainColor,
+                ),
+                SizedBox(
+                  height: AppHeightManager.h1point8,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w5),
+                  child: SizedBox(
+                    height: AppHeightManager.h2,
+                    width: AppHeightManager.h2,
+                    child: const AppCircularProgressWidget(),
+                  ),
+                ),
+                SizedBox(
+                  height: AppHeightManager.h2,
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

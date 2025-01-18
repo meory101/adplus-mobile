@@ -37,20 +37,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: Container(
-        height: AppHeightManager.h100,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.cover, image: AssetImage(AppImageManager.mzad))),
-        child: Padding(
-          padding: EdgeInsets.only(
-              top: AppHeightManager.h3,
-              left: AppWidthManager.w5,
-              right: AppWidthManager.w5),
-          child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
+      resizeToAvoidBottomInset: false,      body: SingleChildScrollView(
+        child: Container(
+          height: AppHeightManager.h100,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover, image: AssetImage(AppImageManager.mzad))),
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: AppHeightManager.h3,
+                left: AppWidthManager.w5,
+                right: AppWidthManager.w5),
+            child: Form(
+              key: formKey,
               child: Column(
                 children: [
                   SizedBox(
@@ -127,7 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if (value == null || value.isEmpty) {
                                   return "usernameRequired".tr();
                                 }
-                    
+
                                 bool isEmail = value.isEmail();
                                 bool isPhone = value.isPhoneNumber();
                                 if (isPhone == true) {
@@ -161,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if (value == null || value.isEmpty) {
                                   return "phoneNumberRequired".tr();
                                 }
-                    
+
                                 if (!value.isPhoneNumber()) {
                                   return "invalidPhoneNumber".tr();
                                 }
@@ -348,21 +347,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
+                              SizedBox(height: AppHeightManager.h7),
+
                             ],
                           ),
-                    
-                          SizedBox(height: AppHeightManager.h4),
-                    
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: AppHeightManager.h4),
-
                 ],
-
               ),
-
             ),
           ),
         ),

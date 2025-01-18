@@ -41,6 +41,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         height: AppHeightManager.h100,
         decoration: BoxDecoration(
@@ -76,7 +77,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 SizedBox(height: AppHeightManager.h5),
                 AppTextFormField(
-                  textInputType: TextInputType.emailAddress,
+                  textInputType: TextInputType.number,
                   hintText: "codeHint".tr(),
                   hintStyle: const TextStyle(color: AppColorManager.textGrey),
                   onChanged: (value) {

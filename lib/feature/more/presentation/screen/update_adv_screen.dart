@@ -111,31 +111,35 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
 
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      onPageChanged: (index, reason) {
-                        setState(() {});
-                      },
-                      aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,
-                      enableInfiniteScroll: true,
-                      autoPlay: true,
-                      viewportFraction: 1,
-                    ),
-                    items: List.generate(
-                      widget.args.data.photos?.length ?? 0,
-                      (index) {
-                        return Container(
-                          width: AppWidthManager.w92,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(AppRadiusManager.r10)),
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: MainImageWidget(
-                            imageUrl: AppConstantManager.imageBaseUrl +
-                                (widget.args.data.photos?[index].photo ?? ""),
-                          ),
-                        );
-                      },
+                  Visibility(
+                    visible:  widget.args.data.photos?.length==0,
+                    child:  SizedBox(),
+                    replacement: CarouselSlider(
+                      options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          setState(() {});
+                        },
+                        aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,
+                        enableInfiniteScroll: true,
+                        autoPlay: true,
+                        viewportFraction: 1,
+                      ),
+                      items: List.generate(
+                        widget.args.data.photos?.length ?? 0,
+                        (index) {
+                          return Container(
+                            width: AppWidthManager.w92,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(AppRadiusManager.r10)),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: MainImageWidget(
+                              imageUrl: AppConstantManager.imageBaseUrl +
+                                  (widget.args.data.photos?[index].photo ?? ""),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(

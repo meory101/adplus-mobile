@@ -35,6 +35,8 @@ class _AdvertisementLanguageScreenState extends State<AdvertisementLanguageScree
             mainAxisSize: MainAxisSize.max,
             children: [
               const AdvertisementAppBar(
+                steps: ""
+,
                 completePercent: 0,
               ),
               SizedBox(

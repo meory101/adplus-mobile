@@ -5,6 +5,7 @@ import 'package:mzad_damascus/feature/authentication/domain/entity/request/forge
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/login_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/reset_passwod_request_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/request/verfication_request.dart';
+import 'package:mzad_damascus/feature/authentication/domain/entity/response/check_update_availability_response_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/forget_password_response_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/login_response_entity.dart';
 import 'package:mzad_damascus/feature/authentication/domain/entity/response/logout_response_entity.dart';
@@ -28,7 +29,8 @@ abstract class AuthRemote {
   Future<ResetPasswordResponse> resetPassword(
       {required PasswordResetRequestEntity entity});
   Future<ForgetPasswordResponseEntity> forgetpassword(
-      {required ForgetPasswordRequestEntity entity}); // أضف هذه السطر
+      {required ForgetPasswordRequestEntity entity});
+  Future<CheckUpdateAvailabilityResponseEntity> checkupdate();
 }
 
 class AuthRemoteImplement extends AuthRemote {
@@ -82,13 +84,11 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<ResetPasswordResponse> resetPassword(
       {required PasswordResetRequestEntity entity}) async {
-    final response = await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.resetPassword); // تأكد من أن لديك عنوان URL الصحيح
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.resetPassword);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      return resetPasswordResponseFromJson(
-          response.body); // تأكد من وجود هذه الدالة لتحويل JSON إلى الكائن
+      return resetPasswordResponseFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }
@@ -97,13 +97,23 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<ForgetPasswordResponseEntity> forgetpassword(
       {required ForgetPasswordRequestEntity entity}) async {
-    final response = await ApiMethods().post(
-        body: entity.toJson(),
-        url: ApiPostUrl.forgetpassword); // تأكد من أن لديك عنوان URL الصحيح
+    final response = await ApiMethods()
+        .post(body: entity.toJson(), url: ApiPostUrl.forgetpassword);
 
     if (ApiStatusCode.success().contains(response.statusCode)) {
-      return forgetPasswordResponseEntityFromJson(
-          response.body); // تأكد من وجود هذه الدالة لتحويل JSON إلى الكائن
+      return forgetPasswordResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
+  Future<CheckUpdateAvailabilityResponseEntity> checkupdate()async {
+    final response = await ApiMethods()
+        .post(body:{}, url: ApiPostUrl.checkupdate);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return checkUpdateAvailabilityResponseEntityFromJson(response.body);
     } else {
       throw ApiServerException(response: response);
     }

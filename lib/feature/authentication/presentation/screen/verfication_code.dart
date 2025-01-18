@@ -53,7 +53,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                height: AppHeightManager.h15,
+                height: AppHeightManager.h8,
               ),
               ClipOval(
                 child: SizedBox(
@@ -72,20 +72,18 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 text: 'verificationCode'.tr(),
               ),
               SizedBox(
-                height: AppHeightManager.h10,
+                height: AppHeightManager.h20,
               ),
               AppTextWidget(
                   text: 'enterVerificationCode'.tr(),
                   color: Colors.orange,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
                   fontSize: FontSizeManager.fs15),
               Padding(
                 padding: EdgeInsets.all(AppWidthManager.w3Point8),
                 child: PinCodeTextField(
                   pinBoxBorderWidth: 2,
-                  pinBoxWidth: AppWidthManager.w10,
-                  pinBoxHeight: AppWidthManager.w10,
+                  pinBoxWidth: AppWidthManager.w12,
+                  pinBoxHeight: AppHeightManager.h6,
                   maxLength: 6,
                   pinBoxRadius: AppRadiusManager.r10,
                   defaultBorderColor: AppColorManager.grey,

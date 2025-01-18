@@ -9,14 +9,15 @@ import '../../../../core/resource/font_manager.dart';
 import '../../../../core/resource/icon_manager.dart';
 import '../../../../core/widget/text/app_text_widget.dart';
 import '../../../../router/router.dart';
-
+import 'dart:ui' as ui;
 
 /// Eng. Nour Othman(meory)
 
 class AdvertisementAppBar extends StatelessWidget {
   final double completePercent;
+  final String? steps;
 
-  const AdvertisementAppBar({super.key, required this.completePercent});
+  const AdvertisementAppBar({super.key, required this.completePercent,required this.steps});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,28 @@ class AdvertisementAppBar extends StatelessWidget {
                 ),
               ),
             ),
-          ),)
+          ),),
+      Visibility(
+        visible: (steps??"").isNotEmpty,
+        child: SizedBox(
+          height: AppHeightManager.h1point8,
+        ),
+      ),
+      Row(
+        children: [
+          AppTextWidget(
+              text:(steps??"").isNotEmpty? (steps.toString() + " "+"step".tr()) : "",
+              fontSize: FontSizeManager.fs16,
+              color: AppColorManager.mainColor,
+              fontWeight: FontWeight.w600),
+        ],
+      ),
+      Visibility(
+        visible: (steps??"").isNotEmpty,
+        child: SizedBox(
+          height: AppHeightManager.h1point8,
+        ),
+      ),
     ]);
   }
 }

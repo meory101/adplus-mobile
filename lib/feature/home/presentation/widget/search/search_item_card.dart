@@ -35,10 +35,11 @@ class SearchItemCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 height: AppHeightManager.h30,
                 imageUrl: AppConstantManager
-                    .imageBaseUrl +
-                    (advertisement
-                        .photos?.first.photo ??
-                        ""),
+                    .imageBaseUrl +((advertisement
+                    .photos??[]).isNotEmpty?
+                (advertisement
+                    .photos?.first.photo ??
+                    "") :"") ,
                 borderRadius: BorderRadius.circular(
                     AppRadiusManager.r15),
               ),

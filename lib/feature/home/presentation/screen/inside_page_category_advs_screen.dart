@@ -166,7 +166,9 @@ class _InsidePageCategoryAdvsScreenState
                   }
 
                   if (starItemsLength > 0) {
-                    if (selectedStarIndex == -1) {
+                    if (selectedStarIndex == -1&& widget.args.isAllCategoryAds ==false) {
+                      print('here is the index$selectedStarIndex');
+
                       if (widget.args.entity.attributes?.first.attributeId ==
                           starItemAttributeId) {
                         for (int newIndex = 0;
@@ -186,6 +188,8 @@ class _InsidePageCategoryAdvsScreenState
                                           .attributeTypeList?[newIndex]
                                           .option ??
                                       "";
+                          print(widget.args.entity.attributes?.first.value);
+                          print('vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalueeeeeeeeeee');
                           if (
                           widget.args.entity.attributes?.first.value
                                   ?.contains(name) ==true){

@@ -125,10 +125,8 @@ class _AuthorProfileScreenState extends State<AuthorProfileScreen> {
                                           AppRadiusManager.r15),
                                     ),
                                     child: MainImageWidget(
-                                      imageUrl: AppConstantManager
-                                              .imageBaseUrl +
-                                          (advertisement?.photos?.first.photo ??
-                                              ""),
+                                      imageUrl: AppConstantManager.imageBaseUrl +((advertisement?.photos??[]).isNotEmpty?
+                                      (advertisement?.photos?.first.photo ?? "") : ""),
                                       borderRadius: BorderRadius.circular(
                                           AppRadiusManager.r15),
                                     )),

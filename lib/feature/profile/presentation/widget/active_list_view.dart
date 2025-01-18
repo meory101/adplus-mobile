@@ -78,14 +78,20 @@ class ActiveListView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.circular(AppRadiusManager.r10)),
                         width: AppWidthManager.w35,
+                        height: AppWidthManager.w35,
                         child: MainImageWidget(
+                          width: AppWidthManager.w35,
+                          height: AppWidthManager.w35,
                           imageUrl: AppConstantManager.imageBaseUrl +
-                              (items[index].photos?.first.photo ?? ""),
+                              ((items[index].photos ?? []).isNotEmpty
+                                  ? (items[index].photos?.first.photo ?? "")
+                                  : ""),
                         ),
                       ),
                       SizedBox(

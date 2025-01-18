@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/resource/constant_manager.dart';
 import 'package:mzad_damascus/core/widget/loading/shimmer/search_user_list_view_shimmer.dart';
 
 import '../../../../../core/model/user.dart';
@@ -85,15 +86,18 @@ class SearchUserResultListView extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Container(
-                            height: AppWidthManager.w15,
-                            width: AppWidthManager.w15,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            decoration:
-                                const BoxDecoration(shape: BoxShape.circle),
-                            child: MainImageWidget(
-                              imageUrl: users[index].photo ?? "",
-                              fit: BoxFit.cover,
+                          Visibility(
+                            visible: (users[index].photo ?? "").isNotEmpty,
+                            child: Container(
+                              height: AppWidthManager.w15,
+                              width: AppWidthManager.w15,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              decoration:
+                                  const BoxDecoration(shape: BoxShape.circle),
+                              child: MainImageWidget(
+                                imageUrl:AppConstantManager.imageBaseUrl+ (users[index].photo ?? ""),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           SizedBox(

@@ -17,12 +17,14 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_ad
 import 'package:mzad_damascus/feature/authentication/data/datasource/remote/auth_remote.dart';
 import 'package:mzad_damascus/feature/authentication/data/repository/auth_repository_implements.dart';
 import 'package:mzad_damascus/feature/authentication/domain/repository/auth_repository.dart';
+import 'package:mzad_damascus/feature/authentication/domain/usecase/check_update_usecase.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/forget_password_usecase.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/login_usecase.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/logout_usecase.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/register_usecase.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/reset_password_usecase.dart';
 import 'package:mzad_damascus/feature/authentication/domain/usecase/verfication_usecase.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/check_ubdate_cubit/check_ubdate_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
@@ -142,6 +144,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => GetCategoriesCubit(usecase: sl()));
+  sl.registerFactory(() => CheckUbdateCubit(usecase: sl()));
   sl.registerFactory(() => CurrencyCubit(usecase: sl()));
   sl.registerFactory(() => AdsByCategoryCubit(usecase: sl()));
   sl.registerFactory(() => ItemSearchCubit(usecase: sl()));
@@ -175,6 +178,7 @@ Future<void> init() async {
   sl.registerFactory(() => AddReactionCubit(usecase: sl()));
   sl.registerFactory(() => AddCommentCubit(usecase: sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => CheckUpdateUsecase(repository: sl()));
   sl.registerLazySingleton(() => CurrencyUsecase(repository: sl()));
   sl.registerLazySingleton(() => AdsByCategoryUsecase(repository: sl()));
   sl.registerLazySingleton(() => NotificationUsecase(repository: sl()));

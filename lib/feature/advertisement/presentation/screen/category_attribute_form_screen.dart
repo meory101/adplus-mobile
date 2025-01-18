@@ -94,7 +94,9 @@ class _CategoryAttributeFormScreenState
             // mainAxisSize: MainAxisSize.max,
             children: [
               const AdvertisementAppBar(
-                completePercent: (2 / 3),
+          steps: "2/3"
+,
+          completePercent: (2 / 3),
               ),
               SizedBox(
                 height: AppHeightManager.h2point5,

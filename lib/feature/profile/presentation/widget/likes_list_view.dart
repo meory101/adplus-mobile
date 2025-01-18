@@ -36,7 +36,6 @@ class LikesListView extends StatelessWidget {
         List<AdvDetails> likes = state.entity.data?.data ?? [];
         return ListView.builder(
           padding: EdgeInsets.zero,
-
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: likes.length + (state.isReachedMax == true ? 0 : 1),
@@ -70,15 +69,18 @@ class LikesListView extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
+
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.circular(AppRadiusManager.r10)),
                         width: AppWidthManager.w35,
+                        height: AppWidthManager.w35,
                         child: MainImageWidget(
-                          imageUrl: AppConstantManager.imageBaseUrl +
-                              (likes[index].photos?.first.photo ?? ""),
-                        ),
+                            imageUrl: AppConstantManager.imageBaseUrl +
+                                ((likes[index].photos ?? []).isNotEmpty
+                                    ? (likes[index].photos?.first.photo ?? "")
+                                    : "")),
                       ),
                       SizedBox(
                         width: AppWidthManager.w3Point8,

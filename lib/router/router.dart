@@ -10,6 +10,8 @@ import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_citie
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/update_adv_cubit/update_advertisement_cubit.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/advertisement_screen.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/screen/category_attribute_form_screen.dart';
+import 'package:mzad_damascus/feature/authentication/domain/entity/request/login_request_entity.dart';
+import 'package:mzad_damascus/feature/authentication/presentation/cubit/check_ubdate_cubit/check_ubdate_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:mzad_damascus/feature/authentication/presentation/cubit/logout%20cubit/logout_cubit.dart';
@@ -151,7 +153,12 @@ abstract class AppRouter {
     switch (settings.name) {
       case RouteNamedScreens.splash:
         myRoute = RouteNamedScreens.splash;
-        return FadeBuilderRoute(page: const SplashScreen());
+        return FadeBuilderRoute(
+            page: BlocProvider(
+          create: (context) => di.sl<CheckUbdateCubit>()
+            ..checkupdate(context: context, ),
+          child: SplashScreen(),
+        ));
       case RouteNamedScreens.profile:
         return FadeBuilderRoute(
           page: BlocProvider(

@@ -73,7 +73,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
           return AdvertisementNextButton(
             buttonText: "addAdvertisement".tr(), // Localized text
             onTap: () async {
-              if (formKey.currentState!.validate() && advFiles.isNotEmpty) {
+              if (formKey.currentState!.validate() ) {
                 context.read<AddAdvertisementCubit>().addAdvertisement(
                       context: context,
                       entity: AdvertisementModel.entity!,
@@ -97,7 +97,10 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const AdvertisementAppBar(completePercent: 1),
+                const AdvertisementAppBar(completePercent: 1,
+                  steps: "3/3"
+
+                ),
                 SizedBox(height: AppHeightManager.h2point5),
                 AppTextWidget(text: "maximum10Images".tr(),
                   fontSize: FontSizeManager.fs16,

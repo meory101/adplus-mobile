@@ -55,6 +55,8 @@ class AdvCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        height: AppHeightManager.h12,
+                        width: AppHeightManager.h12,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: BoxDecoration(
                           borderRadius:
@@ -65,8 +67,12 @@ class AdvCard extends StatelessWidget {
                               BorderRadius.circular(AppRadiusManager.r10),
                           height: AppHeightManager.h12,
                           width: AppHeightManager.h12,
-                          imageUrl: AppConstantManager.imageBaseUrl +
-                              (item.photos?.first.photo ?? ""),
+                          imageUrl: AppConstantManager
+                              .imageBaseUrl +((item
+                              .photos??[]).isNotEmpty?
+                          (item
+                              .photos?.first.photo ??
+                              "") :"") ,
                         ),
                       ),
                       SizedBox(width: AppRadiusManager.r10),

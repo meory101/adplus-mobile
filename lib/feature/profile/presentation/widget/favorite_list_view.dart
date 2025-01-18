@@ -72,14 +72,15 @@ class FavoriteListView extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
+                        width: AppWidthManager.w35,
+                        height: AppWidthManager.w35,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.circular(AppRadiusManager.r10)),
-                        width: AppWidthManager.w35,
                         child: MainImageWidget(
-                          imageUrl: AppConstantManager.imageBaseUrl +
-                              (favorites[index].photos?.first.photo ?? ""),
+                          imageUrl: AppConstantManager.imageBaseUrl +((favorites[index].photos??[]).isNotEmpty?
+                          (favorites[index].photos?.first.photo ?? "") : ""),
                         ),
                       ),
                       SizedBox(
