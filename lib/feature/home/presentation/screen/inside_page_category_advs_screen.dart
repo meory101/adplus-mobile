@@ -41,6 +41,9 @@ class _InsidePageCategoryAdvsScreenState
     extends State<InsidePageCategoryAdvsScreen> {
   @override
   void initState() {
+    FilterRequest.entity.categoryId = widget.args.category.categoryId;
+    print(FilterRequest.entity.categoryId);
+    print('dddddddddddddddddddddddddddddddddd000000000000');
     if (widget.args.isAllCategoryAds == true) {
       isAllAdvs = true;
       context.read<AdsByCategoryCubit>().getAdvsByCategory(
@@ -63,6 +66,9 @@ class _InsidePageCategoryAdvsScreenState
         setState(() {});
       },
     );
+
+    print(FilterRequest.entity.categoryId);
+    print('dddddddddddddddddddddddddddddddddd000000000000');
     super.initState();
   }
 
@@ -76,6 +82,10 @@ class _InsidePageCategoryAdvsScreenState
     context
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: FilterRequest.entity);
+
+    setState(() {
+
+    });
   }
 
   void onScroll() {
@@ -122,7 +132,7 @@ class _InsidePageCategoryAdvsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:  MainAppBar(title: ""),
+        appBar: MainAppBar(title: ""),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
         floatingActionButton: Container(
           alignment: Alignment.center,
@@ -166,7 +176,8 @@ class _InsidePageCategoryAdvsScreenState
                   }
 
                   if (starItemsLength > 0) {
-                    if (selectedStarIndex == -1&& widget.args.isAllCategoryAds ==false) {
+                    if (selectedStarIndex == -1 &&
+                        widget.args.isAllCategoryAds == false) {
                       print('here is the index$selectedStarIndex');
 
                       if (widget.args.entity.attributes?.first.attributeId ==
@@ -190,9 +201,9 @@ class _InsidePageCategoryAdvsScreenState
                                       "";
                           print(widget.args.entity.attributes?.first.value);
                           print('vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalueeeeeeeeeee');
-                          if (
-                          widget.args.entity.attributes?.first.value
-                                  ?.contains(name) ==true){
+                          if (widget.args.entity.attributes?.first.value
+                                  ?.contains(name) ==
+                              true) {
                             selectedStarIndex = newIndex;
                           }
                         }
@@ -208,7 +219,13 @@ class _InsidePageCategoryAdvsScreenState
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: [
-                              CitiesDropDownList(),
+                              CitiesDropDownList(
+                                onChanged: () {
+                                  setState(() {
+
+                                  });
+                                },
+                              ),
                               AttributesHorizantalListView(
                                 filterItems: filterItems,
                                 onDoneSelecting: () {
@@ -219,20 +236,20 @@ class _InsidePageCategoryAdvsScreenState
                                 onTap: () {
                                   clearFilter();
                                   selectedStarIndex = -1;
-                                  selectedStarIndex=100;
+                                  selectedStarIndex = 100;
                                   selectedAttributeMap[
-                                  starItemAttributeId ?? 0] = [];
-                                  setState(() {
-                                  });
+                                      starItemAttributeId ?? 0] = [];
+                                  setState(() {});
                                 },
-                                margin:
-                                EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: AppWidthManager.w3Point8),
                                 alignment: Alignment.center,
                                 height: AppHeightManager.h6,
                                 width: AppWidthManager.w45,
                                 color: AppColorManager.white,
                                 outLinedBorde: true,
-                                borderRadius: BorderRadius.circular(AppRadiusManager.r10),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadiusManager.r10),
                                 borderColor: AppColorManager.subColor,
                                 child: AppTextWidget(
                                   text: "reset".tr(),
@@ -262,15 +279,19 @@ class _InsidePageCategoryAdvsScreenState
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  List<String>? name =[  staredItems.first
-                                          .attributeTypeList?[index].optionEn ??"",
-                                       staredItems.first
-                                          .attributeTypeList?[index].option ??""];
+                                  List<String>? name = [
+                                    staredItems.first.attributeTypeList?[index]
+                                            .optionEn ??
+                                        "",
+                                    staredItems.first.attributeTypeList?[index]
+                                            .option ??
+                                        ""
+                                  ];
                                   selectedStarIndex = index;
                                   selectedAttributeMap[
                                       starItemAttributeId ?? 0] = [];
-                                  selectedAttributeMap[starItemAttributeId ??
-                                      0] = name;
+                                  selectedAttributeMap[
+                                      starItemAttributeId ?? 0] = name;
 
                                   List<FilterAttribute> attributes = [];
                                   selectedAttributeMap.forEach(
@@ -281,8 +302,7 @@ class _InsidePageCategoryAdvsScreenState
                                       }
                                     },
                                   );
-                                  FilterRequest.entity.attributes =
-                                      attributes;
+                                  FilterRequest.entity.attributes = attributes;
                                   getData();
                                   setState(() {});
                                 },
@@ -336,7 +356,8 @@ class _InsidePageCategoryAdvsScreenState
           padding: EdgeInsets.only(top: AppHeightManager.h1),
           child: SingleChildScrollView(
             controller: scrollController,
-            child: (FilterRequest.entity.attributes ?? []).isEmpty
+            child: (FilterRequest.entity.attributes ?? []).isEmpty &&
+                    FilterRequest.entity.cityId == null
                 ? Column(
                     children: [
                       AdsByCategoryListView(category: widget.args.category),

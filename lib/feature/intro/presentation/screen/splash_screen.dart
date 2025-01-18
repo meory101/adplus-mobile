@@ -98,7 +98,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w5),
                   child: SizedBox(
                     height: AppHeightManager.h2,
-                    width: AppHeightManager.h2,
+                      width: AppHeightManager.h2,
                     child: const AppCircularProgressWidget(),
                   ),
                 ),

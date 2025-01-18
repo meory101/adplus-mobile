@@ -31,6 +31,7 @@ import '../../domain/entity/response/get_categories_response_entity.dart';
 void clearFilter() {
   FilterRequest.entity = AdvsByAttributeRequestEntity();
   FilterRequest.entity.attributes = [];
+  FilterRequest.entity.cityId = null;
   selectedAttributeMap = {};
   selectedOtherLanguageAttributeMap = {};
 }
@@ -48,6 +49,7 @@ class CategoryInsidePageScreen extends StatefulWidget {
 class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
   @override
   void initState() {
+
     getCategoryInsidePage();
     super.initState();
   }
@@ -197,12 +199,13 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                               ]));
 
                                     entity.attributes = attributes;
-
+                                    entity.cityId = null;
                                     Navigator.of(context)
                                         .pushNamed(
                                       RouteNamedScreens.insidePageCategoryAdvs,
                                       arguments: InsidePageCategoryAdvArgs(
                                         isAllCategoryAds: false,
+
                                         category: widget.args.subCategory,
                                         entity: entity,
                                       ),
@@ -260,6 +263,8 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                     return i == 0 && index == 1
                                         ? InkWell(
                                             onTap: () {
+                                              entity.cityId = null;
+
                                               Navigator.of(context)
                                                   .pushNamed(
                                                       RouteNamedScreens
@@ -361,6 +366,8 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                                                               ""
                                                         ]));
                                               entity.attributes = attributes;
+                                              entity.cityId = null;
+
                                               Navigator.of(context)
                                                   .pushNamed(
                                                       RouteNamedScreens
