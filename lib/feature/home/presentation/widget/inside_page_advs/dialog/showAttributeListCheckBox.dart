@@ -50,9 +50,13 @@ void showAttributeListCheckBox(
                       }
 
                       if (options[i].name == 'all') {
+                        print('====================================');
                         isSelected =
                             selectedAttributeMap[currentFilterItemId]?.length ==
                                 (options.length - 1);
+                        print(options.length-1);
+                        print(selectedAttributeMap[currentFilterItemId]);
+                        print(selectedAttributeMap[currentFilterItemId]?.length );
                       } else {
                         isSelected = selectedAttributeMap[currentFilterItemId]
                                 ?.contains(options[i].name) ??

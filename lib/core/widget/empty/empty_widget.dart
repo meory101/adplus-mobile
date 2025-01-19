@@ -36,45 +36,51 @@ class EmptyWidget extends StatelessWidget {
               SizedBox(
                 height: AppHeightManager.h1point8,
               ),
-              Padding(
-                padding:  EdgeInsets.only(top: 0,left: 60,right: 60),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    AppTextWidget(
-                      text: title ?? "",
-                      fontSize: FontSizeManager.fs18,
-                      fontWeight: FontWeight.w700,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: AppHeightManager.h05,
-                    ),
-                    AppTextWidget(
-                      text: subTitle ?? "",
-                      fontSize: FontSizeManager.fs16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColorManager.grey,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                    ),
-                    SizedBox(
-                      height: AppHeightManager.h1point5,
-                    ),
-                    Visibility(
-                      visible: actions != null,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: AppHeightManager.h1point8,
-                          ),
-                          actions ?? const SizedBox(),
-                        ],
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 20,
+                bottom: 0,
+                child: Padding(
+                  padding:  EdgeInsets.only(top: 0,left: 0,right: 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AppTextWidget(
+                        text: title ?? "",
+                        fontSize: FontSizeManager.fs18,
+                        fontWeight: FontWeight.w700,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: AppHeightManager.h05,
+                      ),
+                      AppTextWidget(
+                        text: subTitle ?? "",
+                        fontSize: FontSizeManager.fs16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColorManager.grey,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                      ),
+                      SizedBox(
+                        height: AppHeightManager.h1point5,
+                      ),
+                      Visibility(
+                        visible: actions != null,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: AppHeightManager.h1point8,
+                            ),
+                            actions ?? const SizedBox(),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

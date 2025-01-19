@@ -54,9 +54,13 @@ class _InsidePageCategoryAdvsScreenState
       FilterRequest.entity = AdvsByAttributeRequestEntity();
       FilterRequest.entity = widget.args.entity;
       selectedAttributeMap = {};
+      selectedOtherLanguageAttributeMap = {};
       selectedAttributeMap[widget.args.entity.attributes?.first.attributeId ??
-          -1] = widget.args.entity.attributes?.first.value ?? [];
-
+          -1] = [widget.args.entity.attributes?.first.value?.last ?? ""];
+      selectedOtherLanguageAttributeMap[
+          widget.args.entity.attributes?.first.attributeId ?? -1] = [
+        widget.args.entity.attributes?.first.value?.first ?? ""
+      ];
       getAdvertisements();
     }
     scrollController.addListener(onScroll);
@@ -79,13 +83,14 @@ class _InsidePageCategoryAdvsScreenState
   }
 
   getAdvertisements() {
+    FilterRequest.entity.categoryId = widget.args.category.categoryId;
+    print(widget.args.category.categoryId);
+    print('ddddddddddddddd');
     context
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: FilterRequest.entity);
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   void onScroll() {
@@ -179,32 +184,34 @@ class _InsidePageCategoryAdvsScreenState
                     if (selectedStarIndex == -1 &&
                         widget.args.isAllCategoryAds == false) {
                       print('here is the index$selectedStarIndex');
-
-                      if (widget.args.entity.attributes?.first.attributeId ==
-                          starItemAttributeId) {
-                        for (int newIndex = 0;
-                            newIndex <
-                                (staredItems.first.attributeTypeList ?? [])
-                                    .length;
-                            newIndex++) {
-                          String? name =
-                              LanguageHelper.checkIfLTR(context: context)
-                                  ? (staredItems
-                                          .first
-                                          .attributeTypeList?[newIndex]
-                                          .optionEn ??
-                                      "")
-                                  : staredItems
-                                          .first
-                                          .attributeTypeList?[newIndex]
-                                          .option ??
-                                      "";
-                          print(widget.args.entity.attributes?.first.value);
-                          print('vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalueeeeeeeeeee');
-                          if (widget.args.entity.attributes?.first.value
-                                  ?.contains(name) ==
-                              true) {
-                            selectedStarIndex = newIndex;
+                      if ((widget.args.entity.attributes ?? []).isNotEmpty) {
+                        if (widget.args.entity.attributes?.first.attributeId ==
+                            starItemAttributeId) {
+                          for (int newIndex = 0;
+                              newIndex <
+                                  (staredItems.first.attributeTypeList ?? [])
+                                      .length;
+                              newIndex++) {
+                            String? name =
+                                LanguageHelper.checkIfLTR(context: context)
+                                    ? (staredItems
+                                            .first
+                                            .attributeTypeList?[newIndex]
+                                            .optionEn ??
+                                        "")
+                                    : staredItems
+                                            .first
+                                            .attributeTypeList?[newIndex]
+                                            .option ??
+                                        "";
+                            print(widget.args.entity.attributes?.first.value);
+                            print(
+                                'vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalueeeeeeeeeee');
+                            if (widget.args.entity.attributes?.first.value
+                                    ?.contains(name) ==
+                                true) {
+                              selectedStarIndex = newIndex;
+                            }
                           }
                         }
                       }
@@ -220,10 +227,10 @@ class _InsidePageCategoryAdvsScreenState
                             scrollDirection: Axis.horizontal,
                             children: [
                               CitiesDropDownList(
+                                categoryId:
+                                    widget.args.category.categoryId ?? 0,
                                 onChanged: () {
-                                  setState(() {
-
-                                  });
+                                  setState(() {});
                                 },
                               ),
                               AttributesHorizantalListView(

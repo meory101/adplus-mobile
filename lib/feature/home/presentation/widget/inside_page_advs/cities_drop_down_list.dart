@@ -19,7 +19,8 @@ import '../../screen/inside_page_category_advs_screen.dart';
 
 class CitiesDropDownList extends StatelessWidget {
   final Function() onChanged ;
-  const CitiesDropDownList({super.key,required this.onChanged});
+  final num categoryId;
+  const CitiesDropDownList({super.key,required this.onChanged,required this.categoryId});
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +63,8 @@ class CitiesDropDownList extends StatelessWidget {
 
             hintFontColor: AppColorManager.black,
             onChanged: (selectedCity) {
+              FilterRequest.entity.categoryId =
+                  categoryId;
               FilterRequest.entity.cityId =
                   num.parse(selectedCity?.id ?? "0");
               context

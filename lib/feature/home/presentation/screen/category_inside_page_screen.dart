@@ -102,7 +102,10 @@ class _CategoryInsidePageScreenState extends State<CategoryInsidePageScreen> {
                     replacement: Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: AppHeightManager.h10),
-                        child: SizedBox()),
+                        child:    EmptyWidget(
+                    title: "noResults".tr(),
+                    subTitle: "couldNotFindAnyResult".tr(),
+                  )),
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
