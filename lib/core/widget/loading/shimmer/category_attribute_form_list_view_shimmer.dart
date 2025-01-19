@@ -9,6 +9,8 @@ class CategoryAttributeFormListViewShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding:  EdgeInsets.zero,
+
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 10,

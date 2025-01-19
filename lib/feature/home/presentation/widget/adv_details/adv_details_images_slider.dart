@@ -113,7 +113,7 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                         )),
                     Positioned(
                         right: 10,
-                        top: AppHeightManager.h11,
+                        top: AppHeightManager.h17,
                         child: InkWell(
                           onTap: () {
                             setState(() {
@@ -136,7 +136,7 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                         )),
                     Positioned(
                       left: 10,
-                      top: AppHeightManager.h11,
+                      top: AppHeightManager.h17,
                       child: InkWell(
                         onTap: () {
                           setState(() {

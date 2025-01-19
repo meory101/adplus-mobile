@@ -117,7 +117,7 @@ class _CategoryAttributeFormScreenState
                       state.entity.data?.attributes ?? [];
                   if(attributes.isEmpty){
                     return Padding(
-                      padding:  EdgeInsets.only(top: AppHeightManager.h20),
+                      padding:  EdgeInsets.only(top: AppHeightManager.h8),
                       child: EmptyWidget(
                         title: "noResults".tr(),
                         subTitle: "couldNotFindAnyResult".tr(),

@@ -119,9 +119,10 @@ class _UpdateAdvScreenState extends State<UpdateAdvScreen> {
                         onPageChanged: (index, reason) {
                           setState(() {});
                         },
-                        aspectRatio: AppWidthManager.w92 / AppHeightManager.h20,
                         enableInfiniteScroll: true,
                         autoPlay: true,
+                        height: MediaQuery.of(context).size.width * 0.9,
+                        aspectRatio: AppWidthManager.w100 / AppHeightManager.h27,
                         viewportFraction: 1,
                       ),
                       items: List.generate(
