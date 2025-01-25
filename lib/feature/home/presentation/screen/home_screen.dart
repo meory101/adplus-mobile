@@ -32,6 +32,8 @@ import '../widget/home/standard_card.dart';
 
 /// Eng. Nour Othman(meory)
 
+FocusNode focusNode = FocusNode();
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -138,6 +140,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   onCategoryTaped(SubCategory subCategory) {
+    FocusScope.of(context).unfocus();
+
     Navigator.of(context).pushNamed(RouteNamedScreens.categoryInsidePage,
         arguments: CategoryInsidePageArgs(subCategory: subCategory));
   }

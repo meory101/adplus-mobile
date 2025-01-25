@@ -90,27 +90,27 @@ class _AdvDetailsImagesSliderState extends State<AdvDetailsImagesSlider> {
                                 )
                               ])),
                     ),
-                    Positioned(
-                        left: 10,
-                        top: AppHeightManager.h1,
-                        child: InkWell(
-                          onTap: () async {
-                            String result = widget.advDetails?.name ??
-                                "".replaceAll(RegExp(' '), '-');
-                            final urlPreview =
-                                "https://mazaddimashq.com/adv/${widget.advDetails?.itemId}/$result";
-                            await Share.share(
-                                'Share this $result ! •\n\n$urlPreview');
-                          },
-                          child: CircleAvatar(
-                            backgroundColor: AppColorManager.mainColor,
-                            child: Icon(
-                              Icons.share,
-                              size: AppWidthManager.w5,
-                              color: AppColorManager.white,
-                            ),
-                          ),
-                        )),
+                    // Positioned(
+                    //     left: 10,
+                    //     top: AppHeightManager.h1,
+                    //     child: InkWell(
+                    //       onTap: () async {
+                    //         String result = widget.advDetails?.name ??
+                    //             "".replaceAll(RegExp(' '), '-');
+                    //         final urlPreview =
+                    //             "https://mazaddimashq.com/adv/${widget.advDetails?.itemId}/$result";
+                    //         await Share.share(
+                    //             'Share this $result ! •\n\n$urlPreview');
+                    //       },
+                    //       child: CircleAvatar(
+                    //         backgroundColor: AppColorManager.mainColor,
+                    //         child: Icon(
+                    //           Icons.share,
+                    //           size: AppWidthManager.w5,
+                    //           color: AppColorManager.white,
+                    //         ),
+                    //       ),
+                    //     )),
                     Positioned(
                         right: 10,
                         top: AppHeightManager.h17,

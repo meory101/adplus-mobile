@@ -12,6 +12,7 @@ import '../../../../../core/widget/snack_bar/note_message.dart';
 import '../../../home/presentation/cubit/search_user/search_user_cubit.dart';
 
 class MainSearchFormField extends StatefulWidget {
+
   const MainSearchFormField({super.key});
 
   @override
@@ -20,6 +21,7 @@ class MainSearchFormField extends StatefulWidget {
 
 class _SearchFormFieldState extends State<MainSearchFormField> {
   String? searchText ;
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class _SearchFormFieldState extends State<MainSearchFormField> {
           padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w3Point8),
           child: AppTextFormField(
             borderColor: AppColorManager.mainColor,
-
+            focusNode: FocusNode(),
             onChanged: (value) {
               searchText = value;
               return null;
@@ -56,6 +58,7 @@ class _SearchFormFieldState extends State<MainSearchFormField> {
               ),
               onPressed: () {
                 if ((searchText ?? "").isEmpty) return;
+
                 Navigator.of(context).pushNamed(RouteNamedScreens.search,
                 arguments: SearchArgs(searchString:searchText )
                 );

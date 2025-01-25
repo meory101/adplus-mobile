@@ -95,6 +95,8 @@ class HomeRemoteImplement extends HomeRemote {
       {required CategoryInsidePageRequestEntity entity}) async {
     final response = await ApiMethods()
         .post(body: entity.toJson(), url: ApiPostUrl.getCategoryInsidePage);
+    print(response.body);
+    print('------------------------------------------');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return categoryInsidePageResponseEntityFromJson(response.body);
     } else {

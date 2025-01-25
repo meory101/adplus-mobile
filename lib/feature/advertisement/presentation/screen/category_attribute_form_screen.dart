@@ -181,6 +181,7 @@ class _CategoryAttributeFormScreenState
                                         value ?? "", currentAttribute);
                                     return null;
                                   },
+
                                   validator: (value) {
                                     if ((value ?? "").isEmpty) {
                                       return "required";

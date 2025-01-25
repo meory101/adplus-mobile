@@ -54,7 +54,7 @@ abstract class EnumManager {
   static Map<String, TextInputType> attributeTextInputType = {
     text: TextInputType.text,
     number: TextInputType.number,
-    number: TextInputType.datetime,
+    date: TextInputType.datetime,
     boolean: TextInputType.text,
     list: TextInputType.text,
     "": TextInputType.text
