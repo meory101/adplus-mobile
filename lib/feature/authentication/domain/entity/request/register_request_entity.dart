@@ -77,6 +77,7 @@ class RegisterRequestEntity {
     final map = <String, dynamic>{};
     map['name'] = _name;
     map['whatsapp'] = _whatsapp;
+    map['phone'] = _phone;
     map['username'] = _username;
     map['password'] = _password;
     map['password_confirmation'] = _passwordConfirmation;

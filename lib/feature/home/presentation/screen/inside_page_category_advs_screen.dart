@@ -42,8 +42,6 @@ class _InsidePageCategoryAdvsScreenState
   @override
   void initState() {
     FilterRequest.entity.categoryId = widget.args.category.categoryId;
-    print(FilterRequest.entity.categoryId);
-    print('dddddddddddddddddddddddddddddddddd000000000000');
     if (widget.args.isAllCategoryAds == true) {
       isAllAdvs = true;
       context.read<AdsByCategoryCubit>().getAdvsByCategory(
@@ -71,8 +69,6 @@ class _InsidePageCategoryAdvsScreenState
       },
     );
 
-    print(FilterRequest.entity.categoryId);
-    print('dddddddddddddddddddddddddddddddddd000000000000');
     super.initState();
   }
 
@@ -84,8 +80,7 @@ class _InsidePageCategoryAdvsScreenState
 
   getAdvertisements() {
     FilterRequest.entity.categoryId = widget.args.category.categoryId;
-    print(widget.args.category.categoryId);
-    print('ddddddddddddddd');
+
     context
         .read<AdvsByAttributeCubit>()
         .getAdvsByAttribute(context: context, entity: FilterRequest.entity);
@@ -114,9 +109,6 @@ class _InsidePageCategoryAdvsScreenState
   getData() async {
     FilterRequest.entity.attributes?.forEach(
       (element) {
-        print('dddddddddddddddddddddddddddddddddddddd');
-        print(element.value);
-        print(element.attributeId);
       },
     );
     context.read<AdvsByAttributeCubit>().resetData();
@@ -183,7 +175,6 @@ class _InsidePageCategoryAdvsScreenState
                   if (starItemsLength > 0) {
                     if (selectedStarIndex == -1 &&
                         widget.args.isAllCategoryAds == false) {
-                      print('here is the index$selectedStarIndex');
                       if ((widget.args.entity.attributes ?? []).isNotEmpty) {
                         if (widget.args.entity.attributes?.first.attributeId ==
                             starItemAttributeId) {
@@ -204,9 +195,7 @@ class _InsidePageCategoryAdvsScreenState
                                             .attributeTypeList?[newIndex]
                                             .option ??
                                         "";
-                            print(widget.args.entity.attributes?.first.value);
-                            print(
-                                'vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalueeeeeeeeeee');
+
                             if (widget.args.entity.attributes?.first.value
                                     ?.contains(name) ==
                                 true) {

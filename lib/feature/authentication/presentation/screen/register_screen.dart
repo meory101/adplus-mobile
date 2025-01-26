@@ -37,7 +37,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,      body: SingleChildScrollView(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
         child: Container(
           height: AppHeightManager.h100,
           decoration: BoxDecoration(
@@ -178,7 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hintStyle: const TextStyle(
                                   color: AppColorManager.textGrey),
                               onChanged: (value) {
-                                entity.phone = value;
+                                entity.whatsapp = value;
                                 return null;
                               },
                               validator: (value) {
@@ -264,7 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 onPressed: () {
                                   setState(() {
                                     confirmPasswordVisible =
-                                        !confirmPasswordVisible;
+                                    !confirmPasswordVisible;
                                   });
                                 },
                               ),
@@ -274,13 +275,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           SizedBox(height: AppHeightManager.h1point8),
                           passwordsMatch
                               ? Text(
-                                  "passwordsMatch".tr(),
-                                  style: TextStyle(color: Colors.green),
-                                )
+                            "passwordsMatch".tr(),
+                            style: TextStyle(color: Colors.green),
+                          )
                               : Text(
-                                  "passwordsDoNotMatch".tr(),
-                                  style: TextStyle(color: Colors.red),
-                                ),
+                            "passwordsDoNotMatch".tr(),
+                            style: TextStyle(color: Colors.red),
+                          ),
                           SizedBox(height: AppHeightManager.h1),
                           BlocConsumer<RegisterCubit, RegisterState>(
                             listener: (context, state) {
@@ -347,10 +348,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              SizedBox(height: AppHeightManager.h7),
-
                             ],
                           ),
+                          SizedBox(
+                            height: AppHeightManager.h5,
+                          )
                         ],
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:mzad_damascus/core/storage/shared/shared_pref.dart';
 import 'package:mzad_damascus/core/widget/bottom_sheet/login_bottom_sheet.dart';
+import 'package:mzad_damascus/feature/authentication/data/datasource/remote/auth_remote.dart';
 import 'api_error_response_entity.dart';
 import 'api_failures.dart';
 import 'api_status_code.dart';
@@ -77,7 +78,9 @@ abstract class ApiErrorHandler {
           showLoginBottomSheet(context: buildContext);
         }
       } catch (e) {
-        errorEntity.errorMessage =
+        errorEntity.errorMessage =auth==true?
+        jsonDecode(failure.response?.body ?? "")['message']
+            :
             jsonDecode(failure.response?.body ?? "")['errors'].isEmpty
                 ? jsonDecode(failure.response?.body ?? "")['message']
                 : jsonDecode(failure.response?.body ?? "")['errors'].toString();
@@ -87,6 +90,7 @@ abstract class ApiErrorHandler {
           AppSharedPreferences.cashToken(token: "");
           showLoginBottomSheet(context: buildContext);
         }
+        auth= false;
       }
     }
     return Future.value(errorEntity);

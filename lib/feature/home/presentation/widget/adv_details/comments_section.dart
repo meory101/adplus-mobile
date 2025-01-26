@@ -382,7 +382,6 @@ class _CommentsSectionState extends State<CommentsSection> {
                     showLoginBottomSheet(context: context);
                     return;
                   }
-                  print(entity.comment);
                   if((entity.comment??"").isEmpty){
                     return;
                   }

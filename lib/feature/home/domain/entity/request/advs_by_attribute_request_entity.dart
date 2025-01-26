@@ -81,12 +81,6 @@ class AdvsByAttributeRequestEntity {
     if (_attributes != null) {
       map['attributes'] = _attributes?.map((v) => v.toJson()).toList();
     }
-    print(
-        '------------------------------------------------------------------------------');
-
-    print(map);
-    print(
-        '------------------------------------------------------------------------------');
     return map;
   }
 

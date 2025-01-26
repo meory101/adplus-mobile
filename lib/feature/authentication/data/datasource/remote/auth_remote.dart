@@ -17,7 +17,7 @@ import '../../../../../core/api/api_error/api_exception.dart';
 import '../../../../../core/api/api_error/api_status_code.dart';
 import '../../../../../core/api/api_links.dart';
 import '../../../../../core/api/api_methods.dart';
-
+bool auth = false;
 abstract class AuthRemote {
   Future<LoginResponseEntity> login({required LoginRequestEntity entity});
   Future<LogoutResponseEntity> logout();
@@ -37,6 +37,7 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<LoginResponseEntity> login(
       {required LoginRequestEntity entity}) async {
+    auth=true;
     final response =
         await ApiMethods().post(body: entity.toJson(), url: ApiPostUrl.login);
     if (ApiStatusCode.success().contains(response.statusCode)) {

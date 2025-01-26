@@ -34,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Container(
         height: AppHeightManager.h100,
         decoration: BoxDecoration(
@@ -109,10 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
 
                                 bool isEmail = RegExp(
-                                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+                                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
                                     .hasMatch(value);
                                 bool isPhone =
-                                    RegExp(r'^[0-9]{10,15}$').hasMatch(value);
+                                RegExp(r'^[0-9]{10,15}$').hasMatch(value);
 
                                 if (!isEmail && !isPhone) {
                                   return "usernameInvalid".tr();
@@ -195,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     RouteNamedScreens.mainBottomAppBar) {
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                     RouteNamedScreens.mainBottomAppBar,
-                                    (route) => false,
+                                        (route) => false,
                                   );
                                 } else {
                                   Navigator.of(context).pop();

@@ -77,12 +77,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
               AppTextWidget(
                   text: 'enterVerificationCode'.tr(),
                   color: Colors.orange,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
                   fontSize: FontSizeManager.fs15),
               Padding(
                 padding: EdgeInsets.all(AppWidthManager.w3Point8),
                 child: PinCodeTextField(
                   pinBoxBorderWidth: 2,
-                  pinBoxWidth: AppWidthManager.w12,
+                  pinBoxWidth: AppWidthManager.w10,
                   pinBoxHeight: AppHeightManager.h6,
                   maxLength: 6,
                   pinBoxRadius: AppRadiusManager.r10,
