@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
@@ -58,8 +59,12 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'enterPassword'.tr(); // Localized validation message
+                        return "passwordRequired".tr();
                       }
+                      if (!value.isValidPassword()) {
+                        return "invalidPassword".tr();
+                      }
+                      return null;
                       return null;
                     },
                     suffixIcon: IconButton(
@@ -85,14 +90,14 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
                       checkPasswordsMatch();
                       return null;
                     },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'confirmPasswordRequired'.tr(); // Localized validation message
-                      }
-                      if (entity.password != value) {
-                        return 'passwordsDoNotMatch'.tr(); // Localized validation message
-                      }
-                      return null;
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "confirmPasswordRequired".tr();
+                        }
+                        if (entity.password != value) {
+                          return "passwordsDoNotMatch".tr();
+                        }return null;
+
                     },
                     suffixIcon: IconButton(
                       icon: Icon(

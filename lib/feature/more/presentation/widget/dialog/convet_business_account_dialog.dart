@@ -84,10 +84,10 @@ void showBusinessAccountDialog(
                             onTap: () async {
                               File? file = await FileHelper.getFile();
                               if (file == null) return;
-                              // if (FileHelper.getFileExtension(
-                              //     fileName:
-                              //     FileHelper.getFileName(file: file)) ==
-                              //     'pdf') {
+                              if (FileHelper.getFileExtension(
+                                  fileName:
+                                  FileHelper.getFileName(file: file)) ==
+                                  'pdf') {
                                 context
                                     .read<ConvertBusinessAccountCubit>()
                                     .convertToBusinessAccount(
@@ -95,10 +95,10 @@ void showBusinessAccountDialog(
 
                                 return;
                               }
-                            //   NoteMessage.showErrorSnackBar(
-                            //       context: context, text: "mustBePdfFile".tr());
-                            // },
-                              ,
+                              NoteMessage.showErrorSnackBar(
+                                  context: context, text: "mustBePdfFile".tr());
+                            },
+
                             padding: EdgeInsets.symmetric(
                                 horizontal: AppWidthManager.w10),
                             borderRadius:

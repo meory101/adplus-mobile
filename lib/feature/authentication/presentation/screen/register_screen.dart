@@ -154,7 +154,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hintStyle: const TextStyle(
                                   color: AppColorManager.textGrey),
                               onChanged: (value) {
-                                entity.phone = value;
+                                String? newValue = value;
+                                if (value?[0] == "0") {
+                                  newValue = value?.substring(1);
+                                }
+                                entity.phone = '+963$newValue';
                                 return null;
                               },
                               validator: (value) {
@@ -179,7 +183,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hintStyle: const TextStyle(
                                   color: AppColorManager.textGrey),
                               onChanged: (value) {
-                                entity.whatsapp = value;
+                                String? newValue = value;
+                                if (value?[0] == "0") {
+                                  newValue = value?.substring(1);
+                                }
+                                entity.whatsapp = '+963$newValue';
                                 return null;
                               },
                               validator: (value) {
@@ -307,6 +315,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 onTap: () {
                                   if (formKey.currentState?.validate() ??
                                       false) {
+
+                                    // print(entity.toJson());
+                                    // return;
                                     context.read<RegisterCubit>().register(
                                         entity: entity, context: context);
                                   }

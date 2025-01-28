@@ -152,9 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            context.read<NotificationCubit>().resetData();
-            context.read<NotificationCubit>().getMyNotifications(
-                context: context, entity: NotificationsRequestEntity(page: 1));
+            // context.read<NotificationCubit>().resetData();
+            // context.read<NotificationCubit>().getMyNotifications(
+            //     context: context, entity: NotificationsRequestEntity(page: 1));
             context.read<BannersCubit>().getHomeBanners(
                 context: context, source: EnumManager.homeBannerSource);
             return context

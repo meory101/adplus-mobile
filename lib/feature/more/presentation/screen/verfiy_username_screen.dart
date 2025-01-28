@@ -84,7 +84,7 @@ class _VerfiyUsernameScreenState extends State<VerfiyUsernameScreen> {
                 child: PinCodeTextField(
                   pinBoxBorderWidth: 2,
                   pinBoxWidth: AppWidthManager.w10,
-                  pinBoxHeight: AppWidthManager.w10,
+                  pinBoxHeight: AppHeightManager.h6,
                   maxLength: 6,
                   pinBoxRadius: AppRadiusManager.r10,
                   defaultBorderColor: AppColorManager.grey,

@@ -126,8 +126,7 @@ class ApiMethods {
     }
   }
 
-  //Using this function for all pu requests
-  //When the parameter does not needed set as empty value
+
   Future<http.Response> put(
       {required String url, body, required Map<String, dynamic> query}) async {
     query = filterRequest(query);

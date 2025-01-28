@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mzad_damascus/core/helper/validation_helper.dart';
 import 'package:mzad_damascus/core/resource/color_manager.dart';
 import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
@@ -106,13 +107,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value == null || value.isEmpty) {
                                   return "usernameRequired".tr();
                                 }
-
-                                bool isEmail = RegExp(
-                                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
-                                    .hasMatch(value);
-                                bool isPhone =
-                                RegExp(r'^[0-9]{10,15}$').hasMatch(value);
-
+                                bool isEmail = value.isEmail();
+                                bool isPhone = value.isPhoneNumber();
+                                if (isPhone == true) {
+                                  String? newValue = value;
+                                  if (value[0] == "0") {
+                                    newValue = value.substring(1);
+                                  }
+                                  entity.username = '+963$newValue';
+                                }
                                 if (!isEmail && !isPhone) {
                                   return "usernameInvalid".tr();
                                 }
