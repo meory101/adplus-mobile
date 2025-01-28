@@ -142,7 +142,8 @@ class MoreRemoteImplement extends MoreRemote {
     final response = await ApiMethods()
         .postWithMultiFile(
         data: {}, files: [file!], url: ApiPostUrl.uploadfile, imageKey: 'file');
-
+      print(response.statusCode);
+      print(response.body);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return true;
     } else {
