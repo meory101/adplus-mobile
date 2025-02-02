@@ -60,13 +60,9 @@ class AuthRemoteImplement extends AuthRemote {
   @override
   Future<RegisterResponseEntity> register(
       {required RegisterRequestEntity entity}) async {
-    print(entity.whatsapp);
     final response = await ApiMethods()
         .post(body: entity.toJson(), url: ApiPostUrl.register);
-    print(response.statusCode);
-    print(response.body);
 
-    print('-------------------------------------------------');
     if (ApiStatusCode.success().contains(response.statusCode)) {
       return registerResponseEntityFromJson(response.body);
     } else {

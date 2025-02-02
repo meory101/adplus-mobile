@@ -5,12 +5,14 @@ import 'package:mzad_damascus/core/resource/cubit_status_manager.dart';
 import 'package:mzad_damascus/core/resource/font_manager.dart';
 import 'package:mzad_damascus/core/resource/size_manager.dart';
 import 'package:mzad_damascus/core/widget/app_bar/main_app_bar.dart';
+import 'package:mzad_damascus/core/widget/container/decorated_container.dart';
 import 'package:mzad_damascus/core/widget/text/app_text_widget.dart';
 import 'package:mzad_damascus/feature/advertisement/domain/entity/response/get_category_attributes_response_entity.dart';
 import 'package:mzad_damascus/feature/advertisement/presentation/cubit/get_category_attribute_cubit/get_category_attributes_cubit.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/ads_by_category_request_entity.dart';
 import 'package:mzad_damascus/feature/home/domain/entity/request/advs_by_attribute_request_entity.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/ads_by_category_cubit/advs_by_category_cubit.dart';
+import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/advs_by_attribute_grid_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/advs_by_attribute_list_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/advs_by_category_list_view.dart';
 import 'package:mzad_damascus/feature/home/presentation/widget/inside_page_advs/cities_drop_down_list.dart';
@@ -23,9 +25,12 @@ import '../../../advertisement/presentation/cubit/get_category_attribute_cubit/g
 import '../../domain/entity/response/advs_by_attribute_response_entity.dart';
 import '../../domain/entity/response/get_categories_response_entity.dart';
 import '../cubit/advs_by_attribute_cubit/advs_by_attribute_cubit.dart';
+import '../widget/inside_page_advs/advs_by_category_grid_view.dart';
 import '../widget/inside_page_advs/attributes_horizantal_list_view.dart';
 import '../widget/inside_page_advs/dialog/showAttributeListCheckBox.dart';
 import 'category_inside_page_screen.dart';
+import '../widget/inside_page_advs/advs_by_category_grid_view.dart';
+import '../widget/inside_page_advs/advs_by_category_list_view.dart';
 
 class InsidePageCategoryAdvsScreen extends StatefulWidget {
   final InsidePageCategoryAdvArgs args;
@@ -108,8 +113,7 @@ class _InsidePageCategoryAdvsScreenState
 
   getData() async {
     FilterRequest.entity.attributes?.forEach(
-      (element) {
-      },
+      (element) {},
     );
     context.read<AdvsByAttributeCubit>().resetData();
     getAdvertisements();
@@ -125,6 +129,7 @@ class _InsidePageCategoryAdvsScreenState
   int starItemsLength = 0;
   num? starItemAttributeId;
   num? selectedStarIndex = -1;
+  bool isGrid = true;
 
   @override
   Widget build(BuildContext context) {
@@ -348,6 +353,66 @@ class _InsidePageCategoryAdvsScreenState
             ),
           ),
         ),
+        bottomSheet: Container(
+          decoration: BoxDecoration(color: Colors.white, boxShadow: [
+            BoxShadow(
+                color: AppColorManager.lightGreyOpacity6,
+                spreadRadius: 10,
+                blurRadius: 10,
+                offset: Offset(-7, 7))
+          ]),
+          // height: AppHeightManager.h5,
+          padding: EdgeInsets.symmetric(vertical: AppHeightManager.h2),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    isGrid = !isGrid;
+                  });
+                },
+                child: Visibility(
+                  visible: isGrid == true,
+                  replacement: Row(
+                    children: [
+                      Icon(
+                        Icons.list_rounded,
+                        color: AppColorManager.mainColor,
+                      ),
+                      SizedBox(
+                        width: AppWidthManager.w1Point2,
+                      ),
+                      AppTextWidget(
+                        text: "list".tr(),
+                        color: AppColorManager.mainColor,
+                        fontSize: FontSizeManager.fs15,
+                        fontWeight: FontWeight.w600,
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.grid_view_rounded,
+                        color: AppColorManager.mainColor,
+                      ),
+                      SizedBox(
+                        width: AppWidthManager.w1Point2,
+                      ),
+                      AppTextWidget(
+                        text: "grid".tr(),
+                        color: AppColorManager.mainColor,
+                        fontSize: FontSizeManager.fs15,
+                        fontWeight: FontWeight.w600,
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
         body: Container(
           padding: EdgeInsets.only(top: AppHeightManager.h1),
           child: SingleChildScrollView(
@@ -356,14 +421,27 @@ class _InsidePageCategoryAdvsScreenState
                     FilterRequest.entity.cityId == null
                 ? Column(
                     children: [
-                      AdsByCategoryListView(category: widget.args.category),
+                      Visibility(
+                          visible: isGrid,
+                          replacement: AdsByCategoryListView(
+                            category: widget.args.category,
+                          ),
+                          child: AdsByCategoryGridView(
+                            category: widget.args.category,
+                          )),
                       SizedBox(
                         height: AppHeightManager.h2,
                       ),
                     ],
                   )
-                : AdvsByAttributeListView(
-                    category: widget.args.category,
+                : Visibility(
+                    visible: isGrid,
+                    replacement: AdvsByAttributeListView(
+                      category: widget.args.category,
+                    ),
+                    child: AdvsByAttributeGridView(
+                      category: widget.args.category,
+                    ),
                   ),
           ),
         ));

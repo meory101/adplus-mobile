@@ -81,9 +81,7 @@ class RegisterRequestEntity {
     map['username'] = _username;
     map['password'] = _password;
     map['password_confirmation'] = _passwordConfirmation;
-    print('---------------------------------------------');
 
-    print(map);
     print('---------------------------------------------');
     return map;
   }

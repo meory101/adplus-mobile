@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mzad_damascus/feature/home/presentation/cubit/adv_details_cubit/adv_details_cubit.dart';
 import 'package:mzad_damascus/feature/intro/presentation/screen/splash_screen.dart';
@@ -75,7 +76,9 @@ void main() async {
 
   SharedPreferences shPref = await SharedPreferences.getInstance();
   AppSharedPreferences.init(shPref);
-
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: AppColorManager.white));
   runApp(
     EasyLocalization(
       supportedLocales: const [

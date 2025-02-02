@@ -168,5 +168,7 @@
   "verify" : "تاكيد",
   "step" : "خطوة",
   "follower" : "متابع",
+  "list" : "قائمة",
+  "grid" : "مربع",
   "pleaseTurnOnWifiOrMobileData" : "يرجى تشغيل بيانات الهاتف المحمول"
 }
