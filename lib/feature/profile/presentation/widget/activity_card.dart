@@ -46,8 +46,8 @@ class _ActivityCardState extends State<ActivityCard> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: AppHeightManager.h3point4,
-                      width: AppHeightManager.h3point4,
+                      height: AppHeightManager.h2point5,
+                      width: AppHeightManager.h2point5,
                       child: SvgPicture.asset(
                           colorFilter: ColorFilter.mode(
                               selectedIndex == 0 ?AppColorManager.mainColor : AppColorManager.textGrey,
@@ -64,6 +64,7 @@ class _ActivityCardState extends State<ActivityCard> {
               ),
               GestureDetector(
                 onTap: () {
+
                   setState(() {
                     selectedIndex =1;
                     widget.onActivityTapChanged(selectedIndex);
@@ -73,24 +74,22 @@ class _ActivityCardState extends State<ActivityCard> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: AppHeightManager.h3point4,
-                      width: AppHeightManager.h3point4,
+                      height: AppHeightManager.h2point5,
+                      width: AppHeightManager.h2point5,
                       child: SvgPicture.asset(
                           colorFilter: ColorFilter.mode(
-                              selectedIndex == 1 ? AppColorManager.mainColor : AppColorManager.textGrey,
+                              selectedIndex == 1 ?AppColorManager.mainColor : AppColorManager.textGrey,
                               BlendMode.srcIn),
-                          AppIconManager.favorites),
+                          AppIconManager.review),
                     ),
                     AppTextWidget(
-                      text: "favorites".tr(),
+                      text: "inReview".tr(),
                       fontSize: FontSizeManager.fs15,
                       color: selectedIndex == 1 ? AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
                 ),
               ),
-
-
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -102,22 +101,23 @@ class _ActivityCardState extends State<ActivityCard> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: AppHeightManager.h3point4,
-                      width: AppHeightManager.h3point4,
+                      height: AppHeightManager.h2point5,
+                      width: AppHeightManager.h2point5,
                       child: SvgPicture.asset(
                           colorFilter: ColorFilter.mode(
                               selectedIndex == 2 ? AppColorManager.mainColor : AppColorManager.textGrey,
                               BlendMode.srcIn),
-                          AppIconManager.comments),
+                          AppIconManager.favorites),
                     ),
                     AppTextWidget(
-                      text: "comments".tr(),
+                      text: "favorites".tr(),
                       fontSize: FontSizeManager.fs15,
-                      color: selectedIndex == 2 ?AppColorManager.mainColor : AppColorManager.textGrey,
+                      color: selectedIndex == 2 ? AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
                 ),
               ),
+
 
               GestureDetector(
                 onTap: () {
@@ -130,18 +130,46 @@ class _ActivityCardState extends State<ActivityCard> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: AppHeightManager.h3point4,
-                      width: AppHeightManager.h3point4,
+                      height: AppHeightManager.h2point5,
+                      width: AppHeightManager.h2point5,
                       child: SvgPicture.asset(
                           colorFilter: ColorFilter.mode(
                               selectedIndex == 3 ? AppColorManager.mainColor : AppColorManager.textGrey,
+                              BlendMode.srcIn),
+                          AppIconManager.comments),
+                    ),
+                    AppTextWidget(
+                      text: "comments".tr(),
+                      fontSize: FontSizeManager.fs15,
+                      color: selectedIndex == 3 ?AppColorManager.mainColor : AppColorManager.textGrey,
+                    ),
+                  ],
+                ),
+              ),
+
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedIndex =4;
+                    widget.onActivityTapChanged(selectedIndex);
+
+                  });
+                },
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: AppHeightManager.h2point5,
+                      width: AppHeightManager.h2point5,
+                      child: SvgPicture.asset(
+                          colorFilter: ColorFilter.mode(
+                              selectedIndex == 4 ? AppColorManager.mainColor : AppColorManager.textGrey,
                               BlendMode.srcIn),
                           AppIconManager.likes),
                     ),
                     AppTextWidget(
                       text: "likes".tr(),
                       fontSize: FontSizeManager.fs15,
-                      color: selectedIndex == 3 ?AppColorManager.mainColor : AppColorManager.textGrey,
+                      color: selectedIndex == 4 ?AppColorManager.mainColor : AppColorManager.textGrey,
                     ),
                   ],
                 ),

@@ -184,8 +184,32 @@ class _ProfileInfoModificationScreenState
                   ],
                 ),
                 SizedBox(
-                  height: AppHeightManager.h4,
+                  height: AppHeightManager.h3,
                 ),
+              Visibility(
+                  visible: (widget.args.profileInfo?.user?.isCompany??0)==1,
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.verified_rounded,
+                        color: AppColorManager.mainColor,
+                        size: AppHeightManager.h3,
+                      ),
+                      SizedBox(width: AppWidthManager.w1Point2),
+                      AppTextWidget(text: "businessAccount".tr(),
+                        color: AppColorManager.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: FontSizeManager.fs16,
+                      )
+                    ],
+                  ),
+                  SizedBox(height: AppHeightManager.h3,),
+                ],
+              )),
+
                 TitleAppFormFiled(
                   initValue: widget.args.profileInfo?.user?.name ?? "",
                   title: "name(required)".tr(),

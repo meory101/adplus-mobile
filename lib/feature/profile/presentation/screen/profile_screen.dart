@@ -10,7 +10,9 @@ import 'package:mzad_damascus/feature/comment/presentation/cubit/comment_cubit/c
 import 'package:mzad_damascus/feature/favorite/domain/entity/request/favorites_request_entity.dart';
 import 'package:mzad_damascus/feature/favorite/presentation/cubit/favorites_cubit/favorites_cubit.dart';
 import 'package:mzad_damascus/feature/likes/presentation/cubit/likes_cubit/likes_cubit.dart';
+import 'package:mzad_damascus/feature/more/domain/entity/request/myitem_under_review_request_entiity.dart';
 import 'package:mzad_damascus/feature/more/presentation/cubit/my_reviewd_item_cubit/myitem_under_review/myitem_review_cubit.dart';
+import 'package:mzad_damascus/feature/more/presentation/cubit/myitem_under_review/myitem_under_review_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/cubit/get_profile_cubit/get_profile_info_cubit.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/activity_card.dart';
 import 'package:mzad_damascus/feature/profile/presentation/widget/comments_list_view.dart';
@@ -24,6 +26,7 @@ import '../../../../router/router.dart';
 import '../../../likes/domain/entity/request/likes_request_entity.dart';
 import '../../../more/domain/entity/request/myitem_review_request_entiity.dart';
 import '../widget/active_list_view.dart';
+import '../widget/in_review_list_view.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -70,17 +73,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getData() {
-    if (selectedIndex == 1) {
+    if (selectedIndex == 2) {
       context.read<FavoritesCubit>().resetData();
       context
           .read<FavoritesCubit>()
           .getMyFavorites(context: context, entity: MyFavoritesRequestEntity());
-    } else if (selectedIndex == 2) {
+    } else if (selectedIndex == 3) {
       context.read<CommentCubit>().resetData();
       context
           .read<CommentCubit>()
           .getComments(context: context, entity: CommentsRequestEntity());
-    } else if (selectedIndex == 3) {
+    } else if (selectedIndex == 4) {
       context.read<LikesCubit>().resetData();
       context
           .read<LikesCubit>()
@@ -90,19 +93,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context
           .read<MyitemReviewCubit>()
           .myitemreview(context: context, entity: MyItemReviewRequestEntity());
+    } else if (selectedIndex == 1) {
+
+      context.read<MyitemUnderReviewCubit>().resetData();
+      context.read<MyitemUnderReviewCubit>().myitemunderreview(
+          context: context, entity: MyItemUnderReviewRequestEntity());
     }
   }
 
   loadMoreData() {
-    if (selectedIndex == 1) {
+    if (selectedIndex == 2) {
       context
           .read<FavoritesCubit>()
           .getMyFavorites(context: context, entity: MyFavoritesRequestEntity());
-    } else if (selectedIndex == 2) {
+    } else if (selectedIndex == 3) {
       context
           .read<CommentCubit>()
           .getComments(context: context, entity: CommentsRequestEntity());
-    } else if (selectedIndex == 3) {
+    } else if (selectedIndex == 4) {
       context
           .read<LikesCubit>()
           .getLikes(context: context, entity: LikesRequestEntity());
@@ -110,6 +118,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context
           .read<MyitemReviewCubit>()
           .myitemreview(context: context, entity: MyItemReviewRequestEntity());
+    }
+   else if (selectedIndex == 1) {
+      context.read<MyitemUnderReviewCubit>().myitemunderreview(
+          context: context, entity: MyItemUnderReviewRequestEntity());
     }
   }
 
@@ -139,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: AppHeightManager.h8,
             ),
-            MainSearchFormField(),// MainSearchFormField(),
+            MainSearchFormField(), // MainSearchFormField(),
             const ProfileInfoCard(),
             ActivityCard(
               onActivityTapChanged: (index) {
@@ -196,9 +208,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   selectedIndex == 0
                       ? const ActiveListView()
-                      : selectedIndex == 1
+
+                  : selectedIndex ==1? InReviewListView()
+                      : selectedIndex == 2
                           ? const FavoriteListView()
-                          : selectedIndex == 2
+                          : selectedIndex == 3
                               ? const CommentsListView()
                               : const LikesListView()
                 ],

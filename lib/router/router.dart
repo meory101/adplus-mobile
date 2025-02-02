@@ -668,6 +668,9 @@ abstract class AppRouter {
                 create: (context) => di.sl<BannersCubit>(),
               ),
               BlocProvider(
+                create: (context) => di.sl<MyitemUnderReviewCubit>(),
+              ),
+              BlocProvider(
                 create: (context) => di.sl<MyitemReviewCubit>(),
               ),
               BlocProvider(

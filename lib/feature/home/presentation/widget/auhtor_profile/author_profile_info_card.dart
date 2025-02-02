@@ -104,25 +104,50 @@ class _AuthorProfileInfoCardState extends State<AuthorProfileInfoCard> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            color: AppColorManager.mainColor, width: 3)),
-                    child: Container(
-                      width: AppWidthManager.w28,
-                      height: AppWidthManager.w28,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: AppWidthManager.w28 + 8,
+                        height: AppWidthManager.w28 + 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColorManager.subColor,
+                              AppColorManager.mainColor,
+                              AppColorManager.subColor,
+                              AppColorManager.orange
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
                       ),
-                      child: MainImageWidget(
-                        fit: BoxFit.cover,
-                        imageUrl: (AppConstantManager.imageBaseUrl +
-                            (profileInfo?.user?.photo ?? "")),
+                      Container(
+                        width: AppWidthManager.w28 + 3,
+                        height: AppWidthManager.w28 + 3,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
+
+                      // Profile image
+                      Container(
+                        width: AppWidthManager.w28,
+                        height: AppWidthManager.w28,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: MainImageWidget(
+                          fit: BoxFit.cover,
+                          imageUrl: (AppConstantManager.imageBaseUrl +
+                              (profileInfo?.user?.photo ?? "")),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: AppHeightManager.h1),
                   AppTextWidget(
@@ -174,7 +199,7 @@ class _AuthorProfileInfoCardState extends State<AuthorProfileInfoCard> {
                                 Icon(
                                   Icons.call,
                                   size: AppHeightManager.h2,
-                                  color: AppColorManager.mainColor,
+                                  color: AppColorManager.subColor,
                                 ),
                                 SizedBox(
                                   width: AppWidthManager.w1Point2,
@@ -220,7 +245,7 @@ class _AuthorProfileInfoCardState extends State<AuthorProfileInfoCard> {
                                   child: SvgPicture.asset(
                                     AppIconManager.whatsapp,
                                     colorFilter: ColorFilter.mode(
-                                        AppColorManager.mainColor,
+                                        AppColorManager.subColor,
                                         BlendMode.srcIn),
                                   ),
                                 ),

@@ -90,7 +90,9 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                               child: SvgPicture.asset(
                                 AppIconManager.edit,
                                 colorFilter: ColorFilter.mode(
-                                    isVisitor==true?AppColorManager.grey: AppColorManager.subColor,
+                                    isVisitor == true
+                                        ? AppColorManager.grey
+                                        : AppColorManager.subColor,
                                     BlendMode.srcIn),
                               ),
                             ),
@@ -102,36 +104,63 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                             onTap: onAddTaped,
                             child: Icon(
                               Icons.add_circle_outline_outlined,
-                              color:isVisitor==true?AppColorManager.grey: AppColorManager.subColor,
+                              color: isVisitor == true
+                                  ? AppColorManager.grey
+                                  : AppColorManager.subColor,
                               size: AppHeightManager.h3,
                             ),
                           ),
                         ],
                       ),
-                      Container(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                color: AppColorManager.mainColor, width: 3)),
-                        child: Container(
-                          width: AppWidthManager.w28,
-                          height: AppWidthManager.w28,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: AppWidthManager.w28 + 8,
+                            height: AppWidthManager.w28 + 8,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                colors: [
+                                  AppColorManager.subColor,
+                                  AppColorManager.mainColor,
+                                  AppColorManager.subColor,
+                                  AppColorManager.orange
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                            ),
                           ),
-                          child: MainImageWidget(
-                            fit: BoxFit.cover,
-                            imageUrl: (AppConstantManager.imageBaseUrl +
-                                (profileInfo?.user?.photo ?? "")),
+                          Container(
+                            width: AppWidthManager.w28 + 3,
+                            height: AppWidthManager.w28 + 3,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
+
+                          // Profile image
+                          Container(
+                            width: AppWidthManager.w28,
+                            height: AppWidthManager.w28,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: MainImageWidget(
+                              fit: BoxFit.cover,
+                              imageUrl: (AppConstantManager.imageBaseUrl +
+                                  (profileInfo?.user?.photo ?? "")),
+                            ),
+                          ),
+                        ],
                       ),
                       Visibility(
                         visible: (profileInfo?.user?.isCompany ?? 0) == 1,
                         replacement: Icon(
-                          Icons.person,
+                          CupertinoIcons.person,
                           color: AppColorManager.white,
                           size: AppHeightManager.h3,
                         ),
@@ -143,37 +172,45 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                       ),
                     ],
                   ),
-                  SizedBox(height: AppHeightManager.h1),
                   Visibility(
-                      visible: isVisitor==false,
+                      visible: isVisitor == false,
                       child: Column(
-                    children: [
-                      AppTextWidget(
-                        text: profileInfo?.user?.name ?? "",
-                        fontSize: FontSizeManager.fs18,
-                        color: AppColorManager.textAppColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      Directionality(
-                        textDirection: ui.TextDirection.ltr,
-                        child: AppTextWidget(
-                          text: profileInfo?.user?.username ?? "",
-                          fontSize: FontSizeManager.fs16,
-                          color: AppColorManager.grey,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      AppTextWidget(
-                        text: profileInfo?.user?.description ?? "",
-                        fontSize: FontSizeManager.fs15,
-                        color: AppColorManager.grey,
-                        fontWeight: FontWeight.w500,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  )),
-                  SizedBox(height: AppHeightManager.h1),
+                        children: [
+                          AppTextWidget(
+                            text: profileInfo?.user?.name ?? "",
+                            fontSize: FontSizeManager.fs18,
+                            color: AppColorManager.textAppColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          Directionality(
+                            textDirection: ui.TextDirection.ltr,
+                            child: AppTextWidget(
+                              text: profileInfo?.user?.username ?? "",
+                              fontSize: FontSizeManager.fs16,
+                              color: AppColorManager.grey,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Visibility(
+                            replacement: SizedBox(
+                              height: AppHeightManager.h1,
+                            ),
+                            visible: (profileInfo?.user?.description ?? "")
+                                .isNotEmpty,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: AppTextWidget(
+                                text: profileInfo?.user?.description ?? "",
+                                fontSize: FontSizeManager.fs15,
+                                color: AppColorManager.grey,
+                                fontWeight: FontWeight.w500,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -183,7 +220,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                             AppColorManager.lightGreyOpacity6.withOpacity(0.5),
                         padding: EdgeInsets.symmetric(
                             horizontal: AppWidthManager.w3,
-                            vertical: AppHeightManager.h05),
+                            vertical: AppHeightManager.h04),
                         borderRadius:
                             BorderRadius.circular(AppRadiusManager.r15),
                         child: Directionality(
@@ -199,8 +236,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                                 width: AppWidthManager.w1Point2,
                               ),
                               AppTextWidget(
-                                text:
-                                    profileInfo?.user?.phone ?? 'noPhoneNumberYet'.tr(),
+                                text: profileInfo?.user?.phone ??
+                                    'noPhoneNumberYet'.tr(),
                                 fontSize: FontSizeManager.fs15,
                                 color: AppColorManager.textGrey,
                               ),
@@ -217,7 +254,7 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                             AppColorManager.lightGreyOpacity6.withOpacity(0.5),
                         padding: EdgeInsets.symmetric(
                             horizontal: AppWidthManager.w3,
-                            vertical: AppHeightManager.h05),
+                            vertical: AppHeightManager.h04),
                         borderRadius:
                             BorderRadius.circular(AppRadiusManager.r15),
                         child: Directionality(
@@ -238,8 +275,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                                 width: AppWidthManager.w1Point2,
                               ),
                               AppTextWidget(
-                                text:
-                                    profileInfo?.user?.whatsapp ?? 'noWhatsappYet'.tr(),
+                                text: profileInfo?.user?.whatsapp ??
+                                    'noWhatsappYet'.tr(),
                                 fontSize: FontSizeManager.fs15,
                                 color: AppColorManager.textGrey,
                               ),
@@ -249,10 +286,8 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
                       ),
                     ],
                   ),
-                  SizedBox(height: AppHeightManager.h02),
                 ],
               ),
-              SizedBox(height: AppHeightManager.h05),
               Divider(
                 color: AppColorManager.borderGrey,
                 thickness: 1.0,
@@ -262,7 +297,6 @@ class _ProfileInfoCardState extends State<ProfileInfoCard> {
               ProfileFollowingInfoCard(
                 profileInfo: profileInfo,
               ),
-              SizedBox(height: AppHeightManager.h2),
             ],
           ),
         );
